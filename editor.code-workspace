@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "workbench.colorCustomizations": {
+      "_comment": "アクティビティバー（左端または右端にあるバー）",
+      "titleBar.activeBackground": "#51BB7B",
+      "activityBarBadge.background": "#51BB7B",
+      "activityBar.foreground": "#51BB7B"
+      //"textBlockQuote.background": "#51BB7B"
+    },
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": null
+  }
+}
