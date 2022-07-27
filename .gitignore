@@ -3,3 +3,14 @@ Desktop.ini
 .DS_Strore
 *.exe
 ._
+
+# app/public/admin/Search-Replace-DB-master/*
+# app/public/admin/wp-admin/*
+# app/public/admin/wp-content/languages/*
+# app/public/admin/wp-content/upgrade/*
+# app/public/admin/wp-content/uploads/*
+# app/public/admin/wp-content/index.php
+# app/public/admin/wp-includes/*
+# app/public/admin/wp-*.php
+conf/*
+logs/*
