@@ -1,0 +1,40 @@
+# ErrorDocument 404 /error/
+
+<Files ~ "^\.ht">
+Deny from All
+</Files>
+
+# AuthUserFile ~/.htpasswd
+# AuthType Basic
+# AuthName "PLEASE ENTER YOUR ID / PASSWORD"
+
+# <Files "wp-login.php">
+# require valid-user
+# </Files>
+
+# <FilesMatch "\/?wp-admin">
+# require valid-user
+# </FilesMatch>
+
+# 除外
+<Files "wp-admin/admin-ajax.php">
+Satisfy Any
+Order Allow,Deny
+Allow from All
+</Files>
+
+<Files "wp-cron.php">
+Satisfy Any
+Order Allow,Deny
+Allow from All
+</Files>
+
+<Files "xmlrpc.php">
+Order Allow,Deny
+Deny from All
+</Files>
+
+<FilesMatch "^(wp-config\.php|wp-mail\.php|install\.php)">
+Order Allow,Deny
+Deny from All
+</FilesMatch>
