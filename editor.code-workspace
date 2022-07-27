@@ -12,7 +12,6 @@
       "activityBar.foreground": "#51BB7B"
       //"textBlockQuote.background": "#51BB7B"
     },
-    "editor.tabSize": 2,
-    "editor.codeActionsOnSave": null
+    "editor.tabSize": 2
   }
 }
