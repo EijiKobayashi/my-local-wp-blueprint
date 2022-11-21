@@ -72,7 +72,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
       if( ! empty( $found_my_sites_post_id ) ) {
 
-        if( count( $wp_admin_bar->user->blogs ) > 1  ) {
+        if( ! empty( $wp_admin_bar->user->blogs ) && count( $wp_admin_bar->user->blogs ) > 1  ) {
 
           foreach( $wp_admin_bar->user->blogs as $blog ) {
 

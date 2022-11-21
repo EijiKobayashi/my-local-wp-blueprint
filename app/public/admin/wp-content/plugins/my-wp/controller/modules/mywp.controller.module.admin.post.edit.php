@@ -316,8 +316,20 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     <style>
     @media (min-width: 782px) {
-      .edit-post-header .edit-post-fullscreen-mode-close.has-icon svg { display: none; }
-      .edit-post-header .edit-post-fullscreen-mode-close.has-icon:before { font: normal 32px/1 dashicons; content: "\f341"; display: inline-block; }
+      .edit-post-header .edit-post-fullscreen-mode-close.has-icon svg,
+      .edit-post-header .edit-post-fullscreen-mode-close.components-button svg {
+        display: none;
+      }
+      .edit-post-header .edit-post-fullscreen-mode-close.has-icon:before,
+      .edit-post-header .edit-post-fullscreen-mode-close.components-button:before {
+        font: normal 32px/1 dashicons;
+        content: "\f341";
+        display: inline-block;
+      }
+      .edit-post-header .edit-post-fullscreen-mode-close.components-button:before {
+        top: 14px;
+        left: 12px;
+      }
     }
     </style>
 
@@ -1045,9 +1057,27 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     <script>
     jQuery(function( $ ) {
 
-      $(".meta-box-sortables").sortable("disable");
+      let $metabox_sortables = $('.meta-box-sortables');
 
-      $(".meta-box-sortables").sortable("destroy");
+      function disable_metabox_sortable() {
+
+        if( $metabox_sortables.hasClass('ui-sortable') ) {
+
+          $metabox_sortables.sortable('disable');
+
+          $metabox_sortables.sortable('destroy');
+
+        }
+
+      }
+
+      $metabox_sortables.find('.postbox').on('mouseenter', function() {
+
+        disable_metabox_sortable();
+
+      });
+
+      disable_metabox_sortable();
 
     });
     </script>

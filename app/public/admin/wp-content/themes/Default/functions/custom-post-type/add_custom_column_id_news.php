@@ -14,7 +14,7 @@ function add_custom_column_id_news_category($column_name, $id) {
 add_action( 'restrict_manage_posts', 'add_post_taxonomy_restrict_filter_news_category' );
 function add_post_taxonomy_restrict_filter_news_category() {
   global $post_type;
-  if ( 'articles' == $post_type ) {
+  if ( 'news' == $post_type ) {
     ?>
     <select name="news_category">
       <option value="">カテゴリー指定なし</option>
@@ -42,7 +42,7 @@ function add_custom_column_id_news_tags($column_name, $id) {
 add_action( 'restrict_manage_posts', 'add_post_taxonomy_restrict_filter_news_tags' );
 function add_post_taxonomy_restrict_filter_news_tags() {
   global $post_type;
-  if ( 'articles' == $post_type ) {
+  if ( 'news' == $post_type ) {
     ?>
     <select name="news_tags">
       <option value="">タグ指定なし</option>
@@ -54,5 +54,20 @@ function add_post_taxonomy_restrict_filter_news_tags() {
     </select>
     <?php
   }
+}
+// アイキャッチ
+add_action( 'manage_news_posts_custom_column', 'add_custom_column_id_news_thumb', 10, 2 );
+function add_custom_column_id_news_thumb($column_name, $post_id) {
+  if ( 'thumbnail' == $column_name ) {
+    $thumb = get_the_post_thumbnail($post_id, array(100,100), 'thumbnail');
+    echo ( $thumb ) ? $thumb : '─';
+  } elseif ( 'news' == $column_name ) {
+    echo get_post_meta($post_id, 'news', true);
+  }
+}
+add_filter( 'manage_edit-news_columns', 'add_custom_column_news_thumb' );
+function add_custom_column_news_thumb($columns) {
+  $columns['thumbnail'] = 'サムネイル';
+  return $columns;
 }
 ?>

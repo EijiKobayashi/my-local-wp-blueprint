@@ -387,6 +387,12 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
 
     }
 
+    if( is_array( $request['orderby'] ) ) {
+
+      return $request;
+
+    }
+
     if( $request['orderby'] === 'post-thumbnails') {
 
       $request['meta_key'] = '_thumbnail_id';

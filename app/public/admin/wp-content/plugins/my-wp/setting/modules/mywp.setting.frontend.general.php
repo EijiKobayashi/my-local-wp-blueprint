@@ -76,7 +76,42 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
     $api_root = get_rest_url();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Header Meta' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Response Header' , 'my-wp' ); ?></h3>
+    <table class="form-table">
+      <tbody>
+        <tr>
+          <th><?php _e( 'Hide Rest link' , 'my-wp' ); ?></th>
+          <td>
+            <label>
+              <input type="checkbox" name="mywp[data][hide_rest_link_header]" class="hide_rest_link_header" value="1" <?php checked( $setting_data['hide_rest_link_header'] , true ); ?> />
+              <?php _e( 'Hide' ); ?>
+            </label>
+            <p><code>
+              <?php if( ! empty( $api_root ) ) : ?>
+                <?php echo esc_html( 'Link: <' . esc_url_raw( $api_root ) . '>; rel="https://api.w.org/"' ); ?>
+              <?php endif; ?>
+            </code></p>
+          </td>
+        </tr>
+        <tr>
+          <th><?php _e( 'Hide Shortlink' , 'my-wp' ); ?></th>
+          <td>
+            <label>
+              <input type="checkbox" name="mywp[data][hide_shortlink_header]" class="hide_shortlink_header" value="1" <?php checked( $setting_data['hide_shortlink_header'] , true ); ?> />
+              <?php _e( 'Hide' ); ?>
+            </label>
+            <p><code>
+              <?php if( ! empty( $api_root ) ) : ?>
+                <?php echo esc_html( 'Link: <' . home_url( '/' ) . '>?p=***; rel=shortlink' ); ?>
+              <?php endif; ?>
+            </code></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+
+    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'HTML Head' , 'my-wp' ); ?></h3>
     <table class="form-table">
       <tbody>
         <tr>
@@ -135,34 +170,34 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
               <?php _e( 'Hide' ); ?>
             </label>
             <p><code>
-              <?php echo esc_html( '<link rel="alternate" type="' . feed_content_type() . '" title="[Feed Content Type Title" href="Feed Content Type URL" />' ); ?>
+              <?php echo esc_html( '<link rel="alternate" type="' . feed_content_type() . '" title="[Feed Content Type Title]" href="Feed Content Type URL" />' ); ?>
             </code></p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Rest link in Header' , 'my-wp' ); ?></th>
+          <th><?php _e( 'Hide Rest link' , 'my-wp' ); ?></th>
           <td>
             <label>
-              <input type="checkbox" name="mywp[data][hide_rest_link_header]" class="hide_rest_link_header" value="1" <?php checked( $setting_data['hide_rest_link_header'] , true ); ?> />
+              <input type="checkbox" name="mywp[data][hide_rest_link]" class="hide_rest_link" value="1" <?php checked( $setting_data['hide_rest_link'] , true ); ?> />
               <?php _e( 'Hide' ); ?>
             </label>
             <p><code>
               <?php if( ! empty( $api_root ) ) : ?>
-                <?php echo esc_html( 'Link: <' . esc_url_raw( $api_root ) . '>; rel="https://api.w.org/"' ); ?>
+                <?php echo esc_html( '<link rel="https://api.w.org/" href="' . esc_url_raw( $api_root ) . '" />' ); ?>
               <?php endif; ?>
             </code></p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Shortlink in Header' , 'my-wp' ); ?></th>
+          <th><?php _e( 'Hide Shortlink' , 'my-wp' ); ?></th>
           <td>
             <label>
-              <input type="checkbox" name="mywp[data][hide_shortlink_header]" class="hide_shortlink_header" value="1" <?php checked( $setting_data['hide_shortlink_header'] , true ); ?> />
+              <input type="checkbox" name="mywp[data][hide_shortlink]" class="hide_shortlink" value="1" <?php checked( $setting_data['hide_shortlink'] , true ); ?> />
               <?php _e( 'Hide' ); ?>
             </label>
             <p><code>
               <?php if( ! empty( $api_root ) ) : ?>
-                <?php echo esc_html( 'Link: <' . home_url( '/' ) . '>?p=***; rel=shortlink' ); ?>
+                <?php echo esc_html( '<link rel="shortlink" href="' . home_url( '/' ) . '" />' ); ?>
               <?php endif; ?>
             </code></p>
           </td>
@@ -256,6 +291,18 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
 
     }
 
+    if( ! empty( $formatted_data['hide_rest_link_header'] ) ) {
+
+      $new_formatted_data['hide_rest_link_header'] = true;
+
+    }
+
+    if( ! empty( $formatted_data['hide_shortlink_header'] ) ) {
+
+      $new_formatted_data['hide_shortlink_header'] = true;
+
+    }
+
     if( ! empty( $formatted_data['hide_wp_generator'] ) ) {
 
       $new_formatted_data['hide_wp_generator'] = true;
@@ -286,15 +333,15 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
 
     }
 
-    if( ! empty( $formatted_data['hide_rest_link_header'] ) ) {
+    if( ! empty( $formatted_data['hide_rest_link'] ) ) {
 
-      $new_formatted_data['hide_rest_link_header'] = true;
+      $new_formatted_data['hide_rest_link'] = true;
 
     }
 
-    if( ! empty( $formatted_data['hide_shortlink_header'] ) ) {
+    if( ! empty( $formatted_data['hide_shortlink'] ) ) {
 
-      $new_formatted_data['hide_shortlink_header'] = true;
+      $new_formatted_data['hide_shortlink'] = true;
 
     }
 

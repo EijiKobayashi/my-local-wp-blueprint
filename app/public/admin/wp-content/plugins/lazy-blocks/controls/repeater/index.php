@@ -26,7 +26,6 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
             'as_child'          => false,
             'default_settings'  => false,
             'required_settings' => false,
-            'help_settings'     => false,
         );
         $this->attributes   = array(
             'rows_min'              => '',
@@ -51,9 +50,9 @@ class LazyBlocks_Control_Repeater extends LazyBlocks_Control {
     public function register_assets() {
         wp_register_script(
             'lazyblocks-control-repeater',
-            lazyblocks()->plugin_url() . 'controls/repeater/script.min.js',
+            lazyblocks()->plugin_url() . 'dist/controls/repeater/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
-            '2.5.3',
+            LAZY_BLOCKS_VERSION,
             true
         );
     }

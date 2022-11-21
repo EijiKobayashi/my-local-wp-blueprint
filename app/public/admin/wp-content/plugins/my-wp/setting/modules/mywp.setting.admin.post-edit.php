@@ -93,11 +93,19 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     }
 
+    $block_editor_panels_setting_data = array();
+
     add_filter( 'use_block_editor_for_post_type' , array( 'MywpControllerModuleAdminPostEdit' , 'change_editor' ) );
 
     if( function_exists( 'use_block_editor_for_post_type' ) ) {
 
       self::$is_use_block_editor = use_block_editor_for_post_type( $current_setting_post_type_id );
+
+      if( ! empty( $setting_data['use_classic_editor'] ) ) {
+
+        self::$is_use_block_editor = false;
+
+      }
 
     } else {
 
@@ -105,9 +113,9 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     }
 
-    if( self::$is_use_block_editor ) {
+    MywpSettingBlockEditor::set_is_use_block_editor( self::$is_use_block_editor );
 
-      $block_editor_panels_setting_data = array();
+    if( self::$is_use_block_editor ) {
 
       if( ! empty( $setting_data['block_editor_panels'] ) ) {
 
@@ -118,33 +126,64 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
       MywpSettingBlockEditor::set_current_block_editor_screen_id( $current_setting_post_type_id );
       MywpSettingBlockEditor::set_current_block_editor_panels_setting_data( $block_editor_panels_setting_data );
 
-      printf( '<h3 class="mywp-setting-screen-subtitle">%s</h3>' , __( 'Management of Document panels (block editor)' , 'my-wp' ) );
+    }
 
-      MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-management-block-editor-panels.php' );
+    $meta_boxes_setting_data = array();
 
-    } else {
+    if( ! empty( $setting_data['meta_boxes'] ) ) {
 
-      $meta_boxes_setting_data = array();
-
-      if( ! empty( $setting_data['meta_boxes'] ) ) {
-
-        $meta_boxes_setting_data = $setting_data['meta_boxes'];
-
-      }
-
-      $one_post_link = MywpSettingPostType::get_one_post_link_edit( $current_setting_post_type_id );
-
-      MywpSettingMetaBox::set_current_meta_box_screen_id( $current_setting_post_type_id );
-      MywpSettingMetaBox::set_current_meta_box_screen_url( $one_post_link );
-      MywpSettingMetaBox::set_current_meta_box_setting_data( $meta_boxes_setting_data );
-
-      printf( '<h3 class="mywp-setting-screen-subtitle">%s</h3>' , __( 'Management of meta boxes' , 'my-wp' ) );
-
-      MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-management-meta-boxes.php' );
+      $meta_boxes_setting_data = $setting_data['meta_boxes'];
 
     }
 
-    echo '<p>&nbsp;</p>';
+    $one_post_link = MywpSettingPostType::get_one_post_link_edit( $current_setting_post_type_id );
+
+    MywpSettingMetaBox::set_current_meta_box_screen_id( $current_setting_post_type_id );
+    MywpSettingMetaBox::set_current_meta_box_screen_url( $one_post_link );
+    MywpSettingMetaBox::set_current_meta_box_setting_data( $meta_boxes_setting_data );
+
+    ?>
+
+    <?php if( function_exists( 'use_block_editor_for_post_type' ) ) : ?>
+
+      <h3 class="mywp-setting-screen-subtitle"><?php _e( 'For Block/Classic Editor' , 'my-wp' ); ?></h3>
+      <table class="form-table">
+        <tbody>
+          <tr>
+            <th><?php _e( 'Change the Editor' , 'my-wp' ); ?></th>
+            <td>
+              <label>
+                <input type="checkbox" name="mywp[data][use_classic_editor]" class="use_classic_editor" value="1" <?php checked( $setting_data['use_classic_editor'] , true ); ?> />
+                <?php _e( 'Use Classic Editor' , 'my-wp' ); ?>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>&nbsp;</p>
+
+      <p>&nbsp;</p>
+
+    <?php endif; ?>
+
+    <?php if( self::$is_use_block_editor ) : ?>
+
+      <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Management of Document panels (block editor)' , 'my-wp' ); ?></h3>
+
+      <?php MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-management-block-editor-panels.php' ); ?>
+
+      <p>&nbsp;</p>
+
+    <?php endif; ?>
+
+    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Management of meta boxes' , 'my-wp' ); ?></h3>
+
+    <?php MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-management-meta-boxes.php' ); ?>
+
+    <p>&nbsp;</p>
+
+    <?php
 
   }
 
@@ -191,31 +230,12 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     <?php endif; ?>
 
-    <?php if( function_exists( 'use_block_editor_for_post_type' ) ) : ?>
+    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
 
-      <h3 class="mywp-setting-screen-subtitle"><?php _e( 'For Block/Classic Editor' , 'my-wp' ); ?></h3>
-      <table class="form-table">
-        <tbody>
-          <tr>
-            <th><?php _e( 'Change the Editor' , 'my-wp' ); ?></th>
-            <td>
-              <label>
-                <input type="checkbox" name="mywp[data][use_classic_editor]" class="use_classic_editor" value="1" <?php checked( $setting_data['use_classic_editor'] , true ); ?> />
-                <?php _e( 'Use Classic Editor' , 'my-wp' ); ?>
-              </label>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <table class="form-table">
+      <tbody>
+        <?php if( self::$is_use_block_editor ) : ?>
 
-      <p>&nbsp;</p>
-
-    <?php endif; ?>
-
-    <?php if( self::$is_use_block_editor ) : ?>
-
-      <table class="form-table">
-        <tbody>
           <tr>
             <th><?php _e( 'Top left button' , 'my-wp' ); ?></th>
             <td>
@@ -225,18 +245,11 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
               </label>
             </td>
           </tr>
-        </tbody>
-      </table>
 
-      <p>&nbsp;<p>
+        <?php endif; ?>
 
-    <?php endif; ?>
+        <?php if( ! self::$is_use_block_editor ) : ?>
 
-    <?php if( ! self::$is_use_block_editor ) : ?>
-
-      <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
-      <table class="form-table">
-        <tbody>
           <tr>
             <th><?php echo _x( 'Add New' , 'post' ); ?></th>
             <td>
@@ -255,14 +268,20 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
               </label>
             </td>
           </tr>
-          <tr>
-            <th><?php _e( 'Change title placeholder' , 'my-wp' ); ?></th>
-            <td>
-              <label>
-                <input type="text" name="mywp[data][change_title_placeholder]" class="change_title_placeholder large-text" value="<?php echo esc_attr( $setting_data['change_title_placeholder'] ); ?>" placeholder="<?php echo esc_attr( __( 'Add title' ) ); ?>" />
-              </label>
-            </td>
-          </tr>
+
+        <?php endif; ?>
+
+        <tr>
+          <th><?php _e( 'Change title placeholder' , 'my-wp' ); ?></th>
+          <td>
+            <label>
+              <input type="text" name="mywp[data][change_title_placeholder]" class="change_title_placeholder large-text" value="<?php echo esc_attr( $setting_data['change_title_placeholder'] ); ?>" placeholder="<?php echo esc_attr( __( 'Add title' ) ); ?>" />
+            </label>
+          </td>
+        </tr>
+
+        <?php if( ! self::$is_use_block_editor ) : ?>
+
           <tr>
             <th><?php _e( 'Change Post title to Post ID' , 'my-wp' ); ?></th>
             <td>
@@ -282,7 +301,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
             </td>
           </tr>
           <tr>
-            <th><?php _e( 'Change Permalinks' ); ?></th>
+            <th><?php _e( 'Change Permalink Structure' ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_change_permalink]" class="hide_change_permalink" value="1" <?php checked( $setting_data['hide_change_permalink'] , true ); ?> />
@@ -299,15 +318,21 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
               </label>
             </td>
           </tr>
-          <tr>
-            <th><?php _e( 'Re-arrange meta boxes' , 'my-wp' ); ?></th>
-            <td>
-              <label>
-                <input type="checkbox" name="mywp[data][prevent_meta_box]" class="prevent_meta_box" value="1" <?php checked( $setting_data['prevent_meta_box'] , true ); ?> />
-                <?php _e( 'Prevent' , 'my-wp' ); ?>
-              </label>
-            </td>
-          </tr>
+
+        <?php endif; ?>
+
+        <tr>
+          <th><?php _e( 'Re-arrange meta boxes' , 'my-wp' ); ?></th>
+          <td>
+            <label>
+              <input type="checkbox" name="mywp[data][prevent_meta_box]" class="prevent_meta_box" value="1" <?php checked( $setting_data['prevent_meta_box'] , true ); ?> />
+              <?php _e( 'Prevent' , 'my-wp' ); ?>
+            </label>
+          </td>
+        </tr>
+
+        <?php if( ! self::$is_use_block_editor ) : ?>
+
           <tr>
             <th><?php _e( 'Forced Editor' , 'my-wp' ); ?></th>
             <td>
@@ -318,12 +343,12 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
               </select>
             </td>
           </tr>
-        </tbody>
-      </table>
 
-      <p>&nbsp;</p>
+        <?php endif; ?>
+      </tbody>
+    </table>
 
-    <?php endif; ?>
+    <p>&nbsp;</p>
 
     <?php
 

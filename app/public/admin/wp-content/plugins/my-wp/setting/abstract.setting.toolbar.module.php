@@ -26,6 +26,8 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
     add_filter( 'mywp_setting_' . static::$id . '_print_item_content_show_child_items_content' , array( $class , 'mywp_setting_print_item_content_show_child_items_content' ) , 10 , 3 );
 
+    add_action( 'mywp_setting_' . static::$id . '_print_item_class' , array( $class , 'mywp_setting_print_item_class' ) , 10 , 2 );
+
     add_action( 'mywp_setting_' . static::$id . '_print_item_content' , array( $class , 'mywp_setting_print_item_content' ) , 10 );
 
     static::custom_after_init();
@@ -102,11 +104,17 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
   }
 
-  public static function mywp_setting_print_item_content( $item ) {
+  public static function mywp_setting_print_item_class( $item_class , $item ) {
 
     if( empty( $item ) ) {
 
-      return false;
+      return $item_class;
+
+    }
+
+    if( empty( $item->item_default_id ) ) {
+
+      return $item_class;
 
     }
 
@@ -114,7 +122,9 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
       if( in_array( $item->item_default_id , array( 'my-sites' , 'network-admin' ) ) ) {
 
-        printf( '<p class="item-content-notice">%s</p>' , __( 'This menu item is Dynamic submenus content' , 'my-wp' ) );
+        $item_class = 'dynamic-submenu';
+
+        return $item_class;
 
       }
 
@@ -122,7 +132,20 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
     if( in_array( $item->item_default_id , array( 'new-content' ) ) ) {
 
-      printf( '<p class="item-content-notice">%s</p>' , __( 'This menu item is Dynamic submenus content' , 'my-wp' ) );
+      $item_class = 'dynamic-submenu';
+
+    }
+
+    return $item_class;
+
+  }
+
+
+  public static function mywp_setting_print_item_content( $item ) {
+
+    if( empty( $item ) ) {
+
+      return false;
 
     }
 
@@ -637,6 +660,17 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
     #setting-screen-toolbar-items .setting-screen-toolbar-item.active > .item-header .item-active-toggle:before {
       content: "\f142";
     }
+    #setting-screen-toolbar-items .setting-screen-toolbar-item .item-header .dashicons-networking {
+      float: right;
+      color: #c00;
+      margin: 9px 12px 0 auto;
+      transform:  rotate( 270deg );
+      opacity: 0.5;
+      display: none;
+    }
+    #setting-screen-toolbar-items .setting-screen-toolbar-item.dynamic-submenu .item-header .dashicons-networking {
+      display: inline-block;
+    }
     #setting-screen-toolbar-items .setting-screen-toolbar-item .item-header .item-title-wrap {
       margin-left: 10px;
     }
@@ -743,6 +777,16 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
     }
     #setting-screen-toolbar-items .setting-screen-toolbar-item .item-content .item-remove {
       margin: 0 0 6px 0;
+    }
+    #setting-screen-toolbar-items .setting-screen-toolbar-item .item-content .item-content-notice-dynamic-submenu {
+      background: rgba(255, 0, 0, 0.1);
+      padding: 8px 12px;
+      text-align: center;
+      color: #c00;
+      display: none;
+    }
+    #setting-screen-toolbar-items .setting-screen-toolbar-item.dynamic-submenu .item-content .item-content-notice-dynamic-submenu {
+      display: block;
     }
     #setting-screen-toolbar-items .setting-screen-toolbar-item .item-content .child-menu-title {
       font-weight: 400;
@@ -2155,9 +2199,11 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
     }
 
+    $item_class = apply_filters( 'mywp_setting_' . static::$id . '_print_item_class' , '' , $item , $find_parent );
+
     ?>
 
-    <div class="setting-screen-toolbar-item item-id-<?php echo esc_attr( $item->ID ); ?>">
+    <div class="setting-screen-toolbar-item item-id-<?php echo esc_attr( $item->ID ); ?> <?php echo esc_attr( $item_class ); ?>">
 
       <?php static::print_item_header( $item ); ?>
 
@@ -2192,6 +2238,8 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
     <div class="item-header">
 
       <a href="javascript:void(0);" class="item-active-toggle">&nbsp;</a>
+
+      <span class="dashicons dashicons-networking"></span>
 
       <div class="item-title-wrap">
 
@@ -2591,6 +2639,8 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
         <span class="spinner"></span>
 
       </div>
+
+      <p class="item-content-notice-dynamic-submenu"><?php _e( 'This menu item is dynamic submenus content and can not have a submenu.' , 'my-wp' ); ?></p>
 
       <?php $show_child_items_content = apply_filters( 'mywp_setting_' . static::$id . '_print_item_content_show_child_items_content' , true , $item , $item_type ); ?>
 
