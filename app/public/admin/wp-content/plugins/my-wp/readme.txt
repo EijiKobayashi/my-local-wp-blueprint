@@ -2,18 +2,16 @@
 Contributors: gqevu6bsiz
 Tags: mywp, admin, backend, frontend, customize, dashboard, debug, white label, sidebar, admin sidebar, toolbar, admin toolbar, frontend toolbar, metabox, posts, edit-post, uploads, users, user-edit, profile, comments
 Requires at least: 4.7
-Tested up to: 6.0
-Stable tag: 1.20.0
+Tested up to: 6.1
+Stable tag: 1.20.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Simply and easy-to-use the customize for Admin and Frontend.
-
-The demo site is here(TasteWP.com): [https://tastewp.com/new/?pre-installed-plugin-slug=my-wp](https://tastewp.com/new/?pre-installed-plugin-slug=my-wp)
-
 == Description ==
 
-A lot of custom filters and actions, and included the developer tools.
+Simply and easy-to-use the customize for Admin and Frontend. A lot of custom filters and actions, and included the developer tools.
+
+The demo site is here: [https://tastewp.com/new/?pre-installed-plugin-slug=my-wp](https://tastewp.com/new/?pre-installed-plugin-slug=my-wp)
 
 = Easy setting screen =
 Easily customize based on check boxes and text boxes.
@@ -47,6 +45,12 @@ You will speed up to your site creation. Debug on current post, Debug on current
 10. Developer panel on footer.
 
 == Changelog ==
+
+= 1.20.1 2022-11-14 =
+* Added: Hide rest api link and shortlink on HTML meta of Frontend.
+* Updated: Customize post edit when using the block editor.
+* Fixed: Customize the admin toolbar when the user does not have blogs.
+* Fixed: Sortable request when multiple orderby requests on Posts.
 
 = 1.20.0 2022-05-30 =
 * Added: Customize columns on terms.

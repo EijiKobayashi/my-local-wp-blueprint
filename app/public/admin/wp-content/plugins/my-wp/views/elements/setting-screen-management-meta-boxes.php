@@ -32,6 +32,26 @@ $current_meta_boxes = MywpSettingMetaBox::get_current_meta_boxes();
 
 $current_meta_box_setting_data = MywpSettingMetaBox::get_current_meta_box_setting_data();
 
+$is_use_block_editor = MywpSettingBlockEditor::get_is_use_block_editor();
+
+if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
+
+  foreach( $current_meta_boxes as $meta_box_id => $meta_box ) {
+
+    if( $is_use_block_editor && ! empty( $meta_box['args'] ) ) {
+
+      if( ! empty( $meta_box['args']['__back_compat_meta_box'] ) && empty( $meta_box['args']['__block_editor_compatible_meta_box'] ) ) {
+
+        unset( $current_meta_boxes[ $meta_box_id ] );
+
+      }
+
+    }
+
+  }
+
+}
+
 ?>
 
 <div id="setting-screen-management-meta-boxes">
@@ -47,13 +67,23 @@ $current_meta_box_setting_data = MywpSettingMetaBox::get_current_meta_box_settin
 
   <?php if( empty( $current_meta_boxes ) ) : ?>
 
-    <p class="mywp-error-message">
+    <p class="">
 
-      <span class="dashicons dashicons-warning"></span>
-
-      <?php printf( __( '%1$s: %2$s is not found. Please refresh the Columns.' , 'my-wp' ) , __( 'Error' , 'my-wp' ) , __( 'Meta boxes' , 'my-wp' ) ); ?>
+      <?php printf( __( '%s is not found.' , 'my-wp' ) , __( 'Meta boxes' , 'my-wp' ) ); ?>
 
     </p>
+
+    <?php if( ! $is_use_block_editor ) : ?>
+
+      <p class="mywp-error-message">
+
+        <span class="dashicons dashicons-warning"></span>
+
+        <?php _e( 'Please refresh the Columns.' , 'my-wp' ); ?>
+
+      </p>
+
+    <?php endif; ?>
 
   <?php else : ?>
 

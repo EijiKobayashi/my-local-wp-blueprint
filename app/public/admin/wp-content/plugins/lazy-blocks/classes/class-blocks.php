@@ -63,7 +63,9 @@ class LazyBlocks_Blocks {
 
         add_action( 'init', array( $this, 'remove_custom_fields_support' ), 150 );
 
-        add_filter( 'allowed_block_types_all', array( $this, 'allowed_block_types_all' ), 10, 2 );
+        // It is important to have priority higher than 10 to prevent possible conflicts.
+        // https://github.com/nk-crew/lazy-blocks/issues/247 .
+        add_filter( 'allowed_block_types_all', array( $this, 'allowed_block_types_all' ), 100, 2 );
 
         // custom post roles.
         add_action( 'admin_init', array( $this, 'add_role_caps' ) );
@@ -76,12 +78,17 @@ class LazyBlocks_Blocks {
         add_filter( 'manage_lazyblocks_posts_columns', array( $this, 'manage_posts_columns' ) );
         add_filter( 'manage_lazyblocks_posts_custom_column', array( $this, 'manage_posts_custom_column' ), 10, 2 );
 
+        // sanitize block configs.
+        add_filter( 'lzb/get_blocks', array( $this, 'sanitize_block_configs' ), 100 );
+
         // add gutenberg blocks assets.
         if ( function_exists( 'register_block_type' ) ) {
             // add custom block categories.
             add_filter( 'block_categories_all', array( $this, 'block_categories_all' ), 100 );
 
-            add_action( 'enqueue_block_editor_assets', array( $this, 'register_block' ) );
+            // It is important to have priority higher than 10 to allow users register
+            // custom blocks using standard `init` hook.
+            add_action( 'init', array( $this, 'register_block' ), 20 );
             add_action( 'init', array( $this, 'register_block_render' ), 20 );
         }
     }
@@ -90,7 +97,7 @@ class LazyBlocks_Blocks {
      * Handlebars php.
      */
     public function prepare_handlebars() {
-        require_once lazyblocks()->plugin_path() . 'vendor/Handlebars/Autoloader.php';
+        require_once lazyblocks()->plugin_path() . 'vendors/Handlebars/Autoloader.php';
 
         Handlebars\Autoloader::register();
 
@@ -298,7 +305,6 @@ class LazyBlocks_Blocks {
 
         // custom action for extending default helpers by 3rd-party.
         do_action( 'lzb/handlebars/object', $this->handlebars );
-        do_action( 'lzb_handlebars_object', $this->handlebars );
     }
 
     /**
@@ -538,11 +544,15 @@ class LazyBlocks_Blocks {
             $icon      = $this->get_meta_value_by_id( 'lazyblocks_icon' );
             $admin_url = get_edit_post_link( $post->ID );
 
+            echo '<a class="lzb-admin-block-icon" href="' . esc_url( $admin_url ) . '">';
+
             if ( $icon && strpos( $icon, 'dashicons' ) === 0 ) {
-                echo '<a class="lzb-admin-block-icon" href="' . esc_url( $admin_url ) . '"><span class="dashicons ' . esc_attr( $icon ) . '"></span></a>';
+                echo '<span class="dashicons ' . esc_attr( $icon ) . '"></span>';
             } elseif ( $icon ) {
-                echo '<a class="lzb-admin-block-icon" href="' . esc_url( $admin_url ) . '">' . wp_kses( $icon, $this->kses_svg ) . '</a>';
+                echo wp_kses( $icon, $this->kses_svg );
             }
+
+            echo '</a>';
         }
 
         if ( 'lazyblocks_post_category' === $column_name ) {
@@ -568,16 +578,16 @@ class LazyBlocks_Blocks {
 
         if ( 'lazyblocks_post_description' === $column_name ) {
             $description = $this->get_meta_value_by_id( 'lazyblocks_description' );
-            echo esc_html( $description );
+            echo wp_kses_post( $description );
         }
     }
 
     /**
-     * Default values of controls.
+     * Default block data.
      *
      * @var array
      */
-    private $defaults = array(
+    private $block_defaults = array(
         'lazyblocks_controls'                        => array(),
 
         'lazyblocks_slug'                            => '',
@@ -615,6 +625,15 @@ class LazyBlocks_Blocks {
     );
 
     /**
+     * Return default constructor block data.
+     *
+     * @return array
+     */
+    private function get_block_defaults() {
+        return apply_filters( 'lzb/block_defaults', $this->block_defaults );
+    }
+
+    /**
      * Get metabox value by name.
      *
      * @param string $name - meta name.
@@ -623,9 +642,11 @@ class LazyBlocks_Blocks {
      * @return mixed
      */
     private function get_meta_value( $name, $result ) {
-        $default = null;
-        if ( isset( $this->defaults[ $name ] ) ) {
-            $default = $this->defaults[ $name ];
+        $defaults = $this->get_block_defaults();
+        $default  = null;
+
+        if ( isset( $defaults[ $name ] ) ) {
+            $default = $defaults[ $name ];
         }
 
         if ( '' === $result && null !== $default ) {
@@ -687,28 +708,14 @@ class LazyBlocks_Blocks {
     }
 
     /**
-     * Recursive sanitation for an array
-     * Thanks: https://wordpress.stackexchange.com/questions/24736/wordpress-sanitize-array/26465
+     * Returns true if the current user is allowed to save unfiltered HTML.
      *
-     * @param array $array - array for sanitize.
-     * @param array $textarea_items - sanitize as textarea fields by name.
-     *
-     * @return array
+     * @return bool
      */
-    private function sanitize_array( $array, $textarea_items = array() ) {
-        foreach ( $array as $key => &$value ) {
-            if ( is_array( $value ) ) {
-                $value = $this->sanitize_array( $value, $textarea_items );
-            } else {
-                if ( in_array( $key, $textarea_items, true ) ) {
-                    $value = sanitize_textarea_field( $value );
-                } else {
-                    $value = sanitize_text_field( $value );
-                }
-            }
-        }
+    public function is_allowed_unfiltered_html() {
+        $allow_unfiltered_html = current_user_can( 'unfiltered_html' );
 
-        return $array;
+        return apply_filters( 'lzb/allow_unfiltered_html', $allow_unfiltered_html );
     }
 
     /**
@@ -718,7 +725,9 @@ class LazyBlocks_Blocks {
      * @param array $data Metaboxes data for save.
      */
     public function save_meta_boxes( $post_id, $data ) {
-        foreach ( $this->defaults as $meta => $default ) {
+        $defaults = $this->get_block_defaults();
+
+        foreach ( $defaults as $meta => $default ) {
             $new_meta_value = '';
 
             if ( isset( $data[ $meta ] ) ) {
@@ -735,18 +744,13 @@ class LazyBlocks_Blocks {
                     'lazyblocks_code_frontend_html' === $meta ||
                     'lazyblocks_code_frontend_css' === $meta
                 ) {
-                    // phpcs:ignore
                     $new_meta_value = wp_slash( $data[ $meta ] );
                 } else {
-                    // Get the posted data and sanitize it for use as an HTML class.
-                    if ( is_array( $data[ $meta ] ) ) {
-                        $block_data_array_textarea = array( 'choices', 'help' );
-                        $block_data_array_textarea = apply_filters( 'lzb/block_save/array_attributes/textarea_items', $block_data_array_textarea, $data[ $meta ], $meta );
+                    $new_meta_value = wp_slash( $data[ $meta ] );
 
-                        // phpcs:ignore
-                        $new_meta_value = $this->sanitize_array( wp_slash( $data[ $meta ] ), $block_data_array_textarea );
-                    } else {
-                        $new_meta_value = sanitize_text_field( wp_slash( $data[ $meta ] ) );
+                    // Filter $_POST data for users without the 'unfiltered_html' capability.
+                    if ( ! $this->is_allowed_unfiltered_html() ) {
+                        $new_meta_value = wp_kses_post_deep( $new_meta_value );
                     }
                 }
             }
@@ -803,9 +807,10 @@ class LazyBlocks_Blocks {
      * @return array|null
      */
     public function get_meta_boxes( $post_id ) {
+        $defaults    = $this->get_block_defaults();
         $result_meta = array();
 
-        foreach ( $this->defaults as $meta => $default ) {
+        foreach ( $defaults as $meta => $default ) {
             $result_meta[ $meta ] = $this->get_meta_value_by_id( $meta, $post_id );
         }
 
@@ -837,6 +842,29 @@ class LazyBlocks_Blocks {
         }
 
         $this->user_blocks[] = apply_filters( 'lzb/add_user_block', $data );
+    }
+
+    /**
+     * Prepare block controls by adding defaults.
+     *
+     * @param array $controls - block controls.
+     * @param array $all_controls - all registered controls.
+     *
+     * @return array
+     */
+    public function prepare_block_controls( $controls, $all_controls ) {
+        $result = array();
+
+        foreach ( (array) $controls as $k => $control ) {
+            if ( isset( $control['type'] ) && isset( $all_controls[ $control['type'] ] ) && isset( $all_controls[ $control['type'] ]['attributes'] ) ) {
+                $result[ $k ] = array_merge(
+                    $all_controls[ $control['type'] ]['attributes'],
+                    $control
+                );
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -888,17 +916,8 @@ class LazyBlocks_Blocks {
             $keywords = array();
         }
 
-        $controls = $get_meta_value( 'lazyblocks_controls' );
-
         // prepare default control data.
-        foreach ( $controls as $k => $control ) {
-            if ( isset( $control['type'] ) && isset( $all_controls[ $control['type'] ] ) && isset( $all_controls[ $control['type'] ]['attributes'] ) ) {
-                $controls[ $k ] = array_merge(
-                    $all_controls[ $control['type'] ]['attributes'],
-                    $control
-                );
-            }
-        }
+        $controls = $this->prepare_block_controls( $get_meta_value( 'lazyblocks_controls' ), $all_controls );
 
         $align          = (array) $get_meta_value( 'lazyblocks_supports_align' );
         $align_none_key = array_search( 'none', $align, true );
@@ -907,46 +926,50 @@ class LazyBlocks_Blocks {
             unset( $align[ $align_none_key ] );
         }
 
-        return array(
-            'id'             => $id,
-            'title'          => $post_title,
-            'icon'           => $icon,
-            'keywords'       => $keywords,
-            'slug'           => 'lazyblock/' . esc_html( $get_meta_value( 'lazyblocks_slug' ) ),
-            'description'    => esc_html( $get_meta_value( 'lazyblocks_description' ) ),
-            'category'       => $this->sanitize_slug( esc_html( $get_meta_value( 'lazyblocks_category' ) ) ),
-            'category_label' => esc_html( $get_meta_value( 'lazyblocks_category' ) ),
-            'supports'       => array(
-                'customClassName' => $get_meta_value( 'lazyblocks_supports_classname' ),
-                'anchor'          => $get_meta_value( 'lazyblocks_supports_anchor' ),
-                'align'           => $align,
-                'html'            => $get_meta_value( 'lazyblocks_supports_html' ),
-                'multiple'        => $get_meta_value( 'lazyblocks_supports_multiple' ),
-                'inserter'        => $get_meta_value( 'lazyblocks_supports_inserter' ),
-            ),
-            'ghostkit'       => array(
-                'supports' => array(
-                    'spacings'     => $get_meta_value( 'lazyblocks_supports_ghostkit_spacings' ),
-                    'display'      => $get_meta_value( 'lazyblocks_supports_ghostkit_display' ),
-                    'scrollReveal' => $get_meta_value( 'lazyblocks_supports_ghostkit_scroll_reveal' ),
-                    'frame'        => $get_meta_value( 'lazyblocks_supports_ghostkit_frame' ),
-                    'customCSS'    => $get_meta_value( 'lazyblocks_supports_ghostkit_custom_css' ),
+        return apply_filters(
+            'lzb/block_data',
+            array(
+                'id'             => $id,
+                'title'          => $post_title,
+                'icon'           => $icon,
+                'keywords'       => $keywords,
+                'slug'           => 'lazyblock/' . esc_html( $get_meta_value( 'lazyblocks_slug' ) ),
+                'description'    => $get_meta_value( 'lazyblocks_description' ),
+                'category'       => $this->sanitize_slug( esc_html( $get_meta_value( 'lazyblocks_category' ) ) ),
+                'category_label' => esc_html( $get_meta_value( 'lazyblocks_category' ) ),
+                'supports'       => array(
+                    'customClassName' => $get_meta_value( 'lazyblocks_supports_classname' ),
+                    'anchor'          => $get_meta_value( 'lazyblocks_supports_anchor' ),
+                    'align'           => $align,
+                    'html'            => $get_meta_value( 'lazyblocks_supports_html' ),
+                    'multiple'        => $get_meta_value( 'lazyblocks_supports_multiple' ),
+                    'inserter'        => $get_meta_value( 'lazyblocks_supports_inserter' ),
                 ),
+                'ghostkit'       => array(
+                    'supports' => array(
+                        'spacings'     => $get_meta_value( 'lazyblocks_supports_ghostkit_spacings' ),
+                        'display'      => $get_meta_value( 'lazyblocks_supports_ghostkit_display' ),
+                        'scrollReveal' => $get_meta_value( 'lazyblocks_supports_ghostkit_scroll_reveal' ),
+                        'frame'        => $get_meta_value( 'lazyblocks_supports_ghostkit_frame' ),
+                        'customCSS'    => $get_meta_value( 'lazyblocks_supports_ghostkit_custom_css' ),
+                    ),
+                ),
+                'controls'       => $controls,
+                'code'           => array(
+                    'output_method'     => $get_meta_value( 'lazyblocks_code_output_method' ),
+                    'editor_html'       => $get_meta_value( 'lazyblocks_code_editor_html' ),
+                    'editor_callback'   => '',
+                    'editor_css'        => $get_meta_value( 'lazyblocks_code_editor_css' ),
+                    'frontend_html'     => $get_meta_value( 'lazyblocks_code_frontend_html' ),
+                    'frontend_callback' => '',
+                    'frontend_css'      => $get_meta_value( 'lazyblocks_code_frontend_css' ),
+                    'show_preview'      => $get_meta_value( 'lazyblocks_code_show_preview' ),
+                    'single_output'     => $get_meta_value( 'lazyblocks_code_single_output' ),
+                ),
+                'condition'      => $get_meta_value( 'lazyblocks_condition_post_types' ) ? $get_meta_value( 'lazyblocks_condition_post_types' ) : array(),
+                'edit_url'       => get_edit_post_link( $id ),
             ),
-            'controls'       => $controls,
-            'code'           => array(
-                'output_method'     => $get_meta_value( 'lazyblocks_code_output_method' ),
-                'editor_html'       => $get_meta_value( 'lazyblocks_code_editor_html' ),
-                'editor_callback'   => '',
-                'editor_css'        => $get_meta_value( 'lazyblocks_code_editor_css' ),
-                'frontend_html'     => $get_meta_value( 'lazyblocks_code_frontend_html' ),
-                'frontend_callback' => '',
-                'frontend_css'      => $get_meta_value( 'lazyblocks_code_frontend_css' ),
-                'show_preview'      => $get_meta_value( 'lazyblocks_code_show_preview' ),
-                'single_output'     => $get_meta_value( 'lazyblocks_code_single_output' ),
-            ),
-            'condition'      => $get_meta_value( 'lazyblocks_condition_post_types' ) ? $get_meta_value( 'lazyblocks_condition_post_types' ) : array(),
-            'edit_url'       => get_edit_post_link( $id ),
+            $get_meta_value
         );
     }
 
@@ -986,7 +1009,14 @@ class LazyBlocks_Blocks {
         $result = $this->blocks;
 
         if ( ! $db_only && $this->user_blocks ) {
-            $result = array_merge( $result, $this->user_blocks );
+            $all_user_blocks = $this->user_blocks;
+            $all_controls    = lazyblocks()->controls()->get_controls();
+
+            foreach ( $all_user_blocks as $block ) {
+                $block['controls'] = $this->prepare_block_controls( $block['controls'], $all_controls );
+
+                $result[] = $block;
+            }
         }
 
         // unique only.
@@ -1001,10 +1031,10 @@ class LazyBlocks_Blocks {
                 }
             }
 
-            return $unique_result;
+            return apply_filters( 'lzb/get_blocks', $unique_result );
         }
 
-        return $result;
+        return apply_filters( 'lzb/get_blocks', $result );
     }
 
     /**
@@ -1062,6 +1092,60 @@ class LazyBlocks_Blocks {
     }
 
     /**
+     * Sanitize block configs.
+     *
+     * @param array $blocks - block list.
+     *
+     * @return array
+     */
+    public function sanitize_block_configs( $blocks ) {
+        if ( empty( $blocks ) ) {
+            return $blocks;
+        }
+
+        $sanitize_block_data = apply_filters(
+            'lzb/sanitize_block_data',
+            array(
+                'title',
+                'description',
+                'category',
+                'category_label',
+            )
+        );
+
+        $sanitize_control_data = apply_filters(
+            'lzb/sanitize_block_control_data',
+            array(
+                'label',
+                'help',
+                'rows_label',
+                'rows_add_button_label',
+                'placeholder',
+            )
+        );
+
+        foreach ( $blocks as &$block ) {
+            foreach ( $sanitize_block_data as $name ) {
+                if ( ! empty( $block[ $name ] ) ) {
+                    $block[ $name ] = wp_kses_post( $block[ $name ] );
+                }
+            }
+
+            if ( ! empty( $block['controls'] ) ) {
+                foreach ( $block['controls'] as &$control_data ) {
+                    foreach ( $sanitize_control_data as $name ) {
+                        if ( ! empty( $control_data[ $name ] ) ) {
+                            $control_data[ $name ] = wp_kses_post( $control_data[ $name ] );
+                        }
+                    }
+                }
+            }
+        }
+
+        return $blocks;
+    }
+
+    /**
      * Register custom categories for blocks
      *
      * @param array $categories - available categories.
@@ -1102,35 +1186,26 @@ class LazyBlocks_Blocks {
      * Add Gutenberg block assets.
      */
     public function register_block() {
-        global $post_type;
-
         $blocks = $this->get_blocks();
 
-        // enqueue block css.
-        wp_enqueue_style(
-            'lazyblocks-gutenberg',
-            lazyblocks()->plugin_url() . 'assets/css/style.min.css',
-            array(),
-            '2.5.3'
-        );
-        wp_style_add_data( 'lazyblocks-gutenberg', 'rtl', 'replace' );
-        wp_style_add_data( 'lazyblocks-gutenberg', 'suffix', '.min' );
+        wp_register_style( 'lazyblocks-editor', lazyblocks()->plugin_url() . 'dist/assets/editor/style.min.css', array(), LAZY_BLOCKS_VERSION );
+        wp_style_add_data( 'lazyblocks-editor', 'rtl', 'replace' );
+        wp_style_add_data( 'lazyblocks-editor', 'suffix', '.min' );
 
         // enqueue block js.
-        wp_enqueue_script(
-            'lazyblocks-gutenberg',
-            lazyblocks()->plugin_url() . 'assets/js/index.min.js',
+        wp_register_script(
+            'lazyblocks-editor',
+            lazyblocks()->plugin_url() . 'dist/assets/editor/index.min.js',
             array( 'wp-blocks', 'wp-block-editor', 'wp-i18n', 'wp-element', 'wp-components' ),
-            '2.5.3',
+            LAZY_BLOCKS_VERSION,
             true
         );
 
         // additional data for block js.
         wp_localize_script(
-            'lazyblocks-gutenberg',
+            'lazyblocks-editor',
             'lazyblocksGutenberg',
             array(
-                'post_type'          => $post_type,
                 'blocks'             => $blocks,
                 'controls'           => lazyblocks()->controls()->get_controls(),
                 'icons'              => lazyblocks()->icons()->get_all(),
@@ -1259,9 +1334,12 @@ class LazyBlocks_Blocks {
             $attributes = $this->prepare_block_attributes( $block['controls'], '', $block );
 
             $data = array(
+                'apiVersion'      => 2,
                 'attributes'      => $attributes,
                 'render_callback' => array( $this, 'render_callback' ),
                 'example'         => array(),
+                'editor_script'   => 'lazyblocks-editor',
+                'editor_style'    => 'lazyblocks-editor',
             );
 
             // Register block type.
@@ -1383,13 +1461,11 @@ class LazyBlocks_Blocks {
         $allow_wrapper = apply_filters( $block['slug'] . '/allow_wrapper', $allow_wrapper, $attributes, $context );
 
         if ( $allow_wrapper ) {
-            $html_atts = '';
+            $array_atts = array();
 
             if ( ! isset( $attributes['className'] ) ) {
                 $attributes['className'] = '';
             }
-
-            $attributes['className'] .= ' wp-block-' . str_replace( '/', '-', $attributes['lazyblock']['slug'] );
 
             if ( $attributes['blockUniqueClass'] ) {
                 $attributes['className'] .= ' ' . $attributes['blockUniqueClass'];
@@ -1401,17 +1477,19 @@ class LazyBlocks_Blocks {
 
             if ( $attributes['className'] ) {
                 $attributes['className'] = trim( $attributes['className'] );
-                $html_atts              .= ' class="' . esc_attr( $attributes['className'] ) . '"';
+                $array_atts['class']     = esc_attr( $attributes['className'] );
             }
             if ( $attributes['anchor'] ) {
-                $html_atts .= ' id="' . esc_attr( $attributes['anchor'] ) . '"';
+                $array_atts['id'] = esc_attr( $attributes['anchor'] );
             }
 
             if ( isset( $attributes['ghostkitSR'] ) && $attributes['ghostkitSR'] ) {
-                $html_atts .= ' data-ghostkit-sr="' . esc_attr( $attributes['ghostkitSR'] ) . '"';
+                $array_atts['data-ghostkit-sr'] = esc_attr( $attributes['ghostkitSR'] );
             }
 
-            $result = '<div' . $html_atts . '>' . $result . '</div>';
+            $html_atts = get_block_wrapper_attributes( $array_atts );
+
+            $result = '<div ' . $html_atts . '>' . $result . '</div>';
         }
 
         // add filter for block output.

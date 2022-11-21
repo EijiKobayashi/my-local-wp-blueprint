@@ -14,6 +14,8 @@ final class MywpSettingBlockEditor {
 
   private static $current_block_editor_panels_setting_data;
 
+  private static $is_use_block_editor;
+
   public static function get_setting_block_editor_panels() {
 
     $selectable_post_types = MywpSettingPostType::get_setting_post_types();
@@ -26,7 +28,7 @@ final class MywpSettingBlockEditor {
 
       $setting_block_editor_panels[ $post_type ]['post-status'] = array(
         'id' => 'post-status',
-        'title' => __( 'Status & visibility' )
+        'title' => __( 'Overview' )
       );
 
       if ( post_type_supports( $post_type , 'revisions' ) ) {
@@ -40,7 +42,7 @@ final class MywpSettingBlockEditor {
 
       $setting_block_editor_panels[ $post_type ]['post-link'] = array(
         'id' => 'post-link',
-        'title' => __( 'Permalink' )
+        'title' => __( 'Permalinks' )
       );
 
     }
@@ -74,7 +76,7 @@ final class MywpSettingBlockEditor {
 
         $setting_block_editor_panels[ $post_type ]['featured-image'] = array(
           'id' => 'featured-image',
-          'title' => __( 'Featured image' ),
+          'title' => __( 'Featured Images' ),
         );
 
       }
@@ -214,6 +216,18 @@ final class MywpSettingBlockEditor {
   public static function get_current_block_editor_panels_setting_data() {
 
     return self::$current_block_editor_panels_setting_data;
+
+  }
+
+  public static function set_is_use_block_editor( $is_use_block_editor = false ) {
+
+    self::$is_use_block_editor = $is_use_block_editor;
+
+  }
+
+  public static function get_is_use_block_editor() {
+
+    return self::$is_use_block_editor;
 
   }
 

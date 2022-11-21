@@ -1,4 +1,17 @@
 <?php get_header(); ?>
+<?php
+  $args = array(
+    'aria_label' => 'breadcrumb',
+    'ul_class' =>'p-breadcrumb',
+    'li_class' => 'p-breadcrumb__item',
+    'li_active_class' => 'is-active',
+    'aria_current' => 'page',
+    'separator' => '',
+  );
+  custom_breadcrumb($args);
+?>
+<?php get_template_part('templates/partial/blog', 'loop'); ?>
+<?php /*get_template_part('templates/partial/news', 'loop');*/ ?>
 <div id="content">
 <?php if (have_posts()) : ?>
 <?php $post = $posts[0]; // Hack. Set $post so that the_date() works. ?>

@@ -137,6 +137,8 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
     $current_meta_boxes = $wp_meta_boxes[ $metabox_screen_id ];
 
+    $option['regist_meta_boxes'][ $metabox_screen_id ] = array();
+
     foreach( $current_meta_boxes as $context => $priority_meta_boxes ) {
 
       if( empty( $priority_meta_boxes ) or ! is_array( $priority_meta_boxes ) ) {
@@ -166,6 +168,7 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
             'context' => $context,
             'priority' => $priority,
             'title' => strip_tags( $meta_box['title'] ),
+            'args' => $meta_box['args'],
           );
 
         }

@@ -17,13 +17,15 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
   public static function mywp_controller_initial_data( $initial_data ) {
 
     $initial_data['admin_bar'] = '';
+    $initial_data['hide_rest_link_header'] = '';
+    $initial_data['hide_shortlink_header'] = '';
     $initial_data['hide_wp_generator'] = '';
     $initial_data['hide_wlwmanifest_link'] = '';
     $initial_data['hide_rsd_link'] = '';
     $initial_data['hide_feed_links'] = '';
     $initial_data['hide_feed_links_extra'] = '';
-    $initial_data['hide_rest_link_header'] = '';
-    $initial_data['hide_shortlink_header'] = '';
+    $initial_data['hide_rest_link'] = '';
+    $initial_data['hide_shortlink'] = '';
     $initial_data['include_css_file'] = '';
     $initial_data['include_js_file'] = '';
     $initial_data['custom_header_meta'] = '';
@@ -35,13 +37,15 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
   public static function mywp_controller_default_data( $default_data ) {
 
     $default_data['admin_bar'] = '';
+    $default_data['hide_rest_link_header'] = false;
+    $default_data['hide_shortlink_header'] = false;
     $default_data['hide_wp_generator'] = false;
     $default_data['hide_wlwmanifest_link'] = false;
     $default_data['hide_rsd_link'] = false;
     $default_data['hide_feed_links'] = false;
     $default_data['hide_feed_links_extra'] = false;
-    $default_data['hide_rest_link_header'] = false;
-    $default_data['hide_shortlink_header'] = false;
+    $default_data['hide_rest_link'] = '';
+    $default_data['hide_shortlink'] = '';
     $default_data['include_css_file'] = '';
     $default_data['include_js_file'] = '';
     $default_data['custom_header_meta'] = '';
@@ -66,6 +70,10 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     add_filter( 'show_admin_bar' , array( __CLASS__ , 'is_show_admin_bar' ) );
 
+    add_action( 'wp' , array( __CLASS__ , 'hide_rest_link_header' ) );
+
+    add_action( 'wp' , array( __CLASS__ , 'hide_shortlink_header' ) );
+
     add_action( 'wp' , array( __CLASS__ , 'hide_wp_generator' ) );
 
     add_action( 'wp' , array( __CLASS__ , 'hide_wlwmanifest_link' ) );
@@ -76,9 +84,9 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     add_action( 'wp' , array( __CLASS__ , 'hide_feed_links_extra' ) );
 
-    add_action( 'wp' , array( __CLASS__ , 'hide_rest_link_header' ) );
+    add_action( 'wp' , array( __CLASS__ , 'hide_rest_link' ) );
 
-    add_action( 'wp' , array( __CLASS__ , 'hide_shortlink_header' ) );
+    add_action( 'wp' , array( __CLASS__ , 'hide_shortlink' ) );
 
     add_action( 'wp_head' , array( __CLASS__ , 'wp_head' ) );
 
@@ -115,6 +123,50 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
     self::after_do_function( __FUNCTION__ );
 
     return $show_admin_bar;
+
+  }
+
+  public static function hide_rest_link_header() {
+
+    if( ! self::is_do_function( __FUNCTION__ ) ) {
+
+      return false;
+
+    }
+
+    $setting_data = self::get_setting_data();
+
+    if( empty( $setting_data['hide_rest_link_header'] ) ) {
+
+      return false;
+
+    }
+
+    remove_action( 'template_redirect' , 'rest_output_link_header' , 11 );
+
+    self::after_do_function( __FUNCTION__ );
+
+  }
+
+  public static function hide_shortlink_header() {
+
+    if( ! self::is_do_function( __FUNCTION__ ) ) {
+
+      return false;
+
+    }
+
+    $setting_data = self::get_setting_data();
+
+    if( empty( $setting_data['hide_shortlink_header'] ) ) {
+
+      return false;
+
+    }
+
+    remove_action( 'template_redirect' , 'wp_shortlink_header' , 11 );
+
+    self::after_do_function( __FUNCTION__ );
 
   }
 
@@ -228,7 +280,7 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
   }
 
-  public static function hide_rest_link_header() {
+  public static function hide_rest_link() {
 
     if( ! self::is_do_function( __FUNCTION__ ) ) {
 
@@ -238,19 +290,19 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     $setting_data = self::get_setting_data();
 
-    if( empty( $setting_data['hide_rest_link_header'] ) ) {
+    if( empty( $setting_data['hide_rest_link'] ) ) {
 
       return false;
 
     }
 
-    remove_action( 'template_redirect' , 'rest_output_link_header' , 11 );
+    remove_action( 'wp_head' , 'rest_output_link_wp_head' , 10 );
 
     self::after_do_function( __FUNCTION__ );
 
   }
 
-  public static function hide_shortlink_header() {
+  public static function hide_shortlink() {
 
     if( ! self::is_do_function( __FUNCTION__ ) ) {
 
@@ -260,13 +312,13 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     $setting_data = self::get_setting_data();
 
-    if( empty( $setting_data['hide_shortlink_header'] ) ) {
+    if( empty( $setting_data['hide_shortlink'] ) ) {
 
       return false;
 
     }
 
-    remove_action( 'template_redirect' , 'wp_shortlink_header' , 11 );
+    remove_action( 'wp_head' , 'wp_shortlink_wp_head' , 10 );
 
     self::after_do_function( __FUNCTION__ );
 

@@ -2,7 +2,7 @@
 /**
  * Migrations
  *
- * @package lazy-blocks
+ * @package Lazy Blocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,13 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class LazyBlocks_Migration
  */
 class LazyBlocks_Migration {
-    /**
-     * The version.
-     *
-     * @var string
-     */
-    protected $version = '2.5.3';
-
     /**
      * Initial version.
      *
@@ -44,7 +37,7 @@ class LazyBlocks_Migration {
     public function init() {
         // Migration code added after `$this->initial_version` plugin version.
         $saved_version   = get_option( 'lzb_db_version', $this->initial_version );
-        $current_version = $this->version;
+        $current_version = LAZY_BLOCKS_VERSION;
 
         foreach ( $this->get_migrations() as $migration ) {
             if ( version_compare( $saved_version, $migration['version'], '<' ) ) {

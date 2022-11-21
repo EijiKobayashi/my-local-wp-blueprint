@@ -2,7 +2,7 @@
 /**
  * Rest API functions
  *
- * @package lazy-blocks
+ * @package Lazy Blocks
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -125,13 +125,12 @@ class LazyBlocks_Rest extends WP_REST_Controller {
         if ( 0 < $post_id ) {
             // phpcs:ignore
             $post = get_post( $post_id );
+
             if ( ! $post || ! current_user_can( 'edit_post', $post->ID ) ) {
-                return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks of this post.', 'lazy-blocks' ) );
+                return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks of this post.', 'lazy-blocks' ), true );
             }
-        } else {
-            if ( ! current_user_can( 'edit_posts' ) ) {
-                return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks as this user.', 'lazy-blocks' ) );
-            }
+        } elseif ( ! current_user_can( 'edit_posts' ) ) {
+            return $this->error( 'lazy_block_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks as this user.', 'lazy-blocks' ), true );
         }
 
         return true;
@@ -140,9 +139,11 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     /**
      * Get read block data permissions.
      *
+     * @param WP_REST_Request $request Request.
+     *
      * @return WP_REST_Response|true
      */
-    public function get_block_data_permission() {
+    public function get_block_data_permission( $request ) {
         global $post;
 
         $post_id = isset( $request['post_id'] ) ? intval( $request['post_id'] ) : 0;
@@ -151,12 +152,10 @@ class LazyBlocks_Rest extends WP_REST_Controller {
             // phpcs:ignore
             $post = get_post( $post_id );
             if ( ! $post || ! current_user_can( 'edit_post', $post->ID ) ) {
-                return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data.', 'lazy-blocks' ) );
+                return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data.', 'lazy-blocks' ), true );
             }
-        } else {
-            if ( ! current_user_can( 'edit_posts' ) ) {
-                return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'lazy-blocks' ) );
-            }
+        } elseif ( ! current_user_can( 'edit_posts' ) ) {
+            return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'lazy-blocks' ), true );
         }
 
         return true;
@@ -165,10 +164,12 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     /**
      * Get edit block data permissions.
      *
+     * @param WP_REST_Request $request Request.
+     *
      * @return WP_REST_Response|true
      */
-    public function update_block_data_permission() {
-        return $this->get_block_data_permission();
+    public function update_block_data_permission( $request ) {
+        return $this->get_block_data_permission( $request );
     }
 
     /**
@@ -178,7 +179,7 @@ class LazyBlocks_Rest extends WP_REST_Controller {
      */
     public function get_post_types_permission() {
         if ( ! current_user_can( 'edit_posts' ) ) {
-            return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'lazy-blocks' ) );
+            return $this->error( 'lazy_block_data_cannot_read', esc_html__( 'Sorry, you are not allowed to read Gutenberg blocks data as this user.', 'lazy-blocks' ), true );
         }
 
         return true;
@@ -187,10 +188,12 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     /**
      * Get block constructor preview permissions.
      *
+     * @param WP_REST_Request $request Request.
+     *
      * @return WP_REST_Response|true
      */
-    public function block_constructor_preview_permission() {
-        return $this->get_block_data_permission();
+    public function block_constructor_preview_permission( $request ) {
+        return $this->get_block_data_permission( $request );
     }
 
     /**
@@ -233,7 +236,7 @@ class LazyBlocks_Rest extends WP_REST_Controller {
             return $this->error( 'lazy_block_invalid', esc_html__( 'Invalid block.', 'lazy-blocks' ) );
         }
 
-        $block_result = lazyblocks()->blocks()->render_callback( $block_attributes, null, $block_context );
+        $block_result = lazyblocks()->blocks()->render_callback( $block_attributes, null, $block_context, $block );
 
         if ( isset( $block_result ) && null !== $block_result ) {
             return $this->success( $block_result );
@@ -378,20 +381,24 @@ class LazyBlocks_Rest extends WP_REST_Controller {
     /**
      * Error rest.
      *
-     * @param string $code     error code.
-     * @param string $response response data.
-     *
-     * @return WP_REST_Response
+     * @param mixed   $code       error code.
+     * @param mixed   $response   response data.
+     * @param boolean $true_error use true error response to stop the code processing.
+     * @return mixed
      */
-    public function error( $code, $response ) {
+    public function error( $code, $response, $true_error = false ) {
+        if ( $true_error ) {
+            return new WP_Error( $code, $response, array( 'status' => 401 ) );
+        }
+
         return new WP_REST_Response(
             array(
                 'error'      => true,
                 'success'    => false,
                 'error_code' => $code,
-                'response'   => $response,
+                'message'    => $response,
             ),
-            200
+            401
         );
     }
 }

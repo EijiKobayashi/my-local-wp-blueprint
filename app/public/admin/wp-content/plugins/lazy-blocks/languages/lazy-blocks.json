@@ -11,16 +11,16 @@
          "Gutenberg blocks visual constructor. Custom meta fields or blocks with output without hard coding.": [
             ""
          ],
-         "nK": [
+         "Lazy Blocks Team": [
             ""
          ],
-         "https://nkdev.info/": [
+         "https://www.lazyblocks.com/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=byline": [
             ""
          ],
          "Documentation": [
             ""
          ],
-         "PRO Survey": [
+         "Go Pro": [
             ""
          ],
          "and": [
@@ -66,6 +66,12 @@
             ""
          ],
          "Layout": [
+            ""
+         ],
+         "Lazy Blocks and Lazy Blocks Pro should not be active at the same time. We've automatically deactivated Lazy Blocks.": [
+            ""
+         ],
+         "Lazy Blocks and Lazy Blocks Pro should not be active at the same time. We've automatically deactivated Lazy Blocks Pro.": [
             ""
          ],
          "Example Block": [
@@ -199,10 +205,49 @@
          "Toggle": [
             ""
          ],
+         "Undefined": [
+            ""
+         ],
          "URL": [
             ""
          ],
          "Template file <code>%1$s</code> not found.": [
+            ""
+         ],
+         "None": [
+            ""
+         ],
+         "All - prevents all operations": [
+            ""
+         ],
+         "Insert - prevents inserting new blocks, but allows moving existing ones": [
+            ""
+         ],
+         "Content Only - prevents all operations, except the content editing.": [
+            ""
+         ],
+         "Template Settings": [
+            ""
+         ],
+         "Select all": [
+            ""
+         ],
+         "Copy to Clipboard": [
+            ""
+         ],
+         "Export JSON": [
+            ""
+         ],
+         "Generate PHP": [
+            ""
+         ],
+         "Export Blocks": [
+            ""
+         ],
+         "Export Templates": [
+            ""
+         ],
+         "Import": [
             ""
          ],
          "Copied!": [
@@ -223,10 +268,88 @@
          "Icon Picker": [
             ""
          ],
+         "Unlock Extra Features": [
+            ""
+         ],
+         "Upgrade to Lazy Blocks Pro": [
+            ""
+         ],
+         "Supports": [
+            ""
+         ],
+         "Condition": [
+            ""
+         ],
+         "Blocks Constructor": [
+            ""
+         ],
          "Error: Could not generate the preview.": [
             ""
          ],
          "Preview": [
+            ""
+         ],
+         "Control \"%1$s\"": [
+            ""
+         ],
+         "Frontend": [
+            ""
+         ],
+         "Editor": [
+            ""
+         ],
+         "Output Method": [
+            ""
+         ],
+         "HTML + Handlebars": [
+            ""
+         ],
+         "PHP": [
+            ""
+         ],
+         "Theme Template": [
+            ""
+         ],
+         "How to use?": [
+            ""
+         ],
+         "Simple text field example see here:": [
+            ""
+         ],
+         "Note 1: if you use blocks as Metaboxes, you may leave this code editor blank.": [
+            ""
+         ],
+         "Note 2: supported custom PHP callback to output block": [
+            ""
+         ],
+         "Single output code for Frontend and Editor": [
+            ""
+         ],
+         "To output block code, Lazy Blocks will look for template file in your theme directory:": [
+            ""
+         ],
+         "Read more:": [
+            ""
+         ],
+         "How to use theme template": [
+            ""
+         ],
+         "Code Output in Editor": [
+            ""
+         ],
+         "Display Always": [
+            ""
+         ],
+         "Display within `selected` block only": [
+            ""
+         ],
+         "Display within `unselected` block only": [
+            ""
+         ],
+         "Never Display": [
+            ""
+         ],
+         "Code": [
             ""
          ],
          "Show in posts": [
@@ -277,7 +400,10 @@
          "Keywords": [
             ""
          ],
-         "Enter up to 3 keywords": [
+         "Make it easier to discover a block with keyword aliases": [
+            ""
+         ],
+         "Type keyword and push Enter": [
             ""
          ],
          "Select control to see settings.": [
@@ -326,9 +452,6 @@
             ""
          ],
          "Save in Meta": [
-            ""
-         ],
-         "How to use?": [
             ""
          ],
          "Meta custom name (optional)": [
@@ -433,61 +556,19 @@
          "Block Name": [
             ""
          ],
-         "Supports": [
-            ""
-         ],
-         "Condition": [
-            ""
-         ],
-         "Blocks Constructor": [
-            ""
-         ],
-         "None": [
-            ""
-         ],
-         "Prevent all operations": [
-            ""
-         ],
-         "Prevent inserting new blocks, but allows moving existing ones": [
-            ""
-         ],
-         "Template Settings": [
-            ""
-         ],
-         "Select all": [
-            ""
-         ],
-         "Copy to Clipboard": [
-            ""
-         ],
-         "Export JSON": [
-            ""
-         ],
-         "Generate PHP": [
-            ""
-         ],
-         "Export Blocks": [
-            ""
-         ],
-         "Export Templates": [
-            ""
-         ],
-         "Import": [
-            ""
-         ],
          "Free Content": [
             ""
          ],
          "Block used for adding blocks inside it in cases when template locked from adding blocks.": [
             ""
          ],
-         "Error loading block preview: %s": [
-            ""
-         ],
          "This field is required": [
             ""
          ],
          "Edit Block": [
+            ""
+         ],
+         "Error loading block preview: %s": [
             ""
          ],
          "Alongside Text": [
@@ -503,21 +584,6 @@
             ""
          ],
          "Classic": [
-            ""
-         ],
-         "Custom color picker": [
-            ""
-         ],
-         "Color code: %s": [
-            ""
-         ],
-         "Color: %s": [
-            ""
-         ],
-         "Custom Color": [
-            ""
-         ],
-         "Clear": [
             ""
          ],
          "Alpha Channel": [
@@ -580,10 +646,10 @@
          "Edit Gallery": [
             ""
          ],
-         "Preview Size": [
+         "Medium": [
             ""
          ],
-         "Medium": [
+         "Preview Size": [
             ""
          ],
          "image": [
@@ -667,7 +733,7 @@
          "Displays text alongside the toggle": [
             ""
          ],
-         "Reset": [
+         "Looks like this control does not exists.": [
             ""
          ]
       }

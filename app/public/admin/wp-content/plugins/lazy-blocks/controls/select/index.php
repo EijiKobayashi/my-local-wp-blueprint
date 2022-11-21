@@ -43,9 +43,9 @@ class LazyBlocks_Control_Select extends LazyBlocks_Control {
     public function register_assets() {
         wp_register_script(
             'lazyblocks-control-select',
-            lazyblocks()->plugin_url() . 'controls/select/script.min.js',
+            lazyblocks()->plugin_url() . 'dist/controls/select/script.min.js',
             array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
-            '2.5.3',
+            LAZY_BLOCKS_VERSION,
             true
         );
     }

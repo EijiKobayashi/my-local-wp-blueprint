@@ -1,5 +1,16 @@
 <?php get_header(); ?>
 わーい
+<?php
+  $args = array(
+    'aria_label' => 'breadcrumb',
+    'ul_class' =>'p-breadcrumb',
+    'li_class' => 'p-breadcrumb__item',
+    'li_active_class' => 'is-active',
+    'aria_current' => 'page',
+    'separator' => '',
+  );
+  custom_breadcrumb($args);
+?>
 <div id="content">
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 <div class="post" id="post-<?php the_ID(); ?>">

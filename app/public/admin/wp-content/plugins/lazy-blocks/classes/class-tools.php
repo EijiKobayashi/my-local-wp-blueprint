@@ -80,7 +80,6 @@ class LazyBlocks_Tools {
 
     /**
      * Clear block data to export.
-     * Remove `edit_url`
      *
      * @param array $block block data.
      *
@@ -88,10 +87,75 @@ class LazyBlocks_Tools {
      */
     public function clean_block_to_export( $block ) {
         $db_blocks = lazyblocks()->blocks()->get_blocks( true );
+        $controls  = lazyblocks()->controls()->get_controls();
 
         foreach ( $db_blocks as $db_block ) {
             if ( $db_block['id'] === $block['id'] ) {
-                unset( $block['edit_url'] );
+                // Remove unused fields from controls data.
+                if ( 'lazyblock/example-block' === $block['slug'] && ! empty( $block['controls'] ) ) {
+                    foreach ( $block['controls'] as $k => $control ) {
+                        if ( ! isset( $control['type'] ) || ! isset( $controls[ $control['type'] ] ) ) {
+                            continue;
+                        }
+
+                        $control_data = $controls[ $control['type'] ];
+
+                        // Remove restricted fields.
+                        $restrictions_to_remove = array(
+                            'name',
+                            'label',
+                            'default',
+                            'placement',
+                            'width',
+                            'required',
+                            'hide_if_not_selected',
+                            'save_in_meta',
+                        );
+
+                        foreach ( $restrictions_to_remove as $restriction ) {
+                            if (
+                                isset( $control_data['restrictions'][ $restriction . '_settings' ] )
+                                && ! $control_data['restrictions'][ $restriction . '_settings' ]
+                                && isset( $block['controls'][ $k ][ $restriction ] )
+                            ) {
+                                unset( $block['controls'][ $k ][ $restriction ] );
+
+                                if ( 'save_in_meta' === $restriction && isset( $block['controls'][ $k ]['save_in_meta_name'] ) ) {
+                                    unset( $block['controls'][ $k ]['save_in_meta_name'] );
+                                }
+                            }
+                        }
+
+                        // Remove default fields.
+                        $default_fields_to_remove = array(
+                            'default'              => '',
+                            'help'                 => '',
+                            'child_of'             => '',
+                            'placeholder'          => '',
+                            'characters_limit'     => '',
+                            'width'                => '100',
+                            'hide_if_not_selected' => 'false',
+                            'save_in_meta'         => 'false',
+                            'save_in_meta_name'    => '',
+                            'required'             => 'false',
+                        );
+
+                        foreach ( $default_fields_to_remove as $field => $val ) {
+                            if ( isset( $block['controls'][ $k ][ $field ] ) && $val === $block['controls'][ $k ][ $field ] ) {
+                                unset( $block['controls'][ $k ][ $field ] );
+
+                                if ( 'save_in_meta' === $field && isset( $block['controls'][ $field ]['save_in_meta_name'] ) ) {
+                                    unset( $block['controls'][ $field ]['save_in_meta_name'] );
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Remove `edit_url`.
+                if ( isset( $block['edit_url'] ) ) {
+                    unset( $block['edit_url'] );
+                }
             }
         }
 
@@ -199,13 +263,17 @@ class LazyBlocks_Tools {
         // Lazyblocks Tools.
         wp_enqueue_script(
             'lazyblocks-tools',
-            lazyblocks()->plugin_url() . 'assets/admin/tools/index.min.js',
+            lazyblocks()->plugin_url() . 'dist/assets/admin/tools/index.min.js',
             array( 'wp-data', 'wp-element', 'wp-components', 'wp-api', 'wp-i18n' ),
-            '2.5.3',
+            LAZY_BLOCKS_VERSION,
             true
         );
 
         wp_localize_script( 'lazyblocks-tools', 'lazyblocksToolsData', $data );
+
+        wp_enqueue_style( 'lazyblocks-tools', lazyblocks()->plugin_url() . 'dist/assets/admin/tools/style.min.css', '', LAZY_BLOCKS_VERSION );
+        wp_style_add_data( 'lazyblocks-tools', 'rtl', 'replace' );
+        wp_style_add_data( 'lazyblocks-tools', 'suffix', '.min' );
     }
 
     /**
@@ -414,6 +482,22 @@ class LazyBlocks_Tools {
             )
         );
 
+        // TODO - reuse this data from /controls/_base/index.php .
+        $default_control_attributes = array(
+            'type'                 => 'text',
+            'name'                 => '',
+            'default'              => '',
+            'label'                => '',
+            'help'                 => '',
+            'child_of'             => '',
+            'placement'            => 'content',
+            'width'                => '100',
+            'hide_if_not_selected' => 'false',
+            'save_in_meta'         => 'false',
+            'save_in_meta_name'    => '',
+            'required'             => 'false',
+        );
+
         if ( 0 < $post_id ) {
             // add 'lazyblocks_' prefix.
             foreach ( $data as $k => $val ) {
@@ -426,6 +510,14 @@ class LazyBlocks_Tools {
                         $val = substr( $val, strpos( $val, '/' ) + 1 );
                     } elseif ( 'keywords' === $k ) {
                         $val = implode( ',', $val );
+                    } elseif ( 'controls' === $k ) {
+                        $controls = array();
+
+                        foreach ( $val as $i => $inner_val ) {
+                            $controls[ $i ] = array_merge( $default_control_attributes, $inner_val );
+                        }
+
+                        $val = $controls;
                     }
 
                     $meta[ $meta_prefix . $k ] = $val;
