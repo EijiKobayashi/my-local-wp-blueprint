@@ -1,4 +1,6 @@
 <?php
+  // パーマリンク参照: https://libre-co.com/wordpress/custom_taxonomy_permalink/
+
   $labels = array(
     'name' => 'ニュース',
     'singular_name' => 'ニュース',
@@ -66,11 +68,38 @@
     'show_admin_column' => false,
     'hierarchical' => true,
     'query_var' => true,
-    'rewrite' => array( 'slug' => 'news/category/-', 'with_front' => true, 'hierarchical' => true, ),
+    'rewrite' => array( 'slug' => 'news/category', 'with_front' => false, 'hierarchical' => true, ),
     'sort' => true,
     'show_in_rest' => true,
   );
   register_taxonomy( 'news_category', array( 'news' ) , $args );
+
+  // リライトルール
+  add_rewrite_rule('news/([^/]+)/?$', 'index.php?news_category=$matches[1]', 'top');
+  add_rewrite_rule('news/([^/]+)/page/([0-9]+)/?$', 'index.php?news_category=$matches[1]&paged=$matches[2]', 'top');
+  // add_rewrite_rule('news/category/([^/]+)/?$', 'index.php?news_category=$matches[1]', 'top');
+
+  // リダイレクト処理
+  add_action( 'template_redirect', 'add_news_category_rewrite_rule' );
+  function add_news_category_rewrite_rule() {
+    $url_now = $_SERVER['REQUEST_URI'];
+    if ($url_now == "/news/category/") {
+      $url = home_url( '/news/', 'https' );
+      wp_safe_redirect( $url, 301 );
+      exit();
+    }
+  }
+
+  // デフォルトでタームを選択させる
+  function add_news_category_default_term_automatically($post_ID) {
+    global $wpdb;
+    $currentTerm = wp_get_object_terms($post_ID, 'news_category');
+    if (0 == count($currentTerm)) {
+      $defaultTerm= array(1); // 選択させたいタームID
+      wp_set_object_terms($post_ID, $defaultTerm, 'news_category');
+    }
+  }
+  add_action( 'publish_news', 'add_news_category_default_term_automatically' );
 
   // タグ
   $labels = array(
@@ -100,10 +129,53 @@
     'show_admin_column' => false,
     'hierarchical' => true,
     'query_var' => true,
-    'rewrite' => array( 'slug' => 'news/tags/-', 'with_front' => true, 'hierarchical' => true, ),
+    'rewrite' => array( 'slug' => 'news/tags', 'with_front' => false, 'hierarchical' => true, ),
     'sort' => true,
     'show_in_rest' => true,
   );
   register_taxonomy( 'news_tags', array( 'news' ) , $args );
 
+  // リライトルール
+  add_rewrite_rule('news/([^/]+)/?$', 'index.php?news_tags=$matches[1]', 'top');
+  add_rewrite_rule('news/([^/]+)/page/([0-9]+)/?$', 'index.php?news_tags=$matches[1]&paged=$matches[2]', 'top');
+  // add_rewrite_rule('news/tags/([^/]+)/?$', 'index.php?news_tags=$matches[1]', 'top');
+
+  // リダイレクト処理
+  add_action( 'template_redirect', 'add_news_tags_rewrite_rule' );
+  function add_news_tags_rewrite_rule() {
+    $url_now = $_SERVER['REQUEST_URI'];
+    if ($url_now == "/news/tags/") {
+      $url = home_url( '/news/', 'https' );
+      wp_safe_redirect( $url, 301 );
+      exit();
+    }
+  }
+
+  // デフォルトでタームを選択させる
+  function add_news_tags_default_term_automatically($post_ID) {
+    global $wpdb;
+    $currentTerm = wp_get_object_terms($post_ID, 'news_tags');
+    if (0 == count($currentTerm)) {
+      $defaultTerm= array(1); // 選択させたいタームID
+      wp_set_object_terms($post_ID, $defaultTerm, 'news_tags');
+    }
+  }
+  add_action('publish_news', 'add_news_tags_default_term_automatically');
+
+  // エディタ非表示
+  /* add_action( 'init', function() {
+    remove_post_type_support( 'news', 'editor' );
+  }, 99); */
+
+  // 画像フィールドからアイキャッチ画像に登録する
+/*
+  function acf_news_featured_image( $value, $post_id, $field ) {
+    if ( $value != '' ) {
+      update_post_meta($post_id, '_thumbnail_id', $value);
+    } else {
+      delete_post_meta($post_id, '_thumbnail_id');
+    }	return $value;
+  }
+  add_filter('acf/update_value/name=news_image', 'acf_news_featured_image', 10, 3);
+*/
 ?>
