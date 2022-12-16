@@ -41,7 +41,7 @@ function pagination($pages, $paged, $range = 2, $show_only = false) {
     if ($pages >= $display) {
       $start = $pages - ($display - 1);
       for ($c = 1; $c <= $before_shortage; $c++) {
-        echo '<li class="prev"><a href="'. get_pagenum_link($start) .'">'. $start .'</a></li>';
+        echo '<li><a href="'. get_pagenum_link($start) .'">'. $start .'</a></li>';
         $start++;
       }
     }
@@ -59,7 +59,7 @@ function pagination($pages, $paged, $range = 2, $show_only = false) {
     if ($pages >= $display) {
       $start = ($display - $after_shortage) + 1;
       for ($c = 1; $c <= $after_shortage; $c++) {
-        echo '<li class="prev"><a href="'. get_pagenum_link($start) .'">'. $start .'</a></li>';
+        echo '<li><a href="'. get_pagenum_link($start) .'">'. $start .'</a></li>';
         $start++;
       }
     }
