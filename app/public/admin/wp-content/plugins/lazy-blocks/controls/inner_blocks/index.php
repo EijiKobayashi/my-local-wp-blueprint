@@ -63,9 +63,9 @@ class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
     /**
      * Change block render attribute to inner content.
      *
-     * @param string $attributes - block attributes.
-     * @param mixed  $content - block content.
-     * @param mixed  $block - block data.
+     * @param array $attributes - block attributes.
+     * @param mixed $content - block content.
+     * @param mixed $block - block data.
      *
      * @return array filtered attribute data.
      */
@@ -74,7 +74,7 @@ class LazyBlocks_Control_InnerBlocks extends LazyBlocks_Control {
             return $attributes;
         }
 
-        // prepare decoded array to actual array.
+        // prepare inner-blocks content to actual attribute.
         foreach ( $block['controls'] as $control ) {
             if ( $this->name === $control['type'] ) {
                 $attributes[ $control['name'] ] = $content ? $content : '';

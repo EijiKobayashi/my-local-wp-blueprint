@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 6.1.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-11-15 02:03:46+0000\n"
+"PO-Revision-Date: 2023-01-06 07:11:58+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1856,7 +1856,7 @@ msgstr "このテーマでは、カスタマイザーはサポートされませ
 
 #: wp-includes/comment.php:3604
 msgid "<strong>Error:</strong> Please fill the required fields."
-msgstr "<strong>Error:</strong> 必須項目を入力してください。"
+msgstr "<strong>エラー:</strong> 必須項目を入力してください。"
 
 #: wp-includes/class-wp-block-styles-registry.php:85
 msgid "Block style name must not contain any spaces."
@@ -4514,7 +4514,7 @@ msgstr "このテーマは現在使用中の WordPress のバージョンでは�
 #: wp-admin/includes/class-wp-plugins-list-table.php:1310
 #: wp-admin/includes/plugin.php:1136 wp-admin/includes/theme.php:901
 #: wp-admin/includes/theme.php:932 wp-admin/includes/theme.php:978
-#: wp-admin/includes/theme.php:1001 wp-admin/includes/update-core.php:1059
+#: wp-admin/includes/theme.php:1001 wp-admin/includes/update-core.php:1057
 #: wp-admin/includes/update.php:757 wp-admin/includes/update.php:784
 #: wp-admin/install.php:245 wp-admin/theme-install.php:336
 #: wp-admin/theme-install.php:359 wp-admin/theme-install.php:526
