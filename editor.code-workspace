@@ -12,6 +12,27 @@
       "activityBar.foreground": "#51BB7B"
       //"textBlockQuote.background": "#51BB7B"
     },
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "[php]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": true
+    },
+    "[html]": {
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": true
+    },
+    "[scss]": {
+      "editor.formatOnSave": false,
+      "editor.insertSpaces": false
+    },
+    "[javascript]": {
+      "editor.formatOnSave": true,
+      "editor.insertSpaces": true
+    },
+    "[css]": {
+      "editor.formatOnSave": true,
+      "editor.insertSpaces": true
+    }
   }
 }
