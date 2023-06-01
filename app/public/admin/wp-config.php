@@ -77,7 +77,7 @@ define( 'WP_DEBUG', true );
 
 
 /* Add any custom values between this line and the "stop editing" line. */
-
+define( 'ALLOW_UNFILTERED_UPLOADS', true ); // for SVG
 
 
 /* That's all, stop editing! Happy publishing. */
