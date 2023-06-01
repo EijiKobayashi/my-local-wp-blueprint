@@ -13,6 +13,9 @@ const { __experimentalGetSettings: getSettings, dateI18n } = wp.date;
 
 const { Dropdown, PanelBody, ButtonGroup, Button, DatePicker, TimePicker } = wp.components;
 
+const currentTimezone =
+  typeof Intl !== 'undefined' ? Intl.DateTimeFormat().resolvedOptions().timeZone : 0;
+
 /**
  * Date Time Picker.
  */
@@ -32,21 +35,32 @@ function DateTimePicker(props) {
       .join('') // Reverse the string and test for "a" not followed by a slash
   );
 
+  // Date.
   let buttonLabel = __('Select Date', 'lazy-blocks');
   let resolvedFormat = settings.formats.date || 'F j, Y';
 
+  // Date + Time.
   if (allowTimePicker && allowDatePicker) {
     buttonLabel = __('Select Date and Time', 'lazy-blocks');
     resolvedFormat = settings.formats.datetime || 'F j, Y g:i a';
+
+    // Time.
   } else if (allowTimePicker) {
     buttonLabel = __('Select Time', 'lazy-blocks');
     resolvedFormat = settings.formats.time || 'g:i a';
   }
 
+  const formattedDate = value ? dateI18n(resolvedFormat, value, currentTimezone) : buttonLabel;
+
   return (
     <BaseControl label={label} help={help}>
       <div>
         <Dropdown
+          popoverProps={{
+            placement: 'left-start',
+            offset: 36,
+            shift: true,
+          }}
           renderToggle={({ isOpen, onToggle }) => (
             <Button
               isLink
@@ -78,7 +92,7 @@ function DateTimePicker(props) {
                 </svg>
               )}
 
-              {value ? dateI18n(resolvedFormat, value) : buttonLabel}
+              {formattedDate}
             </Button>
           )}
           renderContent={() => (
@@ -140,11 +154,11 @@ addFilter('lzb.constructor.control.date_time.settings', 'lzb.constructor', (rend
           onClick={() => {
             let result = 'date';
 
-            if ('date_time' === dateTimePicker) {
+            if (dateTimePicker === 'date_time') {
               result = 'time';
-            } else if ('date' === dateTimePicker) {
+            } else if (dateTimePicker === 'date') {
               result = 'date';
-            } else if ('time' === dateTimePicker) {
+            } else if (dateTimePicker === 'time') {
               result = 'date_time';
             }
 
@@ -162,11 +176,11 @@ addFilter('lzb.constructor.control.date_time.settings', 'lzb.constructor', (rend
           onClick={() => {
             let result = 'time';
 
-            if ('date_time' === dateTimePicker) {
+            if (dateTimePicker === 'date_time') {
               result = 'date';
-            } else if ('time' === dateTimePicker) {
+            } else if (dateTimePicker === 'time') {
               result = 'time';
-            } else if ('date' === dateTimePicker) {
+            } else if (dateTimePicker === 'date') {
               result = 'date_time';
             }
 

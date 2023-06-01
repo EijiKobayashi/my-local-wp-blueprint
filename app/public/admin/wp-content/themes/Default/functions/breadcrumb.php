@@ -15,12 +15,12 @@ function custom_breadcrumb($args = array()) {
     'aria_current' => '',
     'show_home' => true,
     'show_current' => true,
-    'home' => 'Home',
+    'home' => 'ホーム',
     'blog_home' => 'Blog',
     'search' => 'で検索した結果',
     'tag' => 'タグ : ',
     'author' => '投稿者',
-    'notfound' => '404 Not found',
+    'notfound' => 'お探しのページは見つかりませんでした',
     'separator' => "\n".'<li class="separator">&nbsp;&gt;&nbsp;</li>'."\n",
     'cat_off' => false,
     'cat_parents_off' => false,
@@ -28,6 +28,7 @@ function custom_breadcrumb($args = array()) {
     'tax_parents_off' => false,
     'show_cpta' => true,
     'show_cat_tag_for_cpt' => false,
+    'post_type' => '',
   );
   //引数の値とデフォルトをマージ
   $args = wp_parse_args( $args, $defaults );
@@ -50,15 +51,15 @@ function custom_breadcrumb($args = array()) {
   if (is_front_page() || is_home()) {
     if ($show_home) {
       $label = is_front_page() ? $home: $blog_home;
-      echo  '<'.$nav_div . $id . $nav_div_class. $aria_label. '><ul'. $ul_class .'><li'. $li_active_class. $aria_current. '>'. $label .'</li></ul></'. $nav_div .'>';
+      echo  '<'.$nav_div . $id . $nav_div_class. $aria_label. '><ol'. $ul_class .' itemscope itemtype="https://schema.org/BreadcrumbList"><li'. $li_active_class. $aria_current. '>'. $label .'</li></ol></'. $nav_div .'>';
     }
   }
   //ホーム・フロントページでない場合（且つ管理ページでない場合）
   if (!is_front_page() && !is_home() && !is_admin()) {
     //ホームへのリンクを含むリストを生成
     $str.= '<'.$nav_div . $id . $nav_div_class. $aria_label.'>'."\n";
-    $str.= '<ul'. $ul_class .'>'."\n";
-    $str.= '<li'. $li_class .'><a href="'. home_url() .'/">'. $home .'</a></li>';
+    $str.= '<ol'. $ul_class .' itemscope itemtype="https://schema.org/BreadcrumbList">'."\n";
+    $str.= '<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. home_url() .'/" itemprop="item"><span itemprop="name">'. $home .'</span></a></li>';
     //$wp_query の query_vars から get_query_var() でクエリ変数の値を取得
     //タクソノミー名を取得（タクソノミーアーカイブの場合のみ取得可能）
     $my_taxonomy = get_query_var('taxonomy');
@@ -77,7 +78,7 @@ function custom_breadcrumb($args = array()) {
       //get_post_type_object($cpt)->label：指定した投稿タイプのオブジェクトのラベル（名前）
       //カスタム投稿のアーカイブページへのリンクを追加
       $str.= $separator;
-      $str.='<li'. $li_class .'><a href="' .esc_url(get_post_type_archive_link($cpt)).'">'. get_post_type_object($cpt)->label.'</a></li>';
+      $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="' .esc_url(get_post_type_archive_link($cpt)).'" itemprop="item"><span itemprop="name">'. get_post_type_object($cpt)->label.'</span></a></li>';
       //タームオブジェクトに親があればそれらを取得してリンクを生成してリストに追加
       if ($my_term->parent != 0) {
         //祖先タームオブジェクトの ID の配列を取得し逆順に（取得される配列の並びは階層の下から上）
@@ -85,12 +86,12 @@ function custom_breadcrumb($args = array()) {
         //全ての祖先タームオブジェクトのアーカイブページへのリンクを生成してリストに追加
         foreach ($ancestors as $ancestor) {
           $str.= $separator;
-          $str.='<li'. $li_class .'><a href="'. esc_url(get_term_link($ancestor, $my_term->taxonomy)) .'">'. get_term($ancestor, $my_term->taxonomy)->name .'</a></li>';
+          $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. esc_url(get_term_link($ancestor, $my_term->taxonomy)) .'" itemprop="item"><span itemprop="name">'. get_term($ancestor, $my_term->taxonomy)->name .'</span></a></li>';
         }
       }
       //ターム名を追加
       $str.= $separator;
-      $str.='<li' .$li_active_class. $aria_current.'>'. $my_term->name . '</li>';
+      $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. $my_term->name . '</span></li>';
     //カテゴリーのアーカイブページ
     } elseif (is_category()) {
       //カテゴリーオブジェクトを取得
@@ -100,28 +101,28 @@ function custom_breadcrumb($args = array()) {
         $ancestors = array_reverse(get_ancestors( $cat->term_id, 'category' ));
         foreach ($ancestors as $ancestor) {
           $str.= $separator;
-          $str.='<li'. $li_class .'><a href="'. esc_url(get_category_link($ancestor)) .'">'. get_cat_name($ancestor) .'</a></li>';
+          $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. esc_url(get_category_link($ancestor)) .'" itemprop="item"><span itemprop="name">'. get_cat_name($ancestor) .'</span></a></li>';
         }
       }
       //カテゴリー名を追加
       $str.= $separator;
-      $str.='<li' .$li_active_class. $aria_current.'>'. $cat->name . '</li>';
+      $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. $cat->name . '</span></li>';
     //カスタム投稿のアーカイブページ
     } elseif (is_post_type_archive()) {
       //カスタム投稿タイプ名を取得
       $cpt = get_query_var('post_type');
       //カスタム投稿タイプ名を追加
       $str.= $separator;
-      $str.='<li' .$li_active_class. $aria_current.'>'. get_post_type_object($cpt)->label . '</li>';
+      $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. get_post_type_object($cpt)->label . '</span></li>';
     //カスタム投稿タイプの個別記事ページ
     } elseif ($cpt && is_singular($cpt)) {
       if ($show_cpta) {
         //カスタム投稿タイプアーカイブページへのリンクを生成してリストに追加
         $str.= $separator;
-        $str.='<li'. $li_class .'><a href="' .esc_url(get_post_type_archive_link($cpt)).'">'. get_post_type_object($cpt)->label.'</a></li>';
+        $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="' .esc_url(get_post_type_archive_link($cpt)).'" itemprop="item"><span itemprop="name">'. get_post_type_object($cpt)->label.'</span></a></li>';
       }
       //このカスタム投稿タイプに登録されている全てのタクソノミーオブジェクトの名前を取得
-      $taxes = get_object_taxonomies( $cpt );
+      $taxes = get_object_taxonomies($cpt);
       //タクソノミーオブジェクトの名前が取得できれば
       if (count($taxes) !== 0) {
         //タクソノミーを表示する場合
@@ -155,24 +156,24 @@ function custom_breadcrumb($args = array()) {
             $mytax = $my_pref_tax;
           }
           //投稿に割り当てられたタームオブジェクト（配列）を取得
-          $terms = get_the_terms($post->ID, $mytax); 
+          $terms = get_the_terms($post->ID, $mytax);
           //カスタムフィールドに優先するタームが記載されていればその値を取得して $myterm へ
           $myterm = get_post_meta( get_the_ID(), 'myterm', true) ? esc_attr(get_post_meta( get_the_ID(), 'myterm', true)) : null;
           //$terms が取得できていれば一番下の階層のタームを取得（できない場合は null に）
           $my_term = $terms ? get_deepest_term($terms, $mytax, $myterm) : null;
           //タームが取得できていれば
-          if ( !empty($my_term) ) {
+          if (!empty($my_term)) {
             //$tax_parents_off がfalse（初期値）でタームに親があればそれらを取得してリンクを生成してリストに追加
             if ($my_term->parent != 0 && !$tax_parents_off) {
-              $ancestors = array_reverse(get_ancestors( $my_term->term_id, $mytax ));
+              $ancestors = array_reverse(get_ancestors($my_term->term_id, $mytax));
               foreach ($ancestors as $ancestor) {
                 $str.= $separator;
-                $str.='<li'. $li_class .'><a href="'. esc_url(get_term_link($ancestor, $mytax)).'">'. get_term($ancestor, $mytax)->name . '</a></li>';
+                $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. esc_url(get_term_link($ancestor, $mytax)).'" itemprop="item"><span itemprop="name">'. get_term($ancestor, $mytax)->name . '</span></a></li>';
               }
             }
             //タームのリンクを追加
             $str.= $separator;
-            $str.='<li'. $li_class .'><a href="'. esc_url(get_term_link($my_term, $mytax)).'">'. $my_term->name . '</a></li>';
+            $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. esc_url(get_term_link($my_term, $mytax)).'" itemprop="item"><span itemprop="name">'. $my_term->name . '</span></a></li>';
           }
         }
       }
@@ -180,7 +181,7 @@ function custom_breadcrumb($args = array()) {
         $str.= $separator;
         //$post->post_title には HTML タグが入っている可能性があるのでタグを除去
         //wp_strip_all_tags() の代わりに PHP の strip_tags() でも
-        $str.= '<li' .$li_active_class. $aria_current.'>'. wp_strip_all_tags($post->post_title) .'</li>';
+        $str.= '<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. wp_strip_all_tags($post->post_title) .'</span></li>';
       }
     //個別投稿ページ（添付ファイルも true と判定されるので除外）
     } elseif (is_single() && !is_attachment()) {
@@ -197,16 +198,16 @@ function custom_breadcrumb($args = array()) {
           $ancestors = array_reverse(get_ancestors( $cat->term_id, 'category' ));
           foreach ($ancestors as $ancestor) {
             $str.= $separator;
-            $str.='<li'. $li_class .'><a href="'. esc_url(get_category_link($ancestor)).'">'. get_cat_name($ancestor). '</a></li>';
+            $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. esc_url(get_category_link($ancestor)).'" itemprop="item"><span itemprop="name">'. get_cat_name($ancestor). '</span></a></li>';
           }
         }
         //カテゴリーのリンクを追加
         $str.= $separator;
-        $str.='<li'. $li_class .'><a href="'. esc_url(get_category_link($cat->term_id)). '">'. $cat->name . '</a></li>';
+        $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. esc_url(get_category_link($cat->term_id)). '" itemprop="item"><span itemprop="name">'. $cat->name . '</span></a></li>';
       }
       if ($show_current) {
         $str.= $separator;
-        $str.= '<li' .$li_active_class. $aria_current.'>'. wp_strip_all_tags($post->post_title) .'</li>';
+        $str.= '<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. wp_strip_all_tags($post->post_title) .'</span></li>';
       }
     //固定ページ
     } elseif (is_page()) {
@@ -215,12 +216,12 @@ function custom_breadcrumb($args = array()) {
         $ancestors = array_reverse(get_post_ancestors( $post->ID ));
         foreach ($ancestors as $ancestor) {
           $str.= $separator;
-          $str.='<li'. $li_class .'><a href="'. esc_url(get_permalink($ancestor)).'">'. get_the_title($ancestor) .'</a></li>';
+          $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. esc_url(get_permalink($ancestor)).'" itemprop="item"><span itemprop="name">'. get_the_title($ancestor) .'</span></a></li>';
         }
       }
       //固定ページ名を追加
       $str.= $separator;
-      $str.= '<li' .$li_active_class. $aria_current.'>'. wp_strip_all_tags($post->post_title) .'</li>';
+      $str.= '<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. wp_strip_all_tags($post->post_title) .'</span></li>';
     //日付ベースのアーカイブページ
     } elseif (is_date()) {
       //年別アーカイブ
@@ -228,49 +229,49 @@ function custom_breadcrumb($args = array()) {
         //日付アーカイブページでは get_query_var() でアーカイブページの年・月・日を取得できる
         //取得した値と get_year_link() などを使ってリンクを生成
         $str.= $separator;
-        $str.='<li'. $li_class .'><a href="'. get_year_link(get_query_var('year')). '">' . get_query_var('year'). '年</a></li>';
+        $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. get_year_link(get_query_var('year')). '" itemprop="item"><span itemprop="name">' . get_query_var('year'). '年</span></a></li>';
         $str.= $separator;
-        $str.='<li'. $li_class .'><a href="'. get_month_link(get_query_var('year'), get_query_var('monthnum')). '">'. get_query_var('monthnum') .'月</a></li>';
+        $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. get_month_link(get_query_var('year'), get_query_var('monthnum')). '" itemprop="item"><span itemprop="name">'. get_query_var('monthnum') .'月</span></a></li>';
         $str.= $separator;
-        $str.='<li' .$li_active_class. $aria_current.'>'. get_query_var('day'). '日</li>';
+        $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. get_query_var('day'). '日</span></li>';
       //月別アーカイブ
       } elseif (get_query_var('monthnum') != 0) {
         $str.= $separator;
-        $str.='<li'. $li_class .'><a href="'. get_year_link(get_query_var('year')) .'">'. get_query_var('year') .'年</a></li>';
+        $str.='<li'. $li_class .' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="'. get_year_link(get_query_var('year')) .'" itemprop="item"><span itemprop="name">'. get_query_var('year') .'年</span></a></li>';
         $str.= $separator;
-        $str.='<li' .$li_active_class. $aria_current.'>'. get_query_var('monthnum'). '月</li>';
+        $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. get_query_var('monthnum'). '月</span></li>';
       //年別アーカイブ
       } else {
         $str.= $separator;
-        $str.='<li' .$li_active_class. $aria_current.'>'. get_query_var('year') .'年</li>';
+        $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. get_query_var('year') .'年</span></li>';
       }
     //検索結果表示ページ
     } elseif (is_search()) {
       $str.= $separator;
-      $str.='<li' .$li_active_class. $aria_current.'>「'. get_search_query() .'」'. $search .'</li>';
+      $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">「'. get_search_query() .'」'. $search .'</span></li>';
     //投稿者のアーカイブページ
     } elseif (is_author()) {
       $str.= $separator;
-      $str .='<li' .$li_active_class. $aria_current.'>'. $author .' : '. get_the_author_meta('display_name', get_query_var('author')).'</li>';
+      $str .='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. $author .' : '. get_the_author_meta('display_name', get_query_var('author')).'</span></li>';
     //タグのアーカイブページ
     } elseif (is_tag()) {
       $str.= $separator;
       //$str.='<li' .$li_active_class. $aria_current.'>'. $tag .' '. single_tag_title( '' , false ). '</li>';
-      $str.='<li' .$li_active_class. $aria_current.'>'. single_tag_title( $tag , false ). '</li>';
+      $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. single_tag_title( $tag , false ). '</span></li>';
     //添付ファイルページ
     } elseif (is_attachment()) {
       $str.= $separator;
-      $str.= '<li' .$li_active_class. $aria_current.'>'. wp_strip_all_tags($post->post_title) .'</li>';
+      $str.= '<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. wp_strip_all_tags($post->post_title) .'</span></li>';
     //404 Not Found ページ
     } elseif (is_404()) {
       $str.= $separator;
-      $str.='<li' .$li_active_class. $aria_current.'>'.$notfound.'</li>';
+      $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'.$notfound.'</span></li>';
     //その他
     } else {
       $str.= $separator;
-      $str.='<li' .$li_active_class. $aria_current.'>'. wp_get_document_title() .'</li>';
+      $str.='<li' .$li_active_class. $aria_current.' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><span itemprop="name">'. wp_get_document_title() .'</span></li>';
     }
-    $str.="\n".'</ul>'."\n";
+    $str.="\n".'</ol>'."\n";
     $str.='</' .$nav_div .'>'."\n";
   }
   echo $str;
