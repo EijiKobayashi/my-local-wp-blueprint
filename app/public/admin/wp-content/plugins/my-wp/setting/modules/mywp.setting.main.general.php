@@ -213,7 +213,7 @@ final class MywpSettingScreeMainGeneral extends MywpAbstractSettingModule {
     <script>
     jQuery(function( $ ) {
 
-      $('.mywp-setting-screen-menu-main h1').append( '<span style="color: #888; font-size: 0.6em; margin-left: 12px;">ver <?php echo esc_attr( MYWP_VERSION ); ?></span>' );
+      $('.mywp-setting-screen-menu-main h1').append( '<span style="color: #888; font-size: 0.6em; margin-left: 12px;">ver <?php echo esc_js( MYWP_VERSION ); ?></span>' );
 
     });
     </script>

@@ -462,7 +462,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     foreach( $_POST['item_order_parents'] as $key => $post_item ) {
 
-      if( !isset( $post_item['order'] ) or !isset( $post_item['parent_id'] ) or empty( $post_item['item_id'] ) ) {
+      if( ! isset( $post_item['order'] ) or ! isset( $post_item['parent_id'] ) or empty( $post_item['item_id'] ) ) {
 
         continue;
 
@@ -788,9 +788,21 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function mywp_current_admin_print_footer_scripts() {
 
+    $post_data_js_custom_values = array();
+
+    $post_data_js_custom_values = apply_filters( 'mywp_setting_admin_sidebar_post_data_js_custom_values' , $post_data_js_custom_values );
+
+    if( ! is_array( $post_data_js_custom_values ) ) {
+
+      $post_data_js_custom_values = array();
+
+    }
+
     ?>
     <script>
     jQuery(function( $ ) {
+
+      const post_data_js_custom_values = JSON.parse( '<?php echo json_encode( $post_data_js_custom_values ); ?>' );
 
       $('.sortable-items').sortable({
         placeholder: 'sortable-placeholder',
@@ -809,7 +821,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           $(document).find('#setting-screen-sidebar-items .setting-screen-sidebar-item').each( function( index , el ) {
 
-            let $item = $(el)
+            let $item = $(el);
 
             let post_id = $item.find('> .item-content .id').val();
 
@@ -836,10 +848,16 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
           }
 
           PostData = {
-            action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'update_item_order_and_parents' ); ?>',
-            <?php echo MywpSetting::get_ajax_action_name( self::$id , 'update_item_order_and_parents' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'update_item_order_and_parents' ) ); ?>',
+            action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'update_item_order_and_parents' ) ); ?>',
+            <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'update_item_order_and_parents' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'update_item_order_and_parents' ) ) ); ?>',
             item_order_parents: item_order_parents
           };
+
+          $.each( post_data_js_custom_values, function( key , value ) {
+
+            PostData[ key ] = value;
+
+          });
 
           $.ajax({
             type: 'post',
@@ -849,7 +867,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
             if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-              alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+              alert( mywp_admin_setting.unknown_error_reload_page );
 
               return false;
 
@@ -859,7 +877,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           }).fail( function( xhr ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -922,11 +940,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
         $spinner.css('visibility', 'visible');
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'add_items' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'add_items' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'add_items' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'add_items' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'add_items' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'add_items' ) ) ); ?>',
           add_items: add_items
           <?php do_action( 'mywp_setting_admin_sidebar_available_item_add_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -936,7 +960,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -944,7 +968,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           if( xhr.data.result_html === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -966,7 +990,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
         }).always( function( xhr ) {
 
@@ -997,7 +1021,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         if( ! current_sidebar_item_id ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1025,7 +1049,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         if( ! change_icon_sidebar_item_id || ! select_class ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1119,11 +1143,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
         });
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'remove_items' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'remove_items' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'remove_items' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'remove_items' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'remove_items' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'remove_items' ) ) ); ?>',
           remove_items: remove_items
           <?php do_action( 'mywp_setting_admin_sidebar_item_remove_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -1133,7 +1163,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1147,7 +1177,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1187,11 +1217,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
         };
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'update_item' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'update_item' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'update_item' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'update_item' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'update_item' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'update_item' ) ) ); ?>',
           update_item: update_item
           <?php do_action( 'mywp_setting_admin_sidebar_item_update_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -1201,7 +1237,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1209,7 +1245,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1226,10 +1262,16 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
         let $spinner = $(this).parent().find('.spinner').css('visibility', 'visible');
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'remove_cache' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'remove_cache' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'remove_cache' ) ); ?>'
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'remove_cache' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'remove_cache' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'remove_cache' ) ) ); ?>'
           <?php do_action( 'mywp_setting_admin_sidebar_remove_cache_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -1239,7 +1281,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1247,7 +1289,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1789,7 +1831,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     }
 
-    @set_time_limit( 300 );
+    MywpHelper::set_time_limit( 300 );
 
     $menu_order = 0;
 

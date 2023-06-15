@@ -102,9 +102,17 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
 
     $current_screen = false;
 
+    $current_screen_id = false;
+
     if( function_exists( 'get_current_screen' ) ) {
 
       $current_screen = get_current_screen();
+
+      if( ! empty( $current_screen->id ) ) {
+
+        $current_screen_id = $current_screen->id;
+
+      }
 
     }
 
@@ -207,7 +215,7 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
 
       $debug_lists['column_filters'][] = sprintf( 'manage_%s_posts_columns (manage_{$typenow}_posts_columns)' , $typenow );
 
-      $debug_lists['sortable_column_filter'] = sprintf( 'manage_%s_sortable_columns (manage_{$this->screen->id}_sortable_columns)' , $current_screen->id );
+      $debug_lists['sortable_column_filter'] = sprintf( 'manage_%s_sortable_columns (manage_{$this->screen->id}_sortable_columns)' , $current_screen_id );
 
       if( $typenow === 'page' ) {
 
@@ -221,7 +229,7 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
 
       $debug_lists['column_content_actions'][] = sprintf( 'manage_%s_posts_custom_column (manage_{$post->post_type}_posts_custom_column)' , $typenow );
 
-      $debug_lists['bulk_action_filter'] = sprintf( 'bulk_actions-%s (bulk_actions-{$this->screen->id})' , $current_screen->id );
+      $debug_lists['bulk_action_filter'] = sprintf( 'bulk_actions-%s (bulk_actions-{$this->screen->id})' , $current_screen_id );
 
       $debug_lists['bulk_post_updated_messages'] = self::$bulk_post_updated_messages;
 
@@ -232,11 +240,11 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
 
       $debug_lists['column_filters'] = sprintf( 'manage_edit-%s_columns (manage_edit-{$taxnow}_columns)' , $taxnow );
 
-      $debug_lists['sortable_column_filter'] = sprintf( 'manage_%s_sortable_columns (manage_{$this->screen->id}_sortable_columns)' , $current_screen->id );
+      $debug_lists['sortable_column_filter'] = sprintf( 'manage_%s_sortable_columns (manage_{$this->screen->id}_sortable_columns)' , $current_screen_id );
 
       $debug_lists['column_content_actions'] = sprintf( 'manage_%s_custom_column' , $taxnow );
 
-      $debug_lists['bulk_action_filter'] = sprintf( 'bulk_actions-%s (bulk_actions-{$this->screen->id})' , $current_screen->id );
+      $debug_lists['bulk_action_filter'] = sprintf( 'bulk_actions-%s (bulk_actions-{$this->screen->id})' , $current_screen_id );
 
 
     } elseif( in_array( $pagenow , array( 'term.php' ) ) ) {

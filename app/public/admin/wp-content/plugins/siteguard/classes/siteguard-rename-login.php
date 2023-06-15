@@ -26,7 +26,7 @@ class SiteGuard_RenameLogin extends SiteGuard_Base {
 	}
 	function init() {
 		global $siteguard_config;
-		$siteguard_config->set( 'renamelogin_path', 'login_' . sprintf( '%05d', mt_rand( 1, 99999 ) ) );
+		$siteguard_config->set( 'renamelogin_path', 'login_' . sprintf( '%05d', siteguard_rand( 1, 99999 ) ) );
 		$siteguard_config->set( 'redirect_enable', '0' );
 		$siteguard_config->update();
 		if ( $this->check_module( 'rewrite' ) &&

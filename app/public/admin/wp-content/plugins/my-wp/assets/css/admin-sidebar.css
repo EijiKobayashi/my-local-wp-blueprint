@@ -56,6 +56,10 @@ body.wp-admin.mywp.folded #adminmenu li.mywp-sidebar-item.wp-has-submenu:hover .
   body.wp-admin.mywp.auto-fold #adminmenu li.mywp-sidebar-item .mywp-sidebar-item-childs {
     width: auto;
   }
+  body.wp-admin.mywp.auto-fold #adminmenu li.mywp-sidebar-item.wp-has-submenu:hover .mywp-sidebar-item-childs {
+    position: static;
+    left: 0;
+  }
 }
 body.wp-admin.mywp #adminmenu li.mywp-sidebar-item .mywp-sidebar-item-childs .mywp-sidebar-item-childs {
   position: static;

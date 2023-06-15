@@ -239,17 +239,48 @@ class MW_WP_Form_Main_Controller {
 	 * @return boolean
 	 */
 	protected function _send() {
-		$Mail         = new MW_WP_Form_Mail();
-		$form_key     = $this->Data->get_form_key();
-		$attachments  = $this->_get_attachments();
-		$Mail_Service = new MW_WP_Form_Mail_Service( $Mail, $form_key, $this->Setting, $attachments );
+		$Mail        = new MW_WP_Form_Mail();
+		$form_key    = $this->Data->get_form_key();
+		$attachments = $this->_get_attachments();
 
-		// データベース非保存の場合はファイルも保存されないので、メールで URL が飛ばないように消す
-		if ( ! $this->Setting->get( 'usedb' ) ) {
-			foreach ( $attachments as $key => $attachment ) {
-				$this->Data->clear_value( $key );
-			}
+		// 送信された画像・ファイルの URL はメールに記載しない。記載するのはアップロード後のファイル名のみ。
+		foreach ( $attachments as $key => $attachment ) {
+			$this->Data->set( $key, basename( $attachment ) );
 		}
+
+		// データベースに保存する場合は、添付ファイルを uploads ディレクトリに移動
+		if ( $this->Setting->get( 'usedb' ) ) {
+			$new_attachments = array();
+
+			foreach ( $attachments as $key => $attachment ) {
+				$form_key       = $this->Data->get_form_key();
+				$new_upload_dir = apply_filters(
+					'mwform_upload_dir_' . $form_key,
+					'',
+					clone $this->Data,
+					$key
+				);
+
+				$new_filename = apply_filters(
+					'mwform_upload_filename_' . $form_key,
+					'',
+					clone $this->Data,
+					$key
+				);
+
+				$filepath = MWF_Functions::move_temp_file_to_upload_dir(
+					$attachment,
+					$new_upload_dir,
+					$new_filename
+				);
+
+				$new_attachments[ $key ] = $filepath;
+			}
+
+			$attachments = $new_attachments;
+		}
+
+		$Mail_Service = new MW_WP_Form_Mail_Service( $Mail, $form_key, $this->Setting, $attachments );
 
 		// Send admin mail
 		$is_admin_mail_sended = $Mail_Service->send_admin_mail();
@@ -296,39 +327,26 @@ class MW_WP_Form_Main_Controller {
 		}
 
 		foreach ( $upload_file_keys as $key ) {
-			$upload_file_url = $this->Data->get_post_value_by_key( $key );
-			if ( ! $upload_file_url ) {
+			$upload_filename = $this->Data->get_post_value_by_key( $key );
+			if ( ! $upload_filename ) {
 				continue;
 			}
 
-			$filepath = MWF_Functions::fileurl_to_path( $upload_file_url );
+			$filepath = MWF_Functions::generate_uploaded_filepath_from_filename( $upload_filename );
 			if ( ! file_exists( $filepath ) ) {
 				continue;
 			}
 
-			$form_key       = $this->Data->get_form_key();
-			$new_upload_dir = apply_filters(
-				'mwform_upload_dir_' . $form_key,
-				'',
-				clone $this->Data,
-				$key
-			);
+			$File     = new MW_WP_Form_File();
+			$temp_dir = $File->get_temp_dir();
+			if ( 0 !== strpos( realpath( $filepath ), $temp_dir['dir'] ) ) {
+				continue;
+			}
 
-			$new_filename = apply_filters(
-				'mwform_upload_filename_' . $form_key,
-				'',
-				clone $this->Data,
-				$key
-			);
+			if ( strstr( $filepath, "\0" ) ) {
+				continue;
+			}
 
-			$filepath = MWF_Functions::move_temp_file_to_upload_dir(
-				$filepath,
-				$new_upload_dir,
-				$new_filename
-			);
-
-			$new_upload_file_url = MWF_Functions::filepath_to_url( $filepath );
-			$this->Data->set( $key, $new_upload_file_url );
 			$attachments[ $key ] = $filepath;
 		}
 
@@ -346,8 +364,49 @@ class MW_WP_Form_Main_Controller {
 		if ( ! is_array( $upload_files ) ) {
 			$upload_files = array();
 		}
+
+		// @todo 共通化 exec-shortcode._get_input_page_content()
+		global $post;
+		$form_id = MWF_Functions::get_form_id_from_form_key( $this->Data->get_form_key() );
+		$post    = get_post( $form_id );
+		setup_postdata( $post );
+		$content = apply_filters( 'mwform_post_content_raw_' . $this->Data->get_form_key(), get_the_content(), $this->Data );
+		// $content = $this->_wpautop( $content );
+		$content = apply_filters( 'mwform_post_content_' . $this->Data->get_form_key(), $content, $this->Data );
+		wp_reset_postdata();
+
+		// ファイルアップロード可能な name を制限する
+		$permitted_file_keys = array();
+		preg_match_all(
+			'|\[mwform_image [^\]]*?\]|ms',
+			$content,
+			$image_matches
+		);
+		foreach ( $image_matches as $image_shortcodes ) {
+			foreach ( $image_shortcodes as $image_shortcode ) {
+				preg_match( '/name="([^"]+?)"/', $image_shortcode, $match );
+				if ( $match ) {
+					$permitted_file_keys[ $match[1] ] = $match[1];
+				}
+			}
+		}
+
+		preg_match_all(
+			'|\[mwform_file [^\]]*?\]|ms',
+			$content,
+			$file_matches
+		);
+		foreach ( $file_matches as $file_shortcodes ) {
+			foreach ( $file_shortcodes as $file_shortcode ) {
+				preg_match( '/name="([^"]+?)"/', $file_shortcode, $match );
+				if ( $match ) {
+					$permitted_file_keys[ $match[1] ] = $match[1];
+				}
+			}
+		}
+
 		foreach ( $upload_files as $key => $file ) {
-			if ( $this->Validation->is_valid_field( $key ) ) {
+			if ( $this->Validation->is_valid_field( $key ) && in_array( $key, $permitted_file_keys, true ) ) {
 				$files[ $key ] = $file;
 			} elseif ( isset( $files[ $key ] ) ) {
 				unset( $files[ $key ] );

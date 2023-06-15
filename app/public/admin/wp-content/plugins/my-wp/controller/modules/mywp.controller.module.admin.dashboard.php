@@ -36,6 +36,17 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
   }
 
+  public static function get_meta_box_default() {
+
+    $meta_box_default = array(
+      'action' => '',
+      'title' => ''
+    );
+
+    return $meta_box_default;
+
+  }
+
   public static function mywp_wp_loaded() {
 
     if( ! is_admin() ) {

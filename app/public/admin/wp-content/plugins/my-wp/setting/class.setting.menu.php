@@ -131,7 +131,7 @@ final class MywpSettingMenu {
 
   public static function set_current_menu_id( $setting_menu_id = false ) {
 
-    $setting_menu_id = strip_tags( $setting_menu_id );
+    $setting_menu_id = esc_attr( strip_tags( $setting_menu_id ) );
 
     self::$current_menu_id = $setting_menu_id;
 

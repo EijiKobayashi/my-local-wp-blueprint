@@ -3,11 +3,11 @@
 Plugin Name: My WP Customize Admin/Frontend
 Plugin URI: https://mywpcustomize.com/
 Description: My WP is powerful admin and frontend customize and debug and extendable plugin.
-Version: 1.20.1
+Version: 1.21.1
 Author: gqevu6bsiz
 Author URI: http://gqevu6bsiz.chicappa.jp/
 Requires at least: 4.7
-Tested up to: 6.1
+Tested up to: 6.2
 Text Domain: my-wp
 Domain Path: /languages/
 */
@@ -42,7 +42,7 @@ final class Mywp {
   private static function define_constants() {
 
     define( 'MYWP_NAME' , 'My WP' );
-    define( 'MYWP_VERSION' , '1.20.1' );
+    define( 'MYWP_VERSION' , '1.21.1' );
     define( 'MYWP_PLUGIN_FILE' , __FILE__ );
     define( 'MYWP_PLUGIN_BASENAME' , plugin_basename( MYWP_PLUGIN_FILE ) );
     define( 'MYWP_PLUGIN_DIRNAME' , dirname( MYWP_PLUGIN_BASENAME ) );

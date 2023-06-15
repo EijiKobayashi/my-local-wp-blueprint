@@ -36,6 +36,20 @@ final class MywpControllerModuleAdminComments extends MywpControllerAbstractModu
 
   }
 
+  public static function get_list_column_default() {
+
+    $list_column_default = array(
+      'id' => '',
+      'sort' => '',
+      'orderby' => '',
+      'title' => '',
+      'width' => '',
+    );
+
+    return $list_column_default;
+
+  }
+
   public static function mywp_wp_loaded() {
 
     if( ! is_admin() ) {

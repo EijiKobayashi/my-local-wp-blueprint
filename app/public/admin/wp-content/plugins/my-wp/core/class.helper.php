@@ -190,6 +190,18 @@ final class MywpHelper {
 
   }
 
+  public static function set_time_limit( $seconds = 0 ) {
+
+    $seconds = (int) $seconds;
+
+    if( function_exists( 'set_time_limit' ) ) {
+
+      set_time_limit( $seconds );
+
+    }
+
+  }
+
 }
 
 endif;

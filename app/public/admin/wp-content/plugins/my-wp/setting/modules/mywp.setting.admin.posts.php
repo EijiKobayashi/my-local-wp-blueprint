@@ -150,9 +150,21 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_admin_print_footer_scripts() {
 
+    $post_data_js_custom_values = array();
+
+    $post_data_js_custom_values = apply_filters( 'mywp_setting_admin_posts_post_data_js_custom_values' , $post_data_js_custom_values );
+
+    if( ! is_array( $post_data_js_custom_values ) ) {
+
+      $post_data_js_custom_values = array();
+
+    }
+
     ?>
     <script>
     jQuery(function( $ ) {
+
+      const post_data_js_custom_values = JSON.parse( '<?php echo json_encode( $post_data_js_custom_values ); ?>' );
 
       $('#setting-screen-setting-list-columns #setting-list-columns-available-add-column').on('click', function() {
 
@@ -225,12 +237,18 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
         }
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'add_column' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'add_column' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'add_column' ) ); ?>',
-          setting_post_type: '<?php echo esc_attr( MywpSettingPostType::get_current_post_type_id() ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'add_column' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'add_column' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'add_column' ) ) ); ?>',
+          setting_post_type: '<?php echo esc_js( MywpSettingPostType::get_current_post_type_id() ); ?>',
           add_column_id: add_column_id
-          <?php do_action( 'mywp_setting_admin_posts_available_column_add_post_data_JS' ); ?>
+          <?php //do_action( 'mywp_setting_admin_posts_available_column_add_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $spinner.css('visibility', 'visible');
 
@@ -242,7 +260,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -250,7 +268,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
           if( xhr.data.result_html === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -276,7 +294,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -691,19 +709,15 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     }
 
+    $list_column_default = MywpControllerModuleAdminPosts::get_list_column_default();
+
     if( ! empty( $formatted_data['list_columns'] ) ) {
 
       foreach( $formatted_data['list_columns'] as $list_column_id => $list_column_setting ) {
 
         $list_column_id = strip_tags( $list_column_id );
 
-        $new_list_column_setting = array(
-          'id' => $list_column_id,
-          'sort' => '',
-          'orderby' => '',
-          'title' => '',
-          'width' => '',
-        );
+        $new_list_column_setting = wp_parse_args( array( 'id' => $list_column_id ) , $list_column_default );
 
         if( ! empty( $list_column_setting['sort'] ) ) {
 

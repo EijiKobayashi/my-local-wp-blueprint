@@ -46,6 +46,7 @@ final class MywpSettingInit {
       'admin_uploads'             => $dir . 'mywp.setting.admin.uploads.php',
       'admin_user_edit'           => $dir . 'mywp.setting.admin.user-edit.php',
       'admin_users'               => $dir . 'mywp.setting.admin.users.php',
+      'admin_site_editor'         => $dir . 'mywp.setting.admin.site-editor.php',
 
       'debug_blogs'               => $dir . 'mywp.setting.debug.blogs.php',
       'debug_crons'               => $dir . 'mywp.setting.debug.crons.php',
@@ -477,8 +478,11 @@ final class MywpSettingInit {
 
     $mywp_admin_setting = array(
       'error_try_again' => sprintf( 'ERROR: %s' , __( 'Please try again.' ) ),
+      'unknown_error_reload_page' => __( 'An error has occurred. Please reload the page and try again.' ),
       'confirm_message' => __( 'Are you sure you want to do this?' ),
+      'confirm_update_message' => __( 'Are you sure you want to update?' , 'my-wp' ),
       'confirm_delete_message' => __( 'Are you sure you want to delete this?' , 'my-wp' ),
+      'finish_message' => __( 'Finished' , 'my-wp' ),
       'not_found_update_url' => __( 'Not found update URL.' , 'my-wp' ),
       'column_already_added' => __( 'It column can not be added because it has already added.' , 'my-wp' ),
     );

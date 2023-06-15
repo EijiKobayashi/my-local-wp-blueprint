@@ -74,7 +74,7 @@ final class MywpSettingScreen {
 
   public static function set_current_screen_id( $setting_screen_id = false ) {
 
-    $setting_screen_id = strip_tags( $setting_screen_id );
+    $setting_screen_id = esc_attr( strip_tags( $setting_screen_id ) );
 
     self::$current_screen_id = $setting_screen_id;
 

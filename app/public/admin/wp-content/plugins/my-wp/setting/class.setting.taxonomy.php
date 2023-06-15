@@ -66,7 +66,7 @@ final class MywpSettingTaxonomy {
 
   public static function set_current_taxonomy_id( $taxonomy = false ) {
 
-    $taxonomy = strip_tags( $taxonomy );
+    $taxonomy = esc_attr( strip_tags( $taxonomy ) );
 
     self::$current_taxonomy_id = $taxonomy;
 

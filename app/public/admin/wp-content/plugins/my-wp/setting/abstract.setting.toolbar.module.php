@@ -831,9 +831,21 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
   public static function mywp_current_admin_print_footer_scripts() {
 
+    $post_data_js_custom_values = array();
+
+    $post_data_js_custom_values = apply_filters( 'mywp_setting_' . static::$id . '_post_data_js_custom_values' , $post_data_js_custom_values );
+
+    if( ! is_array( $post_data_js_custom_values ) ) {
+
+      $post_data_js_custom_values = array();
+
+    }
+
     ?>
     <script>
     jQuery(function( $ ) {
+
+      const post_data_js_custom_values = JSON.parse( '<?php echo json_encode( $post_data_js_custom_values ); ?>' );
 
       $('.sortable-items').sortable({
         placeholder: 'sortable-placeholder',
@@ -886,10 +898,16 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
           }
 
           PostData = {
-            action: '<?php echo MywpSetting::get_ajax_action_name( static::$id , 'update_item_order_and_parents' ); ?>',
-            <?php echo MywpSetting::get_ajax_action_name( static::$id , 'update_item_order_and_parents' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'update_item_order_and_parents' ) ); ?>',
+            action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'update_item_order_and_parents' ) ); ?>',
+            <?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'update_item_order_and_parents' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'update_item_order_and_parents' ) ) ); ?>',
             item_order_parents: item_order_parents
           };
+
+          $.each( post_data_js_custom_values, function( key , value ) {
+
+            PostData[ key ] = value;
+
+          });
 
           $.ajax({
             type: 'post',
@@ -899,7 +917,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
             if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-              alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+              alert( mywp_admin_setting.unknown_error_reload_page );
 
               return false;
 
@@ -909,7 +927,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
           }).fail( function( xhr ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -920,6 +938,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
           });
 
         }
+
       });
 
       $('#toolbar-available-item-add-button').on('click', function() {
@@ -985,11 +1004,17 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
         $spinner.css('visibility', 'visible');
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( static::$id , 'add_items' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( static::$id , 'add_items' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'add_items' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'add_items' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'add_items' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'add_items' ) ) ); ?>',
           add_items: add_items
           <?php do_action( 'mywp_setting_' . static::$id . '_available_item_add_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -999,7 +1024,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1007,7 +1032,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
           if( xhr.data.result_html === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1029,7 +1054,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1062,7 +1087,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
         if( ! current_toolbar_item_id ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1090,7 +1115,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
         if( ! change_icon_toolbar_item_id || ! select_class ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1184,11 +1209,17 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
         });
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( static::$id , 'remove_items' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( static::$id , 'remove_items' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'remove_items' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'remove_items' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'remove_items' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'remove_items' ) ) ); ?>',
           remove_items: remove_items
           <?php do_action( 'mywp_setting_' . static::$id . '_item_remove_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -1198,7 +1229,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1212,7 +1243,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
         }).always( function( xhr ) {
 
@@ -1262,11 +1293,17 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
         };
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( static::$id , 'update_item' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( static::$id , 'update_item' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'update_item' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'update_item' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'update_item' ) ); ?>: '<?php echo esc_js(  wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'update_item' ) ) ); ?>',
           update_item: update_item
           <?php do_action( 'mywp_setting_' . static::$id . '_item_update_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -1276,7 +1313,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1284,7 +1321,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1315,10 +1352,16 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
         let $spinner = $(this).parent().find('.spinner').css('visibility', 'visible');
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( static::$id , 'remove_cache' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( static::$id , 'remove_cache' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'remove_cache' ) ); ?>'
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'remove_cache' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( static::$id , 'remove_cache' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( static::$id , 'remove_cache' ) ) ); ?>'
           <?php do_action( 'mywp_setting_' . static::$id . '_remove_cache_post_data_JS' ); ?>
         };
+
+        $.each( post_data_js_custom_values, function( key , value ) {
+
+          PostData[ key ] = value;
+
+        });
 
         $.ajax({
           type: 'post',
@@ -1328,7 +1371,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -1336,7 +1379,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -1348,7 +1391,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
       });
 
-      <?php do_action( 'mywp_setting_' . static::$id . '_custom_jquery_print_footer_scripts' ); ?>
+      <?php //do_action( 'mywp_setting_' . static::$id . '_custom_jquery_print_footer_scripts' ); ?>
 
     });
     </script>
@@ -2050,7 +2093,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
     }
 
-    @set_time_limit( 300 );
+    MywpHelper::set_time_limit( 300 );
 
     $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 

@@ -41,50 +41,47 @@ class MWF_Functions {
 	}
 
 	/**
-	 * Convert file URL to file path.
+	 * Generate file path based on temp directory.
 	 *
-	 * @param string $fileurl File URL.
+	 * @param string $filename The file basename.
 	 * @return string
 	 */
-	public static function fileurl_to_path( $fileurl ) {
-		if ( ! preg_match( '/^https?:\/\//', $fileurl ) ) {
-			return;
+	public static function generate_uploaded_fileurl_from_filename( $filename ) {
+		$filename = basename( $filename );
+		$File     = new MW_WP_Form_File();
+		$temp_dir = $File->get_temp_dir();
+
+		if ( strstr( $filename, '/' ) || strstr( $filename, '\\' ) ) {
+			return false;
 		}
 
-		$wp_upload_dir = wp_upload_dir();
-		$baseurl       = preg_replace( '/^https?:\/\/(.+)$/', '$1', $wp_upload_dir['baseurl'] );
-		$fileurl       = preg_replace( '/^https?:\/\/(.+)$/', '$1', $fileurl );
-		$filepath      = str_replace(
-			$baseurl,
-			$wp_upload_dir['basedir'],
-			$fileurl
-		);
+		if ( strstr( $filename, "\0" ) ) {
+			return false;
+		}
 
-		return $filepath;
+		return path_join( $temp_dir['url'], $filename );
 	}
 
 	/**
-	 * Convert file path to file URL.
+	 * Generate file URL based on temp directory.
 	 *
-	 * @param string $filepath File path.
+	 * @param string $filename The file basename.
 	 * @return string
 	 */
-	public static function filepath_to_url( $filepath ) {
-		if ( preg_match( '/^https?:\/\//', $filepath ) ) {
-			return;
+	public static function generate_uploaded_filepath_from_filename( $filename ) {
+		$filename = basename( $filename );
+		$File     = new MW_WP_Form_File();
+		$temp_dir = $File->get_temp_dir();
+
+		if ( strstr( $filename, '/' ) || strstr( $filename, '\\' ) ) {
+			return false;
 		}
 
-		$wp_upload_dir = wp_upload_dir();
-		$fileurl       = str_replace(
-			$wp_upload_dir['basedir'],
-			$wp_upload_dir['baseurl'],
-			$filepath
-		);
-		if ( is_ssl() ) {
-			$fileurl = preg_replace( '/^https?:\/\//', 'https://', $fileurl );
+		if ( strstr( $filename, "\0" ) ) {
+			return false;
 		}
 
-		return $fileurl;
+		return path_join( $temp_dir['dir'], $filename );
 	}
 
 	/**
@@ -340,6 +337,12 @@ class MWF_Functions {
 						'application/mspowerpoint',
 						'application/powerpoint',
 						'application/ppt',
+					);
+					break;
+				case 'pdf':
+					$wp_check_filetype['type'] = array(
+						$wp_check_filetype['type'],
+						'application/x-empty',
 					);
 					break;
 			}

@@ -58,7 +58,7 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
 
   <p id="meta-box-screen-refresh">
 
-    <a href="<?php echo esc_url( $current_meta_box_screen_url ); ?>" class="button button-secondary" id="meta-box-screen-refresh-button">
+    <a href="<?php echo esc_url( add_query_arg( array( 'mywp_refresh_metabox' => 1 ) , $current_meta_box_screen_url ) ); ?>" class="button button-secondary" id="meta-box-screen-refresh-button">
       <span class="dashicons dashicons-update"></span>
       <?php _e( 'Refresh meta boxes' , 'my-wp' ); ?>
     </a>
