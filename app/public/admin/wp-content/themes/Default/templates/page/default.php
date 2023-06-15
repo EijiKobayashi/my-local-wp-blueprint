@@ -5,6 +5,11 @@
       <h1 class="p-pagetitle__heading"><?php the_title(); ?></h1>
     </div>
   </div>
+  <?php
+  if (function_exists('yoast_breadcrumb')) {
+    yoast_breadcrumb('<div class="p-breadcrumbs">', '</div>');
+  }
+  ?>
   <div class="p-breadcrumbs">
     <?php
     $args = array(

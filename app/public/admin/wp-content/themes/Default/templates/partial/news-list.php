@@ -70,6 +70,9 @@ if ($wp_query->have_posts()) {
     pagination($wp_query->max_num_pages, get_query_var('paged'));
   }
   ?>
+  <?php /*if (function_exists('wp_pagenavi')) {
+    wp_pagenavi();
+  }*/ ?>
 <?php
 }
 wp_reset_query();

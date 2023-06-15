@@ -2,9 +2,9 @@
 global $post;
 $slug = esc_html($post->post_name);
 $contents = esc_html($post->post_content);
-$template = dirname(__FILE__) . '/templates/page/'. $slug .'.php';
+$template = dirname(__FILE__) . '/templates/page/' . $slug . '.php';
 
-if ( file_exists($template) ) {
+if (file_exists($template)) {
   require_once $template;
 } else {
   //echo '"'. $slug .'" テンプレートが存在しません！';

@@ -1,4 +1,25 @@
 <?php get_header(); ?>
+<?php
+if (function_exists('yoast_breadcrumb')) {
+  yoast_breadcrumb('<div class="p-breadcrumbs">', '</div>');
+}
+?>
+<div class="p-breadcrumbs">
+  <?php
+  $args = array(
+    'nav_div' => 'nav',
+    'nav_div_class' => 'p-breadcrumbs__inner',
+    'aria_label' => 'breadcrumbs',
+    'ul_class' => 'p-breadcrumbs__list',
+    'li_class' => '',
+    'li_active_class' => 'is-active',
+    'aria_current' => 'page',
+    'separator' => ' ',
+    'post_type' => 'news',
+  );
+  custom_breadcrumb($args);
+  ?>
+</div>
 <div id="content">
   <?php if (have_posts()) : ?>
     <?php $post = $posts[0]; // Hack. Set $post so that the_date() works.

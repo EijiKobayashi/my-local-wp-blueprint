@@ -1,4 +1,9 @@
 <?php get_header(); ?>
+<?php
+if (function_exists('yoast_breadcrumb')) {
+  yoast_breadcrumb('<div class="p-breadcrumbs">', '</div>');
+}
+?>
 <div class="p-breadcrumbs">
   <?php
   $args = array(
