@@ -58,7 +58,7 @@ final class MywpSettingScreenDebugFindOption extends MywpAbstractSettingModule {
 
       $('#find-option').on('click', function() {
 
-        let current_url = '<?php echo ( $current_url ); ?>';
+        let current_url = '<?php echo esc_js( $current_url ); ?>';
 
         let find_option_name = $('#request-find-option-name').val();
 

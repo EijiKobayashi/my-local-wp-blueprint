@@ -317,12 +317,13 @@ class QM_Collector_PHP_Errors extends QM_DataCollector {
 
 		printf(
 			// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
-			'<link rel="stylesheet" href="%s" media="all" />',
-			esc_url( QueryMonitor::init()->plugin_url( 'assets/query-monitor.css' ) )
+			'<link rel="stylesheet" href="%1$s?ver=%2$s" media="all" />',
+			esc_url( QueryMonitor::init()->plugin_url( 'assets/query-monitor.css' ) ),
+			esc_attr( QM_VERSION )
 		);
 
 		// This unused wrapper with an attribute serves to help the #qm-fatal div break out of an
-		// attribute if a fatal has occured within one.
+		// attribute if a fatal has occurred within one.
 		echo '<div data-qm="qm">';
 
 		printf(
@@ -474,8 +475,8 @@ class QM_Collector_PHP_Errors extends QM_DataCollector {
 	 * Filters the reportable PHP errors using the table specified. Users can customize the levels
 	 * using the `qm/collect/php_error_levels` filter.
 	 *
-	 * @param int[]  $components     The error levels keyed by component name.
-	 * @param string $component_type The component type, for example 'plugin' or 'theme'.
+	 * @param array<string, int> $components     The error levels keyed by component name.
+	 * @param string             $component_type The component type, for example 'plugin' or 'theme'.
 	 * @return void
 	 */
 	public function filter_reportable_errors( array $components, $component_type ) {

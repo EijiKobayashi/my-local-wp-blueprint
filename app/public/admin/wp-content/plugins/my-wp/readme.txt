@@ -2,8 +2,8 @@
 Contributors: gqevu6bsiz
 Tags: mywp, admin, backend, frontend, customize, dashboard, debug, white label, sidebar, admin sidebar, toolbar, admin toolbar, frontend toolbar, metabox, posts, edit-post, uploads, users, user-edit, profile, comments
 Requires at least: 4.7
-Tested up to: 6.1
-Stable tag: 1.20.1
+Tested up to: 6.2
+Stable tag: 1.21.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,6 +45,18 @@ You will speed up to your site creation. Debug on current post, Debug on current
 10. Developer panel on footer.
 
 == Changelog ==
+
+= 1.21.1 2023-05-09 =
+* Fixed: Misalignment of admin sidebar menu on mobile.
+* Fixed: Hidden avatar icon on Site Editor.
+* Fixed: Some security update(XSS vulnerability).
+
+= 1.21.0 2023-03-31 =
+* Added: Change icon for Site Editor.
+* Updated: Update register meta boxes.
+* Updated: Some javascript escapes.
+* Updated: Get current_screen_id for developer tool.
+* Updated: Get default list columns and meta box setting for some controllers.
 
 = 1.20.1 2022-11-14 =
 * Added: Hide rest api link and shortlink on HTML meta of Frontend.

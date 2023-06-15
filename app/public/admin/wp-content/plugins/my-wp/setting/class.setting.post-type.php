@@ -72,7 +72,7 @@ final class MywpSettingPostType {
 
   public static function set_current_post_type_id( $post_type = false ) {
 
-    $post_type = strip_tags( $post_type );
+    $post_type = esc_attr( strip_tags( $post_type ) );
 
     self::$current_post_type_id = $post_type;
 

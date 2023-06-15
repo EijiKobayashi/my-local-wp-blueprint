@@ -137,7 +137,17 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
     $current_meta_boxes = $wp_meta_boxes[ $metabox_screen_id ];
 
-    $option['regist_meta_boxes'][ $metabox_screen_id ] = array();
+    if( ! isset( $option['regist_meta_boxes'][ $metabox_screen_id ] ) ) {
+
+      $option['regist_meta_boxes'][ $metabox_screen_id ] = array();
+
+    }
+
+    if( ! empty( $_GET['mywp_refresh_metabox'] ) ) {
+
+      $option['regist_meta_boxes'][ $metabox_screen_id ] = array();
+
+    }
 
     foreach( $current_meta_boxes as $context => $priority_meta_boxes ) {
 
@@ -163,13 +173,15 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
           }
 
-          $option['regist_meta_boxes'][ $metabox_screen_id ][ $meta_box_id ] = array(
+          $regist_meta_box = array(
             'id' => $meta_box_id,
             'context' => $context,
             'priority' => $priority,
             'title' => strip_tags( $meta_box['title'] ),
             'args' => $meta_box['args'],
           );
+
+          $option['regist_meta_boxes'][ $metabox_screen_id ][ $meta_box_id ] = $regist_meta_box;
 
         }
 

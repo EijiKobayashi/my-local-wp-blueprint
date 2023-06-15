@@ -38,6 +38,7 @@ final class MywpControllerInit {
       'admin_uploads'             => $dir . 'mywp.controller.module.admin.uploads.php',
       'admin_user_edit'           => $dir . 'mywp.controller.module.admin.user-edit.php',
       'admin_users'               => $dir . 'mywp.controller.module.admin.users.php',
+      'admin_site_editor'         => $dir . 'mywp.controller.module.admin.site-editor.php',
 
       'debug_general'             => $dir . 'mywp.controller.module.debug.general.php',
 

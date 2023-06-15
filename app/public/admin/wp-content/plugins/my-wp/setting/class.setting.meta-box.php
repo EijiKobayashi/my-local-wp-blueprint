@@ -16,13 +16,13 @@ final class MywpSettingMetaBox {
 
   private static $current_metabox_setting_data;
 
-  public static function get_setting_meta_boxes() {
+  private static function get_regist_meta_boxes_model() {
+
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
     $mywp_controller = MywpController::get_controller( 'admin_regist_meta_boxes' );
 
     if( empty( $mywp_controller['model'] ) ) {
-
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_require_message( '$mywp_controller["model"]' , $called_text );
 
@@ -30,7 +30,23 @@ final class MywpSettingMetaBox {
 
     }
 
-    $option = $mywp_controller['model']->get_option();
+    return $mywp_controller['model'];
+
+  }
+
+  public static function get_setting_meta_boxes() {
+
+    $regist_meta_boxes_model = self::get_regist_meta_boxes_model();
+
+    if( empty( $regist_meta_boxes_model ) ) {
+
+      MywpHelper::error_require_message( '$regist_meta_boxes_model' , $called_text );
+
+      return false;
+
+    }
+
+    $option = $regist_meta_boxes_model->get_option();
 
     if( empty( $option['regist_meta_boxes'] ) ) {
 
@@ -140,7 +156,7 @@ final class MywpSettingMetaBox {
 
       foreach( $meta_box_setting_data as $key => $data ) {
 
-        if( !isset( $data['action'] ) ) {
+        if( ! isset( $data['action'] ) ) {
 
           unset( $meta_box_setting_data[ $key ] );
 
@@ -157,6 +173,40 @@ final class MywpSettingMetaBox {
   public static function get_current_meta_box_setting_data() {
 
     return self::$current_metabox_setting_data;
+
+  }
+
+  public static function delete_current_meta_boxes() {
+
+    if( empty( self::$current_meta_box_screen_id ) ) {
+
+      return false;
+
+    }
+
+    $regist_meta_boxes_model = self::get_regist_meta_boxes_model();
+
+    if( empty( $regist_meta_boxes_model ) ) {
+
+      MywpHelper::error_require_message( '$regist_meta_boxes_model' , $called_text );
+
+      return false;
+
+    }
+
+    $option = $regist_meta_boxes_model->get_option();
+
+    if( ! isset( $option['regist_meta_boxes'][ self::$current_meta_box_screen_id ] ) ) {
+
+      return false;
+
+    }
+
+    unset( $option['regist_meta_boxes'][ self::$current_meta_box_screen_id ] );
+
+    $regist_meta_boxes_model->update_data( $option );
+
+    return true;
 
   }
 

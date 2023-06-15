@@ -693,6 +693,10 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
       add_filter( 'mywp_model_get_option_key_mywp_' . self::$id , array( __CLASS__ , 'mywp_model_get_option_key' ) );
 
+      MywpSettingMetaBox::set_current_meta_box_screen_id( self::$post_type );
+
+      MywpSettingMetaBox::delete_current_meta_boxes();
+
     }
 
   }

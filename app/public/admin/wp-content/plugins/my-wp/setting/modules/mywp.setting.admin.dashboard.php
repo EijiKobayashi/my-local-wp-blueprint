@@ -105,13 +105,15 @@ final class MywpSettingScreenAdminDashboard extends MywpAbstractSettingModule {
 
     $new_formatted_data['advance'] = $formatted_data['advance'];
 
+    $meta_box_default = MywpControllerModuleAdminDashboard::get_meta_box_default();
+
     if( ! empty( $formatted_data['meta_boxes'] ) ) {
 
       foreach( $formatted_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
 
         $meta_box_id = strip_tags( $meta_box_id );
 
-        $new_meta_box_setting = array( 'action' => '' , 'title' => '' );
+        $new_meta_box_setting = $meta_box_default;
 
         $new_meta_box_setting['action'] = strip_tags( $meta_box_setting['action'] );
 
@@ -140,6 +142,14 @@ final class MywpSettingScreenAdminDashboard extends MywpAbstractSettingModule {
     }
 
     return $new_formatted_data;
+
+  }
+
+  public static function mywp_current_setting_before_post_data_action_remove( $validated_data ) {
+
+    MywpSettingMetaBox::set_current_meta_box_screen_id( 'dashboard' );
+
+    MywpSettingMetaBox::delete_current_meta_boxes();
 
   }
 

@@ -199,7 +199,7 @@ final class MywpSettingBlockEditor {
 
       foreach( $block_editor_panels_setting_data as $key => $data ) {
 
-        if( !isset( $data['action'] ) ) {
+        if( ! isset( $data['action'] ) ) {
 
           unset( $block_editor_panels_setting_data[ $key ] );
 

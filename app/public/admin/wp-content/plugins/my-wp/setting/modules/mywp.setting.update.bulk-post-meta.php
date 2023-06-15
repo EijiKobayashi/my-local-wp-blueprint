@@ -378,8 +378,8 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
         $setting_update_bulk_post_meta_update_results.addClass('disabled');
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'show_posts' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'show_posts' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'show_posts' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'show_posts' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'show_posts' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'show_posts' ) ) ); ?>',
           selected_post_type: post_type,
           selected_post_status: post_status
         };
@@ -392,7 +392,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -408,7 +408,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
           if( xhr.data.result_html === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -420,7 +420,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -432,7 +432,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
       }
 
-      show_all_posts( '<?php echo self::get_selected_post_type(); ?>' , '<?php echo self::get_selected_post_status(); ?>' );
+      show_all_posts( '<?php echo esc_js( self::get_selected_post_type() ); ?>' , '<?php echo esc_js( self::get_selected_post_status() ); ?>' );
 
       $('#setting-update-bulk-post-meta-show-posts').on('click', function() {
 
@@ -569,7 +569,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
         if( is_do_run === 1 ) {
 
-          let is_confirm = window.confirm('<?php _e( 'Are you sure you want to update?' , 'my-wp' ); ?>');
+          let is_confirm = window.confirm( mywp_admin_setting.confirm_update_message );
 
           if( ! is_confirm ) {
 
@@ -586,8 +586,8 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
         $setting_update_bulk_post_meta_update_results.addClass('disabled');
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'show_bulk_post_rows' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'show_bulk_post_rows' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'show_bulk_post_rows' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'show_bulk_post_rows' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'show_bulk_post_rows' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'show_bulk_post_rows' ) ) ); ?>',
           post_ids: post_ids,
           meta_key: meta_key,
           bulk_meta_value: bulk_meta_value
@@ -601,7 +601,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
           if( typeof xhr !== 'object' || xhr.success === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -617,7 +617,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
           if( xhr.data.result_html === undefined ) {
 
-            alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+            alert( mywp_admin_setting.unknown_error_reload_page );
 
             return false;
 
@@ -639,7 +639,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
         }).fail( function( xhr ) {
 
-          alert( '<?php _e( 'An error has occurred. Please reload the page and try again.' ); ?>' );
+          alert( mywp_admin_setting.unknown_error_reload_page );
 
           return false;
 
@@ -661,7 +661,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
         if( $update_post.length < 1 ) {
 
-          alert( '<?php _e( 'Finished' , 'my-wp' ); ?>' );
+          alert( mywp_admin_setting.finish_message );
 
           return false;
 
@@ -670,8 +670,8 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
         $update_post.removeClass('wait').addClass('processing');
 
         PostData = {
-          action: '<?php echo MywpSetting::get_ajax_action_name( self::$id , 'update_post_meta' ); ?>',
-          <?php echo MywpSetting::get_ajax_action_name( self::$id , 'update_post_meta' ); ?>: '<?php echo wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'update_post_meta' ) ); ?>',
+          action: '<?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'update_post_meta' ) ); ?>',
+          <?php echo esc_js( MywpSetting::get_ajax_action_name( self::$id , 'update_post_meta' ) ); ?>: '<?php echo esc_js( wp_create_nonce( MywpSetting::get_ajax_action_name( self::$id , 'update_post_meta' ) ) ); ?>',
           is_do_run: is_do_run,
           post_id: $update_post.find('.post-id').val(),
           meta_key: meta_key,
@@ -710,7 +710,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
           if( ! xhr.data.is_do_run ) {
 
-            $is_updated.append( '<span><?php _e( 'Dry run' , 'my-wp' ); ?></span>' );
+            $is_updated.append( '<span><?php echo esc_html( esc_js( __( 'Dry run' , 'my-wp' ) ) ); ?></span>' );
 
           }
 

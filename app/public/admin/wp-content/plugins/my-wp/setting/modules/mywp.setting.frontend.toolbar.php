@@ -44,7 +44,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
 
     add_filter( 'mywp_setting_' . self::$id . '_get_item_icon_class' , array( __CLASS__ , 'frontend_get_item_icon_class' ) , 10 , 2 );
 
-    add_action( 'mywp_setting_' . self::$id . '_custom_jquery_print_footer_scripts' , array( __CLASS__ , 'frontend_jquery_print_footer_scripts' ) );
+    add_action( 'mywp_setting_admin_print_footer_scripts_' . self::$id , array( __CLASS__ , 'frontend_refresh_js' ) );
 
     add_action( 'mywp_setting_screen_header_' . self::$id , array( __CLASS__ , 'frontend_refresh_button' ) );
 
@@ -197,52 +197,56 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
 
   }
 
-  public static function frontend_jquery_print_footer_scripts() {
+  public static function frontend_refresh_js() {
 
     ?>
+    <script>
+    jQuery(function( $ ) {
 
-    $('body.mywp-setting #setting-screen-setting-frontend-toolbar-item-refresh-button').on('click', function() {
+      $('body.mywp-setting #setting-screen-setting-frontend-toolbar-item-refresh-button').on('click', function() {
 
-      let $button = $(this);
-      let $button_icon = $button.parent().find('.dashicons-update');
-      let url = $button.attr('href');
+        let $button = $(this);
+        let $button_icon = $button.parent().find('.dashicons-update');
+        let url = $button.attr('href');
 
-      if( ! url ) {
+        if( ! url ) {
 
-        alert( mywp_admin_setting.not_found_update_url );
+          alert( mywp_admin_setting.not_found_update_url );
+
+          return false;
+
+        }
+
+        $button_icon.addClass('spin');
+
+        PostData = {
+          mywp_regist_frontend_toolbar: 1
+        };
+
+        $.ajax({
+          type: 'post',
+          url: url,
+          data: PostData,
+          cache: false,
+          timeout: 10000
+        }).done( function( xhr ) {
+
+          location.reload();
+
+        }).fail( function( xhr ) {
+
+          $button_icon.removeClass('spin');
+
+          alert( mywp_admin_setting.error_try_again );
+
+        });
 
         return false;
 
-      }
-
-      $button_icon.addClass('spin');
-
-      PostData = {
-        mywp_regist_frontend_toolbar: 1
-      };
-
-      $.ajax({
-        type: 'post',
-        url: url,
-        data: PostData,
-        cache: false,
-        timeout: 10000
-      }).done( function( xhr ) {
-
-        location.reload();
-
-      }).fail( function( xhr ) {
-
-        $button_icon.removeClass('spin');
-
-        alert( mywp_admin_setting.error_try_again );
-
       });
 
-      return false;
-
     });
-
+    </script>
     <?php
 
   }
