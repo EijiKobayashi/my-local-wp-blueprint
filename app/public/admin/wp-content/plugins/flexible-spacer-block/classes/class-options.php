@@ -12,6 +12,15 @@ class Options {
 	private $breakpoints;
 	private $default_value;
 
+	private $units = array(
+		'px',
+		'%',
+		'em',
+		'rem',
+		'vw',
+		'vh',
+	);
+
 	/**
 	 * Constructor
 	 */
@@ -163,16 +172,30 @@ class Options {
 		$default_value_sm = isset( $this->default_value['sm'] ) ? $this->default_value['sm'] : FSB_DEFAULT_SPACER_HEIGHT;
 		$default_value_md = isset( $this->default_value['md'] ) ? $this->default_value['md'] : FSB_DEFAULT_SPACER_HEIGHT;
 		$default_value_lg = isset( $this->default_value['lg'] ) ? $this->default_value['lg'] : FSB_DEFAULT_SPACER_HEIGHT;
+
+		$default_value_sm_unit = isset( $this->default_value['sm_unit'] ) ? $this->default_value['sm_unit'] : FSB_DEFAULT_SPACER_HEIGHT_UNIT;
+		$default_value_md_unit = isset( $this->default_value['md_unit'] ) ? $this->default_value['md_unit'] : FSB_DEFAULT_SPACER_HEIGHT_UNIT;
+		$default_value_lg_unit = isset( $this->default_value['lg_unit'] ) ? $this->default_value['lg_unit'] : FSB_DEFAULT_SPACER_HEIGHT_UNIT;
 		?>
 		<div class="fsb-option-default-values">
 			<div class="fsb-option-default-values__col">
-				<div class="fsb-option-default-values__device">
+				<div class="fsb-option-breakpoint__device">
 					<svg viewBox="0 0 24 24" width="48" height="48"><path d="M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z"></path></svg>
 					<?php _e( 'Mobile', 'flexible-spacer-block' ); ?>
 				</div>
 				<div class="fsb-option-default-values__input">
 					<input type="number" name="flexible_spacer_block_default_value[sm]" min="<?php echo FSB_MIN_SPACER_HEIGHT; ?>" max="<?php echo FSB_MAX_SPACER_HEIGHT; ?>" value="<?php echo esc_attr( $default_value_sm ); ?>">
-					<span>px</span>
+					<select name="flexible_spacer_block_default_value[sm_unit]">
+						<?php
+						foreach ( $this->units as $unit ) {
+							if ( $unit === $default_value_sm_unit ) {
+								echo '<option value="' . esc_attr( $unit ) . '" selected>' . esc_html( $unit ) . '</option>';
+							} else {
+								echo '<option value="' . esc_attr( $unit ) . '">' . esc_html( $unit ) . '</option>';
+							}
+						}
+						?>
+					</select>
 				</div>
 			</div>
 			<div class="fsb-option-default-values__col">
@@ -182,7 +205,17 @@ class Options {
 				</div>
 				<div class="fsb-option-default-values__input">
 					<input type="number" name="flexible_spacer_block_default_value[md]" min="<?php echo FSB_MIN_SPACER_HEIGHT; ?>" max="<?php echo FSB_MAX_SPACER_HEIGHT; ?>" value="<?php echo esc_attr( $default_value_md ); ?>">
-					<span>px</span>
+					<select name="flexible_spacer_block_default_value[md_unit]">
+						<?php
+						foreach ( $this->units as $unit ) {
+							if ( $unit === $default_value_md_unit ) {
+								echo '<option value="' . esc_attr( $unit ) . '" selected>' . esc_html( $unit ) . '</option>';
+							} else {
+								echo '<option value="' . esc_attr( $unit ) . '">' . esc_html( $unit ) . '</option>';
+							}
+						}
+						?>
+					</select>
 				</div>
 			</div>
 			<div class="fsb-option-default-values__col">
@@ -192,7 +225,17 @@ class Options {
 				</div>
 				<div class="fsb-option-default-values__input">
 					<input type="number" name="flexible_spacer_block_default_value[lg]" min="<?php echo FSB_MIN_SPACER_HEIGHT; ?>" max="<?php echo FSB_MAX_SPACER_HEIGHT; ?>" value="<?php echo esc_attr( $default_value_lg ); ?>">
-					<span>px</span>
+					<select name="flexible_spacer_block_default_value[lg_unit]">
+						<?php
+						foreach ( $this->units as $unit ) {
+							if ( $unit === $default_value_lg_unit ) {
+								echo '<option value="' . esc_attr( $unit ) . '" selected>' . esc_html( $unit ) . '</option>';
+							} else {
+								echo '<option value="' . esc_attr( $unit ) . '">' . esc_html( $unit ) . '</option>';
+							}
+						}
+						?>
+					</select>
 				</div>
 			</div>
 		</div>
@@ -272,6 +315,10 @@ class Options {
 		$default_value_md = isset( $input['md'] ) ? absint( $input['md'] ) : '';
 		$default_value_lg = isset( $input['lg'] ) ? absint( $input['lg'] ) : '';
 
+		$default_value_sm_unit = isset( $input['sm_unit'] ) && in_array( $input['sm_unit'], $this->units, true ) ? $input['sm_unit'] : 'px';
+		$default_value_md_unit = isset( $input['md_unit'] ) && in_array( $input['md_unit'], $this->units, true ) ? $input['md_unit'] : 'px';
+		$default_value_lg_unit = isset( $input['lg_unit'] ) && in_array( $input['lg_unit'], $this->units, true ) ? $input['lg_unit'] : 'px';
+
 		if ( 0 === $default_value_sm || 0 === $default_value_md || 0 === $default_value_lg ) {
 			add_settings_error(
 				'flexible-spacer-block-default-values',
@@ -279,15 +326,21 @@ class Options {
 				__( 'Default Value: Fill in all fields.', 'flexible-spacer-block' )
 			);
 			$new_input = array(
-				'sm' => isset( $this->default_value['sm'] ) ? $this->default_value['sm'] : FSB_DEFAULT_SPACER_HEIGHT,
-				'md' => isset( $this->default_value['md'] ) ? $this->default_value['md'] : FSB_DEFAULT_SPACER_HEIGHT,
-				'lg' => isset( $this->default_value['lg'] ) ? $this->default_value['lg'] : FSB_DEFAULT_SPACER_HEIGHT,
+				'sm'      => isset( $this->default_value['sm'] ) ? $this->default_value['sm'] : FSB_DEFAULT_SPACER_HEIGHT,
+				'md'      => isset( $this->default_value['md'] ) ? $this->default_value['md'] : FSB_DEFAULT_SPACER_HEIGHT,
+				'lg'      => isset( $this->default_value['lg'] ) ? $this->default_value['lg'] : FSB_DEFAULT_SPACER_HEIGHT,
+				'sm_unit' => isset( $this->default_value['sm_unit'] ) ? $this->default_value['sm_unit'] : FSB_DEFAULT_SPACER_HEIGHT_UNIT,
+				'md_unit' => isset( $this->default_value['md_unit'] ) ? $this->default_value['md_unit'] : FSB_DEFAULT_SPACER_HEIGHT_UNIT,
+				'lg_unit' => isset( $this->default_value['lg_unit'] ) ? $this->default_value['lg_unit'] : FSB_DEFAULT_SPACER_HEIGHT_UNIT,
 			);
 		} else {
 			$new_input = array(
-				'sm' => min( max( $default_value_sm, FSB_MIN_SPACER_HEIGHT ), FSB_MAX_SPACER_HEIGHT ),
-				'md' => min( max( $default_value_md, FSB_MIN_SPACER_HEIGHT ), FSB_MAX_SPACER_HEIGHT ),
-				'lg' => min( max( $default_value_lg, FSB_MIN_SPACER_HEIGHT ), FSB_MAX_SPACER_HEIGHT ),
+				'sm'      => min( max( $default_value_sm, FSB_MIN_SPACER_HEIGHT ), FSB_MAX_SPACER_HEIGHT ),
+				'md'      => min( max( $default_value_md, FSB_MIN_SPACER_HEIGHT ), FSB_MAX_SPACER_HEIGHT ),
+				'lg'      => min( max( $default_value_lg, FSB_MIN_SPACER_HEIGHT ), FSB_MAX_SPACER_HEIGHT ),
+				'sm_unit' => $default_value_sm_unit,
+				'md_unit' => $default_value_md_unit,
+				'lg_unit' => $default_value_lg_unit,
 			);
 		}
 		return $new_input;

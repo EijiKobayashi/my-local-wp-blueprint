@@ -28,7 +28,15 @@ final class MywpShortcodeModuleTheme extends MywpShortcodeAbstractModule {
 
     $theme_id = false;
 
+    $is_parent = false;
+
     if( ! empty( $atts['parent'] ) ) {
+
+      $is_parent = true;
+
+    }
+
+    if( $is_parent ) {
 
       $theme_id = get_template();
 
@@ -50,27 +58,11 @@ final class MywpShortcodeModuleTheme extends MywpShortcodeAbstractModule {
 
     if( $field === 'url' ) {
 
-      if( ! empty( $atts['parent'] ) ) {
-
-        $content = get_template_directory_uri();
-
-      } else {
-
-        $content = get_stylesheet_directory_uri();
-
-      }
+      $content = MywpApi::get_theme_url( $is_parent );
 
     } elseif( $field === 'path' ) {
 
-      if( ! empty( $atts['parent'] ) ) {
-
-        $content = get_template_directory();
-
-      } else {
-
-        $content = get_stylesheet_directory();
-
-      }
+      $content = MywpApi::get_theme_path( $is_parent );
 
     } elseif( $field === 'name' ) {
 

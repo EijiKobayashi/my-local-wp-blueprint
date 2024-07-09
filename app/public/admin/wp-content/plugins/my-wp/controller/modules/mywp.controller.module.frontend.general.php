@@ -17,8 +17,12 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
   public static function mywp_controller_initial_data( $initial_data ) {
 
     $initial_data['admin_bar'] = '';
+
     $initial_data['hide_rest_link_header'] = '';
     $initial_data['hide_shortlink_header'] = '';
+    $initial_data['hide_x_pingback'] = '';
+    $initial_data['x_frame_option'] = '';
+
     $initial_data['hide_wp_generator'] = '';
     $initial_data['hide_wlwmanifest_link'] = '';
     $initial_data['hide_rsd_link'] = '';
@@ -37,8 +41,12 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
   public static function mywp_controller_default_data( $default_data ) {
 
     $default_data['admin_bar'] = '';
+
     $default_data['hide_rest_link_header'] = false;
     $default_data['hide_shortlink_header'] = false;
+    $default_data['hide_x_pingback'] = false;
+    $default_data['x_frame_option'] = '';
+
     $default_data['hide_wp_generator'] = false;
     $default_data['hide_wlwmanifest_link'] = false;
     $default_data['hide_rsd_link'] = false;
@@ -68,6 +76,8 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     }
 
+    add_action( 'send_headers' , array( __CLASS__ , 'send_headers' ) );
+
     add_filter( 'show_admin_bar' , array( __CLASS__ , 'is_show_admin_bar' ) );
 
     add_action( 'wp' , array( __CLASS__ , 'hide_rest_link_header' ) );
@@ -88,9 +98,33 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     add_action( 'wp' , array( __CLASS__ , 'hide_shortlink' ) );
 
+    add_filter( 'wp_headers' , array( __CLASS__ , 'wp_headers' ) );
+
     add_action( 'wp_head' , array( __CLASS__ , 'wp_head' ) );
 
     add_action( 'wp_enqueue_scripts' , array( __CLASS__ , 'wp_enqueue_scripts' ) );
+
+  }
+
+  public static function send_headers() {
+
+    if( ! self::is_do_function( __FUNCTION__ ) ) {
+
+      return false;
+
+    }
+
+    $setting_data = self::get_setting_data();
+
+    if( empty( $setting_data['x_frame_option'] ) ) {
+
+      return false;
+
+    }
+
+    header( sprintf( 'X-Frame-Options: %s' , $setting_data['x_frame_option']) );
+
+    self::after_do_function( __FUNCTION__ );
 
   }
 
@@ -167,6 +201,34 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
     remove_action( 'template_redirect' , 'wp_shortlink_header' , 11 );
 
     self::after_do_function( __FUNCTION__ );
+
+  }
+
+  public static function wp_headers( $headers ) {
+
+    if( ! self::is_do_function( __FUNCTION__ ) ) {
+
+      return $headers;
+
+    }
+
+    $setting_data = self::get_setting_data();
+
+    if( empty( $setting_data['hide_x_pingback'] ) ) {
+
+      return $headers;
+
+    }
+
+    if( isset( $headers['X-Pingback'] ) ) {
+
+      unset( $headers['X-Pingback'] );
+
+    }
+
+    self::after_do_function( __FUNCTION__ );
+
+    return $headers;
 
   }
 

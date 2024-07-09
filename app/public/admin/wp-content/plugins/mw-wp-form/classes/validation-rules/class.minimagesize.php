@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -52,7 +52,8 @@ class MW_WP_Form_Validation_Rule_MinImageSize extends MW_WP_Form_Abstract_Valida
 			$filepath = $upload_files[ $name ]['tmp_name'];
 		} else {
 			// Check if uploaded
-			$filepath = MWF_Functions::generate_uploaded_filepath_from_filename( $value );
+			$form_id  = MWF_Functions::get_form_id_from_form_key( $this->Data->get_form_key() );
+			$filepath = MW_WP_Form_Directory::generate_user_filepath( $form_id, $name, $value );
 		}
 
 		if ( file_exists( $filepath ) && exif_imagetype( $filepath ) ) {
@@ -84,12 +85,12 @@ class MW_WP_Form_Validation_Rule_MinImageSize extends MW_WP_Form_Abstract_Valida
 	public function admin( $key, $value ) {
 		$width  = '';
 		$height = '';
-		if ( is_array( $value[ $this->getName() ] ) ) {
-			if ( isset( $value[ $this->getName() ]['width'] ) ) {
-				$width = $value[ $this->getName() ]['width'];
+		if ( is_array( $value[ $this->get_name() ] ) ) {
+			if ( isset( $value[ $this->get_name() ]['width'] ) ) {
+				$width = $value[ $this->get_name() ]['width'];
 			}
-			if ( isset( $value[ $this->getName() ]['height'] ) ) {
-				$height = $value[ $this->getName() ]['height'];
+			if ( isset( $value[ $this->get_name() ]['height'] ) ) {
+				$height = $value[ $this->get_name() ]['height'];
 			}
 		}
 		?>
@@ -97,9 +98,9 @@ class MW_WP_Form_Validation_Rule_MinImageSize extends MW_WP_Form_Abstract_Valida
 			<tr>
 				<td><?php esc_html_e( 'Minimum image size', 'mw-wp-form' ); ?></td>
 				<td>
-					<input type="text" value="<?php echo esc_attr( $width ); ?>" size="4" name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->getName() ); ?>][width]" />
+					<input type="text" value="<?php echo esc_attr( $width ); ?>" size="4" name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->get_name() ); ?>][width]" />
 					&times;
-					<input type="text" value="<?php echo esc_attr( $height ); ?>" size="4" name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->getName() ); ?>][height]" />
+					<input type="text" value="<?php echo esc_attr( $height ); ?>" size="4" name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->get_name() ); ?>][height]" />
 				</td>
 			</tr>
 		</table>

@@ -86,18 +86,19 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 		$chars_en = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 		$chars_jp = 'あいうえおかきくけこさしすせそたちつてとなにのひふへまみむもやゆよらりん';
 
+		$chars = '';
 		$word = '';
 
 		if ( 'jp' == $this->lang_mode ) {
-			$this->chars = $chars_jp;
+			$chars = $chars_jp;
 		} else {
-			$this->chars = $chars_en;
+			$chars = $chars_en;
 		}
 
-		$chars_size = mb_strlen( $this->chars );
+		$chars_size = mb_strlen( $chars );
 		for ( $i = 0; $i < $this->char_length; $i++ ) {
 			$pos   = siteguard_rand( 0, $chars_size - 1 );
-			$char  = mb_substr( $this->chars, $pos, 1 );
+			$char  = mb_substr( $chars, $pos, 1 );
 			$word .= $char;
 		}
 
@@ -120,7 +121,7 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 
 		/* Array of fonts. Randomly picked up per character */
 		if ( 'jp' == $this->lang_mode ) {
-			$this->fonts = array(
+			$fonts = array(
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-black.ttf',
 				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-bold.ttf',
 				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-heavy.ttf',
@@ -166,7 +167,7 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-thin.ttf',
 			);
 		} else {
-			$this->fonts = array(
+			$fonts = array(
 				dirname( __FILE__ ) . '/gentium/GenBkBasR.ttf',
 				dirname( __FILE__ ) . '/gentium/GenBkBasI.ttf',
 				dirname( __FILE__ ) . '/gentium/GenBkBasBI.ttf',
@@ -194,7 +195,7 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 			$gd_info   = gd_info();
 			$word_size = mb_strlen( $word );
 			for ( $i = 0; $i < $word_size; $i++ ) {
-				$font = $this->fonts[ array_rand( $this->fonts ) ];
+				$font = $fonts[ array_rand( $fonts ) ];
 				$font = $this->normalize_path( $font );
 				if ( $gd_info['JIS-mapped Japanese Font Support'] ) {
 					$char = mb_convert_encoding( mb_substr( $word, $i, 1 ), 'SJIS', 'UTF-8' );

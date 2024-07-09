@@ -38,7 +38,12 @@ import {
 	PaddingControl,
 	ColorControl,
 } from '../controls';
-import { toTableAttributes, updateCells } from '../utils/table-state';
+import {
+	toTableAttributes,
+	updateCells,
+	type VTable,
+	type VSelectedCells,
+} from '../utils/table-state';
 import { convertToObject } from '../utils/style-converter';
 import {
 	pickPadding,
@@ -46,6 +51,8 @@ import {
 	pickBorderRadius,
 	pickBorderStyle,
 	pickBorderColor,
+	type CornerProps,
+	type DirectionProps,
 } from '../utils/style-picker';
 import { sanitizeUnitValue } from '../utils/helper';
 import type {
@@ -56,8 +63,6 @@ import type {
 	SectionName,
 	BlockAttributes,
 } from '../BlockAttributes';
-import type { VTable, VSelectedCells } from '../utils/table-state';
-import type { CornerProps, DirectionProps } from '../utils/style-picker';
 
 type Props = {
 	setAttributes: ( attrs: Partial< BlockAttributes > ) => void;
@@ -69,13 +74,17 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 	const cellWidthUnits = useCustomUnits( { availableUnits: CELL_WIDTH_UNITS } );
 	const fontSizeUnits = useCustomUnits( { availableUnits: FONT_SIZE_UNITS } );
 
-	if ( ! selectedCells.length ) return null;
+	if ( ! selectedCells.length ) {
+		return null;
+	}
 
 	const { sectionName, rowIndex, vColIndex } = selectedCells[ 0 ];
 
 	const targetCell = vTable[ sectionName as SectionName ][ rowIndex ].cells[ vColIndex ];
 
-	if ( ! targetCell ) return null;
+	if ( ! targetCell ) {
+		return null;
+	}
 
 	const selectedCellTags: ( 'th' | 'td' )[] = selectedCells.reduce(
 		( result: CellTagValue[], selectedCell ) => {
@@ -225,10 +234,12 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 						units={ fontSizeUnits }
 						min="0"
 						onChange={ onChangeFontSize }
+						size="__unstable-large"
 					/>
 				</BaseControl>
 				<BaseControl id="flexible-table-block-cell-line-height" className="ftb-line-height-control">
 					<TextControl
+						className="ftb-is-next-40px-default-size"
 						label={ __( 'Cell line height', 'flexible-table-block' ) }
 						value={ cellStylesObj?.lineHeight || '' }
 						autoComplete="off"
@@ -251,6 +262,7 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 					units={ cellWidthUnits }
 					min="0"
 					onChange={ onChangeWidth }
+					size="__unstable-large"
 				/>
 				<ButtonGroup
 					aria-label={ __( 'Cell percentage width', 'flexible-table-block' ) }
@@ -262,8 +274,9 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 							<Button
 								key={ perWidth }
 								variant={ isPressed ? 'primary' : undefined }
-								isSmall
 								onClick={ () => onChangeWidth( isPressed ? '' : `${ perWidth }%` ) }
+								// @ts-ignore: `size` prop is not exist at @types
+								size="small"
 							>
 								{ `${ perWidth }%` }
 							</Button>
@@ -345,6 +358,8 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 										icon={ icon }
 										variant={ value === cellStylesObj?.textAlign ? 'primary' : 'secondary' }
 										onClick={ () => onChangeTextAlign( value ) }
+										/// @ts-ignore: `size` prop is not exist at @types
+										size="compact"
 									/>
 								);
 							} ) }
@@ -361,6 +376,8 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 										icon={ icon }
 										variant={ value === cellStylesObj?.verticalAlign ? 'primary' : 'secondary' }
 										onClick={ () => onChangeVerticalAlign( value ) }
+										// @ts-ignore: `size` prop is not exist at @types
+										size="compact"
 									/>
 								);
 							} ) }
@@ -381,6 +398,8 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 									key={ value }
 									variant={ value === targetCell.tag ? 'primary' : 'secondary' }
 									onClick={ () => onChangeTag( value ) }
+									// @ts-ignore: `size` prop is not exist at @types
+									size="compact"
 								>
 									{ label }
 								</Button>
@@ -390,17 +409,19 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 				</div>
 			</BaseControl>
 			<TextControl
+				className="ftb-is-next-40px-default-size"
 				label={ __( 'Cell CSS class(es)', 'flexible-table-block' ) }
 				autoComplete="off"
 				value={ targetCell.className || '' }
 				onChange={ onChangeClass }
-				help={ __( 'Separate multiple classes with spaces.' ) }
+				help={ __( 'Separate multiple classes with spaces.', 'flexible-table-block' ) }
 			/>
 			{ selectedCellTags.length === 1 && (
 				<>
 					<hr />
 					{ selectedCellTags.includes( 'th' ) && (
 						<TextControl
+							className="ftb-is-next-40px-default-size"
 							label={ createInterpolateElement(
 								__( '<code>id</code> attribute', 'flexible-table-block' ),
 								{ code: <code /> }
@@ -411,6 +432,7 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 						/>
 					) }
 					<TextControl
+						className="ftb-is-next-40px-default-size"
 						label={ createInterpolateElement(
 							__( '<code>headers</code> attribute', 'flexible-table-block' ),
 							{ code: <code /> }
@@ -438,6 +460,8 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 												key={ value }
 												variant={ value === targetCell.scope ? 'primary' : 'secondary' }
 												onClick={ () => onChangeScope( value ) }
+												// @ts-ignore: `size` prop is not exist at @types
+												size="compact"
 											>
 												{ label }
 											</Button>

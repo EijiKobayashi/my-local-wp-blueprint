@@ -84,6 +84,12 @@ final class MywpControllerModuleFrontendRegistToolbar extends MywpControllerAbst
 
     $option = $mywp_model->get_option();
 
+    if( empty( $option ) ) {
+
+      $option = array();
+
+    }
+
     $toolbar_menus = $wp_admin_bar->get_nodes();
 
     if( empty( $toolbar_menus ) ) {

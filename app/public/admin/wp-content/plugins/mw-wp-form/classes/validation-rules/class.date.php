@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -77,7 +77,7 @@ class MW_WP_Form_Validation_Rule_Date extends MW_WP_Form_Abstract_Validation_Rul
 	 */
 	public function admin( $key, $value ) {
 		?>
-		<label><input type="checkbox" <?php checked( $value[ $this->getName() ], 1 ); ?> name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->getName() ); ?>]" value="1" /><?php esc_html_e( 'Date', 'mw-wp-form' ); ?></label>
+		<label><input type="checkbox" <?php checked( $value[ $this->get_name() ], 1 ); ?> name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->get_name() ); ?>]" value="1" /><?php esc_html_e( 'Date', 'mw-wp-form' ); ?></label>
 		<?php
 	}
 }

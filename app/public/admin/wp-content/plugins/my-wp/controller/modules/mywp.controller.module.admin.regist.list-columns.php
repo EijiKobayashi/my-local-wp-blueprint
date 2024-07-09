@@ -152,6 +152,12 @@ final class MywpControllerModuleAdminRegistListColumns extends MywpControllerAbs
 
     $option = $mywp_model->get_option();
 
+    if( empty( $option ) ) {
+
+      $option = array();
+
+    }
+
     $column_id = self::$column_type;
 
     if( ! empty( self::$post_type ) ) {
@@ -203,6 +209,12 @@ final class MywpControllerModuleAdminRegistListColumns extends MywpControllerAbs
     }
 
     $option = $mywp_model->get_option();
+
+    if( empty( $option ) ) {
+
+      $option = array();
+
+    }
 
     $column_id = self::$column_type;
 

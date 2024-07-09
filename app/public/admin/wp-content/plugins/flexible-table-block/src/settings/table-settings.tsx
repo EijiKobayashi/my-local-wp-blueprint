@@ -38,7 +38,13 @@ import {
 	BorderSpacingControl,
 	PaddingControl,
 } from '../controls';
-import { toggleSection, toTableAttributes } from '../utils/table-state';
+import {
+	toggleSection,
+	toTableAttributes,
+	type VTable,
+	type VSelectedCells,
+	type VSelectedLine,
+} from '../utils/table-state';
 import { convertToInline } from '../utils/style-converter';
 import {
 	pickPadding,
@@ -47,6 +53,9 @@ import {
 	pickBorderStyle,
 	pickBorderColor,
 	pickBorderSpacing,
+	type CornerProps,
+	type DirectionProps,
+	type CrossProps,
 } from '../utils/style-picker';
 import {
 	updatePadding,
@@ -57,8 +66,6 @@ import {
 	updateBorderSpacing,
 } from '../utils/style-updater';
 import { sanitizeUnitValue } from '../utils/helper';
-import type { VTable, VSelectedCells, VSelectedLine } from '../utils/table-state';
-import type { CornerProps, DirectionProps, CrossProps } from '../utils/style-picker';
 import type { StickyValue, BorderCollapseValue, BlockAttributes } from '../BlockAttributes';
 import type { StoreOptions } from '../store';
 
@@ -82,7 +89,13 @@ export default function TableSettings( {
 	const { hasFixedLayout, isStackedOnMobile, isScrollOnPc, isScrollOnMobile, sticky, head, foot } =
 		attributes;
 
-	const options: StoreOptions = useSelect( ( select ) => select( STORE_NAME ).getOptions(), [] );
+	const options: StoreOptions = useSelect(
+		( select ) =>
+			select( STORE_NAME )
+				// @ts-ignore
+				.getOptions(),
+		[]
+	);
 
 	const tableWidthUnits = useCustomUnits( { availableUnits: TABLE_WIDTH_UNITS } );
 
@@ -231,7 +244,7 @@ export default function TableSettings( {
 					sprintf(
 						/* translators: %d is replaced with the number of breakpoint. */
 						__( 'When the screen width is %dpx or more.', 'flexible-table-block' ),
-						options.breakpoint + 1
+						Math.abs( options.breakpoint ) + 1
 					)
 				}
 				onChange={ onChangeIsScrollOnPc }
@@ -274,11 +287,13 @@ export default function TableSettings( {
 					isStackedOnMobile &&
 					sticky &&
 					__(
-						'Fixed control is only enable for desktop view because "Stack on mobile" is enabled.',
+						'Fixed control is only enabled for desktop view because "Stack on mobile" is enabled.',
 						'flexible-table-block'
 					)
 				}
 				onChange={ onChangeSticky }
+				// @ts-ignore: `size` prop is not exist at @types
+				size="__unstable-large"
 			/>
 			<hr />
 			<BaseControl
@@ -293,6 +308,7 @@ export default function TableSettings( {
 					disabled={ tableStylesObj?.width === 'auto' }
 					min="0"
 					onChange={ onChangeWidth }
+					size="__unstable-large"
 				/>
 				<ButtonGroup
 					aria-label={ __( 'Table percentage width', 'flexible-table-block' ) }
@@ -304,10 +320,11 @@ export default function TableSettings( {
 							<Button
 								key={ perWidth }
 								variant={ isPressed ? 'primary' : undefined }
-								isSmall
 								onClick={ () =>
 									onChangeWidth( isPressed ? '' : sanitizeUnitValue( `${ perWidth }%` ) )
 								}
+								// @ts-ignore: `size` prop is not exist at @types
+								size="small"
 							>
 								{ `${ perWidth }%` }
 							</Button>
@@ -315,8 +332,9 @@ export default function TableSettings( {
 					} ) }
 					<Button
 						variant={ tableStylesObj?.width === 'auto' ? 'primary' : undefined }
-						isSmall
 						onClick={ () => onChangeWidth( tableStylesObj?.width === 'auto' ? '' : 'auto' ) }
+						// @ts-ignore: `size` prop is not exist at @types
+						size="small"
 					>
 						{ __( 'auto', 'flexible-table-block' ) }
 					</Button>
@@ -334,9 +352,10 @@ export default function TableSettings( {
 					disabled={ tableStylesObj?.maxWidth === 'none' }
 					min="0"
 					onChange={ onChangeMaxWidth }
+					size="__unstable-large"
 				/>
 				<ButtonGroup
-					aria-label={ __( 'Table percentage max width' ) }
+					aria-label={ __( 'Table percentage max width', 'flexible-table-block' ) }
 					className="ftb-percent-group"
 				>
 					{ [ 25, 50, 75, 100 ].map( ( perWidth ) => {
@@ -345,10 +364,11 @@ export default function TableSettings( {
 							<Button
 								key={ perWidth }
 								variant={ isPressed ? 'primary' : undefined }
-								isSmall
 								onClick={ () =>
 									onChangeMaxWidth( isPressed ? '' : sanitizeUnitValue( `${ perWidth }%` ) )
 								}
+								// @ts-ignore: `size` prop is not exist at @types
+								size="small"
 							>
 								{ `${ perWidth }%` }
 							</Button>
@@ -356,8 +376,9 @@ export default function TableSettings( {
 					} ) }
 					<Button
 						variant={ tableStylesObj?.maxWidth === 'none' ? 'primary' : undefined }
-						isSmall
 						onClick={ () => onChangeMaxWidth( tableStylesObj?.maxWidth === 'none' ? '' : 'none' ) }
+						// @ts-ignore: `size` prop is not exist at @types
+						size="small"
 					>
 						{ _x( 'none', 'width', 'flexible-table-block' ) }
 					</Button>
@@ -374,9 +395,10 @@ export default function TableSettings( {
 					units={ tableWidthUnits }
 					min="0"
 					onChange={ onChangeMinWidth }
+					size="__unstable-large"
 				/>
 				<ButtonGroup
-					aria-label={ __( 'Table percentage min width' ) }
+					aria-label={ __( 'Table percentage min width', 'flexible-table-block' ) }
 					className="ftb-percent-group"
 				>
 					{ [ 25, 50, 75, 100 ].map( ( perWidth ) => {
@@ -385,8 +407,9 @@ export default function TableSettings( {
 							<Button
 								key={ perWidth }
 								variant={ isPressed ? 'primary' : undefined }
-								isSmall
 								onClick={ () => onChangeMinWidth( isPressed ? '' : `${ perWidth }%` ) }
+								// @ts-ignore: `size` prop is not exist at @types
+								size="small"
 							>
 								{ `${ perWidth }%` }
 							</Button>
@@ -399,7 +422,7 @@ export default function TableSettings( {
 				id="flexible-table-block-table-padding"
 				label={ __( 'Table padding', 'flexible-table-block' ) }
 				help={ __(
-					'Table padding is only enable when "Cell Borders" is set to "Separate".',
+					'Table padding is only enabled when "Cell Borders" is set to "Separate".',
 					'flexible-table-block'
 				) }
 				values={ pickPadding( tableStylesObj ) }
@@ -416,7 +439,7 @@ export default function TableSettings( {
 				id="flexible-table-block-table-border-width"
 				label={ __( 'Table border width', 'flexible-table-block' ) }
 				help={ __(
-					'Table border width is only enable when "Cell Borders" is set to "Separate".',
+					'Table border width is only enabled when "Cell Borders" is set to "Separate".',
 					'flexible-table-block'
 				) }
 				values={ pickBorderWidth( tableStylesObj ) }
@@ -451,6 +474,8 @@ export default function TableSettings( {
 									variant={ value === tableStylesObj?.borderCollapse ? 'primary' : 'secondary' }
 									icon={ icon }
 									onClick={ () => onChangeBorderCollapse( value ) }
+									// @ts-ignore: `size` prop is not exist at @types
+									size="compact"
 								>
 									{ label }
 								</Button>

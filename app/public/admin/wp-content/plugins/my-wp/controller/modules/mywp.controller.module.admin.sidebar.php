@@ -157,7 +157,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
             'item_capability' => $mywp_submenu[1],
           );
 
-          $found_mywp_child_menu_count++;
+          ++$found_mywp_child_menu_count;
 
         }
 
@@ -998,7 +998,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     }
 
-    printf( '<li class="mywp-sidebar-item item-%d item-type-%s %s" id="%s">' , esc_attr( $item_id ) , esc_attr( $item_type ) , esc_attr( $li_class ) , esc_attr( $li_id ) );
+    printf( '<li class="mywp-sidebar-item item-%s item-type-%s %s" id="%s">' , esc_attr( $item_id ) , esc_attr( $item_type ) , esc_attr( $li_class ) , esc_attr( $li_id ) );
 
     if( $item_type === 'custom' ) {
 

@@ -588,9 +588,13 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
           <input type="hidden" class="list-column-item-id" value="<?php echo esc_attr( $column['id'] ); ?>" />
 
-          <?php if( ! is_array( $column['orderby'] ) ) : ?>
+          <?php if( is_string( $column['orderby'] ) ) : ?>
 
             <input type="text" name="mywp[data][list_columns][<?php echo esc_attr( $column['id'] ); ?>][orderby]" class="list-column-orderby" value="<?php echo esc_attr( $column['orderby'] ); ?>" />
+
+          <?php elseif( isset( $column['orderby'][0] ) ) : ?>
+
+            <input type="text" name="mywp[data][list_columns][<?php echo esc_attr( $column['id'] ); ?>][orderby]" class="list-column-orderby" value="<?php echo esc_attr( $column['orderby'][0] ); ?>" />
 
           <?php endif; ?>
 

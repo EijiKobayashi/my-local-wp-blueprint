@@ -738,6 +738,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
     #setting-screen-toolbar-items .setting-screen-toolbar-item .item-content .form-table th,
     #setting-screen-toolbar-items .setting-screen-toolbar-item .item-content .form-table td {
       background: #fff;
+      word-break: break-all;
     }
     #setting-screen-toolbar-items .setting-screen-toolbar-item .item-content .form-table th {
       width: 120px;
@@ -2200,7 +2201,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
         $add_post_id = static::add_post( $post_data , $add_meta_data , $post_terms );
 
-        $menu_order++;
+        ++$menu_order;
 
         if ( empty( $add_post_id ) ) {
 

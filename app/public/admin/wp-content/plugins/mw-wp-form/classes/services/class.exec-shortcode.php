@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -56,7 +56,11 @@ class MW_WP_Form_Exec_Shortcode {
 	 * @return string
 	 */
 	public function initialize( $attributes ) {
-		$this->form_id  = $this->_get_form_id_by_mwform_formkey( $attributes );
+		$this->form_id = $this->_get_form_id_by_mwform_formkey( $attributes );
+		if ( ! $this->form_id ) {
+			return;
+		}
+
 		$this->form_key = MWF_Functions::get_form_key_from_form_id( $this->form_id );
 
 		/**
@@ -113,6 +117,9 @@ class MW_WP_Form_Exec_Shortcode {
 		foreach ( $Form_Fields->get_form_fields() as $form_field ) {
 			$form_field->initialize( new MW_WP_Form_Form(), $this->form_key, $this->view_flg );
 		}
+
+		// Sanitizes content for allowed HTML tags for post content.
+		$content = wp_kses_post( $content );
 
 		return do_shortcode( $content );
 	}
@@ -388,7 +395,7 @@ class MW_WP_Form_Exec_Shortcode {
 			$post = get_post( $attributes['key'] );
 		}
 
-		if ( ! empty( $post ) && isset( $post->ID ) ) {
+		if ( ! empty( $post ) && isset( $post->ID ) && 'publish' === $post->post_status ) {
 			return $post->ID;
 		}
 	}
@@ -404,7 +411,6 @@ class MW_WP_Form_Exec_Shortcode {
 			return $html;
 		}
 
-		$html .= wp_nonce_field( $this->form_key, MWF_Config::TOKEN_NAME, true, false );
 		$html .= sprintf(
 			'<input type="hidden" name="%1$s" value="%2$s" />',
 			esc_attr( MWF_Config::NAME . '-form-id' ),
@@ -413,8 +419,8 @@ class MW_WP_Form_Exec_Shortcode {
 
 		$html .= sprintf(
 			'<input type="hidden" name="%1$s" value="%2$s" />',
-			esc_attr( MWF_Config::NAME . '-form-verify-token' ),
-			esc_attr( $this->Setting->generate_form_verify_token() )
+			esc_attr( MWF_Config::TOKEN_NAME ),
+			esc_attr( MW_WP_Form_Csrf::token() )
 		);
 		return $html;
 	}

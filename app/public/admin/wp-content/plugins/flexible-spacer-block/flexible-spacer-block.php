@@ -2,7 +2,9 @@
 /**
  * Plugin Name: Flexible Spacer Block
  * Description: Add white space between blocks and customize its height for each device.
- * Version: 2.0.0
+ * Requires at least: 6.4
+ * Requires PHP: 7.4
+ * Version: 2.4.0
  * Author: Aki Hamano
  * Author URI: https://github.com/t-hamano
  * License: GPL2 or later
@@ -35,7 +37,8 @@ const FSB_MIN_SPACER_HEIGHT = 0;
 const FSB_MAX_SPACER_HEIGHT = 500;
 
 // Default spacer height
-const FSB_DEFAULT_SPACER_HEIGHT = 100;
+const FSB_DEFAULT_SPACER_HEIGHT      = 100;
+const FSB_DEFAULT_SPACER_HEIGHT_UNIT = 'px';
 
 require_once __DIR__ . '/classes/class-init.php';
 new Flexible_Spacer_Block\Init();

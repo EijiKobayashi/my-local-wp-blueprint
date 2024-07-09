@@ -695,6 +695,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
     #setting-screen-sidebar-items .setting-screen-sidebar-item .item-content .form-table th,
     #setting-screen-sidebar-items .setting-screen-sidebar-item .item-content .form-table td {
       background: #fff;
+      word-break: break-all;
     }
     #setting-screen-sidebar-items .setting-screen-sidebar-item .item-content .form-table th {
       width: 120px;
@@ -1882,7 +1883,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       $parent_post_id = self::add_post( array( 'post_status' => 'draft' , 'menu_order' => $menu_order ) , $add_meta_data , $post_terms );
 
-      $menu_order++;
+      ++$menu_order;
 
       if ( empty( $parent_post_id ) ) {
 
@@ -1926,7 +1927,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           $child_post_id = self::add_post( array( 'post_status' => 'draft' , 'menu_order' => $menu_order , 'post_parent' => $parent_post_id ) , $add_meta_data , $post_terms );
 
-          $menu_order++;
+          ++$menu_order;
 
           if ( empty( $child_post_id ) ) {
 

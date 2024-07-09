@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -38,7 +38,8 @@ class MW_WP_Form_Validation_Rule_FileSize extends MW_WP_Form_Abstract_Validation
 			}
 		} else {
 			$upload_file_keys = $this->Data->get_post_value_by_key( MWF_Config::UPLOAD_FILE_KEYS );
-			$filepath         = MWF_Functions::generate_uploaded_filepath_from_filename( $this->Data->get( $name ) );
+			$form_id          = MWF_Functions::get_form_id_from_form_key( $this->Data->get_form_key() );
+			$filepath         = MW_WP_Form_Directory::generate_user_filepath( $form_id, $name, $this->Data->get( $name ) );
 			if (
 				is_array( $upload_file_keys )
 				&& in_array( $name, $upload_file_keys, true )
@@ -85,14 +86,14 @@ class MW_WP_Form_Validation_Rule_FileSize extends MW_WP_Form_Abstract_Validation
 	 */
 	public function admin( $key, $value ) {
 		$bytes = '';
-		if ( is_array( $value[ $this->getName() ] ) && isset( $value[ $this->getName() ]['bytes'] ) ) {
-			$bytes = $value[ $this->getName() ]['bytes'];
+		if ( is_array( $value[ $this->get_name() ] ) && isset( $value[ $this->get_name() ]['bytes'] ) ) {
+			$bytes = $value[ $this->get_name() ]['bytes'];
 		}
 		?>
 		<table>
 			<tr>
 				<td><?php esc_html_e( 'Permitted file size', 'mw-wp-form' ); ?></td>
-				<td><input type="text" value="<?php echo esc_attr( $bytes ); ?>" name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->getName() ); ?>][bytes]" /> <span class="mwf_note"><?php esc_html_e( 'bytes', 'mw-wp-form' ); ?></span></td>
+				<td><input type="text" value="<?php echo esc_attr( $bytes ); ?>" name="<?php echo MWF_Config::NAME; ?>[validation][<?php echo $key; ?>][<?php echo esc_attr( $this->get_name() ); ?>][bytes]" /> <span class="mwf_note"><?php esc_html_e( 'bytes', 'mw-wp-form' ); ?></span></td>
 			</tr>
 		</table>
 		<?php

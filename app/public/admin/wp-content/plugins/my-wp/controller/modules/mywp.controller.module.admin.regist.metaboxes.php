@@ -121,6 +121,12 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
     $option = $mywp_model->get_option();
 
+    if( empty( $option ) ) {
+
+      $option = array();
+
+    }
+
     $metabox_screen_id = self::$screen_type;
 
     if( self::$screen_type === 'post' ) {

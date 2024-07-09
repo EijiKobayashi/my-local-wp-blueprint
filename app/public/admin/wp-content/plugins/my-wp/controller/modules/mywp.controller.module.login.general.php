@@ -270,6 +270,7 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
 
   public static function custom_footer_text() {
 
+    global $wp_version;
     global $post;
 
     if( ! self::is_do_function( __FUNCTION__ ) ) {
@@ -295,7 +296,20 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
     add_filter( 'mywp_controller_login_general_custom_footer_text' , 'wpautop' );
     add_filter( 'mywp_controller_login_general_custom_footer_text' , 'shortcode_unautop' );
     add_filter( 'mywp_controller_login_general_custom_footer_text' , 'prepend_attachment' );
+
+    if( version_compare( $wp_version , '5.7.0' , '>=' ) ) {
+
+      add_filter( 'mywp_controller_login_general_custom_footer_text' , 'wp_replace_insecure_home_url' );
+
+    }
+
     add_filter( 'mywp_controller_login_general_custom_footer_text' , 'do_shortcode' , 11 );
+
+    if( version_compare( $wp_version , '5.5.0' , '>=' ) ) {
+
+      add_filter( 'mywp_controller_login_general_custom_footer_text' , 'wp_filter_content_tags' , 12 );
+
+    }
 
     $custom_footer_text = apply_filters( 'mywp_controller_login_general_custom_footer_text' , $setting_data['custom_footer_text'] );
 

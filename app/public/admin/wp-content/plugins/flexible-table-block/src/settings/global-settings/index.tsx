@@ -19,14 +19,15 @@ import type { StoreOptions } from '../../store';
 
 export default function GlobalSettings() {
 	const storeOptions: StoreOptions = useSelect(
-		( select ) => select( STORE_NAME ).getOptions(),
+		( select ) =>
+			select( STORE_NAME )
+				// @ts-ignore
+				.getOptions(),
 		[]
 	);
 
 	const isAdministrator: boolean = useSelect(
-		( select ) =>
-			// @ts-ignore
-			select( coreStore ).canUser( 'create', 'users' ),
+		( select ) => select( coreStore ).canUser( 'create', 'users' ),
 		[]
 	);
 
@@ -45,16 +46,23 @@ export default function GlobalSettings() {
 	return (
 		<>
 			<div className="ftb-global-setting">
-				<Button icon={ help } variant="link" onClick={ () => setIsHelpModalOpen( true ) }>
+				<Button
+					icon={ help }
+					variant="link"
+					onClick={ () => setIsHelpModalOpen( true ) }
+					// @ts-ignore: `size` prop is not exist at @types
+					size="compact"
+				>
 					{ __( 'Help', 'flexible-table-block' ) }
 				</Button>
 				{ ! isGlobalSettingLoaded && <Spinner /> }
 				{ isGlobalSettingLoaded && showGlobalSetting && (
 					<Button
 						icon={ cog }
-						iconSize="20"
 						variant="primary"
 						onClick={ () => setIsSettingModalOpen( true ) }
+						// @ts-ignore: `size` prop is not exist at @types
+						size="compact"
 					>
 						{ __( 'Global setting', 'flexible-table-block' ) }
 					</Button>

@@ -1,16 +1,19 @@
 === MW WP Form ===
 Contributors: inc2734, ryu263, tomothumb, nanniku, mt8.biz, NExt-Season, kuck1u, mypacecreator, mh35, grace-create, musus, wildworks, likr, yudai524, noldorinfo
-Donate link: https://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
+Original Donate link: https://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, form, confirm, preview, shortcode, mail, chart, graph, html, contact form, form creation, form creator, form manager, form builder, custom form
-Requires at least: 4.0
-Tested up to: 6.2
-Stable tag: 4.4.5
+Requires at least: 6.0
+Tested up to: 6.4
+Stable tag: 5.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 MW WP Form is shortcode base contact form plugin. This plugin have many features. For example you can use many validation rules, inquiry data saving, and chart aggregation using saved inquiry data.
 
 == Description ==
+
+**This plugin currently has only the minimum required maintenance releases.**
+**Main maintainer has been handed over from @inc2734 to @websoudan.**
 
 MW WP Form can create mail form with a confirmation screen using shortcode.
 
@@ -23,11 +26,11 @@ MW WP Form can create mail form with a confirmation screen using shortcode.
 
 = Official =
 
-https://plugins.2inc.org/mw-wp-form/
+https://mw-wp-form.web-soudan.co.jp
 
 = GitHub =
 
-https://github.com/inc2734/mw-wp-form
+https://github.com/web-soudan/mw-wp-form
 
 = The following third-party resources =
 
@@ -64,7 +67,7 @@ Source: https://developers.google.com/chart/
 
 Do you have questions or issues with MW WP Form? Use these support channels appropriately.
 
-1. [Official](https://plugins.2inc.org/mw-wp-form/)
+1. [Official](https://mw-wp-form.web-soudan.co.jp)
 1. [Support Forum](https://wordpress.org/support/plugin/mw-wp-form)
 
 == Screenshots ==
@@ -76,6 +79,42 @@ Do you have questions or issues with MW WP Form? Use these support channels appr
 5. Supports chart display of saved inquiry data.
 
 == Changelog ==
+
+= 5.1.0 =
+* Security Use wp_kses_post to form content/complete message
+
+= 5.0.6 =
+* Fixed Fixed an error during uninstallation. ( later 5.0.0 )
+* Temporarily Removed PHP requirements
+
+= 5.0.5 =
+* Changed requirements to PHP 8.0, WordPress 6.0
+
+= 5.0.4 =
+* Fixed Delete only attachments.
+
+= 5.0.3 =
+* Remove plugin asset files. 
+
+= 5.0.2 =
+* Fixed file upload security.
+* Fixed Unification of cookie key names.
+
+= 5.0.1 =
+* Main maintainer has been handed over from @inc2734 to @websoudan.
+
+= 5.0.0 =
+* Requires PHP 7.4.
+* Fixed a form access control vulnerability.
+* Enhanced file upload security.
+* Changed uploaded file name from "random number" to "{name attribute value}-{original file name}".
+* Update CSRF check.
+* Remove method: MW_WP_Form::get_temp_dir()
+* Remove method: MW_WP_Form::create_temp_dir()
+* Remove method: MW_WP_Form::do_empty_temp_dir()
+* Remove method: MW_WP_Form::remove_temp_dir()
+* Remove method: MWF_Functions::generate_uploaded_fileurl_from_filename()
+* Remove method: MWF_Functions::generate_uploaded_filepath_from_filename()
 
 = 4.4.5 =
 * Fixed a bug in WordPress 6.2 that the file name of a file sent from file fields or image fields and attached to it becomes "name".

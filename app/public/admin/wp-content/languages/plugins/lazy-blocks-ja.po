@@ -2,14 +2,18 @@
 # This file is distributed under the same license as the Plugins - Custom Blocks Constructor &#8211; Lazy Blocks - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-05-03 08:52:25+0000\n"
+"PO-Revision-Date: 2023-11-09 10:00:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/4.0.0-alpha.4\n"
+"X-Generator: GlotPress/4.0.1\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - Custom Blocks Constructor &#8211; Lazy Blocks - Stable (latest release)\n"
+
+#: classes/class-admin.php:59 classes/class-admin.php:81
+msgid "Go Pro"
+msgstr "Pro 版を入手"
 
 #: classes/class-templates.php:332
 msgid "Insert"
@@ -19,16 +23,18 @@ msgstr "挿入"
 msgid "All"
 msgstr "すべて"
 
-#: classes/class-templates.php:299 assets/admin/templates/index.js:176
+#: classes/class-templates.php:299 assets/admin/templates/index.js:191
+#: build/admin-templates.js:1
 msgid "Template Lock"
 msgstr "テンプレートロック"
 
-#: classes/class-templates.php:298 assets/admin/templates/index.js:163
+#: classes/class-templates.php:298 assets/admin/templates/index.js:178
+#: build/admin-templates.js:1
 msgid "Post Types"
 msgstr "投稿タイプ"
 
 #: classes/class-blocks.php:459
-#: assets/editor-constructor/boxes/controls/control.js:183
+#: assets/editor-constructor/boxes/controls/control.js:246
 msgid "Duplicate"
 msgstr "複製"
 
@@ -37,13 +43,13 @@ msgstr "複製"
 msgid "Duplicate “%1$s”"
 msgstr "“%1$s” を複製"
 
-#: classes/class-blocks.php:321 assets/components/document-tabs/index.js:56
-#: assets/components/document-tabs/index.js:58
+#: classes/class-blocks.php:321 assets/components/document-tabs/index.js:62
+#: assets/components/document-tabs/index.js:64 build/editor.js:1
 msgid "Block"
 msgstr "ブロック"
 
 #. translators: %s - post title.
-#: classes/class-tools.php:602
+#: classes/class-tools.php:594
 msgid "Added new block '%s'."
 msgstr "ブロック '%s' を新規作成しました。"
 
@@ -51,12 +57,12 @@ msgstr "ブロック '%s' を新規作成しました。"
 msgid "Blocks"
 msgstr "ブロック"
 
-#: classes/class-admin.php:278
+#: classes/class-admin.php:279
 msgid "and"
 msgstr "と"
 
 #. translators: %1$s - template file path.
-#: templates/template-not-found.php:17
+#: templates/template-not-found.php:19
 msgid "Template file <code>%1$s</code> not found."
 msgstr "テンプレートファイル <code>%1$s</code> が見つかりませんでした。"
 
@@ -125,26 +131,26 @@ msgid "Rich Text (WYSIWYG)"
 msgstr "リッチテキスト (WYSIWYG)"
 
 #. translators: %s - number of templates.
-#: classes/class-tools.php:381
+#: classes/class-tools.php:373
 msgid "Imported %s template"
 msgid_plural "Imported %s templates"
 msgstr[0] "%s個のテンプレートをインポートしました"
 
 #. translators: %s - number of blocks.
-#: classes/class-tools.php:361
+#: classes/class-tools.php:353
 msgid "Imported %s block"
 msgid_plural "Imported %s blocks"
 msgstr[0] "%s個のブロックをインポートしました"
 
-#: classes/class-tools.php:311
+#: classes/class-tools.php:303
 msgid "Incorrect file type"
 msgstr "不正なファイルタイプ"
 
-#: classes/class-tools.php:305
+#: classes/class-tools.php:297
 msgid "Error uploading file. Please try again"
 msgstr "ファイルアップロードエラー。もう一度お試しください"
 
-#: classes/class-tools.php:295
+#: classes/class-tools.php:287
 msgid "No file selected"
 msgstr "ファイルが選択されていません"
 
@@ -154,7 +160,7 @@ msgid "Export / Import"
 msgstr "エクスポート / インポート"
 
 #: classes/class-controls.php:42
-#: assets/editor-constructor/boxes/selected-control-settings/settings-rows/placement.js:51
+#: assets/editor-constructor/boxes/selected-control-settings/settings-rows/placement.js:74
 msgid "Content"
 msgstr "コンテンツ"
 
@@ -191,7 +197,7 @@ msgstr "Lazy Blocks プラグインの使い始めに便利なサンプルブロ
 msgid "Range"
 msgstr "範囲"
 
-#: classes/class-tools.php:322
+#: classes/class-tools.php:314
 msgid "Import file empty"
 msgstr "空のインポートファイル"
 
@@ -208,7 +214,7 @@ msgid "Basic"
 msgstr "ベーシック"
 
 #. translators: %s - post type.
-#: classes/class-tools.php:556
+#: classes/class-tools.php:548
 msgid "Template for these post types '%s' already exists."
 msgstr "投稿タイプ '%s' のテンプレートはすでに存在します。"
 
@@ -236,11 +242,12 @@ msgstr "このユーザーとして Gutenberg ブロックを読み込む権限�
 msgid "Render callback is not specified."
 msgstr "レンダリングコールバックが指定されていません。"
 
-#: classes/class-admin.php:41 classes/class-admin.php:42
+#: classes/class-admin.php:43 classes/class-admin.php:44
 msgid "Documentation"
 msgstr "ドキュメント"
 
 #. Description of the plugin
+#: lazy-blocks.php
 msgid "Gutenberg blocks visual constructor. Custom meta fields or blocks with output without hard coding."
 msgstr "Gutenberg ブロックのビジュアル構築ツール。コードを書かずに、出力できるカスタムメタフィールドまたはブロックを作成しましょう。"
 
@@ -249,7 +256,7 @@ msgid "Export"
 msgstr "エクスポート"
 
 #: classes/class-blocks.php:528
-#: assets/editor-constructor/boxes/general/index.js:87
+#: assets/editor-constructor/boxes/general/index.js:103
 msgid "Category"
 msgstr "カテゴリー"
 
@@ -258,12 +265,12 @@ msgid "Template"
 msgstr "テンプレート"
 
 #: classes/class-blocks.php:529
-#: assets/editor-constructor/boxes/general/index.js:138
+#: assets/editor-constructor/boxes/general/index.js:170
 msgid "Description"
 msgstr "説明"
 
 #: classes/class-blocks.php:526
-#: assets/editor-constructor/boxes/general/index.js:81
+#: assets/editor-constructor/boxes/general/index.js:95
 msgid "Icon"
 msgstr "アイコン"
 
@@ -272,8 +279,8 @@ msgid "Templates"
 msgstr "テンプレート"
 
 #. Plugin Name of the plugin
-#: classes/class-admin.php:244 classes/class-blocks.php:318
-#: classes/class-blocks.php:1158
+#: lazy-blocks.php classes/class-admin.php:245 classes/class-blocks.php:318
+#: classes/class-blocks.php:1195
 msgid "Lazy Blocks"
 msgstr "Lazy Blocks"
 

@@ -251,7 +251,17 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
         <?php if( ! self::$is_use_block_editor ) : ?>
 
           <tr>
-            <th><?php echo _x( 'Add New' , 'post' ); ?></th>
+            <th>
+              <?php if( ! empty( $current_setting_post_type->labels->add_new ) ) : ?>
+
+                <?php echo esc_html( $current_setting_post_type->labels->add_new ); ?>
+
+              <?php else : ?>
+
+                <?php echo _x( 'Add New' , 'post' ); ?>
+
+              <?php endif; ?>
+            </th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />

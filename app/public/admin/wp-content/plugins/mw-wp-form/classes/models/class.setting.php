@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -335,18 +335,5 @@ class MW_WP_Form_Setting {
 		if ( ! is_null( $new_tracking_number ) ) {
 			update_post_meta( $this->post_id, MWF_Config::TRACKINGNUMBER, $new_tracking_number );
 		}
-	}
-
-	/**
-	 * Generate verify token for form posts data correct checking.
-	 *
-	 * @return string
-	 */
-	public function generate_form_verify_token() {
-		$vars  = get_object_vars( $this );
-		$token = serialize( $vars );
-		$token = base64_encode( $token );
-		$token = sha1( $token );
-		return $token;
 	}
 }

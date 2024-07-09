@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-import { get } from 'lodash';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import type { Property } from 'csstype';
 
 /**
@@ -78,7 +77,7 @@ export default function BorderColorControl( {
 			blockEditorStore
 			// @ts-ignore
 		).getSettings();
-		return get( settings, [ 'colors' ], [] );
+		return settings?.colors ?? [];
 	}, [] );
 
 	const [ isLinked, setIsLinked ] = useState< boolean >( true );
@@ -93,7 +92,7 @@ export default function BorderColorControl( {
 
 	const allInputValue: string | 0 = isMixed ? '' : values.top;
 
-	const classNames: string = classnames( 'ftb-border-color-control', className );
+	const classNames: string = clsx( 'ftb-border-color-control', className );
 
 	const toggleLinked = () => setIsLinked( ! isLinked );
 
@@ -133,7 +132,11 @@ export default function BorderColorControl( {
 			<div aria-labelledby={ headingId } role="region">
 				<div className="ftb-border-color-control__header">
 					<Text id={ headingId }>{ label }</Text>
-					<Button isSmall variant="secondary" onClick={ handleOnReset }>
+					<Button
+						variant="secondary"
+						onClick={ handleOnReset } // @ts-ignore: `size` prop is not exist at @types
+						size="small"
+					>
 						{ __( 'Reset', 'flexible-table-block' ) }
 					</Button>
 				</div>
@@ -144,7 +147,7 @@ export default function BorderColorControl( {
 								{ hasIndicator && <SideIndicatorControl /> }
 								<Button
 									label={ __( 'All', 'flexible-table-block' ) }
-									className={ classnames( 'ftb-border-color-control__indicator', {
+									className={ clsx( 'ftb-border-color-control__indicator', {
 										'ftb-border-color-control__indicator--none': ! allInputValue && ! isMixed,
 										'ftb-border-color-control__indicator--mixed': isMixed,
 										'ftb-border-color-control__indicator--transparent':
@@ -161,7 +164,6 @@ export default function BorderColorControl( {
 								{ isPickerOpen && ! pickerIndex && (
 									<Popover
 										className="ftb-border-color-control__popover"
-										position="top right"
 										onClose={ handleOnPickerClose }
 									>
 										<ColorPalette
@@ -180,7 +182,7 @@ export default function BorderColorControl( {
 									{ hasIndicator && <SideIndicatorControl sides={ [ item.value ] } /> }
 									<Button
 										label={ item.label }
-										className={ classnames( 'ftb-border-color-control__indicator', {
+										className={ clsx( 'ftb-border-color-control__indicator', {
 											'ftb-border-color-control__indicator--none': ! values[ item.value ],
 											'ftb-border-color-control__indicator--transparent':
 												values[ item.value ] === 'transparent',
@@ -192,7 +194,6 @@ export default function BorderColorControl( {
 									{ isPickerOpen && pickerIndex === index && (
 										<Popover
 											className="ftb-border-color-control__popover"
-											position="top right"
 											onClose={ handleOnPickerClose }
 										>
 											<ColorPalette
@@ -211,9 +212,10 @@ export default function BorderColorControl( {
 								<Button
 									className="ftb-border-color-control__header-linked-button"
 									label={ linkedLabel }
-									isSmall
 									onClick={ toggleLinked }
 									icon={ isLinked ? link : linkOff }
+									// @ts-ignore: `size` prop is not exist at @types
+									size="small"
 								/>
 							</span>
 						</Tooltip>

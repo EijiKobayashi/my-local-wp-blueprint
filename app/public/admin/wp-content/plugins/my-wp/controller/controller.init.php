@@ -56,6 +56,7 @@ final class MywpControllerInit {
 
       'site_general'              => $dir . 'mywp.controller.module.site.general.php',
       'site_post_type'            => $dir . 'mywp.controller.module.site.post-type.php',
+      'site_sitemap'              => $dir . 'mywp.controller.module.site.sitemap.php',
 
     );
 

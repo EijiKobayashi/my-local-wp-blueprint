@@ -179,8 +179,8 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
         }
 
-        $current_theme_template = STYLESHEETPATH . '/' . $find_template;
-        $parent_theme_template = TEMPLATEPATH . '/' . $find_template;
+        $current_theme_template = MywpApi::get_theme_path() . '/' . $find_template;
+        $parent_theme_template = MywpApi::get_theme_path( true ) . '/' . $find_template;
         $wp_compat_template = ABSPATH . WPINC . '/theme-compat/' . $find_template;
 
         $all_templates[ $current_theme_template ] = array( 'found' => 0 );
@@ -233,7 +233,15 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
     }
 
-    $debug_lists['current_template'] = sprintf( '<strong>%s</strong> (%s)' , basename( $template ) , $current_template );
+    $file_name = false;
+
+    if( ! empty( $template ) ) {
+
+      $file_name = basename( $template );
+
+    }
+
+    $debug_lists['current_template'] = sprintf( '<strong>%s</strong> (%s)' , $file_name , $current_template );
 
     $debug_lists['find_locate_templates'] = array();
 
@@ -257,8 +265,8 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
         }
 
-        $current_theme_header_template = STYLESHEETPATH . '/' . $find_header_template;
-        $parent_theme_header_template = TEMPLATEPATH . '/' . $find_header_template;
+        $current_theme_header_template = MywpApi::get_theme_path() . '/' . $find_header_template;
+        $parent_theme_header_template = MywpApi::get_theme_path( true ) . '/' . $find_header_template;
         $wp_compat_header_template = ABSPATH . WPINC . '/theme-compat/' . $find_header_template;
 
         $all_header_templates[ $current_theme_header_template ] = array( 'found' => 0 );
@@ -335,8 +343,8 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
         }
 
-        $current_theme_sidebar_template = STYLESHEETPATH . '/' . $find_sidebar_template;
-        $parent_theme_sidebar_template = TEMPLATEPATH . '/' . $find_sidebar_template;
+        $current_theme_sidebar_template = MywpApi::get_theme_path() . '/' . $find_sidebar_template;
+        $parent_theme_sidebar_template = MywpApi::get_theme_path( true ) . '/' . $find_sidebar_template;
         $wp_compat_sidebar_template = ABSPATH . WPINC . '/theme-compat/' . $find_sidebar_template;
 
         $all_sidebar_templates[ $current_theme_sidebar_template ] = array( 'found' => 0 );
@@ -413,8 +421,8 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
         }
 
-        $current_theme_footer_template = STYLESHEETPATH . '/' . $find_footer_template;
-        $parent_theme_footer_template = TEMPLATEPATH . '/' . $find_footer_template;
+        $current_theme_footer_template = MywpApi::get_theme_path() . '/' . $find_footer_template;
+        $parent_theme_footer_template = MywpApi::get_theme_path( true ) . '/' . $find_footer_template;
         $wp_compat_footer_template = ABSPATH . WPINC . '/theme-compat/' . $find_footer_template;
 
         $all_footer_templates[ $current_theme_footer_template ] = array( 'found' => 0 );

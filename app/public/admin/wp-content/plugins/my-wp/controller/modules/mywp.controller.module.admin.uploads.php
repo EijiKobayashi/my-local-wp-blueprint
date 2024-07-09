@@ -147,6 +147,8 @@ final class MywpControllerModuleAdminUploads extends MywpControllerAbstractModul
     ?>
 
     <style>
+    body.wp-admin .wp-filter .media-toolbar-secondary { margin: 10px 0; }
+    body.wp-admin .wp-filter .media-grid-view-switch { display: none; }
     body.wp-admin .wp-filter .filter-items { margin: 10px 0; }
     body.wp-admin .wp-filter .filter-items .view-switch { display: none; }
     </style>
@@ -205,6 +207,8 @@ final class MywpControllerModuleAdminUploads extends MywpControllerAbstractModul
     ?>
 
     <style>
+    body.wp-admin .search-form,
+    body.wp-admin .media-toolbar-primary.search-form { display: none; }
     body.wp-admin #media-search-input { display: none; }
     </style>
 

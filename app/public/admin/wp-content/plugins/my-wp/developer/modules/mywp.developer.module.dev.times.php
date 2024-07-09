@@ -262,7 +262,7 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
       $priority_processes_count = count( $priority_processes );
       $priority_processes_keys = array_keys( $priority_processes );
 
-      for( $i = 0; $i < ( $priority_processes_count -1 ); $i++ ) {
+      for( $i = 0; $i < ( $priority_processes_count -1 ); ++$i ) {
 
         $current_priority = $priority_processes_keys[ $i ];
 
@@ -374,7 +374,7 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
       $priority_processes_count = count( $priority_processes );
       $priority_processes_keys = array_keys( $priority_processes );
 
-      for( $i = 0; $i < ( $priority_processes_count -1 ); $i++ ) {
+      for( $i = 0; $i < ( $priority_processes_count -1 ); ++$i ) {
 
         $current_priority = $priority_processes_keys[ $i ];
 

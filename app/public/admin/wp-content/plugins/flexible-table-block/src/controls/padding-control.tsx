@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import clsx from 'clsx';
 import type { Property } from 'csstype';
 
 /**
@@ -85,7 +85,7 @@ export default function PaddingControl( {
 	const allInputPlaceholder: string = isMixed ? __( 'Mixed', 'flexible-table-block' ) : '';
 	const allInputValue: string | 0 = isMixed ? '' : values.top;
 
-	const classNames: string = classnames( 'ftb-padding-control', className );
+	const classNames: string = clsx( 'ftb-padding-control', className );
 
 	const toggleLinked = () => {
 		setIsLinked( ! isLinked );
@@ -122,7 +122,12 @@ export default function PaddingControl( {
 			<div aria-labelledby={ headingId } role="region">
 				<div className="ftb-padding-control__header">
 					<Text id={ headingId }>{ label }</Text>
-					<Button isSmall variant="secondary" onClick={ handleOnReset }>
+					<Button
+						variant="secondary"
+						onClick={ handleOnReset }
+						// @ts-ignore: `size` prop is not exist at @types
+						size="small"
+					>
 						{ __( 'Reset', 'flexible-table-block' ) }
 					</Button>
 				</div>
@@ -137,6 +142,7 @@ export default function PaddingControl( {
 							onChange={ handleOnChangeAll }
 							value={ allInputValue }
 							units={ paddingUnits }
+							size="__unstable-large"
 						/>
 					) }
 					{ allowSides && (
@@ -145,9 +151,10 @@ export default function PaddingControl( {
 								<Button
 									className="ftb-padding-control__header-linked-button"
 									label={ linkedLabel }
-									isSmall
 									onClick={ toggleLinked }
 									icon={ isLinked ? link : linkOff }
+									// @ts-ignore: `size` prop is not exist at @types
+									size="small"
 								/>
 							</span>
 						</Tooltip>
@@ -163,6 +170,7 @@ export default function PaddingControl( {
 								units={ paddingUnits }
 								onFocus={ () => handleOnFocus( item.value ) }
 								onChange={ ( value: string ) => handleOnChange( value, item.value ) }
+								size="__unstable-large"
 							/>
 						) ) }
 					</div>

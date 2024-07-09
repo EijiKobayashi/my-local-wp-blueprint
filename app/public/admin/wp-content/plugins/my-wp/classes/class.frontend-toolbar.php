@@ -56,8 +56,8 @@ final class MywpFrontendToolbar {
     $find_parent_id = strip_tags( $find_parent_id );
 
     $found_current_default = false;
-    $found_parent_default = false;
-    $found_childs_default = false;
+    $found_parent_default = array();
+    $found_childs_default = array();
 
     foreach( $default_toolbar as $menu_location => $menus ) {
 

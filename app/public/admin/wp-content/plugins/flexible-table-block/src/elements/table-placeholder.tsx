@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-import { times } from 'lodash';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import type { FormEvent } from 'react';
 
 /**
@@ -25,9 +24,8 @@ import {
 	THRESHOLD_PREVIEW_TABLE_COL,
 	THRESHOLD_PREVIEW_TABLE_ROW,
 } from '../constants';
-import { createTable, toTableAttributes } from '../utils/table-state';
+import { createTable, toTableAttributes, type VTable } from '../utils/table-state';
 import { blockIcon as icon } from '../icons';
-import type { VTable } from '../utils/table-state';
 import type { BlockAttributes } from '../BlockAttributes';
 
 type Props = {
@@ -50,7 +48,9 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 	const onCreateTable = ( event: FormEvent ) => {
 		event.preventDefault();
 
-		if ( ! rowCount || ! colCount ) return;
+		if ( ! rowCount || ! colCount ) {
+			return;
+		}
 
 		const vTable: VTable = createTable( {
 			rowCount: Math.min( rowCount, MAX_PREVIEW_TABLE_ROW ),
@@ -84,7 +84,7 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 
 	const onToggleFooterSection = ( section: boolean ) => setFooterSection( section );
 
-	const tableClasses: string = classnames( 'ftb-placeholder__table', {
+	const tableClasses: string = clsx( 'ftb-placeholder__table', {
 		'is-overflow-row': totalRowCount && totalRowCount > THRESHOLD_PREVIEW_TABLE_ROW,
 		'is-overflow-col': colCount && colCount > THRESHOLD_PREVIEW_TABLE_COL,
 	} );
@@ -98,7 +98,7 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 			<legend className="components-placeholder__instructions">
 				{ createInterpolateElement(
 					__(
-						'Hint: Hold <code>Ctrl</code> key to select multiple cells. Hold <code>Shift</code> key to select range.',
+						'Hint: Hold <code>Ctrl</code> key to select multiple cells. Hold <code>Shift</code> key to select the range.',
 						'flexible-table-block'
 					),
 					{ code: <code /> }
@@ -114,33 +114,35 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 						{ headerSection && (
 							<thead>
 								<tr>
-									{ times( colCount, ( colIndex ) => {
-										if ( colIndex > THRESHOLD_PREVIEW_TABLE_COL ) return;
-										return <th key={ colIndex } style={ { height: cellHeight } } />;
-									} ) }
+									{ Array.from( {
+										length: Math.min( colCount, THRESHOLD_PREVIEW_TABLE_COL ),
+									} ).map( ( _col, colIndex ) => (
+										<th key={ colIndex } style={ { height: cellHeight } } />
+									) ) }
 								</tr>
 							</thead>
 						) }
 						<tbody>
-							{ times( rowCount, ( rowIndex ) => {
-								if ( rowIndex > THRESHOLD_PREVIEW_TABLE_ROW ) return;
-								return (
+							{ Array.from( { length: Math.min( rowCount, THRESHOLD_PREVIEW_TABLE_ROW ) } ).map(
+								( _row, rowIndex ) => (
 									<tr key={ rowIndex }>
-										{ times( Math.min( colCount, MAX_PREVIEW_TABLE_COL ), ( colIndex ) => {
-											if ( colIndex > THRESHOLD_PREVIEW_TABLE_COL ) return;
-											return <td key={ colIndex } style={ { height: cellHeight } } />;
-										} ) }
+										{ Array.from( {
+											length: Math.min( colCount, THRESHOLD_PREVIEW_TABLE_COL ),
+										} ).map( ( _col, colIndex ) => (
+											<td key={ colIndex } style={ { height: cellHeight } } />
+										) ) }
 									</tr>
-								);
-							} ) }
+								)
+							) }
 						</tbody>
 						{ footerSection && (
 							<tfoot>
 								<tr>
-									{ times( colCount, ( colIndex ) => {
-										if ( colIndex > THRESHOLD_PREVIEW_TABLE_COL ) return;
-										return <td key={ colIndex } style={ { height: cellHeight } } />;
-									} ) }
+									{ Array.from( {
+										length: Math.min( colCount, THRESHOLD_PREVIEW_TABLE_COL ),
+									} ).map( ( _col, colIndex ) => (
+										<td key={ colIndex } style={ { height: cellHeight } } />
+									) ) }
 								</tr>
 							</tfoot>
 						) }
@@ -150,13 +152,11 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 			<form className="ftb-placeholder__form" onSubmit={ onCreateTable }>
 				<div className="ftb-placeholder__row">
 					<ToggleControl
-						className="ftb-placeholder__toggle-header"
 						label={ __( 'Header section', 'flexible-table-block' ) }
 						checked={ !! headerSection }
 						onChange={ onToggleHeaderSection }
 					/>
 					<ToggleControl
-						className="ftb-placeholder__toggle-footer"
 						label={ __( 'Footer section', 'flexible-table-block' ) }
 						checked={ !! footerSection }
 						onChange={ onToggleFooterSection }
@@ -164,7 +164,7 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 				</div>
 				<div className="ftb-placeholder__row">
 					<TextControl
-						className="ftb-placeholder__column-count"
+						className="ftb-is-next-40px-default-size"
 						label={ __( 'Column count', 'flexible-table-block' ) }
 						type="number"
 						min="1"
@@ -173,7 +173,7 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 						onChange={ onChangeColumnCount }
 					/>
 					<TextControl
-						className="ftb-placeholder__row-count"
+						className="ftb-is-next-40px-default-size"
 						label={ __( 'Row count', 'flexible-table-block' ) }
 						type="number"
 						min="1"
@@ -181,7 +181,13 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 						value={ rowCount || '' }
 						onChange={ onChangeRowCount }
 					/>
-					<Button variant="primary" type="submit" disabled={ ! rowCount || ! colCount }>
+					<Button
+						variant="primary"
+						type="submit"
+						disabled={ ! rowCount || ! colCount }
+						// @ts-ignore: `__next40pxDefaultSize` prop is not exist at @types
+						__next40pxDefaultSize
+					>
 						{ __( 'Create Table', 'flexible-table-block' ) }
 					</Button>
 				</div>

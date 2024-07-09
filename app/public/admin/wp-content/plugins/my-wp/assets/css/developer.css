@@ -3,7 +3,7 @@
   position: relative;
 }
 body.wp-admin #wpbody-content {
-  min-height: 600px;
+  min-height: 800px;
 }
 body.wp-admin #mywp-debug-wrap {
   position: absolute;
@@ -140,6 +140,7 @@ body.wp-admin.folded.block-editor-page #mywp-debug {
   padding: 4px 8px;
   border: 0 none;
   background: none;
+  word-break: break-all;
 }
 #mywp-debug .debug-renders .render .render-content-wrap .render-content table.debug-table th {
   font-weight: normal;

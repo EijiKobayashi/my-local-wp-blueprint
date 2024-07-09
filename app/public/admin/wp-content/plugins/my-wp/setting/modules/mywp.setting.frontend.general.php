@@ -75,6 +75,8 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
 
     $api_root = get_rest_url();
 
+    $x_frame_options = array( 'SAMEORIGIN' , 'DENY' );
+
     ?>
     <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Response Header' , 'my-wp' ); ?></h3>
     <table class="form-table">
@@ -105,6 +107,45 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
                 <?php echo esc_html( 'Link: <' . home_url( '/' ) . '>?p=***; rel=shortlink' ); ?>
               <?php endif; ?>
             </code></p>
+          </td>
+        </tr>
+        <tr>
+          <th><?php _e( 'Hide X-Pingback' , 'my-wp' ); ?></th>
+          <td>
+            <label>
+              <input type="checkbox" name="mywp[data][hide_x_pingback]" class="hide_x_pingback" value="1" <?php checked( $setting_data['hide_x_pingback'] , true ); ?> />
+              <?php _e( 'Hide' ); ?>
+            </label>
+            <p><code>
+              <?php echo esc_html( get_bloginfo( 'pingback_url', 'display' ) ); ?>
+            </code></p>
+          </td>
+        </tr>
+        <tr>
+          <th><?php _e( 'X-Frame-Options' , 'my-wp' ); ?></th>
+          <td>
+            <select name="mywp[data][x_frame_option]">
+              <option value=""></option>
+
+              <?php if( ! empty( $x_frame_options ) ) : ?>
+
+                <?php foreach( $x_frame_options as $x_frame_option ) : ?>
+
+                  <?php $selected = false; ?>
+
+                  <?php if( $setting_data['x_frame_option'] === $x_frame_option ) : ?>
+
+                    <?php $selected = true; ?>
+
+                  <?php endif; ?>
+
+                  <option value="<?php echo esc_attr( $x_frame_option ); ?>" <?php selected( $selected , true ); ?>>
+                    <?php echo esc_attr( $x_frame_option ); ?>
+                  </option>
+
+                <?php endforeach; ?>
+
+              <?php endif; ?>
           </td>
         </tr>
       </tbody>
@@ -300,6 +341,18 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
     if( ! empty( $formatted_data['hide_shortlink_header'] ) ) {
 
       $new_formatted_data['hide_shortlink_header'] = true;
+
+    }
+
+    if( ! empty( $formatted_data['hide_x_pingback'] ) ) {
+
+      $new_formatted_data['hide_x_pingback'] = true;
+
+    }
+
+    if( ! empty( $formatted_data['x_frame_option'] ) ) {
+
+      $new_formatted_data['x_frame_option'] = strip_tags( $formatted_data['x_frame_option'] );
 
     }
 

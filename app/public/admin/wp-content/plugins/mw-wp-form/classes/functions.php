@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -38,50 +38,6 @@ class MWF_Functions {
 	 */
 	public static function is_empty( $value ) {
 		return ( array() === $value || '' === $value || is_null( $value ) || false === $value );
-	}
-
-	/**
-	 * Generate file path based on temp directory.
-	 *
-	 * @param string $filename The file basename.
-	 * @return string
-	 */
-	public static function generate_uploaded_fileurl_from_filename( $filename ) {
-		$filename = basename( $filename );
-		$File     = new MW_WP_Form_File();
-		$temp_dir = $File->get_temp_dir();
-
-		if ( strstr( $filename, '/' ) || strstr( $filename, '\\' ) ) {
-			return false;
-		}
-
-		if ( strstr( $filename, "\0" ) ) {
-			return false;
-		}
-
-		return path_join( $temp_dir['url'], $filename );
-	}
-
-	/**
-	 * Generate file URL based on temp directory.
-	 *
-	 * @param string $filename The file basename.
-	 * @return string
-	 */
-	public static function generate_uploaded_filepath_from_filename( $filename ) {
-		$filename = basename( $filename );
-		$File     = new MW_WP_Form_File();
-		$temp_dir = $File->get_temp_dir();
-
-		if ( strstr( $filename, '/' ) || strstr( $filename, '\\' ) ) {
-			return false;
-		}
-
-		if ( strstr( $filename, "\0" ) ) {
-			return false;
-		}
-
-		return path_join( $temp_dir['dir'], $filename );
 	}
 
 	/**

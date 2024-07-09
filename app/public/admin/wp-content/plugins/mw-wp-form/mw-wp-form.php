@@ -1,17 +1,20 @@
 <?php
 /**
  * Plugin Name: MW WP Form
- * Plugin URI: https://plugins.2inc.org/mw-wp-form/
+ * Plugin URI: https://mw-wp-form.web-soudan.co.jp
  * Description: MW WP Form is shortcode base contact form plugin. This plugin have many features. For example you can use many validation rules, inquiry data saving, and chart aggregation using saved inquiry data.
- * Version: 4.4.5
- * Author: inc2734
- * Author URI: https://2inc.org
+ * Version: 5.1.0
+ * Requires at least: 6.0
+ * Author: websoudan
+ * Author URI: https://web-soudan.co.jp/
+ * Original Author: inc2734
+ * Original Author URI: https://2inc.org
  * Text Domain: mw-wp-form
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -59,6 +62,8 @@ class MW_WP_Form {
 	 */
 	public function _initialize() {
 		load_plugin_textdomain( 'mw-wp-form' );
+
+		MW_WP_Form_Csrf::save_token();
 
 		add_action( 'after_setup_theme', array( $this, '_after_setup_theme' ), 11 );
 		add_action( 'init', array( $this, '_register_post_type' ) );
@@ -210,6 +215,7 @@ class MW_WP_Form {
 		$plugin_dir_path = plugin_dir_path( __FILE__ );
 		include_once( $plugin_dir_path . 'classes/models/class.admin.php' );
 		include_once( $plugin_dir_path . 'classes/models/class.file.php' );
+		include_once( $plugin_dir_path . 'classes/models/class.directory.php' );
 
 		$admin = new MW_WP_Form_Admin();
 		$forms = $admin->get_forms();
@@ -238,16 +244,19 @@ class MW_WP_Form {
 			}
 		}
 
-		$file = new MW_WP_Form_File();
-		$file->remove_temp_dir();
+		try {
+			MW_WP_Form_Directory::do_empty( MW_WP_Form_Directory::get(), true );
+			MW_WP_Form_Directory::remove( MW_WP_Form_Directory::get( false ) );
+		} catch ( \Exception $e ) {
+			error_log( $e->getMessage() );
+		}
 
 		delete_option( MWF_Config::NAME );
 	}
 
 	public function _do_empty_temp_dir() {
 		try {
-			$File = new MW_WP_Form_File();
-			$File->do_empty_temp_dir();
+			MW_WP_Form_Directory::do_empty( MW_WP_Form_Directory::get() );
 		} catch ( \Exception $e ) {
 			error_log( $e->getMessage() );
 		}

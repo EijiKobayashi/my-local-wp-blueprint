@@ -51,6 +51,8 @@ final class MywpSettingScreenFrontendAuthorArchive extends MywpAbstractSettingMo
 
     }
 
+    $site_url = site_url();
+
     ?>
     <table class="form-table">
       <tbody>
@@ -63,8 +65,19 @@ final class MywpSettingScreenFrontendAuthorArchive extends MywpAbstractSettingMo
             </label>
             &nbsp;
             <?php if( ! empty( $author_post ) ) : ?>
-              <a target="_blank" href="<?php echo get_author_posts_url( $author_post->post_author ); ?>"><?php printf( __( 'Author: %s' ) , $author_name ); ?></a>
+              <a target="_blank" href="<?php echo esc_url( get_author_posts_url( $author_post->post_author ) ); ?>"><?php printf( __( 'Author: %s' ) , $author_name ); ?></a>
             <?php endif; ?>
+          </td>
+        </tr>
+        <tr>
+          <th><?php _e( 'Add "Disallow" to robots.txt' , 'my-wp' ); ?></th>
+          <td>
+            <label>
+              <input type="checkbox" name="mywp[data][disable_archive_add_robots_txt]" class="disable_archive_add_robots_txt" value="1" <?php checked( $setting_data['disable_archive_add_robots_txt'] , true ); ?> />
+              <?php _e( 'Add Disallow' , 'my-wp' ); ?>
+            </label>
+            &nbsp;
+            <a target="_blank" href="<?php echo esc_url( $site_url . '/robots.txt' ); ?>">robots.txt</a>
           </td>
         </tr>
       </tbody>
@@ -91,6 +104,12 @@ final class MywpSettingScreenFrontendAuthorArchive extends MywpAbstractSettingMo
     if( ! empty( $formatted_data['disable_archive'] ) ) {
 
       $new_formatted_data['disable_archive'] = true;
+
+    }
+
+    if( ! empty( $formatted_data['disable_archive_add_robots_txt'] ) ) {
+
+      $new_formatted_data['disable_archive_add_robots_txt'] = true;
 
     }
 

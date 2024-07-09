@@ -24,11 +24,10 @@ import {
 import { FONT_SIZE_UNITS, TEXT_ALIGNMENT_CONTROLS, CAPTION_SIDE_CONTROLS } from '../constants';
 import { PaddingControl } from '../controls';
 import { convertToInline } from '../utils/style-converter';
-import { pickPadding } from '../utils/style-picker';
+import { pickPadding, type DirectionProps } from '../utils/style-picker';
 import { updatePadding } from '../utils/style-updater';
 import { sanitizeUnitValue } from '../utils/helper';
 import type { CaptionSideValue, TextAlignValue, BlockAttributes } from '../BlockAttributes';
-import type { DirectionProps } from '../utils/style-picker';
 
 type Props = {
 	attributes: BlockAttributes;
@@ -95,33 +94,37 @@ export default function TableCaptionSettings( {
 					{ __( 'Clear caption settings', 'flexible-table-block' ) }
 				</Button>
 			</BaseControl>
-			<BaseControl
-				id="flexible-table-block-caption-font-size"
-				label={ __( 'Caption font size', 'flexible-table-block' ) }
-				className="ftb-font-size-control"
-			>
-				<UnitControl
+			<div className="ftb-base-control-row">
+				<BaseControl
 					id="flexible-table-block-caption-font-size"
-					value={ captionStylesObj?.fontSize }
-					units={ fontSizeUnits }
-					min="0"
-					onChange={ onChangeFontSize }
-				/>
-			</BaseControl>
-			<BaseControl
-				id="flexible-table-block-caption-line-height"
-				className="ftb-line-height-control"
-			>
-				<TextControl
-					label={ __( 'Caption line height', 'flexible-table-block' ) }
-					autoComplete="off"
-					onChange={ onChangeLineHeight }
-					step={ 0.1 }
-					type="number"
-					value={ captionStylesObj?.lineHeight || '' }
-					min={ 0 }
-				/>
-			</BaseControl>
+					label={ __( 'Caption font size', 'flexible-table-block' ) }
+					className="ftb-font-size-control"
+				>
+					<UnitControl
+						id="flexible-table-block-caption-font-size"
+						value={ captionStylesObj?.fontSize }
+						units={ fontSizeUnits }
+						min="0"
+						onChange={ onChangeFontSize }
+						size="__unstable-large"
+					/>
+				</BaseControl>
+				<BaseControl
+					id="flexible-table-block-caption-line-height"
+					className="ftb-line-height-control"
+				>
+					<TextControl
+						className="ftb-is-next-40px-default-size"
+						label={ __( 'Caption line height', 'flexible-table-block' ) }
+						autoComplete="off"
+						onChange={ onChangeLineHeight }
+						step={ 0.1 }
+						type="number"
+						value={ captionStylesObj?.lineHeight || '' }
+						min={ 0 }
+					/>
+				</BaseControl>
+			</div>
 			<PaddingControl
 				id="flexible-table-block-caption-padding"
 				label={ __( 'Caption padding', 'flexible-table-block' ) }
@@ -140,6 +143,8 @@ export default function TableCaptionSettings( {
 								label={ label }
 								variant={ captionSide === value ? 'primary' : undefined }
 								onClick={ () => onChangeSide( value ) }
+								// @ts-ignore: `size` prop is not exist at @types
+								size="compact"
 							>
 								{ label }
 							</Button>
@@ -161,6 +166,8 @@ export default function TableCaptionSettings( {
 									variant={ value === captionStylesObj?.textAlign ? 'primary' : 'secondary' }
 									icon={ icon }
 									onClick={ () => onChangeAlign( value ) }
+									// @ts-ignore: `size` prop is not exist at @types
+									size="compact"
 								/>
 							);
 						} ) }

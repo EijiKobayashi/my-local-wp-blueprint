@@ -78,8 +78,18 @@ final class MywpSettingScreenDebugTranslations extends MywpAbstractSettingModule
               <?php echo $translation_domain; ?><br />
             </th>
             <td>
-              <p><code><?php echo $translation_object->get_filename(); ?></code></p>
+              <?php if( $translation_object instanceof MO ) : ?>
+
+                <p><code><?php echo esc_html( $translation_object->get_filename() ); ?></code></p>
+
+              <?php else : ?>
+
+                <p><?php echo esc_html( __( 'Unknown translation file.' , 'my-wp' ) ); ?></p>
+
+              <?php endif; ?>
+
               <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php print_r( $translation_object->entries ); ?></textarea>
+
             </td>
           </tr>
         <?php endforeach; ?>

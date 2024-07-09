@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mw-wp-form
- * @author inc2734
+ * @author websoudan
  * @license GPL-2.0+
  */
 
@@ -255,7 +255,8 @@ class MW_WP_Form_Mail_Service {
 	 */
 	protected function _delete_files() {
 		foreach ( $this->attachments as $file ) {
-			if ( file_exists( $file ) ) {
+			$file = realpath( $file );
+			if ( false !== $file && is_file( $file ) && 0 === strpos( $file, MW_WP_Form_Directory::get() ) ) {
 				unlink( $file );
 			}
 		}

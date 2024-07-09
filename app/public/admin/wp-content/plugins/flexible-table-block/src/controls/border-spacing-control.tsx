@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 /**
  * WordPress dependencies
@@ -68,7 +68,6 @@ export default function BorderSpacingControl( {
 	const borderSpacingUnits = useCustomUnits( { availableUnits: BORDER_SPACING_UNITS } );
 
 	const [ isLinked, setIsLinked ] = useState< boolean >( true );
-	const [ direction, setDirection ] = useState< DirectionValue | undefined >( undefined );
 
 	const headingId: string = `${ id }-heading`;
 
@@ -79,20 +78,16 @@ export default function BorderSpacingControl( {
 	const allInputPlaceholder: string = isMixed ? __( 'Mixed', 'flexible-table-block' ) : '';
 	const allInputValue: string | 0 = isMixed ? '' : values.horizontal;
 
-	const classNames: string = classnames( 'ftb-border-spacing-control', className );
+	const classNames: string = clsx( 'ftb-border-spacing-control', className );
 
 	const toggleLinked = () => {
 		setIsLinked( ! isLinked );
-		setDirection( undefined );
 	};
 
 	const handleOnReset = () => {
 		setIsLinked( true );
-		setDirection( undefined );
 		onChange( DEFAULT_VALUES );
 	};
-
-	const handleOnFocus = ( focusDirection: DirectionValue ) => setDirection( focusDirection );
 
 	const handleOnChangeAll = ( inputValue: string ) => {
 		const [ , unit ] = parseUnit( inputValue );
@@ -123,53 +118,61 @@ export default function BorderSpacingControl( {
 			<div aria-labelledby={ headingId } role="region">
 				<div className="ftb-border-spacing-control__header">
 					<Text id={ headingId }>{ label }</Text>
-					<Button isSmall variant="secondary" onClick={ handleOnReset }>
+					<Button
+						variant="secondary"
+						onClick={ handleOnReset }
+						// @ts-ignore: `size` prop is not exist at @types
+						size="small"
+					>
 						{ __( 'Reset', 'flexible-table-block' ) }
 					</Button>
 				</div>
-				<div className="ftb-border-spacing-control__header-control">
-					{ hasIndicator && (
-						<DirectionIndicatorControl
-							directions={ direction === undefined ? undefined : [ direction ] }
-						/>
-					) }
-					{ ( isLinked || ! allowSides ) && (
-						<UnitControl
-							aria-label={ __( 'All', 'flexible-table-block' ) }
-							value={ allInputValue }
-							units={ borderSpacingUnits }
-							placeholder={ allInputPlaceholder }
-							onChange={ handleOnChangeAll }
-						/>
-					) }
+				<div className="ftb-border-spacing-control__controls">
+					<div className="ftb-border-spacing-control__controls-inner">
+						{ ( isLinked || ! allowSides ) && (
+							<div className="ftb-border-spacing-control__controls-row">
+								{ hasIndicator && <DirectionIndicatorControl /> }
+								<UnitControl
+									aria-label={ __( 'All', 'flexible-table-block' ) }
+									value={ allInputValue }
+									units={ borderSpacingUnits }
+									placeholder={ allInputPlaceholder }
+									onChange={ handleOnChangeAll }
+									size="__unstable-large"
+								/>
+							</div>
+						) }
+						{ ! isLinked &&
+							allowSides &&
+							DIRECTION_CONTROLS.map( ( item, index ) => (
+								<div className="ftb-border-spacing-control__controls-row" key={ index }>
+									{ hasIndicator && <DirectionIndicatorControl directions={ [ item.value ] } /> }
+									<UnitControl
+										key={ item.value }
+										aria-label={ item.label }
+										value={ values[ item.value as ValuesKey ] }
+										units={ borderSpacingUnits }
+										onChange={ ( value: string ) => handleOnChange( value, item.value ) }
+										size="__unstable-large"
+									/>
+								</div>
+							) ) }
+					</div>
 					{ allowSides && (
 						<Tooltip text={ linkedLabel }>
 							<span>
 								<Button
 									className="ftb-border-spacing-control__header-linked-button"
 									label={ linkedLabel }
-									isSmall
 									icon={ isLinked ? link : linkOff }
 									onClick={ toggleLinked }
+									// @ts-ignore: `size` prop is not exist at @types
+									size="small"
 								/>
 							</span>
 						</Tooltip>
 					) }
 				</div>
-				{ ! isLinked && allowSides && (
-					<div className="ftb-border-spacing-control__input-controls">
-						{ DIRECTION_CONTROLS.map( ( item ) => (
-							<UnitControl
-								key={ item.value }
-								aria-label={ item.label }
-								value={ values[ item.value as ValuesKey ] }
-								units={ borderSpacingUnits }
-								onFocus={ () => handleOnFocus( item.value ) }
-								onChange={ ( value: string ) => handleOnChange( value, item.value ) }
-							/>
-						) ) }
-					</div>
-				) }
 			</div>
 		</BaseControl>
 	);

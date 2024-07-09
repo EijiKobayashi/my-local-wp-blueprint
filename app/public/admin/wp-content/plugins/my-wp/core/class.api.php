@@ -219,6 +219,22 @@ final class MywpApi {
 
   public static function get_all_user_roles() {
 
+    if( ! function_exists( 'get_editable_roles' ) ) {
+
+      require_once ABSPATH . 'wp-admin/includes/user.php';
+
+    }
+
+    if( ! function_exists( 'get_editable_roles' ) ) {
+
+      $called_text = sprintf( 'get_editable_roles()' , __FUNCTION__ );
+
+      MywpHelper::error_not_found_message( '$editable_roles' , $called_text );
+
+      return false;
+
+    }
+
     $editable_roles = get_editable_roles();
 
     if( empty( $editable_roles ) ) {
@@ -1476,6 +1492,38 @@ final class MywpApi {
     $dashicons = array( 'all' => $icons , 'categories' => $categories );
 
     return $dashicons;
+
+  }
+
+  public static function get_theme_path( $parent = false ) {
+
+    if( $parent ) {
+
+      $theme_path = get_template_directory();
+
+    } else {
+
+      $theme_path = get_stylesheet_directory();
+
+    }
+
+    return $theme_path;
+
+  }
+
+  public static function get_theme_url( $parent = false ) {
+
+    if( $parent ) {
+
+      $theme_url = get_template_directory_uri();
+
+    } else {
+
+      $theme_url = get_stylesheet_directory_uri();
+
+    }
+
+    return $theme_url;
 
   }
 

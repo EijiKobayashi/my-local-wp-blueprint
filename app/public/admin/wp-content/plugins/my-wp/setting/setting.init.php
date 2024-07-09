@@ -59,6 +59,7 @@ final class MywpSettingInit {
       'debug_post_type_structure' => $dir . 'mywp.setting.debug.post-type-structure.php',
       'debug_post_types'          => $dir . 'mywp.setting.debug.post-types.php',
       'debug_post_structure'      => $dir . 'mywp.setting.debug.post-structure.php',
+      'debug_rest_api'            => $dir . 'mywp.setting.debug.rest-api.php',
       'debug_site_options'        => $dir . 'mywp.setting.debug.site-options.php',
       'debug_taxonomies'          => $dir . 'mywp.setting.debug.taxonomies.php',
       'debug_terms'               => $dir . 'mywp.setting.debug.terms.php',
@@ -79,6 +80,7 @@ final class MywpSettingInit {
 
       'site_general'              => $dir . 'mywp.setting.site.general.php',
       'site_post_type'            => $dir . 'mywp.setting.site.post-type.php',
+      'site_sitemap'              => $dir . 'mywp.setting.site.sitemap.php',
 
       'update_bulk_post_meta'     => $dir . 'mywp.setting.update.bulk-post-meta.php',
 

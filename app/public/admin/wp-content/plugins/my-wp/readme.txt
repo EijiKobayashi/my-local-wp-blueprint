@@ -2,8 +2,9 @@
 Contributors: gqevu6bsiz
 Tags: mywp, admin, backend, frontend, customize, dashboard, debug, white label, sidebar, admin sidebar, toolbar, admin toolbar, frontend toolbar, metabox, posts, edit-post, uploads, users, user-edit, profile, comments
 Requires at least: 4.7
-Tested up to: 6.2
-Stable tag: 1.21.1
+Tested up to: 6.4
+Requires PHP: 5.6
+Stable tag: 1.23.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,6 +46,29 @@ You will speed up to your site creation. Debug on current post, Debug on current
 10. Developer panel on footer.
 
 == Changelog ==
+
+= 1.23.0 2023-12-25 =
+* Added: Debug for rest API.
+* Added: Hide setting for WordPress CORE sitemap.
+* Added: Send X-Frame-Options header on frontend.
+* Fixed: Some small fix.
+
+= 1.22.2 2023-11-27 =
+* Fixed: Autovivification fixed for PHP 8.1.
+
+= 1.22.1 2023-11-25 =
+* Updated: Compatibility for PHP 8.1 and WP 6.4.
+* Fixed: Hide search box on uploads.
+* Fixed: Print template file name when empty template.
+* Fixed: Change label on post edit.
+* Fixed: Print translation content when empty translation object.
+
+= 1.22.0 2023-08-14 =
+* Added: Add disallow to author archive for robots.txt.
+* Added: Hide X-Pingback for response header.
+* Fixed: Text line break adjustment on debug panel, sidebar setting, toolbar setting.
+* Fixed: Get all user roles.
+* Fixed: Sort order column customize on Posts.
 
 = 1.21.1 2023-05-09 =
 * Fixed: Misalignment of admin sidebar menu on mobile.
