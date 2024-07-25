@@ -324,7 +324,7 @@ final class MywpControllerModuleAdminUploads extends MywpControllerAbstractModul
 
         $order = $wp_query->get( 'order' );
 
-        $orderby_statement = sprintf( '%1$s.%2$s %3$s' , $wpdb->posts , $orderby , $order );
+        $orderby_statement = sprintf( '%1$s.%2$s %3$s' , esc_sql( $wpdb->posts ) , esc_sql( $orderby ) , esc_sql( $order ) );
 
       }
 

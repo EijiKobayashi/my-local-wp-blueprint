@@ -20,6 +20,12 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
 
   public static function mywp_setting_screens( $setting_screens ) {
 
+    if( ! class_exists( 'WP_Sitemaps' ) ) {
+
+      return $setting_screens;
+
+    }
+
     $setting_screens[ self::$id ] = array(
       'title' => __( 'sitemap.xml' , 'my-wp' ),
       'menu' => self::$menu,
@@ -31,6 +37,12 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
   }
 
   public static function mywp_current_setting_screen_content() {
+
+    if( ! class_exists( 'WP_Sitemaps' ) ) {
+
+      return false;
+
+    }
 
     $setting_data = self::get_setting_data();
 

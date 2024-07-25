@@ -1,30 +1,75 @@
 === My WP Customize Admin/Frontend ===
 Contributors: gqevu6bsiz
-Tags: mywp, admin, backend, frontend, customize, dashboard, debug, white label, sidebar, admin sidebar, toolbar, admin toolbar, frontend toolbar, metabox, posts, edit-post, uploads, users, user-edit, profile, comments
+Tags: admin, frontend, debug, sidebar, toolbar
 Requires at least: 4.7
-Tested up to: 6.4
+Tested up to: 6.6
 Requires PHP: 5.6
-Stable tag: 1.23.0
+Stable tag: 1.23.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
+Simply and easy-to-use the customize for Admin and Frontend. A lot of custom filters and actions, and included the developer tools.
+
 == Description ==
+
+[My WP Customize](https://mywpcustomize.com) is customize for WordPress.
 
 Simply and easy-to-use the customize for Admin and Frontend. A lot of custom filters and actions, and included the developer tools.
 
-The demo site is here: [https://tastewp.com/new/?pre-installed-plugin-slug=my-wp](https://tastewp.com/new/?pre-installed-plugin-slug=my-wp)
-
-= Easy setting screen =
-Easily customize based on check boxes and text boxes.
-
-= Many customization =
-Freely editable admin sidebar, Admin footer text, Dashboard, Disable Author archive, etc ... and more customize. [My WP Customize](https://mywpcustomize.com)
-
-= Custom actions and filters =
 There are lots of custom actions and filters.
 
-= Developer tools =
 You will speed up to your site creation. Debug on current post, Debug on current using theme, Debug on server info, ...etc more helpful info.
+
+The demo site is here: [https://playground.wordpress.net/?plugin=my-wp&url=/wp-admin/admin.php?page=mywp)
+
+= Customize the admin =
+- Admin General(hide update notifications, hide screen options, custom footer text).
+- Admin Dashboard(hide meta boxes, change meta box title, restrict meta box order).
+- Admin Sidebar(hide menus, order menus, change icon and title, add custom link menu).
+- Admin Toolbar(hide menus, order menus, change icon and title, add custom link menu).
+- Admin Post list(hide columns, order columns, change title).
+- Admin Post edit(support block editor and classic editor, hide meta boxes, change title placeholder, restrict order meta box).
+- Admin Terms(hide columns, order columns, change title).
+- Admin Media uploads(hide columns, order columns, change title).
+- Admin Comments(hide columns, order columns, change title).
+- Admin Users(hide columns, order columns, change title).
+- Admin User edit(hide Visual Editor checkbox, hide Syntax Highlighting checkbox, hide Admin Color Scheme).
+- Admin Site editor(Change top left button).
+- Admin Nav menus(hide meta boxes, hide Link target, hide Title Attribute, hide CSS classes).
+
+= Customize the frontend =
+- Frontend General(show and hide toolbar, hide Rest link, hide Shortlink, set X-Frame-Options, add custom header meta).
+- Frontend Author archive(hide archive page, add Disallow to robots.txt).
+- Frontend Date archive(hide archive page).
+- Frontend Taxonomy archive(hide archive page).
+- Frontend Toolbar(hide menus, order menus, change icon and title, add custom link menu).
+
+= Customize the login =
+- Login General(Change logo link and image, hide select language, add custom footer text).
+- Login User(redirect after login and logout).
+
+= Customize the website =
+- Site General(Disable file edit, hide PHP X-Mailer version).
+- Site Post type(Change create_posts capability).
+- Site Sitemap(hide core sitemap.xml).
+
+= For Debug =
+- Debug General(Display a debug screen that is useful for development).
+- Debug Blogs(Show all blogs on network/multisite).
+- Debug Crons(Shor all crons).
+- Debug Date time(Show all date and time values).
+- Debug Defines(Show all defines).
+- Debug Post statuses(Show all post statuses).
+- Debug Post structure(Show a post structure).
+- Debug Post types(Show all post types).
+- Debug Rest API(Show all rest api).
+- Debug Site options(Show all site options on network/multisite).
+- Debug Taxonomies(Show all taxonomies).
+- Debug Terms(Show all terms).
+- Debug transients(Show all transients).
+- Debug translations(Show all translations).
+- Debug Capabilities(Show all user roles capabilities).
+
 
 == Installation ==
 
@@ -46,6 +91,11 @@ You will speed up to your site creation. Debug on current post, Debug on current
 10. Developer panel on footer.
 
 == Changelog ==
+
+= 1.23.1 2024-07-20 =
+* Fixed: Update serialized value on bulk post meta.
+* Fixed: Sitemap error on lower WP.
+* Fixed: Escape value for orderby statement on admin uploads and admin posts.
 
 = 1.23.0 2023-12-25 =
 * Added: Debug for rest API.
