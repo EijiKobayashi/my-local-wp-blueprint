@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "cheatSheet": "https://fullsiteediting.com/lessons/remove-settings-in-theme-json/",
   "customTemplates": [],
   "settings": {
     "appearanceTools": false,
@@ -18,7 +19,7 @@
       "customGradient": false,
       "defaultGradients": false,
       "defaultPalette": false,
-      "duotone": [],
+      "duotone": null,
       "gradients": [],
       "/* gradients */": [
         {
@@ -155,12 +156,28 @@
           "fontSizes": []
         }
       },
+      "core/image": {
+        "lightbox": {
+          "allowEditing": false,
+          "enabled": false
+        }
+      },
       "core/button": {
         "border": {
           "radius": false
         },
         "typography": {
           "fontSizes": []
+        },
+        "shadow": {
+          "defaultPresets": false,
+          "/* presets */": [
+            {
+              "name": "test-shadow",
+              "slug": "test-shadow",
+              "shadow": "0 5px 5px 0 rgb(0 0 0 / 0.3)"
+            }
+          ]
         }
       },
       "core/separator": {
@@ -174,6 +191,16 @@
           "dots": false
         }
       }
+    },
+    "shadow": {
+      "defaultPresets": false,
+      "/* presets */": [
+        {
+          "name": "",
+          "slug": "",
+          "shadow": ""
+        }
+      ]
     },
     "custom": {},
     "/* custom */": {

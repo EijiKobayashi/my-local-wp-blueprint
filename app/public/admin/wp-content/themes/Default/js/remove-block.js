@@ -8,7 +8,7 @@ wp.domReady(() => {
   //wp.blocks.unregisterBlockType('core/freeform'); // クラシック
   wp.blocks.unregisterBlockType('core/preformatted'); // 整形済みテキスト
   //wp.blocks.unregisterBlockType('core/pullquote'); // プルクオート
-  wp.blocks.unregisterBlockType('core/table'); // テーブル
+  //wp.blocks.unregisterBlockType('core/table'); // テーブル
   wp.blocks.unregisterBlockType('core/verse'); // 詩
 
   // メディア
@@ -18,12 +18,15 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockType('core/cover'); // カバー
   wp.blocks.unregisterBlockType('core/file'); // ファイル
   //wp.blocks.unregisterBlockType('core/media-text'); // メディアとテキスト
-  //wp.blocks.unregisterBlockType('core/video'); // 動画
+  wp.blocks.unregisterBlockType('core/video'); // 動画
 
   // デザイン
   //wp.blocks.unregisterBlockType('core/buttons'); // ボタン
   //wp.blocks.unregisterBlockType('core/columns'); // カラム
   //wp.blocks.unregisterBlockType('core/group'); // グループ
+  //wp.blocks.unregisterBlockType('core/group'); // 横並び (wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}})
+  //wp.blocks.unregisterBlockType('core/group'); // 縦積み (wp:group {"layout":{"type":"flex","orientation":"vertical"}})
+  //wp.blocks.unregisterBlockType('core/group'); // グリッド (wp:group {"layout":{"type":"grid"}})
   wp.blocks.unregisterBlockType('core/more'); // 続きを読む
   wp.blocks.unregisterBlockType('core/nextpage'); // ページ区切り
   //wp.blocks.unregisterBlockType('core/separator'); // 区切り
@@ -60,12 +63,13 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockType('core/avatar'); // アバター
   wp.blocks.unregisterBlockType('core/post-author'); // 投稿者
   wp.blocks.unregisterBlockType('core/post-navigation-link'); // 次の投稿
-  wp.blocks.unregisterBlockType('core/post-navigation-link', 'previous'); // 前の投稿 {"type":"previous"}
+  //wp.blocks.unregisterBlockType('core/post-navigation-link', 'previous'); // 前の投稿 {"type":"previous"}
   wp.blocks.unregisterBlockType('core/read-more'); // 続きを読む
   wp.blocks.unregisterBlockType('core/comments'); // コメント
   wp.blocks.unregisterBlockType('core/post-comments-form'); // 投稿コメントフォーム
   wp.blocks.unregisterBlockType('core/term-description'); // タームの説明
   wp.blocks.unregisterBlockType('core/post-author-biography'); // 投稿者のプロフィール情報
+  wp.blocks.unregisterBlockType('core/post-author-name'); // 投稿者の名前
 
   // 埋め込み
   wp.blocks.unregisterBlockVariation('core/embed', '');
@@ -101,4 +105,11 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockVariation('core/embed', 'pinterest'); // Pinterest
   wp.blocks.unregisterBlockVariation('core/embed', 'pocketcasts'); // Pocketcasts
   wp.blocks.unregisterBlockVariation('core/embed', 'wolfram-cloud'); // Wolfram Cloud
+  wp.blocks.unregisterBlockVariation('core/embed', 'pocket-casts'); // Pocket Casts
+  wp.blocks.unregisterBlockVariation('core/embed', 'bluesky'); // Bluesky
+
+  // Yoast SEO
+  wp.blocks.unregisterBlockType('yoast/faq-block'); // FAQ
+  wp.blocks.unregisterBlockType('yoast/how-to-block'); // HOW TO
+  wp.blocks.unregisterBlockType('yoast-seo/breadcrumbs'); // パンくずリスト
 });
