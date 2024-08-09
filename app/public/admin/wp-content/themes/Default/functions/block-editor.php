@@ -3,15 +3,23 @@
 add_theme_support('disable-custom-colors');
 
 // 使わないブロックを登録する
-add_action('enqueue_block_editor_assets', function () {
+function my_theme_enqueue_block_remove_block() {
   wp_enqueue_script('remove-block', get_template_directory_uri() . '/js/remove-block.js', array(), false, true);
-});
+}
+add_action('enqueue_block_editor_assets', 'my_theme_enqueue_block_remove_block');
 
 // ブロックスタイルを無効化する
-function my_theme_enqueue_block_editor() {
-  wp_enqueue_script('mytheme-block-editor-script', get_template_directory_uri() . '/js/remove-editor.js', array('wp-blocks', 'wp-dom'), wp_get_theme()->get('Version'), true);
+function my_theme_enqueue_block_remove_editor() {
+  wp_enqueue_script('remove-editor', get_template_directory_uri() . '/js/remove-editor.js', array('wp-blocks', 'wp-dom', 'wp-dom-ready', 'wp-edit-post'), wp_get_theme()->get('Version'), true);
 }
-add_action('enqueue_block_editor_assets', 'my_theme_enqueue_block_editor');
+add_action('enqueue_block_editor_assets', 'my_theme_enqueue_block_remove_editor');
+
+// Openverse 無効化
+function my_theme_enable_openverse_media_category($settings) {
+  $settings['enableOpenverseMediaCategory'] = false;
+  return $settings;
+}
+add_filter('block_editor_settings_all', 'my_theme_enable_openverse_media_category', 10);
 
 // WordPressのブロックパターンを削除する
 add_filter('should_load_remote_block_patterns', function () {

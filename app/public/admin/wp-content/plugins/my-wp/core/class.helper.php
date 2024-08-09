@@ -16,7 +16,9 @@ final class MywpHelper {
 
     }
 
-    $action  = strip_tags( $action );
+    $action = strip_tags( $action );
+
+    $called = strip_tags( $called );
 
     self::error_message( sprintf( __( 'This function can be called after "%s" action.' , 'my-wp' ) , $action ) , $called );
 
@@ -30,7 +32,9 @@ final class MywpHelper {
 
     }
 
-    $required_val  = strip_tags( $required_val );
+    $required_val = strip_tags( $required_val );
+
+    $called = strip_tags( $called );
 
     self::error_message( sprintf( __( 'The %s is required.' , 'my-wp' ) , $required_val ) , $called );
 
@@ -44,9 +48,59 @@ final class MywpHelper {
 
     }
 
-    $not_found  = strip_tags( $not_found );
+    $not_found = strip_tags( $not_found );
+
+    $called = strip_tags( $called );
 
     self::error_message( sprintf( __( '%s is not found.' , 'my-wp' ) , $not_found ) , $called );
+
+  }
+
+  public static function error_deprecated( $deprecated_message = false , $called = false ) {
+
+    if( $deprecated_message === false or $called === false ) {
+
+      return false;
+
+    }
+
+    $deprecated_message  = strip_tags( $deprecated_message );
+
+    $called = strip_tags( $called );
+
+    self::error_message( $deprecated_message , $called );
+
+    if( WP_DEBUG ) {
+
+      if( function_exists( 'wp_trigger_error' ) ) {
+
+        $message = sprintf( 'Plugin %s(%s), %s, %s' , MYWP_NAME , MYWP_PLUGIN_BASENAME , $called , $deprecated_message );
+
+        wp_trigger_error( '' , $message );
+
+      }
+
+    }
+
+  }
+
+  public static function error_deprecated_value( $deprecated_message = false , $called = false , $version = false ) {
+
+    if( $deprecated_message === false or $called === false or $version === false ) {
+
+      return false;
+
+    }
+
+    $deprecated_message  = strip_tags( $deprecated_message );
+
+    $called = strip_tags( $called );
+
+    $version = strip_tags( $version );
+
+    $message = sprintf( '%s is deprecated since version %s.' , $deprecated_message , $version );
+
+    self::error_deprecated( $message , $called );
 
   }
 
@@ -199,6 +253,146 @@ final class MywpHelper {
       set_time_limit( $seconds );
 
     }
+
+  }
+
+  public static function sanitize_text( $value ) {
+
+    $value = sanitize_text_field( $value );
+
+    return $value;
+
+  }
+
+  public static function sanitize_number( $value ) {
+
+    $value = self::sanitize_text( $value );
+
+    if( $value === '0' ) {
+
+      return 0;
+
+    }
+
+    if( empty( $value ) ) {
+
+      return false;
+
+    }
+
+    $value = (int) $value;
+
+    if( empty( $value ) ) {
+
+      return false;
+
+    }
+
+    return $value;
+
+  }
+
+  public static function sanitize_date( $value ) {
+
+    $value = self::sanitize_text( $value );
+
+    if( empty( $value ) ) {
+
+      return false;
+
+    }
+
+    $date_array = explode( '-' , $value );
+
+    if( empty( $date_array[0] ) ) {
+
+      return false;
+
+    }
+
+    $year = (int) $date_array[0];
+
+    if( empty( $date_array[1] ) ) {
+
+      return false;
+
+    }
+
+    $month = (int) $date_array[1];
+
+    if( empty( $date_array[2] ) ) {
+
+      return false;
+
+    }
+
+    $day = (int) $date_array[2];
+
+    $date_string = sprintf( '%s-%s-%s' , $year , $month , $day );
+
+    if( ! wp_checkdate( $month , $day , $year , $date_string ) ) {
+
+      return false;
+
+    }
+
+    return $date_string;
+
+  }
+
+  public static function sanitize_term_ids( $taxonomy , $values ) {
+
+    $taxonomy = sanitize_text_field( $taxonomy );
+
+    if( empty( $taxonomy ) ) {
+
+      return false;
+
+    }
+
+    if( ! taxonomy_exists( $taxonomy ) ) {
+
+      return false;
+
+    }
+
+    if( empty( $values ) ) {
+
+      return false;
+
+    }
+
+    if( ! is_array( $values ) ) {
+
+      return false;
+
+    }
+
+    $term_ids = array();
+
+    foreach( $values as $term_id ) {
+
+      $term_id = MywpHelper::sanitize_number( $term_id );
+
+      if( empty( $term_id ) ) {
+
+        continue;
+
+      }
+
+      $term_exists = term_exists( $term_id , $taxonomy );
+
+      if( empty( $term_exists['term_id'] ) ) {
+
+        continue;
+
+      }
+
+      $term_ids[] = (int) $term_exists['term_id'];
+
+    }
+
+    return $term_ids;
 
   }
 

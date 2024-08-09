@@ -202,6 +202,14 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
     }
 
+    if( is_array( $bulk_meta_value ) or is_object( $bulk_meta_value ) ) {
+
+      return false;
+
+    }
+
+    $bulk_meta_value_unserialize = maybe_unserialize( stripslashes_deep( $bulk_meta_value ) );
+
     $is_do_run = false;
 
     if( ! empty( $_POST['is_do_run'] ) ) {
@@ -216,7 +224,15 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
       $from_meta_value = get_post_meta( $post_id , $meta_key , true );
 
-      $is_updated = update_post_meta( $post_id , $meta_key , $bulk_meta_value , $from_meta_value );
+      if( ! empty( $bulk_meta_value_unserialize ) ) {
+
+        $is_updated = update_post_meta( $post_id , $meta_key , $bulk_meta_value_unserialize , $from_meta_value );
+
+      } else {
+
+        $is_updated = update_post_meta( $post_id , $meta_key , $bulk_meta_value , $from_meta_value );
+
+      }
 
     }
 
@@ -965,6 +981,8 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
 
   private static function print_update_items( $post_ids ,  $meta_key , $bulk_meta_value ) {
 
+    $bulk_meta_value_unserialize = maybe_unserialize( stripslashes_deep( $bulk_meta_value ) );
+
     ?>
 
     <?php if( empty( $post_ids ) ) : ?>
@@ -984,7 +1002,10 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
         <?php $is_updated = 1; ?>
 
         <tr class="result-post post post-<?php echo esc_attr( $post_id ); ?> wait">
-          <th class="id"><?php echo $post_id; ?><input type="hidden" class="post-id" value="<?php echo esc_attr( $post_id ); ?>" /></th>
+          <th class="id">
+            <?php echo $post_id; ?>
+            <input type="hidden" class="post-id" value="<?php echo esc_attr( $post_id ); ?>" />
+          </th>
           <td class="is-updated">
             <div class="updating">
               <span class="dashicons dashicons-update"></span>
@@ -996,9 +1017,23 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingModul
               <span class="dashicons dashicons-warning"></span>
             </div>
           </td>
-          <td class="from-meta"><?php print_r( esc_html( $from_meta_value ) ); ?></td>
-          <td class="update-arrow"><span class="dashicons dashicons-arrow-right-alt2"></span></td>
-          <td class="to-meta"><?php echo esc_html( $bulk_meta_value ); ?></td>
+          <td class="from-meta">
+            <?php if( is_array( $from_meta_value ) or is_object( $from_meta_value ) ) : ?>
+              <textarea class="large-text" readonly="readonly"><?php print_r( $from_meta_value ); ?></textarea>
+            <?php else : ?>
+              <?php echo esc_html( $from_meta_value ); ?>
+            <?php endif; ?>
+          </td>
+          <td class="update-arrow">
+            <span class="dashicons dashicons-arrow-right-alt2"></span>
+          </td>
+          <td class="to-meta">
+            <?php if( is_array( $bulk_meta_value_unserialize ) or is_object( $bulk_meta_value_unserialize ) ) : ?>
+              <textarea class="large-text" readonly="readonly"><?php print_r( $bulk_meta_value_unserialize ); ?></textarea>
+            <?php else : ?>
+              <?php echo esc_html( $bulk_meta_value ); ?>
+            <?php endif; ?>
+          </td>
         </tr>
 
       <?php endforeach; ?>

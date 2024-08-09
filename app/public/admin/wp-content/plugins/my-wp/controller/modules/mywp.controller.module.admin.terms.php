@@ -112,7 +112,7 @@ final class MywpControllerModuleAdminTerms extends MywpControllerAbstractModule 
 
     add_filter( 'mywp_model_get_option_key_mywp_' . self::$id , array( __CLASS__ , 'mywp_model_get_option_key' ) );
 
-    add_filter( 'manage_edit-' . self::$taxonomy . '_columns' , array( __CLASS__ , 'manage_columns' ) );
+    add_filter( 'manage_edit-' . self::$taxonomy . '_columns' , array( __CLASS__ , 'manage_columns' ) , 10001 );
 
     add_action( 'manage_' . self::$taxonomy . '_custom_column' , array( __CLASS__ , 'manage_column_body' ) , 10 , 3 );
 
@@ -142,7 +142,7 @@ final class MywpControllerModuleAdminTerms extends MywpControllerAbstractModule 
 
     add_filter( "edit_{$taxnow}_per_page" , array( __CLASS__ , 'edit_per_page' ) );
 
-    add_filter( "manage_edit-{$taxnow}_columns" , array( __CLASS__ , 'manage_columns' ) );
+    add_filter( "manage_edit-{$taxnow}_columns" , array( __CLASS__ , 'manage_columns' ) , 10001 );
 
     add_action( "manage_{$taxnow}_custom_column" , array( __CLASS__ , 'manage_column_body' ) , 10 , 3 );
 
@@ -361,11 +361,31 @@ final class MywpControllerModuleAdminTerms extends MywpControllerAbstractModule 
 
     $term = get_term( $term_id , self::$taxonomy );
 
+    if( $column_id === 'mywp_column_id' ) {
+
+      $content = $term_id;
+
+    } elseif( $column_id === 'mywp_column_parent' ) {
+
+      $content = $term->parent;
+
+    }
+
+    $called_text = sprintf( '%s::%s( $content , $column_id , $term_id )' , __CLASS__ , __FUNCTION__ );
+
     if( $column_id === 'id' ) {
+
+      $deprecated_message = '$column_id "id"';
+
+      MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
       $content = $term_id;
 
     } elseif( $column_id === 'parent' ) {
+
+      $deprecated_message = '$column_id "parent"';
+
+      MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
       $content = $term->parent;
 

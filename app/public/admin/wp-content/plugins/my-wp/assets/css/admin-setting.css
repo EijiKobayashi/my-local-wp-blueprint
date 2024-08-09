@@ -454,6 +454,16 @@ body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-s
 body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-section #setting-screen-setting-list-columns #setting-list-columns #setting-list-columns-setting-columns #setting-list-columns-setting-columns-items .list-columns-item.active > .list-column-item-header .title-wrap .default-title {
   color: #F9CDA1;
 }
+body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-section #setting-screen-setting-list-columns #setting-list-columns #setting-list-columns-setting-columns #setting-list-columns-setting-columns-items .list-columns-item .list-column-item-header .title-wrap .mywp-desc-caution {
+  margin: 0 auto;
+  padding: 2px 4px;
+}
+
+body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-section #setting-screen-setting-list-columns #setting-list-columns #setting-list-columns-setting-columns #setting-list-columns-setting-columns-items .list-columns-item .list-column-item-header .title-wrap .column-id {
+  float: right;
+  display: inline-block;
+  opacity: 0.5;
+}
 body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-section #setting-screen-setting-list-columns #setting-list-columns #setting-list-columns-setting-columns #setting-list-columns-setting-columns-items .list-columns-item .list-column-item-content {
   display: none;
   padding: 20px;

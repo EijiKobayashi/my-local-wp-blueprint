@@ -180,6 +180,7 @@ add_filter('next_post_link', 'add_next_post_link_class');
 function dequeue_plugins_style() {
   wp_dequeue_style('wp-block-library');
   wp_dequeue_style('core-block-supports');
+  //wp_dequeue_style('core-block-supports-duotone-inline-css');
 }
 add_action('wp_enqueue_scripts', 'dequeue_plugins_style', 9999);
 function dequeue_global_style() {
@@ -212,13 +213,11 @@ add_action('init', 'delete_jquery');
 
 // 新規投稿画面にCSS読み込む
 /*
-function my_front_style()
-{
+function my_front_style() {
   wp_enqueue_style('my_front_style', home_url() . '/assets/css/style.css');
 }
 add_action('admin_head-post.php', 'my_front_style');
-function my_admin_style()
-{
+function my_admin_style() {
   wp_enqueue_style('my_admin_style', get_template_directory_uri() . '/css/admin-style.css');
 }
 add_action('admin_head-post.php', 'my_admin_style');

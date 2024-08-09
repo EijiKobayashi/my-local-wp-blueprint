@@ -1,19 +1,35 @@
-wp.domReady(function () {
+wp.domReady(() => {
   // サンプル
   // wp.blocks.unregisterBlockStyle( 'ブロック名', 'スタイル名' );
 
-  // 区切り（幅広線）
-  wp.blocks.unregisterBlockStyle('core/separator', 'wide');
-
-  // 区切り（ドット）
-  wp.blocks.unregisterBlockStyle('core/separator', 'dots');
-
-  // 画像（角丸）
+  // 画像
+  wp.blocks.unregisterBlockStyle('core/image', 'default');
   wp.blocks.unregisterBlockStyle('core/image', 'rounded');
 
-  // 引用（プレーン）
+  // 引用
+  wp.blocks.unregisterBlockStyle('core/quote', 'default');
   wp.blocks.unregisterBlockStyle('core/quote', 'plain');
-
-  // 引用（大）
   wp.blocks.unregisterBlockStyle('core/quote', 'large');
+
+  // ボタン
+  wp.blocks.unregisterBlockStyle('core/button', 'fill');
+  wp.blocks.unregisterBlockStyle('core/button', 'outline');
+
+  // 抜粋
+  wp.blocks.unregisterBlockStyle('core/pullquote', 'default');
+  wp.blocks.unregisterBlockStyle('core/pullquote', 'solid-color');
+
+  // 区切り
+  wp.blocks.unregisterBlockStyle('core/separator', 'default');
+  wp.blocks.unregisterBlockStyle('core/separator', 'wide');
+  wp.blocks.unregisterBlockStyle('core/separator', 'dots');
+
+  // テーブル
+  wp.blocks.unregisterBlockStyle('core/table', 'regular');
+  wp.blocks.unregisterBlockStyle('core/table', 'stripes');
+
+  // SNS
+  wp.blocks.unregisterBlockStyle('core/social-links', 'default');
+  wp.blocks.unregisterBlockStyle('core/social-links', 'logos-only');
+  wp.blocks.unregisterBlockStyle('core/social-links', 'pill-shape');
 });

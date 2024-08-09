@@ -544,6 +544,21 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
         </span>
 
+        <?php if( $column['type'] === 'deprecated' ) : ?>
+
+          <p class="mywp-desc-caution">
+            <span class="dashicons dashicons-warning"></span>
+            <?php _e( 'Deprecated' , 'my-wp' ); ?>
+          </p>
+
+        <?php endif; ?>
+
+        <span class="column-id">
+
+          <?php echo esc_html( $column_id ); ?>
+
+        </span>
+
       </div>
 
     </div>

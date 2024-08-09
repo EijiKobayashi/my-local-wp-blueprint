@@ -16,6 +16,60 @@ final class MywpDeveloperModuleMywpError extends MywpDeveloperAbstractModule {
 
   static protected $priority = 10;
 
+  protected static function after_init() {
+
+    add_action( 'admin_footer' , array( __CLASS__ , 'show_error_count' ) );
+
+  }
+
+  public static function show_error_count() {
+
+    add_filter( 'mywp_debug_types' , array( __CLASS__ , 'mywp_debug_types_show_error_count' ) , 100 );
+
+    add_filter( 'mywp_debug_renders' , array( __CLASS__ , 'mywp_debug_renders_show_error_count' ) , 100 );
+
+  }
+
+  public static function mywp_debug_types_show_error_count( $debug_types ) {
+
+    $errors = self::get_errors();
+
+    if( empty( $errors ) ) {
+
+      return $debug_types;
+
+    }
+
+    if( isset( $debug_types['mywp'] ) ) {
+
+      $debug_types['mywp'] .= ' (error) ';
+
+    }
+
+    return $debug_types;
+
+  }
+
+  public static function mywp_debug_renders_show_error_count( $debug_renders ) {
+
+    $errors = self::get_errors();
+
+    if( empty( $errors ) ) {
+
+      return $debug_renders;
+
+    }
+
+    if( isset( $debug_renders[ self::$id ] ) ) {
+
+      $debug_renders[ self::$id ]['title'] .= sprintf( ' (%s) ' , count( $errors ) );
+
+    }
+
+    return $debug_renders;
+
+  }
+
   public static function mywp_debug_renders( $debug_renders ) {
 
     $debug_renders[ self::$id ] = array(

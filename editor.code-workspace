@@ -12,19 +12,37 @@
       "activityBar.foreground": "#51BB7B"
       //"textBlockQuote.background": "#51BB7B"
     },
+    "editor.codeActionsOnSave": null,
     "editor.tabSize": 2,
+    //"editor.insertSpaces": false,
+    "editor.fontSize": 11,
+    "editor.fontFamily": "'0xProto'", //"Osaka-Mono, Menlo, Monaco, 'Courier New', monospace",
+    "prettier.printWidth": 640,
+    "prettier.tabWidth": 2,
+    "files.insertFinalNewline": false,
+    "editor.comments.ignoreEmptyLines": true,
+    "editor.comments.insertSpace": false,
+    "emmet.includeLanguages": {
+      "ejs": "html"
+    },
     "[php]": {
       //"editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.formatOnSave": true,
       "editor.insertSpaces": true
     },
     "[html]": {
-      "editor.formatOnSave": false,
+      "editor.defaultFormatter": "j69.ejs-beautify",
+      "editor.formatOnSave": true,
       "editor.insertSpaces": true
     },
     "[scss]": {
-      "editor.formatOnSave": false,
-      "editor.insertSpaces": false
+      "editor.formatOnSave": true,
+      "editor.insertSpaces": true
+    },
+    "[ejs]": {
+      //"editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true,
+      "editor.insertSpaces": true
     },
     "[javascript]": {
       "editor.formatOnSave": true,

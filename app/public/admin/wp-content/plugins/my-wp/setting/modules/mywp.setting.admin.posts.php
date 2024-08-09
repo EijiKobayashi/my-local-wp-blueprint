@@ -138,7 +138,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     ob_start();
 
-    self::print_item( $found_column );
+    self::print_item( $found_column , $found_column['id'] );
 
     $result_html .= ob_get_contents();
 
@@ -412,11 +412,28 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Automatic output of column contents' , 'my-wp' ); ?></th>
+          <th>
+            <?php _e( 'Automatic output of column contents' , 'my-wp' ); ?>
+            <span class="mywp-desc-caution">
+              <span class="dashicons dashicons-warning"></span>
+              <?php _e( 'Deprecated' , 'my-wp' ); ?>
+            </span>
+          </th>
           <td>
             <select name="mywp[data][auto_output_column_body]" class="auto_output_column_body">
               <option value="" <?php selected( false , $setting_data['auto_output_column_body'] ); ?>><?php echo esc_attr( __( 'Not automatic output' , 'my-wp' ) ); ?></option>
               <option value="1" <?php selected( true , $setting_data['auto_output_column_body'] ); ?>><?php echo esc_attr( __( 'Automatic output' , 'my-wp' ) ); ?></option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <?php _e( 'Custom search filter' , 'my-wp' ); ?>
+          </th>
+          <td>
+            <select name="mywp[data][custom_search_filter]" class="custom_search_filter">
+              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Hide' , 'my-wp' ) ); ?></option>
+              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Show' , 'my-wp' ) ); ?></option>
             </select>
           </td>
         </tr>
@@ -492,45 +509,6 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
         'title' => __( 'Date' ),
         'width' => '10%',
       ),
-      'slug' => array(
-        'id' => 'slug',
-        'type' => 'core',
-        'orderby' => 'name',
-        'title' => __( 'Slug' ),
-        'width' => '25%',
-        'is_need_automatic_output' => true,
-      ),
-      'excerpt' => array(
-        'id' => 'excerpt',
-        'type' => 'core',
-        'orderby' => 'post_excerpt',
-        'title' => __( 'Excerpt' ),
-        'width' => '100%',
-        'is_need_automatic_output' => true,
-      ),
-      'id' => array(
-        'id' => 'id',
-        'type' => 'core',
-        'orderby' => 'ID',
-        'title' => __( 'ID' , 'my-wp' ),
-        'is_need_automatic_output' => true,
-      ),
-      'parent' => array(
-        'id' => 'parent',
-        'type' => 'core',
-        'orderby' => 'parent',
-        'title' => __( 'Parent' ),
-        'width' => '10%',
-        'is_need_automatic_output' => true,
-      ),
-      'menu_order' => array(
-        'id' => 'menu_order',
-        'type' => 'core',
-        'sort' => true,
-        'orderby' => 'menu_order',
-        'title' => __( 'Order' ),
-        'is_need_automatic_output' => true,
-      ),
     );
 
     if( current_theme_supports( 'post-thumbnails' ) ) {
@@ -540,7 +518,6 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
         'type' => 'core',
         'orderby' => 'post-thumbnails',
         'title' => _x( 'Featured image' , 'post' ),
-        'is_need_automatic_output' => true,
       );
 
     }
@@ -576,27 +553,20 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
       'columns' => array(),
     );
 
-    $taxonomies = get_taxonomies( array() , 'objects' );
+    $taxonomies = get_taxonomies( array( 'object_type' => array( $current_setting_post_type_id ) ) , 'objects' );
 
     if( ! empty( $taxonomies ) ) {
 
       foreach( $taxonomies as $taxonomy ) {
 
-        if( ! in_array( $current_setting_post_type_id , $taxonomy->object_type ) ) {
-
-          continue;
-
-        }
-
         $available_list_column = array(
-          'id' => $taxonomy->name,
-          'type' => 'core',
+          'id' => 'mywp_taxonomy_column_' . $taxonomy->name,
+          'type' => 'taxonomies',
           'title' => $taxonomy->label,
           'width' => '15%',
-          'is_need_automatic_output' => true,
         );
 
-        $available_list_columns['taxonomies']['columns'][ $taxonomy->name ] = $available_list_column;
+        $available_list_columns['taxonomies']['columns'][ 'mywp_taxonomy_column_' . $taxonomy->name ] = $available_list_column;
 
       }
 
@@ -604,22 +574,62 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     $available_list_columns['other'] = array(
       'title' => __( 'Other' , 'my-wp' ),
-      'columns' => array(),
+      'columns' => array(
+        'mywp_column_id' => array(
+          'id' => 'mywp_column_id',
+          'type' => 'other',
+          'orderby' => 'ID',
+          'title' => __( 'ID' , 'my-wp' ),
+        ),
+        'mywp_column_parent' => array(
+          'id' => 'mywp_column_parent',
+          'type' => 'other',
+          'orderby' => 'parent',
+          'title' => __( 'Parent' ),
+          'width' => '10%',
+        ),
+        'mywp_column_menu_order' => array(
+          'id' => 'mywp_column_menu_order',
+          'type' => 'other',
+          'sort' => true,
+          'orderby' => 'menu_order',
+          'title' => __( 'Order' ),
+        ),
+        'mywp_column_slug' => array(
+          'id' => 'mywp_column_slug',
+          'type' => 'other',
+          'orderby' => 'name',
+          'title' => __( 'Slug' ),
+          'width' => '25%',
+        ),
+        'mywp_column_excerpt' => array(
+          'id' => 'mywp_column_excerpt',
+          'type' => 'other',
+          'orderby' => 'post_excerpt',
+          'title' => __( 'Excerpt' ),
+          'width' => '100%',
+        ),
+      ),
     );
 
-    $core_list_columns = self::get_core_list_columns();
+    if( current_theme_supports( 'post-thumbnails' ) ) {
+
+      $available_list_columns['other']['columns']['mywp_column_post_thumbnails'] = array(
+        'id' => 'mywp_column_post_thumbnails',
+        'type' => 'other',
+        'orderby' => 'post-thumbnails',
+        'title' => _x( 'Featured image' , 'post' ),
+      );
+
+    }
 
     $default_list_columns = self::get_default_list_columns();
+
+    $core_list_columns = self::get_core_list_columns();
 
     foreach( $default_list_columns['columns'] as $column_id => $column_title ) {
 
       if( isset( $core_list_columns[ $column_id ] ) ) {
-
-        continue;
-
-      }
-
-      if( isset( $taxonomies[ $column_id ] ) ) {
 
         continue;
 
@@ -653,15 +663,120 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
       foreach( $all_custom_fields as $custom_field_name => $v ) {
 
         $available_list_column = array(
-          'id' => $custom_field_name,
+          'id' => 'mywp_custom_field_column_' . $custom_field_name,
           'type' => 'custom_fields',
+          'sort' => true,
+          'orderby' => $custom_field_name,
+          'title' => $custom_field_name,
+        );
+
+        $available_list_columns['custom_fields']['columns'][ 'mywp_custom_field_column_' . $custom_field_name ] = $available_list_column;
+
+      }
+
+    }
+
+    $available_list_columns['deprecated'] = array(
+      'title' => __( 'Deprecated' , 'my-wp' ),
+      'columns' => array(
+        'id' => array(
+          'id' => 'id',
+          'type' => 'deprecated',
+          'orderby' => 'ID',
+          'title' => __( 'ID' , 'my-wp' ),
+          'is_need_automatic_output' => true,
+        ),
+        'parent' => array(
+          'id' => 'parent',
+          'type' => 'deprecated',
+          'orderby' => 'parent',
+          'title' => __( 'Parent' ),
+          'width' => '10%',
+          'is_need_automatic_output' => true,
+        ),
+        'menu_order' => array(
+          'id' => 'menu_order',
+          'type' => 'deprecated',
+          'sort' => true,
+          'orderby' => 'menu_order',
+          'title' => __( 'Order' ),
+          'is_need_automatic_output' => true,
+        ),
+        'slug' => array(
+          'id' => 'slug',
+          'type' => 'deprecated',
+          'orderby' => 'name',
+          'title' => __( 'Slug' ),
+          'width' => '25%',
+          'is_need_automatic_output' => true,
+        ),
+        'excerpt' => array(
+          'id' => 'excerpt',
+          'type' => 'deprecated',
+          'orderby' => 'post_excerpt',
+          'title' => __( 'Excerpt' ),
+          'width' => '100%',
+          'is_need_automatic_output' => true,
+        ),
+      ),
+    );
+
+    if( current_theme_supports( 'post-thumbnails' ) ) {
+
+      $available_list_columns['deprecated']['columns']['post-thumbnails'] = array(
+        'id' => 'post-thumbnails',
+        'type' => 'deprecated',
+        'orderby' => 'post-thumbnails',
+        'title' => _x( 'Featured image' , 'post' ),
+        'is_need_automatic_output' => true,
+      );
+
+    }
+
+    if( ! empty( $taxonomies ) ) {
+
+      foreach( $taxonomies as $taxonomy ) {
+
+        if( isset( $default_list_columns['columns'][ $taxonomy->name ] ) ) {
+
+          continue;
+
+        }
+
+        $available_list_column = array(
+          'id' => $taxonomy->name,
+          'type' => 'deprecated',
+          'title' => $taxonomy->label,
+          'width' => '15%',
+          'is_need_automatic_output' => true,
+        );
+
+        $available_list_columns['deprecated']['columns'][ $taxonomy->name ] = $available_list_column;
+
+      }
+
+    }
+
+    if( ! empty( $all_custom_fields ) ) {
+
+      foreach( $all_custom_fields as $custom_field_name => $v ) {
+
+        if( isset( $default_list_columns['columns'][ $custom_field_name ] ) ) {
+
+          continue;
+
+        }
+
+        $available_list_column = array(
+          'id' => $custom_field_name,
+          'type' => 'deprecated',
           'sort' => true,
           'orderby' => $custom_field_name,
           'title' => $custom_field_name,
           'is_need_automatic_output' => true,
         );
 
-        $available_list_columns['custom_fields']['columns'][ $custom_field_name ] = $available_list_column;
+        $available_list_columns['deprecated']['columns'][ $custom_field_name ] = $available_list_column;
 
       }
 
@@ -788,6 +903,12 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
     if( ! empty( $formatted_data['auto_output_column_body'] ) ) {
 
       $new_formatted_data['auto_output_column_body'] = true;
+
+    }
+
+    if( ! empty( $formatted_data['custom_search_filter'] ) ) {
+
+      $new_formatted_data['custom_search_filter'] = true;
 
     }
 
