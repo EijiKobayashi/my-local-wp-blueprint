@@ -55,7 +55,9 @@ wp_enqueue_script( 'jquery' );
 
         <?php endif; ?>
 
-        <a href="javascript:void(0);" class="type-select type-<?php echo sanitize_html_class( $debug_type ); ?> <?php echo sanitize_html_class( $add_class ); ?>" data-type="<?php echo esc_attr( $debug_type ); ?>"><?php echo $type_label; ?></a>
+        <a href="javascript:void(0);" class="type-select type-<?php echo sanitize_html_class( $debug_type ); ?> <?php echo sanitize_html_class( $add_class ); ?>" data-type="<?php echo esc_attr( $debug_type ); ?>">
+          <?php echo $type_label; ?>
+        </a>
 
       <?php endforeach; ?>
 

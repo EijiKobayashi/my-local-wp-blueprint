@@ -36,6 +36,7 @@ final class MywpDeveloperModuleCoreEnvironment extends MywpDeveloperAbstractModu
     $defines = array(
       'WP_DEBUG',
       'WP_DEBUG_LOG',
+      'WP_DEBUG_DISPLAY',
       'SCRIPT_DEBUG',
       'SAVEQUERIES',
       'WP_HOME',

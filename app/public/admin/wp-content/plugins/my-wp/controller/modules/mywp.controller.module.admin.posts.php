@@ -4,13 +4,13 @@ if ( ! defined( 'ABSPATH' ) ) {
   exit;
 }
 
-if( ! class_exists( 'MywpControllerAbstractModule' ) ) {
+if( ! class_exists( 'MywpAbstractControllerListModule' ) ) {
   return false;
 }
 
 if ( ! class_exists( 'MywpControllerModuleAdminPosts' ) ) :
 
-final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule {
+final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListModule {
 
   static protected $id = 'admin_posts';
 
@@ -27,6 +27,7 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
     $initial_data['hide_search_box'] = '';
     $initial_data['hide_bulk_actions'] = '';
     $initial_data['auto_output_column_body'] = '';
+    $initial_data['custom_search_filter'] = '';
 
     return $initial_data;
 
@@ -43,6 +44,7 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
     $default_data['hide_search_box'] = false;
     $default_data['hide_bulk_actions'] = false;
     $default_data['auto_output_column_body'] = false;
+    $default_data['custom_search_filter'] = false;
 
     return $default_data;
 
@@ -59,20 +61,6 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
     );
 
     return $bulk_update_messages_default;
-
-  }
-
-  public static function get_list_column_default() {
-
-    $list_column_default = array(
-      'id' => '',
-      'sort' => '',
-      'orderby' => '',
-      'title' => '',
-      'width' => '',
-    );
-
-    return $list_column_default;
 
   }
 
@@ -140,7 +128,7 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
 
     add_filter( 'mywp_model_get_option_key_mywp_' . self::$id , array( __CLASS__ , 'mywp_model_get_option_key' ) );
 
-    add_filter( 'manage_edit-' . self::$post_type . '_columns' , array( __CLASS__ , 'manage_columns' ) );
+    add_filter( 'manage_edit-' . self::$post_type . '_columns' , array( __CLASS__ , 'manage_columns' ) , 10001 );
 
     add_action( 'manage_' . self::$post_type . '_posts_custom_column' , array( __CLASS__ , 'manage_column_body' ) , 10 , 2 );
 
@@ -178,11 +166,13 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
 
     add_filter( "edit_{$typenow}_per_page" , array( __CLASS__ , 'edit_per_page' ) );
 
-    add_filter( "manage_edit-{$typenow}_columns" , array( __CLASS__ , 'manage_columns' ) );
+    add_filter( "manage_edit-{$typenow}_columns" , array( __CLASS__ , 'manage_columns' ) , 10001 );
 
     add_action( "manage_{$typenow}_posts_custom_column" , array( __CLASS__ , 'manage_column_body' ) , 10 , 2 );
 
     add_filter( "manage_edit-{$typenow}_sortable_columns", array( __CLASS__ , 'manage_columns_sortable' ) );
+
+    self::custom_search_filter();
 
   }
 
@@ -538,51 +528,45 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
 
     }
 
-    if( ! $setting_data['auto_output_column_body'] ) {
-
-      return false;
-
-    }
-
     $post = get_post( $post_id );
 
-    if( $column_id === 'id' ) {
+    if( $column_id === 'mywp_column_id' ) {
 
-      echo $post_id;
+      echo esc_html( $post_id );
 
-    } elseif( $column_id === 'slug' ) {
+    } elseif( $column_id === 'mywp_column_parent' ) {
+
+      echo esc_html( $post->post_parent );
+
+    } elseif( $column_id === 'mywp_column_menu_order' ) {
+
+      echo esc_html( $post->menu_order );
+
+    } elseif( $column_id === 'mywp_column_slug' ) {
 
       echo sanitize_title( $post->post_name );
 
-    } elseif( $column_id === 'parent' ) {
+    } elseif( $column_id === 'mywp_column_excerpt' ) {
 
-      echo $post->post_parent;
+      $post_excerpt = strip_tags( $post->post_excerpt );
 
-    } elseif( $column_id === 'post-formats' ) {
+      if( function_exists( 'mb_substr' ) ) {
 
-      echo get_post_format_string( get_post_format( $post_id ) );
+        echo esc_html( mb_substr( $post_excerpt , 0 , 20 ) );
 
-    } elseif( $column_id === 'excerpt' ) {
+      } else {
 
-      if( ! empty( $post->post_excerpt ) ) {
-
-        if( function_exists( 'mb_substr' ) ) {
-
-          echo mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
-
-        } else {
-
-          echo substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
-
-        }
+        echo esc_html( substr( $post_excerpt , 0 , 20 ) );
 
       }
 
-    } elseif( $column_id === 'menu_order' ) {
+      if( ! empty( $post_excerpt ) ) {
 
-      echo $post->menu_order;
+        echo '.';
 
-    } elseif( $column_id === 'post-thumbnails' ) {
+      }
+
+    } elseif( $column_id === 'mywp_column_post_thumbnails' ) {
 
       if( has_post_thumbnail( $post_id ) ) {
 
@@ -590,23 +574,265 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
 
         $thumbnail = wp_get_attachment_image_src( $thumbnail_id , 'post-thumbnail' , true );
 
-        printf( '<img src="%s" style="%s" /></a>' , esc_attr( $thumbnail[0] ) , esc_attr( 'max-width:100%;' ) );
+        if( ! empty( $thumbnail[0] ) ) {
+
+          if( current_user_can( 'upload_files' ) ) {
+
+            $thumbnail_edit_link = add_query_arg( array( 'post' => $thumbnail_id , 'action' => 'edit' ) , admin_url( 'post.php' ) );
+
+            printf( '<a href="%s"><img src="%s" style="%s" /></a>' , esc_url( $thumbnail_edit_link ) , esc_url( $thumbnail[0] ) , esc_attr( 'max-width:100%;' ) );
+
+          } else {
+
+            printf( '<img src="%s" style="%s" />' , esc_url( $thumbnail[0] ) , esc_attr( 'max-width:100%;' ) );
+
+          }
+
+        }
+
+      }
+
+    } elseif( strpos( $column_id , 'mywp_taxonomy_column_' ) !== false ) {
+
+      $post_type_taxonomies = MywpTaxonomy::get_taxonomies( array( 'object_type' => array( self::$post_type ) ) );
+
+      $taxonomy = str_replace( 'mywp_taxonomy_column_' , '' , $column_id );
+
+      if( empty( $post_type_taxonomies[ $taxonomy ] ) ) {
+
+        return false;
+
+      }
+
+      $post_terms = wp_get_post_terms( $post_id , $taxonomy , array( 'fields' => 'all' ) );
+
+      if( ! empty( $post_terms ) ) {
+
+        foreach( $post_terms as $post_term ) {
+
+          printf( '<span class="post-term post-term-%d">[%s]</span> ' , esc_attr( $post_term->term_id ) , esc_html( $post_term->name ) );
+
+        }
+
+      }
+
+    } elseif( strpos( $column_id , 'mywp_custom_field_column_' ) !== false ) {
+
+      $custom_field_key = str_replace( 'mywp_custom_field_column_' , '' , $column_id );
+
+      $post_meta = MywpPostType::get_post_meta( $post_id , $custom_field_key );
+
+      if( empty( $post_meta ) ) {
+
+        return false;
+
+      }
+
+      echo '<div>';
+
+      $post_meta_maybe_serialize = maybe_unserialize( $post_meta );
+
+      if( is_array( $post_meta_maybe_serialize ) or is_object( $post_meta_maybe_serialize ) ) {
+
+        printf( '<textarea class="large-text" readonly="readonly">%s</textarea>' , print_r( $post_meta_maybe_serialize , true ) );
+
+      } else {
+
+        $post_meta_maybe_json = json_decode( $post_meta );
+
+        if( ! empty( $post_meta_maybe_json ) && is_object( $post_meta_maybe_json ) ) {
+
+          printf( '<textarea class="large-text" readonly="readonly">%s</textarea>' , print_r( $post_meta_maybe_json , true ) );
+
+        } else {
+
+          echo $post_meta;
+
+        }
+
+      }
+
+      echo '</div>';
+
+    }
+
+    $called_text = sprintf( '%s::%s( $column_id , $post_id )' , __CLASS__ , __FUNCTION__ );
+
+    $default_list_columns = self::get_default_list_colums();
+
+    if( $column_id === 'id' ) {
+
+      if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
+
+        $deprecated_message = '$column_id "id"';
+
+        MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
+
+        if( ! $setting_data['auto_output_column_body'] ) {
+
+          return false;
+
+        }
+
+        echo $post_id;
+
+      }
+
+    } elseif( $column_id === 'slug' ) {
+
+      if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
+
+        $deprecated_message = '$column_id "slug"';
+
+        MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
+
+        if( ! $setting_data['auto_output_column_body'] ) {
+
+          return false;
+
+        }
+
+        echo sanitize_title( $post->post_name );
+
+      }
+
+    } elseif( $column_id === 'parent' ) {
+
+      if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
+
+        $deprecated_message = '$column_id "parent"';
+
+        MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
+
+        if( ! $setting_data['auto_output_column_body'] ) {
+
+          return false;
+
+        }
+
+        echo $post->post_parent;
+
+      }
+
+    } elseif( $column_id === 'post-formats' ) {
+
+      if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
+
+        $deprecated_message = '$column_id "post-formats"';
+
+        MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
+
+        if( ! $setting_data['auto_output_column_body'] ) {
+
+          return false;
+
+        }
+
+        echo get_post_format_string( get_post_format( $post_id ) );
+
+      }
+
+    } elseif( $column_id === 'excerpt' ) {
+
+      if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
+
+        $deprecated_message = '$column_id "excerpt"';
+
+        MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
+
+        if( ! $setting_data['auto_output_column_body'] ) {
+
+          return false;
+
+        }
+
+        if( ! empty( $post->post_excerpt ) ) {
+
+          if( function_exists( 'mb_substr' ) ) {
+
+            echo mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
+
+          } else {
+
+            echo substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
+
+          }
+
+        }
+
+      }
+
+    } elseif( $column_id === 'menu_order' ) {
+
+      if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
+
+        $deprecated_message = '$column_id "menu_order"';
+
+        MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
+
+        if( ! $setting_data['auto_output_column_body'] ) {
+
+          return false;
+
+        }
+
+        echo $post->menu_order;
+
+      }
+
+    } elseif( $column_id === 'post-thumbnails' ) {
+
+      if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
+
+        $deprecated_message = '$column_id "post-thumbnails"';
+
+        MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
+
+        if( ! $setting_data['auto_output_column_body'] ) {
+
+          return false;
+
+        }
+
+        if( has_post_thumbnail( $post_id ) ) {
+
+          $thumbnail_id = get_post_thumbnail_id( $post_id );
+
+          $thumbnail = wp_get_attachment_image_src( $thumbnail_id , 'post-thumbnail' , true );
+
+          printf( '<img src="%s" style="%s" /></a>' , esc_attr( $thumbnail[0] ) , esc_attr( 'max-width:100%;' ) );
+
+        }
 
       }
 
     } else {
 
+      if( ! $setting_data['auto_output_column_body'] ) {
+
+        return false;
+
+      }
+
       $post_type_taxonomies = MywpTaxonomy::get_taxonomies( array( 'object_type' => array( self::$post_type ) ) );
 
       if( ! empty( $post_type_taxonomies[ $column_id ] ) ) {
 
-        $post_terms = wp_get_post_terms( $post_id , $column_id , array( 'fields' => 'all' ) );
+        if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
 
-        if( ! empty( $post_terms ) ) {
+          $deprecated_message = '$column_id "post terms( ' . $column_id . ' )"';
 
-          foreach( $post_terms as $post_term ) {
+          MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-            printf( '<span class="post-term post-term-%d">[%s]</span> ' , esc_attr( $post_term->term_id ) , $post_term->name );
+          $post_terms = wp_get_post_terms( $post_id , $column_id , array( 'fields' => 'all' ) );
+
+          if( ! empty( $post_terms ) ) {
+
+            foreach( $post_terms as $post_term ) {
+
+              printf( '<span class="post-term post-term-%d">[%s]</span> ' , esc_attr( $post_term->term_id ) , $post_term->name );
+
+            }
 
           }
 
@@ -618,31 +844,39 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
 
         if( ! empty( $post_meta ) ) {
 
-          echo '<div>';
+          if( empty( $default_list_columns['columns'][ $column_id ] ) ) {
 
-          $post_meta_maybe_serialize = maybe_unserialize( $post_meta );
+            $deprecated_message = '$column_id "post meta( ' . $column_id . ' )"';
 
-          if( is_array( $post_meta_maybe_serialize ) or is_object( $post_meta_maybe_serialize ) ) {
+            MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-            print_r( $post_meta_maybe_serialize );
+            echo '<div>';
 
-          } else {
+            $post_meta_maybe_serialize = maybe_unserialize( $post_meta );
 
-            $post_meta_maybe_json = json_decode( $post_meta );
+            if( is_array( $post_meta_maybe_serialize ) or is_object( $post_meta_maybe_serialize ) ) {
 
-            if( ! empty( $post_meta_maybe_json ) && is_object( $post_meta_maybe_json ) ) {
-
-              print_r( $post_meta_maybe_json );
+              print_r( $post_meta_maybe_serialize );
 
             } else {
 
-              echo $post_meta;
+              $post_meta_maybe_json = json_decode( $post_meta );
+
+              if( ! empty( $post_meta_maybe_json ) && is_object( $post_meta_maybe_json ) ) {
+
+                print_r( $post_meta_maybe_json );
+
+              } else {
+
+                echo $post_meta;
+
+              }
 
             }
 
-          }
+            echo '</div>';
 
-          echo '</div>';
+          }
 
         }
 
@@ -685,6 +919,339 @@ final class MywpControllerModuleAdminPosts extends MywpControllerAbstractModule 
     self::after_do_function( __FUNCTION__ );
 
     return $sortables;
+
+  }
+
+  private static function get_default_list_colums() {
+
+    $mywp_cache = new MywpCache( 'MywpControllerModuleAdminPosts_get_default_list_columns_' . self::$post_type );
+
+    $cache = $mywp_cache->get_cache();
+
+    if( ! empty( $cache ) ) {
+
+      return $cache;
+
+    }
+
+    $default_list_columns = array();
+
+    $mywp_controller = MywpController::get_controller( 'admin_regist_list_columns' );
+
+    if( empty( $mywp_controller['model'] ) ) {
+
+      return false;
+
+    }
+
+    $option = $mywp_controller['model']->get_option();
+
+    if( empty( $option['regist_columns'][ self::$post_type ] ) ) {
+
+      return false;
+
+    }
+
+    $default_list_columns = $option['regist_columns'][ self::$post_type ];
+
+    $mywp_cache->update_cache( $default_list_columns );
+
+    return $default_list_columns;
+
+  }
+
+  protected static function custom_search_filter_do() {
+
+    add_action( 'pre_get_posts' , array( __CLASS__ , 'custom_search_filter_query' ) , 9 );
+
+    add_action( 'mywp_controller_admin_posts_custom_search_filter_form' , array( __CLASS__ , 'form_in_post_type' ) );
+
+  }
+
+  private static function get_post_statuses() {
+
+    global $wp_post_statuses;
+
+    $post_statuses = array();
+
+    foreach( $wp_post_statuses as $post_status => $wp_post_status ) {
+
+      /*
+      if( ! in_array( $post_status , array( 'draft' , 'publish' , 'trash' , 'private' ) ) ) {
+
+        continue;
+
+      }
+      */
+
+      $post_statuses[ $post_status ] = $wp_post_status->label;
+
+    }
+
+    return $post_statuses;
+
+  }
+
+  protected static function custom_search_filter_query_do( $query , $custom_search_filter_requests ) {
+
+    if( ! $query->is_main_query() ) {
+
+      return false;
+
+    }
+
+    if( empty( $_REQUEST['post_type'] ) ) {
+
+      return false;
+
+    }
+
+    $post_type = MywpHelper::sanitize_text( $_REQUEST['post_type'] );
+
+    if( $post_type !== self::$post_type ) {
+
+      return false;
+
+    }
+
+    if( isset( $custom_search_filter_requests['mywp_custom_search_id'] ) ) {
+
+      $post_id = MywpHelper::sanitize_number( $custom_search_filter_requests['mywp_custom_search_id'] );
+
+      if( ! empty( $post_id ) ) {
+
+        $query->set( 'p' , $post_id );
+
+      }
+
+    }
+
+    if( isset( $custom_search_filter_requests['mywp_custom_search_post_status'] ) ) {
+
+      $post_status = MywpHelper::sanitize_text( $custom_search_filter_requests['mywp_custom_search_post_status'] );
+
+      $post_statuses = self::get_post_statuses();
+
+      if( ! empty( $post_statuses[ $post_status ] ) ) {
+
+        $query->set( 'post_status' , $post_status );
+
+      }
+
+    }
+
+    if( isset( $custom_search_filter_requests['mywp_custom_search_title'] ) ) {
+
+      $title = MywpHelper::sanitize_text( $custom_search_filter_requests['mywp_custom_search_title'] );
+
+      if( ! empty( $title ) ) {
+
+        $query->set( 's' , $title );
+
+      }
+
+    }
+
+    $date_query = array();
+
+    if( isset( $custom_search_filter_requests['mywp_custom_search_post_date'] ) ) {
+
+      foreach( array( 'from' , 'to' ) as $date_key ) {
+
+        if( empty( $custom_search_filter_requests['mywp_custom_search_post_date'][ $date_key ] ) ) {
+
+          continue;
+
+        }
+
+        $date = MywpHelper::sanitize_date( $custom_search_filter_requests['mywp_custom_search_post_date'][ $date_key ] );
+
+        if( empty( $date ) ) {
+
+          continue;
+
+        }
+
+        $date_q = array(
+          'column' => 'post_date',
+          'inclusive' => true,
+        );
+
+        if( $date_key === 'from' ) {
+
+          $date_q['after'] = $date;
+
+        } elseif( $date_key === 'to' ) {
+
+          $date_q['before'] = $date;
+
+        }
+
+        $date_query[] = $date_q;
+
+      }
+
+    }
+
+    if( ! empty( $date_query ) ) {
+
+      $query->set( 'date_query' , $date_query );
+
+    }
+
+    if( isset( $custom_search_filter_requests['mywp_custom_search_post_parent'] ) ) {
+
+      $post_parent = MywpHelper::sanitize_number( $custom_search_filter_requests['mywp_custom_search_post_parent'] );
+
+      if( $post_parent !== false ) {
+
+        $query->set( 'post_parent' , $post_parent );
+
+      }
+
+    }
+
+    $tax_query = array();
+
+    foreach( $custom_search_filter_requests as $custom_search_filter_request_key => $custom_search_filter_request_value ) {
+
+      if( strpos( $custom_search_filter_request_key , 'mywp_custom_search_taxonomy_' ) === false ) {
+
+        continue;
+
+      }
+
+      $taxonomy_name = str_replace( 'mywp_custom_search_taxonomy_' , '' , $custom_search_filter_request_key );
+
+      $term_ids = MywpHelper::sanitize_term_ids( $taxonomy_name , $custom_search_filter_request_value );
+
+      if( ! empty( $term_ids ) ) {
+
+        $tax_query[] = array(
+          'taxonomy' => $taxonomy_name,
+          'field' => 'term_id',
+          'terms' => $term_ids,
+          'operator' => 'AND',
+        );
+
+      }
+
+    }
+
+    if( ! empty( $tax_query ) ) {
+
+      $query->set( 'tax_query' , wp_parse_args( $tax_query , array( 'relation' => 'AND' ) ) );
+
+    }
+
+    do_action( 'mywp_controller_admin_posts_custom_search_filter' , $query , $custom_search_filter_requests , self::$post_type );
+
+    do_action( 'mywp_controller_admin_posts_custom_search_filter-' . self::$post_type , $query , $custom_search_filter_requests );
+
+  }
+
+  protected static function get_custom_search_filter_fields() {
+
+    $custom_search_filter_fields = array(
+      'mywp_custom_search_id' => array(
+        'id' => 'mywp_custom_search_id',
+        'title' => 'ID',
+        'type' => 'number',
+      ),
+      'mywp_custom_search_post_status' => array(
+        'id' => 'mywp_custom_search_post_status',
+        'title' => __( 'Post Status' , 'my-wp' ),
+        'type' => 'select',
+        'multiple' => false,
+      ),
+      'mywp_custom_search_title' => array(
+        'id' => 'mywp_custom_search_title',
+        'title' => __( 'Title' ),
+        'type' => 'text',
+      ),
+      'mywp_custom_search_post_date' => array(
+        'id' => 'mywp_custom_search_post_date',
+        'title' => __( 'Date' ),
+        'type' => 'date',
+      ),
+      'mywp_custom_search_post_parent' => array(
+        'id' => 'mywp_custom_search_post_parent',
+        'title' => __( 'Post Parent' , 'my-wp' ),
+        'type' => 'number',
+      ),
+    );
+
+    $post_statuses = self::get_post_statuses();
+
+    $custom_search_filter_fields['mywp_custom_search_post_status']['choices'] = $post_statuses;
+
+    $taxonomies = get_taxonomies( array( 'object_type' => array( self::$post_type ) ) , 'objects' );
+
+    if( ! empty( $taxonomies ) ) {
+
+      foreach( $taxonomies as $taxonomy ) {
+
+        $terms = get_terms( $taxonomy->name , array( 'hide_empty' => false ) );
+
+        if( empty( $terms ) ) {
+
+          continue;
+
+        }
+
+        if( is_wp_error( $terms ) ) {
+
+          continue;
+
+        }
+
+        $custom_search_filter_fields['mywp_custom_search_taxonomy_' . $taxonomy->name ] = array(
+          'id' => 'mywp_custom_search_taxonomy_' . $taxonomy->name,
+          'title' => $taxonomy->label,
+          'type' => 'checkbox',
+          'multiple' => true,
+          'choices' => array(),
+        );
+
+        foreach( $terms as $term ) {
+
+          $custom_search_filter_fields['mywp_custom_search_taxonomy_' . $taxonomy->name ]['choices'][ $term->term_id ] = $term->name;
+
+        }
+
+      }
+
+    }
+
+    $custom_search_filter_fields = apply_filters( 'mywp_controller_admin_posts_custom_search_filter_fields-' . self::$post_type , $custom_search_filter_fields );
+
+    if( empty( $custom_search_filter_fields ) ) {
+
+      return false;
+
+    }
+
+    return $custom_search_filter_fields;
+
+  }
+
+  protected static function get_custom_search_filter_fields_after( $custom_search_filter_fields , $custom_search_filter_requests ) {
+
+    $custom_search_filter_fields = apply_filters( 'mywp_controller_admin_posts_custom_search_filter_fields_after' , $custom_search_filter_fields , $custom_search_filter_requests , self::$post_type );
+
+    $custom_search_filter_fields = apply_filters( 'mywp_controller_admin_posts_custom_search_filter_fields_after-' . self::$post_type , $custom_search_filter_fields , $custom_search_filter_requests );
+
+    return $custom_search_filter_fields;
+
+  }
+
+  public static function form_in_post_type() {
+
+    ?>
+
+    <input type="hidden" name="post_type" value="<?php echo esc_attr( self::$post_type ); ?>">
+
+    <?php
 
   }
 

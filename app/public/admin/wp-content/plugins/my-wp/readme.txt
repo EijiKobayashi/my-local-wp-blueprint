@@ -4,7 +4,7 @@ Tags: admin, frontend, debug, sidebar, toolbar
 Requires at least: 4.7
 Tested up to: 6.6
 Requires PHP: 5.6
-Stable tag: 1.23.1
+Stable tag: 1.24.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -20,7 +20,7 @@ There are lots of custom actions and filters.
 
 You will speed up to your site creation. Debug on current post, Debug on current using theme, Debug on server info, ...etc more helpful info.
 
-The demo site is here: [https://playground.wordpress.net/?plugin=my-wp&url=/wp-admin/admin.php?page=mywp)
+The demo site is here: [https://playground.wordpress.net/?plugin=my-wp&url=/wp-admin/admin.php?page=mywp](https://playground.wordpress.net/?plugin=my-wp&url=/wp-admin/admin.php?page=mywp)
 
 = Customize the admin =
 - Admin General(hide update notifications, hide screen options, custom footer text).
@@ -56,7 +56,7 @@ The demo site is here: [https://playground.wordpress.net/?plugin=my-wp&url=/wp-a
 = For Debug =
 - Debug General(Display a debug screen that is useful for development).
 - Debug Blogs(Show all blogs on network/multisite).
-- Debug Crons(Shor all crons).
+- Debug Crons(Show all crons).
 - Debug Date time(Show all date and time values).
 - Debug Defines(Show all defines).
 - Debug Post statuses(Show all post statuses).
@@ -91,6 +91,10 @@ The demo site is here: [https://playground.wordpress.net/?plugin=my-wp&url=/wp-a
 10. Developer panel on footer.
 
 == Changelog ==
+
+= 1.24.0 2024-08-06 =
+* Added: Deprecated list columns on Posts, Comments, Users, Uploads, Terms.
+* Added: Custom search filter on Posts, Comments, Users, Uploads.
 
 = 1.23.1 2024-07-20 =
 * Fixed: Update serialized value on bulk post meta.

@@ -98,7 +98,7 @@ final class MywpSettingScreenAdminComments extends MywpAbstractSettingColumnsMod
 
     ob_start();
 
-    self::print_item( $found_column );
+    self::print_item( $found_column , $found_column['id'] );
 
     $result_html .= ob_get_contents();
 
@@ -292,6 +292,17 @@ final class MywpSettingScreenAdminComments extends MywpAbstractSettingColumnsMod
             </label>
           </td>
         </tr>
+        <tr>
+          <th>
+            <?php _e( 'Custom search filter' , 'my-wp' ); ?>
+          </th>
+          <td>
+            <select name="mywp[data][custom_search_filter]" class="custom_search_filter">
+              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Hide' , 'my-wp' ) ); ?></option>
+              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Show' , 'my-wp' ) ); ?></option>
+            </select>
+          </td>
+        </tr>
       </tbody>
     </table>
     <p>&nbsp;</p>
@@ -351,33 +362,6 @@ final class MywpSettingScreenAdminComments extends MywpAbstractSettingColumnsMod
         'title' => _x( 'Date' , 'column name' ),
         'width' => '14%',
       ),
-      'id' => array(
-        'id' => 'id',
-        'type' => 'core',
-        'orderby' => 'comment_ID',
-        'title' => __( 'ID' , 'my-wp' ),
-      ),
-      'comment_author' => array(
-        'id' => 'comment_author',
-        'type' => 'core',
-        'sort' => true,
-        'orderby' => 'comment_author',
-        'title' => __( 'Name' ),
-      ),
-      'comment_author_email' => array(
-        'id' => 'comment_author_email',
-        'type' => 'core',
-        'sort' => true,
-        'orderby' => 'comment_author_email',
-        'title' => __( 'Email' ),
-      ),
-      'comment_author_url' => array(
-        'id' => 'comment_author_url',
-        'type' => 'core',
-        'sort' => true,
-        'orderby' => 'comment_author_url',
-        'title' => __( 'URL' ),
-      ),
     );
 
     return $core_list_columns;
@@ -398,7 +382,35 @@ final class MywpSettingScreenAdminComments extends MywpAbstractSettingColumnsMod
 
     $available_list_columns['other'] = array(
       'title' => __( 'Other' , 'my-wp' ),
-      'columns' => array(),
+      'columns' => array(
+        'mywp_column_id' => array(
+          'id' => 'mywp_column_id',
+          'type' => 'other',
+          'orderby' => 'comment_ID',
+          'title' => __( 'ID' , 'my-wp' ),
+        ),
+        'mywp_column_comment_author' => array(
+          'id' => 'mywp_column_comment_author',
+          'type' => 'other',
+          'sort' => true,
+          'orderby' => 'comment_author',
+          'title' => __( 'Name' ),
+        ),
+        'mywp_column_comment_author_email' => array(
+          'id' => 'mywp_column_comment_author_email',
+          'type' => 'other',
+          'sort' => true,
+          'orderby' => 'comment_author_email',
+          'title' => __( 'Email' ),
+        ),
+        'mywp_column_comment_author_url' => array(
+          'id' => 'mywp_column_comment_author_url',
+          'type' => 'other',
+          'sort' => true,
+          'orderby' => 'comment_author_url',
+          'title' => __( 'URL' ),
+        ),
+      ),
     );
 
     $core_list_columns = self::get_core_list_columns();
@@ -428,6 +440,39 @@ final class MywpSettingScreenAdminComments extends MywpAbstractSettingColumnsMod
       $available_list_columns['other']['columns'][ $column_id ] = $available_list_column;
 
     }
+
+    $available_list_columns['deprecated'] = array(
+      'title' => __( 'Deprecated' , 'my-wp' ),
+      'columns' => array(
+        'id' => array(
+          'id' => 'id',
+          'type' => 'deprecated',
+          'orderby' => 'comment_ID',
+          'title' => __( 'ID' , 'my-wp' ),
+        ),
+        'comment_author' => array(
+          'id' => 'comment_author',
+          'type' => 'deprecated',
+          'sort' => true,
+          'orderby' => 'comment_author',
+          'title' => __( 'Name' ),
+        ),
+        'comment_author_email' => array(
+          'id' => 'comment_author_email',
+          'type' => 'deprecated',
+          'sort' => true,
+          'orderby' => 'comment_author_email',
+          'title' => __( 'Email' ),
+        ),
+        'comment_author_url' => array(
+          'id' => 'comment_author_url',
+          'type' => 'deprecated',
+          'sort' => true,
+          'orderby' => 'comment_author_url',
+          'title' => __( 'URL' ),
+        ),
+      ),
+    );
 
     return $available_list_columns;
 
@@ -496,6 +541,12 @@ final class MywpSettingScreenAdminComments extends MywpAbstractSettingColumnsMod
     if( ! empty( $formatted_data['hide_search_box'] ) ) {
 
       $new_formatted_data['hide_search_box'] = true;
+
+    }
+
+    if( ! empty( $formatted_data['custom_search_filter'] ) ) {
+
+      $new_formatted_data['custom_search_filter'] = true;
 
     }
 

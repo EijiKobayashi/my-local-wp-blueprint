@@ -98,7 +98,7 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
     ob_start();
 
-    self::print_item( $found_column );
+    self::print_item( $found_column , $found_column['id'] );
 
     $result_html .= ob_get_contents();
 
@@ -303,6 +303,17 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
             </label>
           </td>
         </tr>
+        <tr>
+          <th>
+            <?php _e( 'Custom search filter' , 'my-wp' ); ?>
+          </th>
+          <td>
+            <select name="mywp[data][custom_search_filter]" class="custom_search_filter">
+              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Hide' , 'my-wp' ) ); ?></option>
+              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Show' , 'my-wp' ) ); ?></option>
+            </select>
+          </td>
+        </tr>
       </tbody>
     </table>
     <p>&nbsp;</p>
@@ -362,24 +373,9 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
       'posts' => array(
         'id' => 'posts',
         'type' => 'core',
+        'orderby' => 'post_count',
         'title' => __( 'Posts' ),
         'width' => '74px',
-      ),
-      'id' => array(
-        'id' => 'id',
-        'type' => 'core',
-        'orderby' => 'ID',
-        'title' => __( 'ID' , 'my-wp' ),
-      ),
-      'user_nicename' => array(
-        'id' => 'user_nicename',
-        'type' => 'core',
-        'title' => __( 'Nickname' ),
-      ),
-      'display_name' => array(
-        'id' => 'display_name',
-        'type' => 'core',
-        'title' => __( 'Display name publicly as' ),
       ),
     );
 
@@ -401,7 +397,32 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
     $available_list_columns['other'] = array(
       'title' => __( 'Other' , 'my-wp' ),
-      'columns' => array(),
+      'columns' => array(
+        'mywp_column_id' => array(
+          'id' => 'mywp_column_id',
+          'type' => 'other',
+          'orderby' => 'ID',
+          'title' => __( 'ID' , 'my-wp' ),
+        ),
+        'mywp_column_user_nicename' => array(
+          'id' => 'mywp_column_user_nicename',
+          'type' => 'other',
+          'orderby' => 'user_nicename',
+          'title' => __( 'Nickname' ),
+        ),
+        'mywp_column_display_name' => array(
+          'id' => 'mywp_column_display_name',
+          'type' => 'other',
+          'orderby' => 'display_name',
+          'title' => __( 'Display name publicly as' ),
+        ),
+        'mywp_column_user_registered' => array(
+          'id' => 'mywp_column_user_registered',
+          'type' => 'other',
+          'orderby' => 'user_registered',
+          'title' => __( 'Registered Date' ),
+        ),
+      ),
     );
 
     $core_list_columns = self::get_core_list_columns();
@@ -461,6 +482,28 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
     }
 
     */
+
+    $available_list_columns['deprecated'] = array(
+      'title' => __( 'Deprecated' , 'my-wp' ),
+      'columns' => array(
+        'id' => array(
+          'id' => 'id',
+          'type' => 'deprecated',
+          'orderby' => 'ID',
+          'title' => __( 'ID' , 'my-wp' ),
+        ),
+        'user_nicename' => array(
+          'id' => 'user_nicename',
+          'type' => 'deprecated',
+          'title' => __( 'Nickname' ),
+        ),
+        'display_name' => array(
+          'id' => 'display_name',
+          'type' => 'deprecated',
+          'title' => __( 'Display name publicly as' ),
+        ),
+      ),
+    );
 
     return $available_list_columns;
 
@@ -535,6 +578,12 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
     if( ! empty( $formatted_data['hide_search_box'] ) ) {
 
       $new_formatted_data['hide_search_box'] = true;
+
+    }
+
+    if( ! empty( $formatted_data['custom_search_filter'] ) ) {
+
+      $new_formatted_data['custom_search_filter'] = true;
 
     }
 

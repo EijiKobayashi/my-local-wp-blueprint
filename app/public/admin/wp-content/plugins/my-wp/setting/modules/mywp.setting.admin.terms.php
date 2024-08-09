@@ -138,7 +138,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     ob_start();
 
-    self::print_item( $found_column );
+    self::print_item( $found_column , $found_column['id'] );
 
     $result_html .= ob_get_contents();
 
@@ -448,19 +448,6 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
         'title' => _x( 'Count' , 'Number/count of items' ),
         'width' => '74px',
       ),
-      'id' => array(
-        'id' => 'id',
-        'type' => 'core',
-        'orderby' => 'ID',
-        'title' => __( 'ID' , 'my-wp' ),
-      ),
-      'parent' => array(
-        'id' => 'parent',
-        'type' => 'core',
-        'orderby' => 'parent',
-        'title' => __( 'Parent' ),
-        'width' => '10%',
-      ),
     );
 
     return $core_list_columns;
@@ -491,7 +478,21 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     $available_list_columns['other'] = array(
       'title' => __( 'Other' , 'my-wp' ),
-      'columns' => array(),
+      'columns' => array(
+        'mywp_column_id' => array(
+          'id' => 'mywp_column_id',
+          'type' => 'other',
+          'orderby' => 'ID',
+          'title' => __( 'ID' , 'my-wp' ),
+        ),
+        'mywp_column_parent' => array(
+          'id' => 'mywp_column_parent',
+          'type' => 'other',
+          'orderby' => 'parent',
+          'title' => __( 'Parent' ),
+          'width' => '10%',
+        ),
+      ),
     );
 
     $core_list_columns = self::get_core_list_columns();
@@ -555,6 +556,25 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     }
     */
+
+    $available_list_columns['deprecated'] = array(
+      'title' => __( 'Deprecated' , 'my-wp' ),
+      'columns' => array(
+        'id' => array(
+          'id' => 'id',
+          'type' => 'deprecated',
+          'orderby' => 'ID',
+          'title' => __( 'ID' , 'my-wp' ),
+        ),
+        'parent' => array(
+          'id' => 'parent',
+          'type' => 'deprecated',
+          'orderby' => 'parent',
+          'title' => __( 'Parent' ),
+          'width' => '10%',
+        ),
+      ),
+    );
 
     return $available_list_columns;
 

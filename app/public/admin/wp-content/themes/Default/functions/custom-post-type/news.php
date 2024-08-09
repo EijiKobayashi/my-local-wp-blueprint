@@ -63,8 +63,8 @@ $labels = array(
 $args = array(
   'labels' => $labels,
   'show_ui' => true,
-  'show_in_nav_menus' => true,
-  'show_tagcloud' => true,
+  'show_in_nav_menus' => false,
+  'show_tagcloud' => false,
   'show_admin_column' => false,
   'hierarchical' => true,
   'query_var' => true,
@@ -75,12 +75,12 @@ $args = array(
 register_taxonomy('news_category', array('news'), $args);
 
 // リライトルール
-add_rewrite_rule('news/([^/]+)/?$', 'index.php?news_category=$matches[1]', 'top');
-add_rewrite_rule('news/([^/]+)/page/([0-9]+)/?$', 'index.php?news_category=$matches[1]&paged=$matches[2]', 'top');
+// add_rewrite_rule('news/([^/]+)/?$', 'index.php?news_category=$matches[1]', 'top');
+// add_rewrite_rule('news/([^/]+)/page/([0-9]+)/?$', 'index.php?news_category=$matches[1]&paged=$matches[2]', 'top');
 // add_rewrite_rule('news/category/([^/]+)/?$', 'index.php?news_category=$matches[1]', 'top');
 
 // リダイレクト処理
-add_action('template_redirect', 'add_news_category_rewrite_rule');
+/* add_action('template_redirect', 'add_news_category_rewrite_rule');
 function add_news_category_rewrite_rule() {
   $url_now = $_SERVER['REQUEST_URI'];
   if ($url_now == "/news/category/") {
@@ -88,7 +88,7 @@ function add_news_category_rewrite_rule() {
     wp_safe_redirect($url, 301);
     exit();
   }
-}
+} */
 
 // デフォルトでタームを選択させる
 function add_news_category_default_term_automatically($post_ID) {
@@ -124,8 +124,8 @@ $labels = array(
 $args = array(
   'labels' => $labels,
   'show_ui' => true,
-  'show_in_nav_menus' => true,
-  'show_tagcloud' => true,
+  'show_in_nav_menus' => false,
+  'show_tagcloud' => false,
   'show_admin_column' => false,
   'hierarchical' => true,
   'query_var' => true,
@@ -136,12 +136,12 @@ $args = array(
 register_taxonomy('news_tags', array('news'), $args);
 
 // リライトルール
-add_rewrite_rule('news/([^/]+)/?$', 'index.php?news_tags=$matches[1]', 'top');
-add_rewrite_rule('news/([^/]+)/page/([0-9]+)/?$', 'index.php?news_tags=$matches[1]&paged=$matches[2]', 'top');
+// add_rewrite_rule('news/([^/]+)/?$', 'index.php?news_tags=$matches[1]', 'top');
+// add_rewrite_rule('news/([^/]+)/page/([0-9]+)/?$', 'index.php?news_tags=$matches[1]&paged=$matches[2]', 'top');
 // add_rewrite_rule('news/tags/([^/]+)/?$', 'index.php?news_tags=$matches[1]', 'top');
 
 // リダイレクト処理
-add_action('template_redirect', 'add_news_tags_rewrite_rule');
+/* add_action('template_redirect', 'add_news_tags_rewrite_rule');
 function add_news_tags_rewrite_rule() {
   $url_now = $_SERVER['REQUEST_URI'];
   if ($url_now == "/news/tags/") {
@@ -149,7 +149,7 @@ function add_news_tags_rewrite_rule() {
     wp_safe_redirect($url, 301);
     exit();
   }
-}
+} */
 
 // デフォルトでタームを選択させる
 function add_news_tags_default_term_automatically($post_ID) {
