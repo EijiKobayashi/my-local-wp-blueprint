@@ -44,7 +44,7 @@ $terms = get_terms($taxonomy);
           <ul class="p-tabs-nav__list">
             <li class="p-tabs-nav__item"><a href="<?php echo home_url(); ?>/news/" data-tab-id="">すべて</a></li>
             <?php foreach ($terms as $term) { ?>
-              <li class="p-tabs-nav__item<?php if ($term_slug == $term->slug) { ?> is-current<?php } ?>"><a href="<?php echo home_url(); ?>/news/category/<?php echo $term->slug; ?>/" data-tab-id=""><?php echo $term->name; ?></a></li>
+              <li class="p-tabs-nav__item<?php if ($term_slug == $term->slug) { ?> is-current<?php } ?>"><a href="<?php echo home_url(); ?>/news/tags/<?php echo $term->slug; ?>/" data-tab-id=""><?php echo $term->name; ?></a></li>
             <?php } ?>
           </ul>
         </nav>

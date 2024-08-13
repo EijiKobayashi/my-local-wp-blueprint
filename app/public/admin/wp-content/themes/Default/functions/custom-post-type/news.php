@@ -68,7 +68,7 @@ $args = array(
   'show_admin_column' => false,
   'hierarchical' => true,
   'query_var' => true,
-  'rewrite' => array('slug' => 'news/category', 'with_front' => false, 'hierarchical' => true,),
+  'rewrite' => array('slug' => 'category', 'with_front' => false, 'hierarchical' => true,),
   'sort' => true,
   'show_in_rest' => true,
 );
@@ -129,7 +129,7 @@ $args = array(
   'show_admin_column' => false,
   'hierarchical' => true,
   'query_var' => true,
-  'rewrite' => array('slug' => 'news/tags', 'with_front' => false, 'hierarchical' => true,),
+  'rewrite' => array('slug' => 'tags', 'with_front' => false, 'hierarchical' => true,),
   'sort' => true,
   'show_in_rest' => true,
 );
