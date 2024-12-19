@@ -178,3 +178,11 @@ add_action('publish_news', 'add_news_tags_default_term_automatically');
   }
   add_filter('acf/update_value/name=news_image', 'acf_news_featured_image', 10, 3);
 */
+
+// リライトルールを強制的に更新
+/* function flush_rewrite_on_activation() {
+  create_news_post_type();
+  create_news_taxonomy();
+  flush_rewrite_rules();
+}
+register_activation_hook(__FILE__, 'flush_rewrite_on_activation'); */

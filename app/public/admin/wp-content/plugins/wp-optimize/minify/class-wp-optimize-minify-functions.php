@@ -11,7 +11,7 @@ if (function_exists('mb_internal_encoding')) {
 ini_set('pcre.backtrack_limit', 5000000);
 ini_set('pcre.recursion_limit', 5000000);
 	
-use MatthiasMullie\Minify; // phpcs:ignore PHPCompatibility.Keywords.NewKeywords.t_useFound, PHPCompatibility.LanguageConstructs.NewLanguageConstructs.t_ns_separatorFound
+use MatthiasMullie\Minify;
 
 class WP_Optimize_Minify_Functions {
 
@@ -626,7 +626,7 @@ class WP_Optimize_Minify_Functions {
 	}
 
 	/**
-	 * Get the content of an asset, wether local or remote
+	 * Get the content of an asset, whether local or remote
 	 *
 	 * @param string $url
 	 * @return array
@@ -873,7 +873,7 @@ class WP_Optimize_Minify_Functions {
 		}
 
 		/**
-		 * Wether to exclude the content or not from the minifying process.
+		 * Whether to exclude the content or not from the minifying process.
 		 */
 		return apply_filters('wpo_minify_exclude_contents', false);
 	}
