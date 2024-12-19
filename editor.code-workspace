@@ -27,6 +27,7 @@
     },
     "[php]": {
       //"editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
       "editor.formatOnSave": true,
       "editor.insertSpaces": true
     },
