@@ -24,9 +24,9 @@ wp.domReady(() => {
   //wp.blocks.unregisterBlockType('core/buttons'); // ボタン
   //wp.blocks.unregisterBlockType('core/columns'); // カラム
   //wp.blocks.unregisterBlockType('core/group'); // グループ
-  //wp.blocks.unregisterBlockType('core/group'); // 横並び (wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}})
-  //wp.blocks.unregisterBlockType('core/group'); // 縦積み (wp:group {"layout":{"type":"flex","orientation":"vertical"}})
-  //wp.blocks.unregisterBlockType('core/group'); // グリッド (wp:group {"layout":{"type":"grid"}})
+  //wp.blocks.unregisterBlockType('core/group', 'group-row'); // 横並び
+  //wp.blocks.unregisterBlockType('core/group', 'group-stack'); // 縦積み
+  //wp.blocks.unregisterBlockType('core/group', 'group-grid'); // グリッド
   wp.blocks.unregisterBlockType('core/more'); // 続きを読む
   wp.blocks.unregisterBlockType('core/nextpage'); // ページ区切り
   //wp.blocks.unregisterBlockType('core/separator'); // 区切り
