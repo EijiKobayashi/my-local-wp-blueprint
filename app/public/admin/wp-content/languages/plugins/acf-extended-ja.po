@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Advanced Custom Fields: Extended - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-07-01 14:35:00+0000\n"
+"PO-Revision-Date: 2024-10-30 13:21:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,11 @@ msgstr ""
 "X-Generator: GlotPress/4.0.1\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - Advanced Custom Fields: Extended - Stable (latest release)\n"
+
+#: includes/modules/form/module-form-action-user.php:1278
+#: includes/modules/form/module-form-action-user.php:1328
+msgid "Login"
+msgstr "ログイン"
 
 #: includes/assets.php:128
 msgid "Debug"
@@ -65,13 +70,13 @@ msgid "Google reCaptcha"
 msgstr "Google reCaptcha"
 
 #: includes/module-legacy.php:256 includes/module-post.php:129
-#: includes/modules/performance/module-performance-functions.php:651
+#: includes/modules/performance/module-performance-functions.php:660
 msgid "Active"
 msgstr "有効"
 
 #: includes/acfe-field-group-functions.php:468
 #: includes/modules/block-type/module-block-type.php:207
-#: includes/modules/form/module-form-fields.php:1210
+#: includes/modules/form/module-form-fields.php:1217
 #: includes/modules/form/module-form.php:61
 #: includes/modules/form/module-form.php:256
 #: includes/modules/options-page/module-options-page.php:238
@@ -108,7 +113,7 @@ msgid "Hide Buttons"
 msgstr "ボタンを非表示"
 
 #: includes/fields/field-dynamic-render.php:17
-#: includes/fields/field-flexible-content-preview.php:78
+#: includes/fields/field-flexible-content-preview.php:80
 msgid "Dynamic Render"
 msgstr "動的レンダリング"
 
@@ -233,7 +238,7 @@ msgstr "JSON をエクスポート"
 msgid "Review changes"
 msgstr "変更をレビュー"
 
-#: includes/init.php:174
+#: includes/init.php:179
 msgid "ACF Extended requires <a href=\"https://www.advancedcustomfields.com/pro/\" target=\"_blank\">Advanced Custom Fields PRO</a> (minimum: 5.8)."
 msgstr "ACF Extended には<a href=\"https://www.advancedcustomfields.com/pro/\" target=\"_blank\">Advanced Custom Fields PRO</a> (最低5.8) が必要です。"
 
@@ -319,7 +324,7 @@ msgstr "最大行数"
 #: includes/fields/field-post-types.php:253
 #: includes/fields/field-select.php:106
 #: includes/fields/field-taxonomies.php:253
-#: includes/fields/field-taxonomy-terms.php:639
+#: includes/fields/field-taxonomy-terms.php:641
 #: includes/fields/field-user-roles.php:238
 msgid "Search Input Placeholder"
 msgstr "検索入力プレースホルダー"
@@ -329,7 +334,7 @@ msgstr "検索入力プレースホルダー"
 #: includes/fields/field-post-types.php:254
 #: includes/fields/field-select.php:107
 #: includes/fields/field-taxonomies.php:254
-#: includes/fields/field-taxonomy-terms.php:640
+#: includes/fields/field-taxonomy-terms.php:642
 #: includes/fields/field-user-roles.php:239
 msgid "Appears within the search input"
 msgstr "検索インプット内に表示"
@@ -429,11 +434,11 @@ msgstr "複製し、設定モードとして使用するフィールドグルー
 #: includes/modules/form/module-form-action-user.php:1754
 #: includes/modules/form/module-form-action-user.php:1805
 #: includes/modules/form/module-form-action-user.php:1965
-#: includes/modules/form/module-form-fields.php:1344
+#: includes/modules/form/module-form-fields.php:1351
 msgid "Default"
 msgstr "デフォルト"
 
-#: includes/fields/field-flexible-content-preview.php:332
+#: includes/fields/field-flexible-content-preview.php:334
 msgid "Edit layout"
 msgstr "レイアウトを編集"
 
@@ -489,7 +494,7 @@ msgid "Exported 1 field group."
 msgid_plural "Exported %s field groups."
 msgstr[0] "%s個のフィールドグループをエクスポートしました。"
 
-#: includes/fields/field-taxonomy-terms.php:755
+#: includes/fields/field-taxonomy-terms.php:757
 msgid "Save Terms"
 msgstr "タームを保存"
 
@@ -498,13 +503,17 @@ msgstr "タームを保存"
 msgid "Import Forms"
 msgstr "フォームをインポート"
 
-#: includes/fields/field-taxonomy-terms.php:764
+#: includes/fields/field-taxonomy-terms.php:766
 msgid "Load Terms"
 msgstr "タームを読み込む"
 
 #: includes/fields/field-advanced-link.php:52
 msgid "Filter by Taxonomy"
 msgstr "タクソノミーで絞り込み"
+
+#: includes/modules/form/module-form.php:49
+msgid "%s forms imported"
+msgstr "%s個のフォームをインポートしました"
 
 #: includes/modules/form/module-form.php:42
 msgid "No forms selected"
@@ -514,11 +523,11 @@ msgstr "フォームが選択されていません"
 msgid "New Post Arguments"
 msgstr "新規投稿引数"
 
-#: includes/fields/field-taxonomy-terms.php:765
+#: includes/fields/field-taxonomy-terms.php:767
 msgid "Load value from posts terms"
 msgstr "投稿タームから値を読み込む"
 
-#: includes/fields/field-taxonomy-terms.php:756
+#: includes/fields/field-taxonomy-terms.php:758
 msgid "Connect selected terms to the post"
 msgstr "選択したタームを投稿に関連付ける"
 
@@ -563,7 +572,7 @@ msgstr "Text/HTML"
 msgid "Editor mode"
 msgstr "編集モード"
 
-#: includes/fields/field-taxonomy-terms.php:480
+#: includes/fields/field-taxonomy-terms.php:482
 msgid "Terms_level"
 msgstr "Terms_level"
 
@@ -575,7 +584,7 @@ msgstr "行数を表示"
 #: includes/fields/field-post-statuses.php:186
 #: includes/fields/field-post-types.php:186 includes/fields/field-select.php:54
 #: includes/fields/field-taxonomies.php:186
-#: includes/fields/field-taxonomy-terms.php:572
+#: includes/fields/field-taxonomy-terms.php:574
 #: includes/fields/field-user-roles.php:171
 msgid "Placeholder"
 msgstr "プレースホルダー"
@@ -588,11 +597,11 @@ msgstr "コードエディター"
 msgid "Seamless Style"
 msgstr "シームレスなスタイル"
 
-#: includes/fields/field-taxonomy-terms.php:474
+#: includes/fields/field-taxonomy-terms.php:476
 msgid "All terms"
 msgstr "すべてのターム"
 
-#: includes/fields/field-taxonomy-terms.php:465
+#: includes/fields/field-taxonomy-terms.php:467
 msgid "Allow Terms"
 msgstr "タームを許可"
 
@@ -700,7 +709,7 @@ msgid "Shortcode"
 msgstr "ショートコード"
 
 #: includes/acfe-field-functions.php:597 includes/module-legacy.php:534
-#: includes/modules/form/module-form-fields.php:970
+#: includes/modules/form/module-form-fields.php:977
 msgid "no label"
 msgstr "ラベルなし"
 
@@ -740,19 +749,19 @@ msgid "All post types"
 msgstr "すべての投稿タイプ"
 
 #: includes/fields/field-hidden.php:17
-#: includes/modules/form/module-form-fields.php:1555
+#: includes/modules/form/module-form-fields.php:1562
 msgid "Hidden"
 msgstr "非表示"
 
-#: includes/fields/field-taxonomy-terms.php:522
+#: includes/fields/field-taxonomy-terms.php:524
 msgid "Term ID"
 msgstr "ターム ID"
 
-#: includes/fields/field-taxonomy-terms.php:521
+#: includes/fields/field-taxonomy-terms.php:523
 msgid "Term name"
 msgstr "ターム名"
 
-#: includes/fields/field-taxonomy-terms.php:520
+#: includes/fields/field-taxonomy-terms.php:522
 msgid "Term object"
 msgstr "タームオブジェクト"
 
@@ -836,7 +845,7 @@ msgstr "ボタンのデフォルト値を設定する"
 #: includes/fields/field-post-statuses.php:329
 #: includes/fields/field-post-types.php:329
 #: includes/fields/field-taxonomies.php:329
-#: includes/fields/field-taxonomy-terms.php:737
+#: includes/fields/field-taxonomy-terms.php:739
 #: includes/fields/field-user-roles.php:314
 msgid "Toggle"
 msgstr "切り替え"
@@ -845,7 +854,7 @@ msgstr "切り替え"
 #: includes/fields/field-post-statuses.php:307
 #: includes/fields/field-post-types.php:307
 #: includes/fields/field-taxonomies.php:307
-#: includes/fields/field-taxonomy-terms.php:715
+#: includes/fields/field-taxonomy-terms.php:717
 #: includes/fields/field-user-roles.php:292
 msgid "Horizontal"
 msgstr "水平"
@@ -854,7 +863,7 @@ msgstr "水平"
 #: includes/fields/field-post-statuses.php:306
 #: includes/fields/field-post-types.php:306
 #: includes/fields/field-taxonomies.php:306
-#: includes/fields/field-taxonomy-terms.php:714
+#: includes/fields/field-taxonomy-terms.php:716
 #: includes/fields/field-user-roles.php:291
 msgid "Vertical"
 msgstr "垂直"
@@ -875,7 +884,7 @@ msgstr "その他"
 #: includes/fields/field-post-statuses.php:126
 #: includes/fields/field-post-types.php:126
 #: includes/fields/field-taxonomies.php:126
-#: includes/fields/field-taxonomy-terms.php:667
+#: includes/fields/field-taxonomy-terms.php:669
 #: includes/fields/field-user-roles.php:111
 msgid "Select multiple values?"
 msgstr "複数値を選択可能にしますか ?"
@@ -884,7 +893,7 @@ msgstr "複数値を選択可能にしますか ?"
 #: includes/fields/field-post-statuses.php:190
 #: includes/fields/field-post-types.php:190 includes/fields/field-select.php:58
 #: includes/fields/field-taxonomies.php:190
-#: includes/fields/field-taxonomy-terms.php:576
+#: includes/fields/field-taxonomy-terms.php:578
 #: includes/fields/field-user-roles.php:175
 msgctxt "verb"
 msgid "Select"
@@ -894,14 +903,14 @@ msgstr "選択"
 #: includes/fields/field-post-statuses.php:101
 #: includes/fields/field-post-types.php:101
 #: includes/fields/field-taxonomies.php:101
-#: includes/fields/field-taxonomy-terms.php:547
+#: includes/fields/field-taxonomy-terms.php:549
 #: includes/fields/field-user-roles.php:86
 msgid "Allow Null?"
 msgstr "空の値を許可しますか ?"
 
 #: includes/fields/field-advanced-link.php:60
 #: includes/fields/field-taxonomies.php:61
-#: includes/fields/field-taxonomy-terms.php:374
+#: includes/fields/field-taxonomy-terms.php:376
 msgid "All taxonomies"
 msgstr "すべてのタクソノミー"
 
@@ -1044,7 +1053,7 @@ msgid "Allow Post Status"
 msgstr "投稿ステータスを許可"
 
 #: includes/fields/field-taxonomies.php:53
-#: includes/fields/field-taxonomy-terms.php:366
+#: includes/fields/field-taxonomy-terms.php:368
 msgid "Allow Taxonomy"
 msgstr "タクソノミーを許可"
 
@@ -1060,7 +1069,7 @@ msgstr "行ボタン連携の改善"
 #: includes/fields/field-post-statuses.php:163
 #: includes/fields/field-post-types.php:163
 #: includes/fields/field-taxonomies.php:163
-#: includes/fields/field-taxonomy-terms.php:685
+#: includes/fields/field-taxonomy-terms.php:687
 #: includes/fields/field-user-roles.php:148
 msgid "Use AJAX to lazy load choices?"
 msgstr "AJAX を使用して選択肢を遅延読み込みしますか ?"
@@ -1073,7 +1082,7 @@ msgstr "クリック時に AJAX イベントをトリガーする"
 msgid "Default value in the hidden input"
 msgstr "'hidden (非表示)' 入力のデフォルト値"
 
-#: includes/modules/form/module-form-fields.php:1234
+#: includes/modules/form/module-form-fields.php:1241
 #: includes/modules/form/module-form.php:62
 msgid "Actions"
 msgstr "操作"
@@ -1082,7 +1091,7 @@ msgstr "操作"
 msgid "Username may not be longer than 60 characters."
 msgstr "ユーザー名は60文字以下に設定してください。"
 
-#: includes/modules/form/module-form-fields.php:1146
+#: includes/modules/form/module-form-fields.php:1153
 #: includes/modules/form/module-form-shortcode.php:159
 #: includes/modules/form/module-form.php:28
 msgid "Form"
@@ -1092,7 +1101,7 @@ msgstr "フォーム"
 #: includes/fields/field-post-statuses.php:144
 #: includes/fields/field-post-types.php:144
 #: includes/fields/field-taxonomies.php:144
-#: includes/fields/field-taxonomy-terms.php:529
+#: includes/fields/field-taxonomy-terms.php:531
 #: includes/fields/field-user-roles.php:129
 msgid "Stylised UI"
 msgstr "スタイリッシュな UI"
@@ -1109,7 +1118,7 @@ msgstr "フィールドの選択肢として「カスタム」を保存する"
 #: includes/fields/field-post-statuses.php:330
 #: includes/fields/field-post-types.php:330
 #: includes/fields/field-taxonomies.php:330
-#: includes/fields/field-taxonomy-terms.php:738
+#: includes/fields/field-taxonomy-terms.php:740
 #: includes/fields/field-user-roles.php:315
 msgid "Prepend an extra checkbox to toggle all choices"
 msgstr "追加のチェックボックスを先頭に追加して、すべての選択肢を切り替えます"
@@ -1122,7 +1131,7 @@ msgstr "ID"
 #: includes/fields/field-post-statuses.php:81
 #: includes/fields/field-post-types.php:81
 #: includes/fields/field-taxonomies.php:81
-#: includes/fields/field-taxonomy-terms.php:508
+#: includes/fields/field-taxonomy-terms.php:510
 #: includes/fields/field-user-roles.php:79
 msgid "Enter each default value on a new line"
 msgstr "新しい行に各デフォルト値を入力してください"
@@ -1175,7 +1184,7 @@ msgstr "ターゲット"
 msgid "An error has occured"
 msgstr "エラーが発生しました"
 
-#: includes/fields/field-flexible-content-preview.php:129
+#: includes/fields/field-flexible-content-preview.php:131
 msgid "Layouts Placeholder"
 msgstr "レイアウトのプレースホルダー"
 
@@ -1195,12 +1204,12 @@ msgstr "閉じる"
 #: includes/fields/field-post-statuses.php:300
 #: includes/fields/field-post-types.php:300
 #: includes/fields/field-taxonomies.php:300
-#: includes/fields/field-taxonomy-terms.php:708
+#: includes/fields/field-taxonomy-terms.php:710
 #: includes/fields/field-user-roles.php:285
 msgid "Layout"
 msgstr "レイアウト"
 
-#: includes/fields/field-flexible-content-preview.php:104
+#: includes/fields/field-flexible-content-preview.php:106
 msgid "Use layouts render settings to display a dynamic preview in the administration"
 msgstr "レイアウトレンダリング設定を使用して、投稿管理の動的プレビューを表示します"
 
@@ -1404,8 +1413,8 @@ msgstr "カテゴリー"
 msgid "Post ID"
 msgstr "投稿 ID"
 
-#: includes/fields/field-flexible-content-preview.php:180
-#: includes/modules/form/module-form-fields.php:1698
+#: includes/fields/field-flexible-content-preview.php:182
+#: includes/modules/form/module-form-fields.php:1705
 msgid "Render"
 msgstr "レンダリング"
 
@@ -1486,7 +1495,7 @@ msgstr "いいえ"
 #: includes/modules/dev/module-dev.php:436
 #: includes/modules/form/module-form-action-term.php:754
 #: includes/modules/form/module-form-action-term.php:1138
-#: includes/modules/form/module-form-fields.php:1191
+#: includes/modules/form/module-form-fields.php:1198
 #: includes/modules/form/module-form.php:60
 #: includes/modules/option/module-option-table.php:226
 #: includes/modules/option/module-option.php:361
@@ -1592,7 +1601,7 @@ msgstr "入力内容の前に表示"
 #: includes/fields/field-post-statuses.php:187
 #: includes/fields/field-post-types.php:187 includes/fields/field-select.php:55
 #: includes/fields/field-slug.php:48 includes/fields/field-taxonomies.php:187
-#: includes/fields/field-taxonomy-terms.php:573
+#: includes/fields/field-taxonomy-terms.php:575
 #: includes/fields/field-user-roles.php:172
 msgid "Appears within the input"
 msgstr "入力内容の中に表示"
@@ -1605,7 +1614,7 @@ msgstr "新規投稿作成時に表示"
 #: includes/fields/field-post-statuses.php:80
 #: includes/fields/field-post-types.php:80 includes/fields/field-slug.php:39
 #: includes/fields/field-taxonomies.php:80
-#: includes/fields/field-taxonomy-terms.php:507
+#: includes/fields/field-taxonomy-terms.php:509
 #: includes/fields/field-user-roles.php:78
 msgid "Default Value"
 msgstr "初期値"
@@ -1624,7 +1633,7 @@ msgstr "投稿タイプ名"
 #: includes/fields/field-post-statuses.php:74
 #: includes/fields/field-post-types.php:74
 #: includes/fields/field-taxonomies.php:74
-#: includes/fields/field-taxonomy-terms.php:501
+#: includes/fields/field-taxonomy-terms.php:503
 #: includes/fields/field-user-roles.php:72
 msgctxt "noun"
 msgid "Select"
@@ -1634,7 +1643,7 @@ msgstr "選択"
 #: includes/fields/field-post-statuses.php:73
 #: includes/fields/field-post-types.php:73
 #: includes/fields/field-taxonomies.php:73
-#: includes/fields/field-taxonomy-terms.php:500
+#: includes/fields/field-taxonomy-terms.php:502
 #: includes/fields/field-user-roles.php:71
 msgid "Radio Buttons"
 msgstr "ラジオボタン"
@@ -1643,7 +1652,7 @@ msgstr "ラジオボタン"
 #: includes/fields/field-post-statuses.php:72
 #: includes/fields/field-post-types.php:72
 #: includes/fields/field-taxonomies.php:72
-#: includes/fields/field-taxonomy-terms.php:499
+#: includes/fields/field-taxonomy-terms.php:501
 #: includes/fields/field-user-roles.php:70
 msgid "Checkbox"
 msgstr "チェックボックス"
@@ -1652,10 +1661,15 @@ msgstr "チェックボックス"
 #: includes/fields/field-post-statuses.php:66
 #: includes/fields/field-post-types.php:66
 #: includes/fields/field-taxonomies.php:66
-#: includes/fields/field-taxonomy-terms.php:493
+#: includes/fields/field-taxonomy-terms.php:495
 #: includes/fields/field-user-roles.php:64
 msgid "Appearance"
 msgstr "外観"
+
+#: includes/modules/form/module-form-action-post.php:1032
+#: includes/modules/form/module-form-action-post.php:1766
+msgid "Post type"
+msgstr "投稿タイプ"
 
 #: includes/fields/field-slug.php:113
 msgid "Value must not exceed %d characters"
@@ -1677,7 +1691,7 @@ msgstr "投稿タイプオブジェクト"
 #: includes/fields/field-post-statuses.php:67
 #: includes/fields/field-post-types.php:67
 #: includes/fields/field-taxonomies.php:67
-#: includes/fields/field-taxonomy-terms.php:494
+#: includes/fields/field-taxonomy-terms.php:496
 #: includes/fields/field-user-roles.php:65
 msgid "Select the appearance of this field"
 msgstr "このフィールドの外観を選択"
@@ -1686,7 +1700,7 @@ msgstr "このフィールドの外観を選択"
 #: includes/fields/field-post-statuses.php:88
 #: includes/fields/field-post-types.php:88
 #: includes/fields/field-taxonomies.php:88
-#: includes/fields/field-taxonomy-terms.php:515
+#: includes/fields/field-taxonomy-terms.php:517
 msgid "Return Value"
 msgstr "返り値"
 
@@ -1717,7 +1731,7 @@ msgstr "この投稿タイプは予約されています"
 msgid "This taxonomy already exists"
 msgstr "このタクソノミーはすでに存在しています"
 
-#: includes/fields/field-taxonomy-terms.php:486
+#: includes/fields/field-taxonomy-terms.php:488
 #: includes/locations/post-type-all.php:31
 #: includes/locations/post-type-archive.php:320
 #: includes/locations/post-type-list.php:237
@@ -1745,7 +1759,7 @@ msgstr "ボタン"
 #: includes/admin/settings.php:534 includes/admin/settings.php:695
 #: includes/admin/settings.php:705 includes/fields-settings/settings.php:136
 #: includes/fields/field-flexible-content.php:92
-#: includes/modules/form/module-form-fields.php:1257
+#: includes/modules/form/module-form-fields.php:1264
 msgid "Settings"
 msgstr "設定"
 

@@ -17,21 +17,8 @@ import {
 	// @ts-ignore: has no exported member
 	useBlockEditingMode,
 } from '@wordpress/block-editor';
-import {
-	// @ts-ignore: has no exported member
-	ToolbarDropdownMenu,
-	PanelBody,
-} from '@wordpress/components';
-import {
-	blockTable,
-	justifyLeft,
-	tableColumnAfter,
-	tableColumnBefore,
-	tableColumnDelete,
-	tableRowAfter,
-	tableRowBefore,
-	tableRowDelete,
-} from '@wordpress/icons';
+import { ToolbarDropdownMenu, PanelBody } from '@wordpress/components';
+import { blockTable, justifyLeft } from '@wordpress/icons';
 import { store as noticesStore } from '@wordpress/notices';
 import type { BlockEditProps } from '@wordpress/blocks';
 
@@ -60,14 +47,23 @@ import {
 	type VSelectedCells,
 } from './utils/table-state';
 import { convertToObject } from './utils/style-converter';
-import { mergeCell, splitCell } from './icons';
+import {
+	tableRowAfter,
+	tableRowBefore,
+	tableColumnBefore,
+	tableColumnAfter,
+	tableColumnDelete,
+	tableRowDelete,
+	tableMergeCell,
+	tableSplitCell,
+} from './icons';
 import type { BlockAttributes, SectionName, ContentJustifyValue } from './BlockAttributes';
 
 function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 	const {
 		attributes,
 		setAttributes,
-		isSelected,
+		isSelected: isSingleSelected,
 		// @ts-ignore: `insertBlocksAfter` prop is not exist at @types
 		insertBlocksAfter,
 	} = props;
@@ -77,24 +73,21 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 
 	const tableStylesObj: Properties = convertToObject( tableStyles );
 	const captionStylesObj: Properties = convertToObject( captionStyles );
-	const options: StoreOptions = useSelect(
-		( select ) =>
-			select( STORE_NAME )
-				// @ts-ignore
-				.getOptions(),
-		[]
-	);
+	const options = useSelect( ( select ) => {
+		const { getOptions }: { getOptions: () => StoreOptions } = select( STORE_NAME );
+		return getOptions();
+	}, [] );
 	const { createWarningNotice } = useDispatch( noticesStore );
 	const blockEditingMode = useBlockEditingMode();
 	const isContentOnlyMode = blockEditingMode === 'contentOnly';
 
 	// Release cell selection.
 	useEffect( () => {
-		if ( ! isSelected ) {
+		if ( ! isSingleSelected ) {
 			setSelectedCells( undefined );
 			setSelectedLine( undefined );
 		}
-	}, [ isSelected ] );
+	}, [ isSingleSelected ] );
 
 	// Create virtual table object with the cells placed in positions based on how they actually look.
 	const vTable: VTable = toVirtualTable( attributes );
@@ -134,6 +127,7 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 			vTable.body.length === 1 &&
 			( ! isEmptySection( vTable.head ) || ! isEmptySection( vTable.foot ) )
 		) {
+			// @ts-ignore
 			createWarningNotice(
 				__( 'The table body must have one or more rows.', 'flexible-table-block' ),
 				{
@@ -240,18 +234,18 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 			onClick: () => onDeleteColumn(),
 		},
 		{
-			icon: splitCell,
+			icon: tableSplitCell,
 			title: __( 'Split merged cells', 'flexible-table-block' ),
 			isDisabled: ! selectedCells || ! hasMergedCells( selectedCells ),
 			onClick: () => onSplitMergedCells(),
 		},
 		{
-			icon: mergeCell,
+			icon: tableMergeCell,
 			title: __( 'Merge cells', 'flexible-table-block' ),
 			isDisabled: ! selectedCells || ! isRectangleSelected( selectedCells ),
 			onClick: () => onMergeCells(),
 		},
-	] as const;
+	];
 
 	const isEmpty: boolean = ! [ 'head', 'body', 'foot' ].filter(
 		( sectionName ) => ! isEmptySection( vTable[ sectionName as SectionName ] )
@@ -271,7 +265,7 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 	const tableProps = {
 		attributes,
 		setAttributes,
-		isSelected,
+		isSelected: isSingleSelected,
 		options,
 		vTable,
 		tableStylesObj,
@@ -309,6 +303,7 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 		setSelectedLine,
 		setSelectedCells,
 		captionStylesObj,
+		isSelected: isSingleSelected,
 	};
 
 	const tableCaptionSettingProps = {
@@ -328,10 +323,7 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 				<figure { ...tableFigureProps }>
 					{ ! isContentOnlyMode && (
 						<>
-							<BlockControls
-								// @ts-ignore: `group` prop is not exist at @types
-								group="block"
-							>
+							<BlockControls group="block">
 								<ToolbarDropdownMenu
 									label={ __( 'Change table justification', 'flexible-table-block' ) }
 									icon={
@@ -342,13 +334,11 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 										justifyLeft
 									}
 									controls={ TableJustifyControls }
-									hasArrowIndicator
 								/>
 								<ToolbarDropdownMenu
 									label={ __( 'Edit table', 'flexible-table-block' ) }
 									icon={ blockTable }
 									controls={ TableEditControls }
-									hasArrowIndicator
 								/>
 							</BlockControls>
 						</>

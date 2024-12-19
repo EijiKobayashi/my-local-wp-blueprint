@@ -19,6 +19,11 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockStyle('core/pullquote', 'default');
   wp.blocks.unregisterBlockStyle('core/pullquote', 'solid-color');
 
+  // グループ
+  wp.blocks.unregisterBlockVariation('core/group', 'group-row');
+  wp.blocks.unregisterBlockVariation('core/group', 'group-stack');
+  wp.blocks.unregisterBlockVariation('core/group', 'group-grid');
+
   // 区切り
   wp.blocks.unregisterBlockStyle('core/separator', 'default');
   wp.blocks.unregisterBlockStyle('core/separator', 'wide');

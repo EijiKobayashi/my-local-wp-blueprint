@@ -53,7 +53,7 @@ function validate(validationData, value, data) {
 addFilter('lzb.editor.control.radio.validate', 'lzb.editor', validate);
 
 /**
- * Control settings render in constructor.
+ * Control settings render in block builder.
  */
 addFilter(
 	'lzb.constructor.control.radio.settings',
@@ -88,6 +88,7 @@ addFilter(
 									allow_null: value ? 'true' : 'false',
 								})
 							}
+							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 				</PanelBody>

@@ -27,6 +27,8 @@ addFilter('lzb.editor.control.text.render', 'lzb.editor', (render, props) => {
 				placeholder={props.data.placeholder}
 				value={props.getValue()}
 				onChange={props.onChange}
+				__next40pxDefaultSize
+				__nextHasNoMarginBottom
 			/>
 		</BaseControl>
 	);
@@ -63,7 +65,7 @@ addFilter('lzb.editor.control.text.validate', 'lzb.editor', validate);
 addFilter('lzb.editor.control.textarea.validate', 'lzb.editor', validate);
 
 /**
- * Control settings render in constructor.
+ * Control settings render in block builder.
  */
 addFilter(
 	'lzb.constructor.control.text.settings',
@@ -78,6 +80,8 @@ addFilter(
 						label={__('Placeholder', 'lazy-blocks')}
 						value={data.placeholder}
 						onChange={(value) => updateData({ placeholder: value })}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -98,6 +102,8 @@ addFilter(
 						onChange={(value) =>
 							updateData({ characters_limit: `${value}` })
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</>

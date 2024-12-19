@@ -54,7 +54,7 @@ function validate(validationData, value) {
 addFilter('lzb.editor.control.color.validate', 'lzb.editor', validate);
 
 /**
- * Control settings render in constructor.
+ * Control settings render in block builder.
  */
 addFilter(
 	'lzb.constructor.control.color.settings',
@@ -75,6 +75,8 @@ addFilter(
 						onChange={(value) =>
 							updateData({ alongside_text: value })
 						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -93,6 +95,7 @@ addFilter(
 							onChange={(value) =>
 								updateData({ alpha: value ? 'true' : 'false' })
 							}
+							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 					<BaseControl
@@ -112,6 +115,7 @@ addFilter(
 									palette: value ? 'true' : 'false',
 								})
 							}
+							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 				</PanelBody>

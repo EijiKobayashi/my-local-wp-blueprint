@@ -10,7 +10,17 @@ import type { FormEvent } from 'react';
 import { __ } from '@wordpress/i18n';
 import { useState, createInterpolateElement } from '@wordpress/element';
 import { BlockIcon } from '@wordpress/block-editor';
-import { Button, Placeholder, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	Button,
+	Placeholder,
+	TextControl,
+	ToggleControl,
+	__experimentalHStack as HStack,
+	__experimentalVStack as VStack,
+	__experimentalSpacer as Spacer,
+	__experimentalText as Text,
+} from '@wordpress/components';
+import { isAppleOS } from '@wordpress/keycodes';
 
 /**
  * Internal dependencies
@@ -95,20 +105,31 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 			className="ftb-placeholder"
 			icon={ <BlockIcon icon={ icon } showColors /> }
 		>
-			<legend className="components-placeholder__instructions">
+			<div className="components-placeholder__instructions">
 				{ createInterpolateElement(
-					__(
-						'Hint: Hold <code>Ctrl</code> key to select multiple cells. Hold <code>Shift</code> key to select the range.',
-						'flexible-table-block'
-					),
+					isAppleOS()
+						? __(
+								'Hint: Hold <code>Command</code> key to select multiple cells. Hold <code>Shift</code> key to select the range.',
+								'flexible-table-block'
+						  )
+						: __(
+								'Hint: Hold <code>Ctrl</code> key to select multiple cells. Hold <code>Shift</code> key to select the range.',
+								'flexible-table-block'
+						  ),
 					{ code: <code /> }
 				) }
-			</legend>
-			<div
+			</div>
+			<Spacer
+				as={ VStack }
 				className="ftb-placeholder__table-wrap"
 				style={ { minHeight: MIN_PREVIEW_TABLE_HEIGHT } }
+				alignment="center"
+				padding={ 4 }
+				marginBottom={ 0 }
 			>
-				<div className="ftb-placeholder__tbl-ttl">{ __( 'Preview', 'flexible-table-block' ) }</div>
+				<Text align="center" isBlock weight="500">
+					{ __( 'Preview', 'flexible-table-block' ) }
+				</Text>
 				{ rowCount && colCount && (
 					<table className={ tableClasses }>
 						{ headerSection && (
@@ -148,50 +169,55 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 						) }
 					</table>
 				) }
-			</div>
-			<form className="ftb-placeholder__form" onSubmit={ onCreateTable }>
-				<div className="ftb-placeholder__row">
+			</Spacer>
+			<VStack as="form" onSubmit={ onCreateTable }>
+				<HStack wrap justify="start">
 					<ToggleControl
 						label={ __( 'Header section', 'flexible-table-block' ) }
 						checked={ !! headerSection }
 						onChange={ onToggleHeaderSection }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Footer section', 'flexible-table-block' ) }
 						checked={ !! footerSection }
 						onChange={ onToggleFooterSection }
+						__nextHasNoMarginBottom
 					/>
-				</div>
-				<div className="ftb-placeholder__row">
+				</HStack>
+				<HStack wrap alignment="end" justify="start">
 					<TextControl
-						className="ftb-is-next-40px-default-size"
 						label={ __( 'Column count', 'flexible-table-block' ) }
+						className="ftb-placeholder__input"
 						type="number"
 						min="1"
 						max={ MAX_PREVIEW_TABLE_COL }
 						value={ colCount || '' }
 						onChange={ onChangeColumnCount }
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<TextControl
-						className="ftb-is-next-40px-default-size"
 						label={ __( 'Row count', 'flexible-table-block' ) }
+						className="ftb-placeholder__input"
 						type="number"
 						min="1"
 						max={ MAX_PREVIEW_TABLE_ROW }
 						value={ rowCount || '' }
 						onChange={ onChangeRowCount }
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<Button
 						variant="primary"
 						type="submit"
 						disabled={ ! rowCount || ! colCount }
-						// @ts-ignore: `__next40pxDefaultSize` prop is not exist at @types
 						__next40pxDefaultSize
 					>
 						{ __( 'Create Table', 'flexible-table-block' ) }
 					</Button>
-				</div>
-			</form>
+				</HStack>
+			</VStack>
 		</Placeholder>
 	);
 }

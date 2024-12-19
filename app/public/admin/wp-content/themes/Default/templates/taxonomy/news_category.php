@@ -1,7 +1,13 @@
 <?php
-header('Location: ' . get_home_url() . '/news/');
-exit;
-$taxonomy = 'news_category';
+//header('Location: ' . get_home_url() . '/news/');
+//exit;
+
+$term_name = $queried_object->name;
+$term_slug = $queried_object->slug;
+$term_description = $queried_object->description;
+$term_taxonomy = $queried_object->taxonomy;
+
+$taxonomy = $term_taxonomy;
 $terms = get_terms($taxonomy);
 ?>
 <?php get_header(); ?>

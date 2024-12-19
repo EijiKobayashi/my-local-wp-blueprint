@@ -42,9 +42,11 @@ class WP_Optimize_Admin {
 				'optimize' => __('Optimizations', 'wp-optimize'),
 				'tables' => __('Tables', 'wp-optimize'),
 				'settings' => __('Settings', 'wp-optimize'),
+				'table_analysis' => __('Table usage', 'wp-optimize').'<span class="menu-pill premium-only">Premium</span>'
 			),
 			'wpo_images'  => array(
 				'smush' => __('Compress images', 'wp-optimize'),
+				'dimensions' => __('Images dimensions', 'wp-optimize').'<span class="menu-pill premium-only">Premium</span>',
 				'unused' => __('Unused images and sizes', 'wp-optimize').'<span class="menu-pill premium-only">Premium</span>',
 				'lazyload' => __('Lazy-load', 'wp-optimize').'<span class="menu-pill premium-only">Premium</span>',
 			),
@@ -60,9 +62,13 @@ class WP_Optimize_Admin {
 				"js" => __('JavaScript', 'wp-optimize').'<span class="menu-pill disabled hidden">'.__('Disabled', 'wp-optimize').'</span>',
 				"css" => __('CSS', 'wp-optimize').'<span class="menu-pill disabled hidden">'.__('Disabled', 'wp-optimize').'</span>',
 				"font" => __('Fonts', 'wp-optimize'),
+				"analytics" => __('Google Analytics', 'wp-optimize').'<span class="menu-pill premium-only">Premium</span>',
 				"settings" => __('Settings', 'wp-optimize'),
 				"preload" => __('Preload', 'wp-optimize'),
 				"advanced" => __('Advanced', 'wp-optimize')
+			),
+			'wpo_performance' => array(
+				'404_detector' => __('Not found requests', 'wp-optimize'),
 			),
 			'wpo_settings' => array(
 				'settings' => array(
@@ -71,13 +77,13 @@ class WP_Optimize_Admin {
 //				'updraftcentral' => array(
 //					'title' => 'UpdraftCentral'
 //				),
+				'status' => __('System status', 'wp-optimize'),
 			),
 			'wpo_support' => array('support' => __('Support / FAQs', 'wp-optimize')),
 			'wpo_mayalso' => array('may_also' => __('Premium / Plugin family', 'wp-optimize')),
 		);
 
 		$tabs = (array_key_exists($page, $pages_tabs)) ? $pages_tabs[$page] : array();
-
 		return apply_filters('wp_optimize_admin_page_'.$page.'_tabs', $tabs);
 	}
 
@@ -186,6 +192,7 @@ class WP_Optimize_Admin {
 		 * SETTINGS
 		 */
 		add_action('wp_optimize_admin_page_wpo_settings_settings', array($this, 'output_dashboard_settings_tab'), 20);
+		add_action('wp_optimize_admin_page_wpo_settings_status', array($this, 'output_dashboard_status_tab'));
 
 		/**
 		 * UpdraftCentral
@@ -203,6 +210,11 @@ class WP_Optimize_Admin {
 		add_action('wp_optimize_admin_page_WP-Optimize_optimize', array($this, 'output_database_optimize_tab'), 20);
 		add_action('wp_optimize_admin_page_WP-Optimize_tables', array($this, 'output_database_tables_tab'), 20);
 		add_action('wp_optimize_admin_page_WP-Optimize_settings', array($this, 'output_database_settings_tab'), 20);
+		add_action('wp_optimize_admin_page_WP-Optimize_table_analysis', array($this, 'output_table_usage_tab'), 20);
+		/**
+		 * PERFORMANCE
+		 */
+		add_action('wp_optimize_admin_page_wpo_performance_404_detector', array($this, 'output_performance_404_requests'), 20);
 
 		/**
 		 * CACHE
@@ -237,6 +249,11 @@ class WP_Optimize_Admin {
 			 */
 			add_filter('admin_footer_text', array($this, 'display_footer_review_message'));
 		}
+		
+		/**
+		 * Add action for display Images > Images dimensions tab.
+		 */
+		add_action('wp_optimize_admin_page_wpo_images_dimensions', array($this, 'admin_page_wpo_images_dimensions'));
 	}
 
 	/**
@@ -249,6 +266,20 @@ class WP_Optimize_Admin {
 		} else {
 			$this->prevent_manage_options_info();
 		}
+	}
+
+	/**
+	 * Table usage tab
+	 *
+	 * @return void
+	 */
+	public function output_table_usage_tab() {
+		if (WP_Optimize::is_premium()) {
+			$extract = array('is_enabled' => (bool) WP_Optimize()->get_options()->get_option(WPO_DB_Table_Analysis::ENABLED_SETTING_NAME), 'dashboard' => WP_Optimize_Premium()->get_db_table_analysis_dashboard());
+		} else {
+			$extract = array('is_enabled' => false);
+		}
+		WP_Optimize()->include_template('database/table-analysis.php', false, $extract);
 	}
 
 	/**
@@ -276,6 +307,13 @@ class WP_Optimize_Admin {
 		} else {
 			$this->prevent_manage_options_info();
 		}
+	}
+
+	/**
+	 * Outputs the system status page
+	 */
+	public function output_dashboard_status_tab() {
+		WP_Optimize()->include_template('status/status-page.php');
 	}
 
 	/**
@@ -319,7 +357,8 @@ class WP_Optimize_Admin {
 			'wpo_cache_options' => $wpo_cache_options,
 			'cache_size' => $wpo_cache->get_cache_size(),
 			'display' => $display,
-			'can_purge_the_cache' => WP_Optimize()->get_page_cache()->can_purge_cache(),
+			'can_purge_the_cache' => $wpo_cache->can_purge_cache(),
+			'auto_preload_purged_contents' => $wpo_cache->should_auto_preload_purged_contents(),
 			'does_server_handles_cache' => WP_Optimize()->does_server_handles_cache(),
 			'error' => $error,
 		));
@@ -332,7 +371,7 @@ class WP_Optimize_Admin {
 		$wpo_cache = WP_Optimize()->get_page_cache();
 		$wpo_cache_options = $wpo_cache->config->get();
 		$wpo_cache_preloader = WP_Optimize_Page_Cache_Preloader::instance();
-		$is_running = $wpo_cache_preloader->is_running();
+		$is_running = $wpo_cache_preloader->is_busy() && !$wpo_cache_preloader->is_cancelled();
 		$status = $wpo_cache_preloader->get_status_info();
 
 		WP_Optimize()->include_template('cache/page-cache-preload.php', false, array(
@@ -477,6 +516,38 @@ class WP_Optimize_Admin {
 	}
 
 	/**
+	 * Outputs the Performance 404 requests Tab
+	 */
+	public function output_performance_404_requests() {
+		$wp_optimize = WP_Optimize();
+		$is_enabled = $wp_optimize->get_options()->get_option('404_detector', 0);
+
+		$detector = $wp_optimize->get_404_detector();
+
+		$requests = $detector->get_suspicious_requests();
+
+		$report_has_data = false;
+		foreach ($requests as $url_requests) {
+			foreach ($url_requests as $row) {
+				if (1 < $row->occurrences && 'grouped' == $row->row_type) {
+					if (0 == $row->non_suspicious_referrers && 1 < $row->total_referrers) {
+						continue;
+					}
+				}
+				$report_has_data = true;
+			}
+		}
+
+		$wp_optimize->include_template('performance/404-detector.php', false, array(
+			'requests' => $requests,
+			'suspicious_threshold' => $detector->get_suspicious_request_count_threshold(),
+			'obj_404_detector' => $detector,
+			'report_has_data' => $report_has_data,
+			'is_enabled' => $is_enabled,
+		));
+	}
+
+	/**
 	 * Runs upon the WP action admin_page_wpo_images_unused
 	 */
 	public function admin_page_wpo_images_unused() {
@@ -488,6 +559,19 @@ class WP_Optimize_Admin {
 	 */
 	public function admin_page_wpo_images_lazyload() {
 		WP_Optimize()->include_template('images/lazyload.php');
+	}
+	
+	/**
+	 * Runs upon the WP action wp_optimize_admin_page_wpo_images_dimensions
+	 */
+	public function admin_page_wpo_images_dimensions() {
+		$options = WP_Optimize()->get_options();
+		$image_dimensions = $options->get_option('image_dimensions');
+		$ignore_classes = $options->get_option('image_dimensions_ignore_classes');
+		WP_Optimize()->include_template('images/dimensions.php', false, array(
+			'images_dimensions_status' => $image_dimensions,
+			'ignore_classes' => $ignore_classes ?: '',
+		));
 	}
 
 	/**
@@ -664,9 +748,18 @@ class WP_Optimize_Admin {
 				'menu_title' => __('Minify', 'wp-optimize'),
 				'menu_slug' => 'wpo_minify',
 				'function' => array($this, 'display_admin'),
-				'icon' => 'dashboard',
+				'icon' => 'editor-contract',
 				'create_submenu' => true,
 				'order' => 50,
+			),
+			array(
+				'page_title' => __('Performance', 'wp-optimize'),
+				'menu_title' => __('Performance', 'wp-optimize'),
+				'menu_slug' => 'wpo_performance',
+				'function' => array($this, 'display_admin'),
+				'icon' => 'performance',
+				'create_submenu' => true,
+				'order' => 53,
 			),
 			array(
 				'create_submenu' => false,

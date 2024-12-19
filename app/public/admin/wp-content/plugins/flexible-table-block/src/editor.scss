@@ -2,6 +2,7 @@
 @import "controls/style";
 
 .editor-styles-wrapper .wp-block-flexible-table-block-table {
+	box-sizing: border-box;
 
 	> table {
 
@@ -105,7 +106,6 @@
 
 	.ftb-placeholder {
 		// Reset typography support styles
-		padding: 16px;
 		font-style: normal;
 		font-weight: normal;
 		line-height: initial;
@@ -123,21 +123,13 @@
 
 	.ftb-placeholder__table-wrap {
 		width: 100%;
-		padding: 12px 24px 16px;
 		background-color: #eaeaea;
-	}
-
-	.ftb-placeholder__tbl-ttl {
-		margin-bottom: 8px;
-		font-size: 16px;
-		font-weight: bold;
-		text-align: center;
+		box-sizing: border-box;
 	}
 
 	.ftb-placeholder__table {
 		width: 100%;
 		max-width: 330px;
-		margin: 0 auto;
 		vertical-align: middle;
 		table-layout: fixed;
 		border-spacing: 3px;
@@ -190,28 +182,8 @@
 		}
 	}
 
-	.ftb-placeholder__form {
-		display: block !important;
-		flex-wrap: nowrap;
-
-		.components-base-control {
-			width: 100px;
-
-			&.components-toggle-control {
-				width: auto;
-			}
-		}
-
-		.components-base-control__field {
-			margin-right: 8px;
-			margin-bottom: 0;
-		}
-	}
-
-	.ftb-placeholder__row {
-		display: flex;
-		align-items: flex-end;
-		margin-top: 16px;
+	.ftb-placeholder__input {
+		width: 112px;
 	}
 
 	.ftb-table-cell-label {
@@ -394,21 +366,6 @@
 	}
 }
 
-// TODO: Fix that cursor does not change when mouseover RichText
-// in the Site Editor. This seems to be a bug in the core and will
-// be removed as soon as it is fixed in the core.
-// See: https://github.com/WordPress/gutenberg/issues/53374
-.is-outline-mode .wp-block-flexible-table-block-table.is-selected .rich-text {
-	cursor: initial;
-}
-
-// TODO: Remove this style and replace it with `__next40pxDefaultSize` prop
-// when supported WordPress versions are greater than or equal to 6.5.
-// See: https://github.com/WordPress/gutenberg/pull/55471
-.ftb-is-next-40px-default-size .components-text-control__input {
-	height: 40px;
-}
-
 // Setting Component Styles
 .ftb-button-group {
 	display: block;
@@ -424,11 +381,6 @@
 	}
 }
 
-.ftb-reset-settings-control .components-base-control__field {
-	display: flex;
-	justify-content: flex-end;
-}
-
 .ftb-base-control-label {
 	display: inline-block;
 	margin-bottom: 8px;
@@ -437,45 +389,28 @@
 	text-transform: uppercase;
 }
 
-.ftb-base-control-row {
-	display: flex;
-
-	.components-base-control__field {
-		margin-bottom: 0;
-	}
-
-	> *:first-child {
-		margin-right: 16px;
-	}
-}
-
-.ftb-base-control-field-row {
-	display: flex;
-
-	> *:first-child {
-		margin-right: 16px;
-	}
-}
-
 .ftb-percent-group {
-	margin-top: 8px;
-}
+	margin-top: -8px;
 
-.ftb-font-size-control,
-.ftb-width-control {
-
-	.components-input-control.components-input-control {
-		max-width: 100px;
-		margin-bottom: 0;
+	&:has(+ .components-base-control) {
+		margin-bottom: 16px;
 	}
 }
 
-.ftb-width-control .components-unit-control .components-unit-control__select {
-	background-color: transparent;
-	background-image: none;
+// Backwards compatible styles for WordPress 6.6 / 6.5
+// See: https://github.com/WordPress/gutenberg/issues/53374
+.is-outline-mode .wp-block-flexible-table-block-table.is-selected .rich-text {
+	cursor: initial;
 }
 
-.ftb-line-height-control .components-text-control__input {
-	display: block;
-	max-width: 72px;
+// Backwards compatible styles for WordPress 6.5
+.ftb-placeholder {
+
+	.components-placeholder__instructions {
+		margin-bottom: 0;
+	}
+
+	.components-placeholder__fieldset {
+		gap: 16px;
+	}
 }

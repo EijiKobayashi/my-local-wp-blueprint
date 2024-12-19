@@ -78,7 +78,7 @@ addFilter('lzb.editor.control.gallery.updateValue', 'lzb.editor', (value) => {
 });
 
 /**
- * Control settings render in constructor.
+ * Control settings render in block builder.
  *
  * @param {Object} props - component props.
  *
@@ -127,6 +127,8 @@ function AdditionalAttributes(props) {
 				})}
 				value={data.preview_size || 'medium'}
 				onChange={(value) => updateData({ preview_size: value })}
+				__next40pxDefaultSize
+				__nextHasNoMarginBottom
 			/>
 		</PanelBody>
 	);
