@@ -14,7 +14,7 @@
       "text": false,
       "background": false,
       "link": false,
-      "custom": false,
+      "custom": true,
       "customDuotone": false,
       "customGradient": false,
       "defaultGradients": false,
@@ -126,32 +126,46 @@
     },
     "layout": {
       "contentSize": "1024px",
-      "wideSize": "1440px"
+      "wideSize": null
     },
     "blocks": {
       "core/paragraph": {
+        "color": {
+          "text": true,
+          "background": true
+        },
         "typography": {
+          "customFontSize": true,
           "fontSizes": [
             {
               "size": "0.875rem",
               "slug": "small"
             },
             {
-              "size": "1.25rem",
+              "size": "1.125rem",
               "slug": "medium"
             },
             {
-              "size": "1.5rem",
+              "size": "1.25rem",
               "slug": "large"
             },
             {
-              "size": "1.875rem",
+              "size": "1.5rem",
               "slug": "x-large"
+            },
+            {
+              "size": "1.875rem",
+              "slug": "xx-large"
             }
           ]
         }
       },
       "core/heading": {
+        "color": {
+          "text": true,
+          "background": true,
+          "palette": true
+        },
         "typography": {
           "fontSizes": []
         }
@@ -160,6 +174,38 @@
         "lightbox": {
           "allowEditing": false,
           "enabled": false
+        }
+      },
+      "core/list": {
+        "color": {
+          "text": true,
+          "background": true,
+          "palette": true
+        },
+        "typography": {
+          "customFontSize": true,
+          "fontSizes": [
+            {
+              "size": "0.875rem",
+              "slug": "small"
+            },
+            {
+              "size": "1.125rem",
+              "slug": "medium"
+            },
+            {
+              "size": "1.25rem",
+              "slug": "large"
+            },
+            {
+              "size": "1.5rem",
+              "slug": "x-large"
+            },
+            {
+              "size": "1.875rem",
+              "slug": "xx-large"
+            }
+          ]
         }
       },
       "core/button": {

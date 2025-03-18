@@ -20,6 +20,7 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockStyle('core/pullquote', 'solid-color');
 
   // グループ
+  //wp.blocks.unregisterBlockVariation('core/group', 'group-flex');
   wp.blocks.unregisterBlockVariation('core/group', 'group-row');
   wp.blocks.unregisterBlockVariation('core/group', 'group-stack');
   wp.blocks.unregisterBlockVariation('core/group', 'group-grid');

@@ -4,16 +4,17 @@ wp.domReady(() => {
   //wp.blocks.unregisterBlockType('core/heading'); // 見出し
   //wp.blocks.unregisterBlockType('core/list'); // リスト
   //wp.blocks.unregisterBlockType('core/quote'); // 引用
-  //wp.blocks.unregisterBlockType('core/code'); // コード
+  wp.blocks.unregisterBlockType('core/code'); // コード
+  wp.blocks.unregisterBlockType('core/details'); // 詳細
   //wp.blocks.unregisterBlockType('core/freeform'); // クラシック
   wp.blocks.unregisterBlockType('core/preformatted'); // 整形済みテキスト
-  //wp.blocks.unregisterBlockType('core/pullquote'); // プルクオート
-  //wp.blocks.unregisterBlockType('core/table'); // テーブル
+  wp.blocks.unregisterBlockType('core/pullquote'); // プルクオート
+  wp.blocks.unregisterBlockType('core/table'); // テーブル
   wp.blocks.unregisterBlockType('core/verse'); // 詩
 
   // メディア
   //wp.blocks.unregisterBlockType('core/image'); // 画像
-  //wp.blocks.unregisterBlockType('core/gallery'); // ギャラリー
+  wp.blocks.unregisterBlockType('core/gallery'); // ギャラリー
   wp.blocks.unregisterBlockType('core/audio'); // 音声
   wp.blocks.unregisterBlockType('core/cover'); // カバー
   wp.blocks.unregisterBlockType('core/file'); // ファイル
