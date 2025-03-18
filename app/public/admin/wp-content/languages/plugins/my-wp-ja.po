@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - My WP Customize Admin/Frontend - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-06 08:43:35+0000\n"
+"PO-Revision-Date: 2025-01-24 01:31:43+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,50 @@ msgstr ""
 "X-Generator: GlotPress/4.0.1\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - My WP Customize Admin/Frontend - Stable (latest release)\n"
+
+#: setting/modules/mywp.setting.debug.general.php:125
+msgid "debug_backtrace()"
+msgstr "debug_backtrace()"
+
+#: setting/modules/mywp.setting.debug.general.php:116
+msgid "Action hooks"
+msgstr "アクションフック"
+
+#: setting/modules/mywp.setting.debug.general.php:107
+msgid "Process times"
+msgstr "処理時間"
+
+#: setting/modules/mywp.setting.debug.general.php:93
+#: setting/modules/mywp.setting.debug.general.php:102
+#: setting/modules/mywp.setting.debug.general.php:111
+#: setting/modules/mywp.setting.debug.general.php:120
+#: setting/modules/mywp.setting.debug.general.php:129
+msgid "Activate"
+msgstr "有効化"
+
+#: setting/modules/mywp.setting.debug.general.php:89
+msgid "My WP Cache"
+msgstr "My WP Cache"
+
+#: setting/modules/mywp.setting.debug.general.php:84
+msgid "Debugging these items may require significant time and memory, depending on the plugins and themes you are using. Please proceed with caution."
+msgstr "いくつかのデバッグ項目は多くの時間とメモリを必要とする場合があります。注意して設定してください。"
+
+#: setting/modules/mywp.setting.debug.general.php:82
+msgid "Heavy process debug items"
+msgstr "重い処理のデバッグ項目"
+
+#: developer/modules/mywp.developer.module.dev.actions.php:60
+#: developer/modules/mywp.developer.module.dev.actions.php:98
+#: developer/modules/mywp.developer.module.dev.debugtrace.php:34
+#: developer/modules/mywp.developer.module.dev.debugtrace.php:50
+#: developer/modules/mywp.developer.module.dev.request.php:78
+#: developer/modules/mywp.developer.module.dev.times.php:219
+#: developer/modules/mywp.developer.module.dev.times.php:315
+#: developer/modules/mywp.developer.module.mywp.cache.php:42
+#: developer/modules/mywp.developer.module.mywp.cache.php:66
+msgid "Not activated."
+msgstr "有効化されていません"
 
 #: setting/modules/mywp.setting.admin.comments.php:302
 #: setting/modules/mywp.setting.admin.posts.php:436
@@ -25,7 +69,7 @@ msgstr "表示する"
 msgid "Custom search filter"
 msgstr "カスタム検索フィルター"
 
-#: setting/abstract.setting.columns.module.php:551
+#: setting/abstract.setting.columns.module.php:559
 #: setting/modules/mywp.setting.admin.comments.php:445
 #: setting/modules/mywp.setting.admin.posts.php:419
 #: setting/modules/mywp.setting.admin.posts.php:680
@@ -35,65 +79,65 @@ msgstr "カスタム検索フィルター"
 msgid "Deprecated"
 msgstr "非推奨"
 
-#: controller/modules/mywp.controller.module.admin.users.php:570
+#: controller/modules/mywp.controller.module.admin.users.php:578
 #: setting/modules/mywp.setting.admin.users.php:423
 msgid "Registered Date"
 msgstr "登録日時"
 
-#: controller/modules/mywp.controller.module.admin.users.php:559
+#: controller/modules/mywp.controller.module.admin.users.php:567
 msgid "User Email"
 msgstr "ユーザーのメールアドレス"
 
-#: controller/modules/mywp.controller.module.admin.users.php:549
+#: controller/modules/mywp.controller.module.admin.users.php:557
 msgid "User ID"
 msgstr "ユーザー ID"
 
-#: controller/modules/mywp.controller.module.admin.uploads.php:813
+#: controller/modules/mywp.controller.module.admin.uploads.php:821
 msgid "Mime Type"
 msgstr "MIME タイプ"
 
-#: controller/modules/mywp.controller.module.admin.uploads.php:803
+#: controller/modules/mywp.controller.module.admin.uploads.php:811
 msgid "Post Date"
 msgstr "投稿日時"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1179
-#: controller/modules/mywp.controller.module.admin.uploads.php:808
+#: controller/modules/mywp.controller.module.admin.posts.php:1197
+#: controller/modules/mywp.controller.module.admin.uploads.php:816
 msgid "Post Parent"
 msgstr "親ページ"
 
-#: controller/modules/mywp.controller.module.admin.comments.php:558
+#: controller/modules/mywp.controller.module.admin.comments.php:566
 msgid "Comment Parent"
 msgstr "親コメント"
 
-#: controller/modules/mywp.controller.module.admin.comments.php:553
+#: controller/modules/mywp.controller.module.admin.comments.php:561
 msgid "Comment Date"
 msgstr "コメント日時"
 
-#: controller/modules/mywp.controller.module.admin.comments.php:548
+#: controller/modules/mywp.controller.module.admin.comments.php:556
 msgid "Comment Author Email"
 msgstr "コメント投稿者のメール"
 
-#: controller/modules/mywp.controller.module.admin.comments.php:542
+#: controller/modules/mywp.controller.module.admin.comments.php:550
 msgid "Comment Status"
 msgstr "コメントステータス"
 
-#: controller/modules/mywp.controller.module.admin.comments.php:537
+#: controller/modules/mywp.controller.module.admin.comments.php:545
 msgid "Comment Post ID"
 msgstr "コメントへの投稿ID"
 
-#: controller/abstract.controller.list.module.php:836
+#: controller/abstract.controller.list.module.php:878
 msgid "To"
 msgstr "To"
 
-#: controller/abstract.controller.list.module.php:831
+#: controller/abstract.controller.list.module.php:873
 msgid "From"
 msgstr "From"
 
-#: controller/abstract.controller.list.module.php:788
+#: controller/abstract.controller.list.module.php:830
 msgid "Clear"
 msgstr "クリア"
 
-#: controller/abstract.controller.list.module.php:646
+#: controller/abstract.controller.list.module.php:688
 msgid "Search Filter"
 msgstr "検索フィルター"
 
@@ -200,7 +244,7 @@ msgid "Overview"
 msgstr "概要"
 
 #: setting/abstract.setting.toolbar.module.php:2687
-#: setting/modules/mywp.setting.admin.sidebar.php:2411
+#: setting/modules/mywp.setting.admin.sidebar.php:2427
 msgid "This menu item is dynamic submenus content and can not have a submenu."
 msgstr "このメニューは動的にサブメニューを作成するため、サブメニューを設定することはできません。"
 
@@ -231,7 +275,7 @@ msgctxt "post"
 msgid "Featured image"
 msgstr "アイキャッチ画像"
 
-#: setting/abstract.setting.columns.module.php:620
+#: setting/abstract.setting.columns.module.php:628
 msgid "This column value output is need Automatic output of column contents enabled."
 msgstr "このカラムの値は カラムの内容を自動出力 を有効にしないと表示されません。"
 
@@ -284,7 +328,7 @@ msgstr "投稿の構造"
 msgid "Post Structure"
 msgstr "投稿の構造"
 
-#: controller/modules/mywp.controller.module.admin.users.php:564
+#: controller/modules/mywp.controller.module.admin.users.php:572
 #: setting/modules/mywp.setting.debug.capabilities.php:48
 msgid "User Roles"
 msgstr "ユーザー権限グループ"
@@ -344,7 +388,7 @@ msgstr "ショートコードを使用できます。"
 msgid "All columns place behind \"title or name\" and \"checkbox\" when show on mobile device."
 msgstr "モバイル端末で表示する場合は”チェック\"と\"タイトル 又は 名前\"の後にカラムを設定してください。"
 
-#: setting/modules/mywp.setting.debug.transients.php:212
+#: setting/modules/mywp.setting.debug.transients.php:211
 msgid "Expiration"
 msgstr "有効期限"
 
@@ -356,18 +400,18 @@ msgstr "すべての投稿のステータス"
 msgid "Date Time"
 msgstr "日付と時刻"
 
-#: setting/modules/mywp.setting.debug.crons.php:74
-#: setting/modules/mywp.setting.debug.transients.php:242
+#: setting/modules/mywp.setting.debug.crons.php:73
+#: setting/modules/mywp.setting.debug.transients.php:241
 msgid "RAW"
 msgstr "RAW"
 
 #: setting/modules/mywp.setting.debug.blogs.php:73
-#: setting/modules/mywp.setting.debug.crons.php:61
-#: setting/modules/mywp.setting.debug.transients.php:213
+#: setting/modules/mywp.setting.debug.crons.php:60
+#: setting/modules/mywp.setting.debug.transients.php:212
 msgid "Data"
 msgstr "データ"
 
-#: setting/modules/mywp.setting.debug.crons.php:60
+#: setting/modules/mywp.setting.debug.crons.php:59
 msgid "Run %s"
 msgstr "%s の実行"
 
@@ -384,7 +428,7 @@ msgid "This menu item is only display for single page."
 msgstr "このメニューアイテムはシングルページでのみ表示されます。"
 
 #: setting/abstract.setting.toolbar.module.php:2787
-#: setting/modules/mywp.setting.admin.sidebar.php:2535
+#: setting/modules/mywp.setting.admin.sidebar.php:2551
 msgid "Example menu title"
 msgstr "メニュータイトル"
 
@@ -417,8 +461,8 @@ msgstr "メニューを閉じる"
 msgid "All Post Metas"
 msgstr "すべての投稿メタ"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1163
-#: controller/modules/mywp.controller.module.admin.uploads.php:792
+#: controller/modules/mywp.controller.module.admin.posts.php:1181
+#: controller/modules/mywp.controller.module.admin.uploads.php:800
 #: setting/modules/mywp.setting.update.bulk-post-meta.php:950
 msgid "Post Status"
 msgstr "投稿ステータス"
@@ -731,7 +775,7 @@ msgstr "権限グループ"
 msgid "Email"
 msgstr "メールアドレス"
 
-#: controller/modules/mywp.controller.module.admin.users.php:554
+#: controller/modules/mywp.controller.module.admin.users.php:562
 #: setting/modules/mywp.setting.admin.users.php:352
 msgid "Username"
 msgstr "ユーザー名"
@@ -748,8 +792,8 @@ msgstr "URL"
 #: setting/modules/mywp.setting.admin.comments.php:397
 #: setting/modules/mywp.setting.admin.comments.php:458
 #: setting/modules/mywp.setting.admin.users.php:358
-#: setting/modules/mywp.setting.debug.crons.php:59
-#: setting/modules/mywp.setting.debug.transients.php:211
+#: setting/modules/mywp.setting.debug.crons.php:58
+#: setting/modules/mywp.setting.debug.transients.php:210
 msgid "Name"
 msgstr "名前"
 
@@ -801,7 +845,7 @@ msgstr "メディアを検索"
 msgid "Media Library"
 msgstr "メディアライブラリ"
 
-#: setting/abstract.setting.columns.module.php:629
+#: setting/abstract.setting.columns.module.php:637
 msgid "Column ID"
 msgstr "カラム ID"
 
@@ -823,11 +867,11 @@ msgstr "更新URLが見つかりません。"
 msgid "Select %s"
 msgstr "%s を選択"
 
-#: setting/abstract.setting.columns.module.php:652
+#: setting/abstract.setting.columns.module.php:660
 msgid "Width"
 msgstr "幅"
 
-#: setting/abstract.setting.columns.module.php:647
+#: setting/abstract.setting.columns.module.php:655
 msgid "Active"
 msgstr "有効"
 
@@ -859,7 +903,7 @@ msgstr "ID"
 msgid "Slug"
 msgstr "スラッグ"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1174
+#: controller/modules/mywp.controller.module.admin.posts.php:1192
 #: post-type/modules/mywp.post-type.module.logger.php:102
 #: setting/modules/mywp.setting.admin.posts.php:509
 msgid "Date"
@@ -1011,7 +1055,7 @@ msgstr "すべてのサイト設定"
 msgid "All Options"
 msgstr "すべての設定"
 
-#: controller/abstract.controller.list.module.php:883
+#: controller/abstract.controller.list.module.php:925
 #: setting/modules/mywp.setting.debug.find-option.php:119
 #: shortcode/modules/mywp.shortcode.module.toolbar_item.php:29
 #: shortcode/modules/mywp.shortcode.module.toolbar_item.php:30
@@ -1074,8 +1118,8 @@ msgstr "グループ"
 #: setting/abstract.setting.toolbar.module.php:2329
 #: setting/abstract.setting.toolbar.module.php:2628
 #: setting/modules/mywp.setting.admin.sidebar.php:1640
-#: setting/modules/mywp.setting.admin.sidebar.php:2083
-#: setting/modules/mywp.setting.admin.sidebar.php:2358
+#: setting/modules/mywp.setting.admin.sidebar.php:2099
+#: setting/modules/mywp.setting.admin.sidebar.php:2374
 msgid "Custom HTML"
 msgstr "カスタム HTML"
 
@@ -1120,7 +1164,7 @@ msgid "Are you sure you want to do this?"
 msgstr "本当に実行していいですか ?"
 
 #: setting/abstract.setting.toolbar.module.php:2799
-#: setting/modules/mywp.setting.admin.sidebar.php:2547
+#: setting/modules/mywp.setting.admin.sidebar.php:2563
 msgid "Change Icon"
 msgstr "アイコンの変更"
 
@@ -1128,9 +1172,9 @@ msgstr "アイコンの変更"
 #: setting/abstract.setting.toolbar.module.php:2470
 #: setting/abstract.setting.toolbar.module.php:2558
 #: setting/abstract.setting.toolbar.module.php:2636
-#: setting/modules/mywp.setting.admin.sidebar.php:2166
-#: setting/modules/mywp.setting.admin.sidebar.php:2280
-#: setting/modules/mywp.setting.admin.sidebar.php:2366
+#: setting/modules/mywp.setting.admin.sidebar.php:2182
+#: setting/modules/mywp.setting.admin.sidebar.php:2296
+#: setting/modules/mywp.setting.admin.sidebar.php:2382
 #: setting/modules/mywp.setting.admin.toolbar.php:131
 #: setting/modules/mywp.setting.frontend.toolbar.php:138
 msgid "More Details"
@@ -1160,7 +1204,7 @@ msgstr "WordPress.org Specific: Jobs, Profiles, WordCamps"
 msgid "Social"
 msgstr "ソーシャル"
 
-#: core/class.api.php:298 setting/abstract.setting.columns.module.php:642
+#: core/class.api.php:298 setting/abstract.setting.columns.module.php:650
 msgid "Sorting"
 msgstr "並べ替え"
 
@@ -1351,13 +1395,13 @@ msgstr "投稿の更新"
 msgid "All Translations"
 msgstr "すべての翻訳"
 
-#: setting/modules/mywp.setting.debug.transients.php:228
-#: setting/modules/mywp.setting.debug.transients.php:237
+#: setting/modules/mywp.setting.debug.transients.php:227
+#: setting/modules/mywp.setting.debug.transients.php:236
 msgid "Not found timeout date."
 msgstr "タイムアウトのデータが見つかりません。"
 
-#: setting/modules/mywp.setting.debug.crons.php:74
-#: setting/modules/mywp.setting.debug.transients.php:242
+#: setting/modules/mywp.setting.debug.crons.php:73
+#: setting/modules/mywp.setting.debug.transients.php:241
 msgid "UTC"
 msgstr "UTC"
 
@@ -1483,7 +1527,7 @@ msgid "Custom Menu UI"
 msgstr "カスタムメニュー UI"
 
 #: setting/abstract.setting.toolbar.module.php:2538
-#: setting/modules/mywp.setting.admin.sidebar.php:2260
+#: setting/modules/mywp.setting.admin.sidebar.php:2276
 msgid "Link Attributes"
 msgstr "リンク属性"
 
@@ -1529,31 +1573,31 @@ msgstr "メタボックスの更新"
 msgid "My WP Debug"
 msgstr "My WP Debug"
 
-#: controller/modules/mywp.controller.module.debug.general.php:411
+#: controller/modules/mywp.controller.module.debug.general.php:423
 msgid "plugin base name: %s"
 msgstr "plugin base name: %s"
 
-#: controller/modules/mywp.controller.module.debug.general.php:405
+#: controller/modules/mywp.controller.module.debug.general.php:417
 msgid "Not Activated"
 msgstr "非有効化"
 
-#: controller/modules/mywp.controller.module.debug.general.php:401
+#: controller/modules/mywp.controller.module.debug.general.php:413
 msgid "Activated"
 msgstr "有効化済み"
 
-#: controller/modules/mywp.controller.module.debug.general.php:168
+#: controller/modules/mywp.controller.module.debug.general.php:180
 msgid "Thirdparty"
 msgstr "サードパーティ"
 
-#: controller/modules/mywp.controller.module.debug.general.php:148
+#: controller/modules/mywp.controller.module.debug.general.php:160
 msgid "My WP Taxonomy"
 msgstr "My WP タクソノミー"
 
-#: controller/modules/mywp.controller.module.debug.general.php:138
+#: controller/modules/mywp.controller.module.debug.general.php:150
 msgid "My WP Shortcode"
 msgstr "My WP ショートコード"
 
-#: controller/modules/mywp.controller.module.debug.general.php:153
+#: controller/modules/mywp.controller.module.debug.general.php:165
 msgid "Current Setting"
 msgstr "現在の設定"
 
@@ -1660,7 +1704,7 @@ msgstr "すべてのタクソノミー"
 
 #: setting/modules/mywp.setting.debug.blogs.php:64
 #: setting/modules/mywp.setting.debug.capabilities.php:44
-#: setting/modules/mywp.setting.debug.crons.php:56
+#: setting/modules/mywp.setting.debug.crons.php:55
 #: setting/modules/mywp.setting.debug.defines.php:98
 #: setting/modules/mywp.setting.debug.find-option.php:154
 #: setting/modules/mywp.setting.debug.options.php:46
@@ -1671,7 +1715,7 @@ msgstr "すべてのタクソノミー"
 #: setting/modules/mywp.setting.debug.site-options.php:64
 #: setting/modules/mywp.setting.debug.taxonomies.php:44
 #: setting/modules/mywp.setting.debug.terms.php:68
-#: setting/modules/mywp.setting.debug.transients.php:207
+#: setting/modules/mywp.setting.debug.transients.php:206
 #: setting/modules/mywp.setting.debug.translations.php:72
 msgid "Count"
 msgstr "計"
@@ -1680,22 +1724,22 @@ msgstr "計"
 msgid "All Post Types"
 msgstr "すべての投稿タイプ"
 
-#: setting/modules/mywp.setting.debug.general.php:61
+#: setting/modules/mywp.setting.debug.general.php:62
 #: setting/modules/mywp.setting.login.user.php:24
 msgid "User"
 msgstr "ユーザー"
 
-#: setting/modules/mywp.setting.debug.general.php:54
+#: setting/modules/mywp.setting.debug.general.php:55
 msgid "Debugging for multiple users that enter the User ID with comma."
 msgstr "ユーザーIDをカンマ区切りで入力すると複数のユーザーでデバッグできます。"
 
 #: controller/abstract.controller.toolbar.module.php:245
 #: controller/abstract.controller.toolbar.module.php:246
-#: setting/modules/mywp.setting.debug.general.php:49
+#: setting/modules/mywp.setting.debug.general.php:50
 msgid "Users"
 msgstr "ユーザー"
 
-#: setting/modules/mywp.setting.debug.general.php:49
+#: setting/modules/mywp.setting.debug.general.php:50
 msgid "Show debugging %s"
 msgstr "%sのデバッグ表示"
 
@@ -1747,47 +1791,47 @@ msgid "Profile"
 msgstr "プロフィール"
 
 #: setting/abstract.setting.toolbar.module.php:2695
-#: setting/modules/mywp.setting.admin.sidebar.php:2419
+#: setting/modules/mywp.setting.admin.sidebar.php:2435
 msgid "Child Menus"
 msgstr "サブメニュー"
 
 #: setting/abstract.setting.toolbar.module.php:2594
-#: setting/modules/mywp.setting.admin.sidebar.php:2328
+#: setting/modules/mywp.setting.admin.sidebar.php:2344
 msgid "Icon html"
 msgstr "アイコン html"
 
 #: setting/abstract.setting.toolbar.module.php:2588
-#: setting/modules/mywp.setting.admin.sidebar.php:2216
-#: setting/modules/mywp.setting.admin.sidebar.php:2322
+#: setting/modules/mywp.setting.admin.sidebar.php:2232
+#: setting/modules/mywp.setting.admin.sidebar.php:2338
 msgid "Icon style"
 msgstr "アイコン style"
 
 #: setting/abstract.setting.toolbar.module.php:2582
-#: setting/modules/mywp.setting.admin.sidebar.php:2222
-#: setting/modules/mywp.setting.admin.sidebar.php:2316
+#: setting/modules/mywp.setting.admin.sidebar.php:2238
+#: setting/modules/mywp.setting.admin.sidebar.php:2332
 msgid "Icon img"
 msgstr "アイコン img"
 
 #: setting/abstract.setting.toolbar.module.php:2576
-#: setting/modules/mywp.setting.admin.sidebar.php:2310
+#: setting/modules/mywp.setting.admin.sidebar.php:2326
 msgid "Icon id"
 msgstr "アイコン id"
 
 #: setting/abstract.setting.toolbar.module.php:2405
 #: setting/abstract.setting.toolbar.module.php:2544
-#: setting/modules/mywp.setting.admin.sidebar.php:2158
-#: setting/modules/mywp.setting.admin.sidebar.php:2266
+#: setting/modules/mywp.setting.admin.sidebar.php:2174
+#: setting/modules/mywp.setting.admin.sidebar.php:2282
 #: setting/modules/mywp.setting.frontend.toolbar.php:157
 msgid "Icon class"
 msgstr "アイコン class"
 
-#: setting/modules/mywp.setting.admin.sidebar.php:2210
-#: setting/modules/mywp.setting.admin.sidebar.php:2304
+#: setting/modules/mywp.setting.admin.sidebar.php:2226
+#: setting/modules/mywp.setting.admin.sidebar.php:2320
 msgid "Link id"
 msgstr "リンク id"
 
-#: setting/modules/mywp.setting.admin.sidebar.php:2204
-#: setting/modules/mywp.setting.admin.sidebar.php:2298
+#: setting/modules/mywp.setting.admin.sidebar.php:2220
+#: setting/modules/mywp.setting.admin.sidebar.php:2314
 msgid "Link class"
 msgstr "リンク class"
 
@@ -1795,24 +1839,24 @@ msgstr "リンク class"
 #: setting/abstract.setting.toolbar.module.php:2490
 #: setting/abstract.setting.toolbar.module.php:2570
 #: setting/abstract.setting.toolbar.module.php:2654
-#: setting/modules/mywp.setting.admin.sidebar.php:2198
-#: setting/modules/mywp.setting.admin.sidebar.php:2292
-#: setting/modules/mywp.setting.admin.sidebar.php:2384
+#: setting/modules/mywp.setting.admin.sidebar.php:2214
+#: setting/modules/mywp.setting.admin.sidebar.php:2308
+#: setting/modules/mywp.setting.admin.sidebar.php:2400
 msgid "LI id"
 msgstr "LI id"
 
 #: setting/abstract.setting.toolbar.module.php:2564
 #: setting/abstract.setting.toolbar.module.php:2648
-#: setting/modules/mywp.setting.admin.sidebar.php:2192
-#: setting/modules/mywp.setting.admin.sidebar.php:2286
-#: setting/modules/mywp.setting.admin.sidebar.php:2378
+#: setting/modules/mywp.setting.admin.sidebar.php:2208
+#: setting/modules/mywp.setting.admin.sidebar.php:2302
+#: setting/modules/mywp.setting.admin.sidebar.php:2394
 msgid "LI class"
 msgstr "LI class"
 
 #: setting/abstract.setting.toolbar.module.php:2433
 #: setting/abstract.setting.toolbar.module.php:2532
-#: setting/modules/mywp.setting.admin.sidebar.php:2186
-#: setting/modules/mywp.setting.admin.sidebar.php:2254
+#: setting/modules/mywp.setting.admin.sidebar.php:2202
+#: setting/modules/mywp.setting.admin.sidebar.php:2270
 #: setting/modules/mywp.setting.admin.toolbar.php:143
 #: setting/modules/mywp.setting.frontend.toolbar.php:150
 msgid "Link URL"
@@ -1822,9 +1866,9 @@ msgstr "リンクURL"
 #: setting/abstract.setting.toolbar.module.php:2477
 #: setting/abstract.setting.toolbar.module.php:2550
 #: setting/abstract.setting.toolbar.module.php:2642
-#: setting/modules/mywp.setting.admin.sidebar.php:2173
-#: setting/modules/mywp.setting.admin.sidebar.php:2272
-#: setting/modules/mywp.setting.admin.sidebar.php:2372
+#: setting/modules/mywp.setting.admin.sidebar.php:2189
+#: setting/modules/mywp.setting.admin.sidebar.php:2288
+#: setting/modules/mywp.setting.admin.sidebar.php:2388
 #: setting/modules/mywp.setting.admin.toolbar.php:150
 #: setting/modules/mywp.setting.frontend.toolbar.php:166
 msgid "Capability"
@@ -1832,28 +1876,28 @@ msgstr "権限"
 
 #: setting/abstract.setting.toolbar.module.php:2399
 #: setting/abstract.setting.toolbar.module.php:2526
-#: setting/modules/mywp.setting.admin.sidebar.php:2152
-#: setting/modules/mywp.setting.admin.sidebar.php:2248
+#: setting/modules/mywp.setting.admin.sidebar.php:2168
+#: setting/modules/mywp.setting.admin.sidebar.php:2264
 #: setting/modules/mywp.setting.admin.toolbar.php:137
 #: setting/modules/mywp.setting.frontend.toolbar.php:144
 msgid "Menu Title"
 msgstr "メニュー名"
 
 #: setting/modules/mywp.setting.admin.sidebar.php:1636
-#: setting/modules/mywp.setting.admin.sidebar.php:2078
+#: setting/modules/mywp.setting.admin.sidebar.php:2094
 msgid "Separator"
 msgstr "区切り線"
 
 #: setting/abstract.setting.toolbar.module.php:1898
 #: setting/abstract.setting.toolbar.module.php:2334
 #: setting/modules/mywp.setting.admin.sidebar.php:1644
-#: setting/modules/mywp.setting.admin.sidebar.php:2087
+#: setting/modules/mywp.setting.admin.sidebar.php:2103
 msgid "Custom Link"
 msgstr "カスタムリンク"
 
 #: setting/abstract.setting.toolbar.module.php:2679
 #: setting/modules/mywp.setting.admin.sidebar.php:1590
-#: setting/modules/mywp.setting.admin.sidebar.php:2403
+#: setting/modules/mywp.setting.admin.sidebar.php:2419
 #: setting/setting.init.php:176 views/elements/setting-screen-input-post.php:35
 msgid "Update"
 msgstr "更新"
@@ -1908,10 +1952,10 @@ msgstr "すべての投稿"
 
 #: setting/modules/mywp.setting.admin.post-edit.php:664
 #: setting/modules/mywp.setting.admin.post-edit.php:678
-#: setting/modules/mywp.setting.admin.posts.php:937
-#: setting/modules/mywp.setting.admin.posts.php:951
-#: setting/modules/mywp.setting.admin.terms.php:701
-#: setting/modules/mywp.setting.admin.terms.php:715
+#: setting/modules/mywp.setting.admin.posts.php:945
+#: setting/modules/mywp.setting.admin.posts.php:959
+#: setting/modules/mywp.setting.admin.terms.php:709
+#: setting/modules/mywp.setting.admin.terms.php:723
 #: setting/modules/mywp.setting.frontend.taxonomy-archive.php:177
 #: setting/modules/mywp.setting.frontend.taxonomy-archive.php:191
 msgid "The %s is not found data."
@@ -1926,9 +1970,9 @@ msgstr "コンテンツ"
 msgid "Permalinks"
 msgstr "パーマリンク"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1169
-#: controller/modules/mywp.controller.module.admin.uploads.php:798
-#: setting/abstract.setting.columns.module.php:635
+#: controller/modules/mywp.controller.module.admin.posts.php:1187
+#: controller/modules/mywp.controller.module.admin.uploads.php:806
+#: setting/abstract.setting.columns.module.php:643
 #: setting/modules/mywp.setting.admin.post-edit.php:273
 #: setting/modules/mywp.setting.admin.posts.php:487
 #: setting/modules/mywp.setting.admin.uploads.php:426
@@ -2035,10 +2079,10 @@ msgstr "JSファイルの読み込み"
 msgid "Include your CSS file"
 msgstr "CSSファイルの読み込み"
 
-#: setting/abstract.setting.columns.module.php:666
+#: setting/abstract.setting.columns.module.php:674
 #: setting/abstract.setting.toolbar.module.php:2681
 #: setting/modules/mywp.setting.admin.general.php:164
-#: setting/modules/mywp.setting.admin.sidebar.php:2405
+#: setting/modules/mywp.setting.admin.sidebar.php:2421
 #: views/elements/setting-screen-management-meta-boxes.php:111
 #: views/elements/setting-screen-management-meta-boxes.php:140
 msgid "Remove"
@@ -2209,11 +2253,11 @@ msgstr "設定を保存しました。"
 msgid "The %1$s is required for %2$s."
 msgstr "%2$sには%1$sが必要です。"
 
-#: controller/modules/mywp.controller.module.debug.general.php:143
+#: controller/modules/mywp.controller.module.debug.general.php:155
 msgid "My WP Post_Type"
 msgstr "My WP 投稿タイプ"
 
-#: setting/abstract.setting.columns.module.php:655
+#: setting/abstract.setting.columns.module.php:663
 msgid "Default"
 msgstr "デフォルト"
 
@@ -2225,33 +2269,34 @@ msgstr "エラーはありません。"
 msgid "Cache"
 msgstr "キャッシュ"
 
-#: developer/modules/mywp.developer.module.dev.times.php:258
-#: developer/modules/mywp.developer.module.dev.times.php:368
+#: developer/modules/mywp.developer.module.dev.times.php:280
+#: developer/modules/mywp.developer.module.dev.times.php:400
 msgid "Total"
 msgstr "合計"
 
-#: developer/modules/mywp.developer.module.dev.times.php:245
-#: developer/modules/mywp.developer.module.dev.times.php:347
+#: developer/modules/mywp.developer.module.dev.times.php:267
+#: developer/modules/mywp.developer.module.dev.times.php:379
 msgid "Screen"
 msgstr "画面"
 
-#: developer/modules/mywp.developer.module.dev.times.php:233
-#: developer/modules/mywp.developer.module.dev.times.php:331
+#: developer/modules/mywp.developer.module.dev.times.php:255
+#: developer/modules/mywp.developer.module.dev.times.php:363
 msgid "Before Screen"
 msgstr "画面表示前"
 
-#: developer/modules/mywp.developer.module.dev.times.php:221
-#: developer/modules/mywp.developer.module.dev.times.php:311
+#: developer/modules/mywp.developer.module.dev.times.php:241
+#: developer/modules/mywp.developer.module.dev.times.php:341
 #: setting/modules/mywp.setting.update.bulk-post-meta.php:781
 #: setting/modules/mywp.setting.update.bulk-post-meta.php:790
 msgid "All"
 msgstr "すべて"
 
-#: developer/modules/mywp.developer.module.dev.times.php:196
+#: developer/modules/mywp.developer.module.dev.times.php:208
 msgid "Action Times"
 msgstr "アクションの時間"
 
 #: developer/modules/mywp.developer.module.dev.request.php:23
+#: setting/modules/mywp.setting.debug.general.php:98
 msgid "Request"
 msgstr "リクエスト"
 
@@ -2316,7 +2361,7 @@ msgstr ""
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: core/class.helper.php:55 setting/modules/mywp.setting.debug.general.php:61
+#: core/class.helper.php:55 setting/modules/mywp.setting.debug.general.php:62
 #: views/elements/setting-screen-management-meta-boxes.php:72
 msgid "%s is not found."
 msgstr "%s が見つかりません。"
@@ -2338,7 +2383,7 @@ msgstr "%s のファイルが見つかりません。"
 #: controller/abstract.controller.toolbar.module.php:288
 #: controller/abstract.controller.toolbar.module.php:301
 #: controller/abstract.controller.toolbar.module.php:302
-#: controller/modules/mywp.controller.module.debug.general.php:158
+#: controller/modules/mywp.controller.module.debug.general.php:170
 #: controller/modules/mywp.controller.module.main.general.php:127
 msgid "Settings"
 msgstr "設定"
@@ -2352,6 +2397,6 @@ msgstr "レビュー"
 msgid "Support Forums"
 msgstr "サポートフォーラム"
 
-#: controller/modules/mywp.controller.module.debug.general.php:163
+#: controller/modules/mywp.controller.module.debug.general.php:175
 msgid "Controller"
 msgstr "Controller"
