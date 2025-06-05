@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - WP-Optimize – Cache, Compress images, Minify &amp; Clean database to boost page speed &amp; performance - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-03-03 02:38:05+0000\n"
+"PO-Revision-Date: 2025-06-02 11:48:51+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,14 @@ msgstr ""
 "X-Generator: GlotPress/4.0.1\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - WP-Optimize – Cache, Compress images, Minify &amp; Clean database to boost page speed &amp; performance - Stable (latest release)\n"
+
+#: templates/notices/horizontal-notice.php:79
+msgid "Translate"
+msgstr "翻訳"
+
+#: templates/notices/horizontal-notice.php:67
+msgid "Get AIOS"
+msgstr "AIOS を入手"
 
 #: templates/minify/js-settings-tab.php:190
 msgid "Delay JS"
@@ -23,7 +31,7 @@ msgstr "ログ"
 msgid "Hits"
 msgstr "ヒット"
 
-#: templates/status/status-page-ajax.php:7 wp-optimize.php:942
+#: templates/status/status-page-ajax.php:7 wp-optimize.php:947
 msgid "Show"
 msgstr "表示"
 
@@ -31,7 +39,7 @@ msgstr "表示"
 msgid "Copy"
 msgstr "コピー"
 
-#: wp-optimize.php:943
+#: wp-optimize.php:948
 msgid "Hide"
 msgstr "非表示"
 
@@ -76,6 +84,10 @@ msgstr "レポートをダウンロード"
 msgid "Enable Google Analytics"
 msgstr "Google アナリティクスを有効化"
 
+#: includes/class-wp-optimize-system-status-report.php:353
+msgid "Redirection is enabled"
+msgstr "リダイレクトが有効です"
+
 #: includes/class-wp-optimize-system-status-report.php:349
 msgid "Redirection is not available"
 msgstr "リダイレクトは利用できません"
@@ -92,7 +104,7 @@ msgstr "ログファイルが見つかりません"
 #: includes/class-wp-optimize-system-status-report.php:215
 #: includes/class-wp-optimize-system-status-report.php:229
 #: templates/performance/404-detector.php:78
-#: templates/performance/404-detector.php:118 wp-optimize.php:949
+#: templates/performance/404-detector.php:118 wp-optimize.php:954
 msgid "Not available"
 msgstr "利用できません"
 
@@ -199,7 +211,7 @@ msgstr "コンテンツのリセット"
 msgid "Switch Proxy"
 msgstr "プロキシの切り替え"
 
-#: wp-optimize.php:917
+#: wp-optimize.php:922
 msgid "Saving..."
 msgstr "保存中 ..."
 
@@ -215,11 +227,11 @@ msgstr "WP Get API"
 msgid "WP Overnight"
 msgstr "WP Overnight"
 
-#: templates/notices/install-or-update-notice.php:28
+#: templates/notices/install-or-update-notice.php:33
 msgid "UpdraftPlus:"
 msgstr "UpdraftPlus:"
 
-#: templates/notices/install-or-update-notice.php:52
+#: templates/notices/install-or-update-notice.php:57
 msgid "WP Overnight:"
 msgstr "WP Overnight:"
 
@@ -239,7 +251,7 @@ msgstr "デバッグログをダウンロード"
 msgid "Minify not enabled"
 msgstr "軽量化が有効ではありません"
 
-#: wp-optimize.php:913
+#: wp-optimize.php:918
 msgid "Deleting..."
 msgstr "削除しています..."
 
@@ -255,7 +267,7 @@ msgstr "詳細"
 msgid "Continue?"
 msgstr "続けますか ?"
 
-#: wp-optimize.php:889
+#: wp-optimize.php:894
 msgid "Add"
 msgstr "追加"
 
@@ -272,7 +284,7 @@ msgid "Apply"
 msgstr "適用する"
 
 #: templates/minify/cached-file.php:5
-#: templates/settings/settings-logging.php:48 wp-optimize.php:912
+#: templates/settings/settings-logging.php:48 wp-optimize.php:917
 msgid "Delete"
 msgstr "削除"
 
@@ -301,11 +313,11 @@ msgid "Export / import settings"
 msgstr "エクスポート・インポート設定"
 
 #. translators: %d is the number of minutes
-#: cache/class-wpo-page-cache.php:1543
+#: cache/class-wpo-page-cache.php:1599
 msgid "%d minutes"
 msgstr "%d分"
 
-#: wp-optimize.php:937
+#: wp-optimize.php:942
 msgid "Importing..."
 msgstr "インポート中 ..."
 
@@ -337,10 +349,6 @@ msgstr "サイズ名"
 #: templates/images/smush.php:80
 msgid "WebP conversion"
 msgstr "WebP 変換"
-
-#: includes/class-wp-optimize-notices.php:146
-msgid "by"
-msgstr "by"
 
 #: templates/cache/page-cache.php:5
 msgid "Page caching"
@@ -374,7 +382,7 @@ msgstr "もっと読む。"
 msgid "Advanced options"
 msgstr "高度な設定"
 
-#: includes/class-updraft-smush-manager.php:1185 wp-optimize.php:891
+#: includes/class-updraft-smush-manager.php:1185 wp-optimize.php:896
 msgid "Cancelling..."
 msgstr "キャンセル中 ..."
 
@@ -401,17 +409,17 @@ msgstr "サイトは Cloudflare を使用しており、そちらでブラウザ
 msgid "You do not have permission to purge the cache"
 msgstr "キャッシュを消去する権限がありません"
 
-#: cache/file-based-page-cache-functions.php:321
+#: cache/file-based-page-cache-functions.php:323
 msgid "We don't cache RSS feeds"
 msgstr "RSS フィードはキャッシュしません"
 
-#: cache/file-based-page-cache-functions.php:106
+#: cache/file-based-page-cache-functions.php:108
 msgid "This page has a fatal error"
 msgstr "このページには致命的なエラーがあります"
 
 #. translators: %d is the number of files in the cache
 #. translators: %d represents the number of files.
-#: cache/class-wpo-page-cache.php:203
+#: cache/class-wpo-page-cache.php:256
 #: includes/class-wp-optimize-system-status-report.php:218
 msgid "(%d files)"
 msgstr "(%d個のファイル)"
@@ -425,7 +433,7 @@ msgid "No such command found"
 msgstr "お探しのコマンドが見つかりません"
 
 #. translators: %d is the number of files in the cache
-#: cache/class-wpo-page-cache.php:203 minify/class-wp-optimize-minify.php:106
+#: cache/class-wpo-page-cache.php:256 minify/class-wp-optimize-minify.php:106
 msgid "Cache size:"
 msgstr "キャッシュサイズ:"
 
@@ -521,7 +529,7 @@ msgstr "CDN ドメイン"
 msgid "Miscellaneous"
 msgstr "その他"
 
-#: wp-optimize.php:1309
+#: wp-optimize.php:1314
 msgid "N/A"
 msgstr "該当なし"
 
@@ -709,7 +717,7 @@ msgstr "CSS オプション"
 msgid "Your server uses Brotli compression instead of Gzip, which is good."
 msgstr "サーバーは Gzip ではなく Brotli 圧縮を使用しています。これは良いことです。"
 
-#: cache/file-based-page-cache-functions.php:100
+#: cache/file-based-page-cache-functions.php:102
 msgid "This is a REST API request (identified by REST_REQUEST constant)"
 msgstr "これは REST APIリクエストです (REST_REQUEST 定数で識別されます)"
 
@@ -736,16 +744,33 @@ msgstr "すべての圧縮済みの画像が未圧縮としてマークされま
 msgid "All the compressed images for the site %s were successfully marked as uncompressed."
 msgstr "サイト %s のすべての圧縮済みの画像が未圧縮としてマークされました。"
 
+#. translators: %s is the number of restored images.
+#: includes/class-updraft-smush-manager.php:520
+msgid "%s compressed images were restored from their backup"
+msgstr "バックアップから %s 枚の圧縮画像を復元しました。"
+
 #. translators: %s is the backup file path
 #: includes/class-updraft-smush-manager.php:431
 msgid "The backup file %s could not be deleted."
 msgstr "バックアップファイル %s は削除できませんでした。"
 
+#: includes/class-updraft-smush-manager.php:428
+msgid "The file could not be copied; check your PHP error logs for details"
+msgstr "ファイルがコピーできませんでした。詳細は PHP のエラーログを確認してください。"
+
+#: includes/class-updraft-smush-manager.php:426
+msgid "Please check your folder's permissions"
+msgstr "フォルダのパーミッションを確認してください"
+
 #: templates/images/smush.php:131
 msgid "Mark all images as uncompressed"
 msgstr "すべての画像を未圧縮としてマークする"
 
-#: cache/class-wpo-page-cache.php:320 cache/class-wpo-page-cache.php:334
+#: includes/class-updraft-smush-manager.php:424
+msgid "The backup was not found; it may have been deleted or was already restored"
+msgstr "バックアップが見つかりませんでした。すでに削除、または、復元されています。"
+
+#: cache/class-wpo-page-cache.php:376 cache/class-wpo-page-cache.php:390
 msgid "The page cache was not purged."
 msgstr "ページキャッシュを削除しませんでした。"
 
@@ -765,7 +790,7 @@ msgstr "日"
 msgid "or"
 msgstr "または"
 
-#: cache/class-wpo-page-cache.php:313 cache/class-wpo-page-cache.php:327
+#: cache/class-wpo-page-cache.php:369 cache/class-wpo-page-cache.php:383
 msgid "The page cache was successfully purged."
 msgstr "ページキャッシュを削除しました。"
 
@@ -787,11 +812,11 @@ msgstr "すべての画像バックアップを削除する"
 msgid "Automatically delete image backups after"
 msgstr "この期間の経過後に画像バックアップを自動で削除する"
 
-#: cache/file-based-page-cache-functions.php:133
+#: cache/file-based-page-cache-functions.php:135
 msgid "Attempt to create subfolder within cache directory failed"
 msgstr "キャッシュディレクトリ内のサブフォルダー作成に失敗しました"
 
-#: cache/file-based-page-cache-functions.php:39
+#: cache/file-based-page-cache-functions.php:51
 msgid "User is logged in"
 msgstr "ユーザーはログイン中"
 
@@ -800,7 +825,7 @@ msgstr "ユーザーはログイン中"
 msgid "You should speak to your web hosting support to find how to enable it."
 msgstr "ホスティングサービスのサポートに連絡して、有効化する方法を見つける必要があります。"
 
-#: cache/file-based-page-cache-functions.php:305
+#: cache/file-based-page-cache-functions.php:307
 msgid "Page type is not cacheable (search, 404 or password-protected)"
 msgstr "ページタイプはキャッシュできません (404ページ、検索ページ、またはパスワード保護ページ)"
 
@@ -815,11 +840,11 @@ msgstr "Gzip 圧縮設定を .htaccess ファイルに追加しました。"
 msgid "Output is too small (less than %d bytes) to be worth caching"
 msgstr "出力が小さすぎるため (%dバイト未満) キャッシュする価値がありません"
 
-#: cache/file-based-page-cache-functions.php:58
+#: cache/file-based-page-cache-functions.php:60
 msgid "WP-O cache parent directory was not found"
 msgstr "WP-O キャッシュの親ディレクトリが見つかりませんでした"
 
-#: cache/file-based-page-cache-functions.php:62
+#: cache/file-based-page-cache-functions.php:64
 msgid "WP-O cache directory was not found"
 msgstr "WP-O キャッシュディレクトリが見つかりませんでした"
 
@@ -897,15 +922,11 @@ msgstr "キャッシュ期間と同じ"
 msgid "Static file headers"
 msgstr "静的ファイルヘッダー"
 
-#: cache/class-wpo-page-cache.php:201 includes/class-wp-optimize-admin.php:53
+#: cache/class-wpo-page-cache.php:254 includes/class-wp-optimize-admin.php:53
 msgid "Page cache"
 msgstr "ページキャッシュ"
 
-#: includes/class-updraft-smush-manager.php:1633
-msgid "Compress image"
-msgstr "画像を圧縮する"
-
-#: wp-optimize.php:907
+#: wp-optimize.php:912
 msgid "Started preload..."
 msgstr "プリロードを開始しました..."
 
@@ -919,7 +940,7 @@ msgid "Database cleaning"
 msgstr "データベースのクリーニング"
 
 #: templates/minify/status-tab.php:12 templates/minify/status-tab.php:24
-#: templates/notices/install-or-update-notice.php:106
+#: templates/notices/install-or-update-notice.php:111
 msgid "Read the documentation"
 msgstr "ドキュメンテーションを読む"
 
@@ -935,11 +956,11 @@ msgid "%d url found."
 msgid_plural "%d urls found."
 msgstr[0] "%d個の URL が見つかりました。"
 
-#: templates/cache/page-cache.php:64 wp-optimize.php:909
+#: templates/cache/page-cache.php:64 wp-optimize.php:914
 msgid "Current cache size:"
 msgstr "現在のキャッシュサイズ:"
 
-#: templates/cache/page-cache.php:65 wp-optimize.php:910
+#: templates/cache/page-cache.php:65 wp-optimize.php:915
 msgid "Number of files:"
 msgstr "ファイル数 :"
 
@@ -948,12 +969,12 @@ msgstr "ファイル数 :"
 msgid "Premium Upgrade"
 msgstr "プレミアムアップグレード"
 
-#: templates/notices/install-or-update-notice.php:73
+#: templates/notices/install-or-update-notice.php:78
 msgid "Thank you for updating WP-Optimize!"
 msgstr "WP-Optimize をアップグレードしていただきありがとうございます。"
 
 #: cache/class-wp-optimize-page-cache-preloader.php:712
-#: minify/class-wp-optimize-minify-preloader.php:131 wp-optimize.php:908
+#: minify/class-wp-optimize-minify-preloader.php:131 wp-optimize.php:913
 msgid "Loading URLs..."
 msgstr "URL を読み込み中…"
 
@@ -1005,7 +1026,7 @@ msgstr "新しいキャッシュされたバージョンが生成されるまで
 msgid "This action will trigger WP-Optimize to cache the site by visiting pages to preload them (so that they are ready the first time a human visitor wants them)."
 msgstr "このアクションは、WP-Optimize がページを訪問してサイトをキャッシュするためのトリガーになります (人間の訪問者が最初に要求した際に準備ができているように)。"
 
-#: templates/notices/install-or-update-notice.php:74
+#: templates/notices/install-or-update-notice.php:79
 msgid "The team at WP-Optimize is working hard to make your site fast and efficient."
 msgstr "WP-Optimize のチームは、あなたのサイトを高速かつ効率的にするために努力しています。"
 
@@ -1029,7 +1050,7 @@ msgstr "画像圧縮機能の使用方法が分からない場合"
 msgid "Not sure how to use the cache feature?"
 msgstr "キャッシュ機能の使用方法が分からない場合"
 
-#: templates/notices/install-or-update-notice.php:83
+#: templates/notices/install-or-update-notice.php:88
 msgid "If you already have plugins for minifying, don't worry - WP-Optimize won't interfere unless you turn these options on."
 msgstr "すでに圧縮用のプラグインがある場合はご心配なく。WP-Optimize は、これらのオプションを有効化しない限り干渉しません。"
 
@@ -1067,6 +1088,23 @@ msgstr[0] "%1$s / %2$s の URL をプリロードしました"
 msgid "Last preload finished at %s"
 msgstr "最後のプリロードは %s に終了しました"
 
+#. translators: %1$s is opening anchor tag, %2$s is closing anchor tag
+#: templates/notices/install-or-update-notice.php:99
+msgctxt "%s is replaced by a link tag"
+msgid "PS - check out our new improved Premium version %1$shere%2$s."
+msgstr "PS - 改良された新しいプレミアムバージョンを %1$sこちら%2$s でご確認ください。"
+
+#. translators: %1$s is an opening anchor tag, %2$s is a closing anchor tag
+#: templates/notices/install-or-update-notice.php:66
+msgid "Finally, please take a look at our %1$spremium version%2$s, which is packed full of additional speed enhancements to make your site go even faster!"
+msgstr "最後に、サイトをさらに高速化するための追加の速度強化機能が満載の%1$sプレミアムバージョン%2$s をご覧ください。"
+
+#. translators: %1$s is an opening anchor tag, %2$s is a closing anchor tag,
+#. %3$s is an opening anchor tag, %4$s is a closing anchor tag
+#: templates/notices/install-or-update-notice.php:109
+msgid "%1$sRead the full WP-Optimize documentation%2$s, or if you have any questions, please ask %3$sPremium support%4$s"
+msgstr "%1$sWP-Optimize の完全なドキュメントを読む%2$s、または質問がある場合は %3$sプレミアムサポート%4$s にお問い合わせください"
+
 #: includes/class-wp-optimize-admin.php:50
 msgid "Lazy-load"
 msgstr "遅延読み込み"
@@ -1085,7 +1123,7 @@ msgstr "キャッシュの期間"
 
 #: includes/class-wp-optimize-admin.php:668
 #: includes/class-wp-optimize-admin.php:671 templates/cache/page-cache.php:56
-#: wp-optimize.php:973 wp-optimize.php:976
+#: wp-optimize.php:978 wp-optimize.php:981
 msgid "Purge cache"
 msgstr "キャッシュをパージ"
 
@@ -1125,7 +1163,7 @@ msgid "If a sitemap is available, then it will be used to determine which conten
 msgstr "サイトマップが利用可能な場合、キャッシュされるコンテンツを決定するために使用されます。"
 
 #: templates/cache/page-cache-preload.php:7 templates/minify/preload-tab.php:27
-#: wp-optimize.php:906
+#: wp-optimize.php:911
 msgid "Run now"
 msgstr "今すぐ実行"
 
@@ -1270,11 +1308,11 @@ msgstr "登録されている画像サイズ"
 msgid "Unused images"
 msgstr "未使用の画像"
 
-#: templates/images/lazyload.php:32
+#: templates/images/lazyload.php:40
 msgid "Skip image classes"
 msgstr "画像クラスをスキップ"
 
-#: templates/images/lazyload.php:14
+#: templates/images/lazyload.php:16
 msgid "Lazy-load images"
 msgstr "遅延読み込み画像"
 
@@ -1282,15 +1320,15 @@ msgstr "遅延読み込み画像"
 msgid "Unused image sizes"
 msgstr "未使用の画像サイズ"
 
-#: templates/images/lazyload.php:28
+#: templates/images/lazyload.php:31
 msgid "Iframes and Videos"
 msgstr "iframe と動画"
 
-#: templates/images/lazyload.php:24
+#: templates/images/lazyload.php:26
 msgid "Follow this link to read more about lazy-loading images and video"
 msgstr "遅延読み込みの画像と動画の詳細については、このリンクをご覧ください"
 
-#: templates/images/lazyload.php:45
+#: templates/images/lazyload.php:53
 msgid "Enable Lazy-loading with WP-Optimize Premium."
 msgstr "WP-Optimize Premium なら遅延読み込みを有効化できます。"
 
@@ -1307,7 +1345,7 @@ msgid "Compress images"
 msgstr "画像を圧縮"
 
 #: includes/class-wp-optimize-admin.php:729
-#: includes/class-wp-optimize-admin.php:730 templates/images/lazyload.php:27
+#: includes/class-wp-optimize-admin.php:730 templates/images/lazyload.php:29
 msgid "Images"
 msgstr "画像"
 
@@ -1475,10 +1513,6 @@ msgstr "最初に「非圧縮画像」パネルから圧縮したい画像を選
 msgid "Time elapsed"
 msgstr "経過時間"
 
-#: templates/images/smush.php:112
-msgid "Service provided by reSmush.it"
-msgstr "reSmush.it の提供サービス"
-
 #: templates/images/smush.php:120
 msgid "Preserve EXIF data"
 msgstr "EXIF データを保持"
@@ -1531,7 +1565,7 @@ msgstr "時間"
 msgid "day(s)"
 msgstr "日"
 
-#: templates/admin-page-header-tabs.php:8 templates/pages-menu.php:5
+#: templates/admin-page-header-tabs.php:9 templates/pages-menu.php:5
 msgid "Menu"
 msgstr "メニュー"
 
@@ -1549,11 +1583,11 @@ msgstr "ヘルプ"
 msgid "Database"
 msgstr "データベース"
 
-#: wp-optimize.php:1030
+#: wp-optimize.php:1035
 msgid "Remove"
 msgstr "削除"
 
-#: templates/cache/browser-cache.php:51 wp-optimize.php:905
+#: templates/cache/browser-cache.php:51 wp-optimize.php:910
 msgid "Update"
 msgstr "更新"
 
@@ -1586,11 +1620,11 @@ msgstr "インストールされていません"
 msgid "Useful links"
 msgstr "便利なリンク"
 
-#: wp-optimize.php:904
+#: wp-optimize.php:909
 msgid "Please use valid values."
 msgstr "有効な値を使用してください。"
 
-#: wp-optimize.php:903
+#: wp-optimize.php:908
 msgid "Please use positive integers."
 msgstr "正の整数を使用してください。"
 
@@ -1884,7 +1918,7 @@ msgstr "予約された最適化はありません"
 msgid "Last scheduled optimization was at %s"
 msgstr "最後の最適化予定 %s"
 
-#: wp-optimize.php:1021
+#: wp-optimize.php:1026
 msgid "Repair"
 msgstr "修復"
 
@@ -1932,7 +1966,7 @@ msgstr "クリーンアップの制御: より強力で柔軟なスケジュー�
 msgid "Clean auto draft posts which are older than %s weeks"
 msgstr "%s 週間以上経過した自動下書きの投稿をクリーンアップする"
 
-#: wp-optimize.php:896
+#: wp-optimize.php:901
 msgid "Before saving, you need to complete the currently incomplete settings (or remove them)."
 msgstr "保存する前に、現在の不完全な設定を完了（または削除）する必要があります。"
 
@@ -1940,7 +1974,7 @@ msgstr "保存する前に、現在の不完全な設定を完了（または削
 msgid "Inactive"
 msgstr "無効"
 
-#: wp-optimize.php:895
+#: wp-optimize.php:900
 msgid "Are you sure you want to remove this logging destination?"
 msgstr "このログの記録先を削除してもよろしいですか?"
 
@@ -1965,12 +1999,7 @@ msgstr "他のテーブルが最適化されます (%s)。"
 msgid "How many last records store?"
 msgstr "過去の記録をいくつ保存しますか ?"
 
-#. Plugin URI of the plugin
-#: wp-optimize.php
-msgid "https://getwpo.com"
-msgstr "https://getwpo.com"
-
-#: includes/class-wpo-activation.php:45
+#: includes/class-wpo-activation.php:46
 msgid "go back"
 msgstr "戻る"
 
@@ -1984,11 +2013,11 @@ msgstr "戻る"
 #: templates/database/tables-list-after.php:64
 #: templates/images/smush-popup.php:35 templates/images/smush-popup.php:68
 #: templates/minify/preload-tab.php:27
-#: templates/settings/settings-logging.php:52 wp-optimize.php:890
+#: templates/settings/settings-logging.php:52 wp-optimize.php:895
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: wp-optimize.php:887
+#: wp-optimize.php:892
 msgid "Run optimizations"
 msgstr "最適化を実行する"
 
@@ -1996,25 +2025,25 @@ msgstr "最適化を実行する"
 msgid "Tables not found."
 msgstr "テーブルがみつかりません。"
 
-#: wp-optimize.php:894
+#: wp-optimize.php:899
 msgid "Please, select settings file."
 msgstr "設定ファイルを選んでください。"
 
-#: wp-optimize.php:882
+#: wp-optimize.php:887
 msgid "Automatic backup before optimizations"
 msgstr "最適化前の自動バックアップ"
 
 #. translators: %d is number of overdue cron jobs
-#: wp-optimize.php:1190
+#: wp-optimize.php:1195
 msgid "Read this page for a guide to possible causes and how to fix it."
 msgstr "考えられる原因とその修正方法のガイドについては、このページをお読みください。"
 
 #. translators: %d is number of overdue cron jobs
-#: wp-optimize.php:1190
+#: wp-optimize.php:1195
 msgid "Warning"
 msgstr "警告"
 
-#: wp-optimize.php:784
+#: wp-optimize.php:789
 msgid "WP-Optimize (Free) has been de-activated, because WP-Optimize Premium is active."
 msgstr "WP-Optimize Premiumが有効になっているため、WP-Optimize（無料）は無効になっています。"
 
@@ -2026,11 +2055,11 @@ msgstr "テーブルを検索"
 msgid "Premium / Plugin family"
 msgstr "プレミアム / プラグインファミリー"
 
-#: templates/notices/install-or-update-notice.php:20
+#: templates/notices/install-or-update-notice.php:25
 msgid "WP-Optimize Premium:"
 msgstr "WP-Optimize Premium:"
 
-#: templates/notices/install-or-update-notice.php:9
+#: templates/notices/install-or-update-notice.php:14
 msgid "Thank you for installing WP-Optimize!"
 msgstr "WP-Optimize をインストールしていただきありがとうございます。"
 
@@ -2039,11 +2068,11 @@ msgstr "WP-Optimize をインストールしていただきありがとうござ
 msgid "Find out more."
 msgstr "詳細はこちら。"
 
-#: includes/class-wpo-activation.php:44
+#: includes/class-wpo-activation.php:45
 msgid "Only Network Administrator can activate the WP-Optimize plugin."
 msgstr "ネットワーク管理者のみが WP-Optimize プラグインを有効化できます。"
 
-#: wp-optimize.php:794
+#: wp-optimize.php:799
 msgid "New feature: WP-Optimize Premium can now optimize all sites within a multisite install, not just the main one."
 msgstr "新機能: WP-Optimize Premium は、メインサイトだけでなく、マルチサイトインストール内のすべてのサイトを最適化できるようになりました。"
 
@@ -2115,6 +2144,12 @@ msgstr "いいえ"
 msgid "Upgrade now"
 msgstr "今すぐアップグレード"
 
+#: templates/settings/may-also-like.php:79
+#: templates/settings/may-also-like.php:80
+#: templates/settings/may-also-like.php:118
+msgid "Multisite support"
+msgstr "マルチサイトサポート"
+
 #: templates/settings/may-also-like.php:45
 #: templates/settings/may-also-like.php:48
 #: templates/settings/may-also-like.php:58
@@ -2138,12 +2173,6 @@ msgstr "今すぐアップグレード"
 #: templates/settings/may-also-like.php:269
 msgid "Yes"
 msgstr "はい"
-
-#: templates/settings/may-also-like.php:79
-#: templates/settings/may-also-like.php:80
-#: templates/settings/may-also-like.php:118
-msgid "Multisite support"
-msgstr "マルチサイトサポート"
 
 #: templates/settings/may-also-like.php:32
 #: templates/settings/may-also-like.php:275
@@ -2176,7 +2205,7 @@ msgid "Free"
 msgstr "無料"
 
 #: templates/admin-page-header.php:29 templates/settings/may-also-like.php:26
-#: wp-optimize.php:998
+#: wp-optimize.php:1003
 msgid "Premium"
 msgstr "プレミアム"
 
@@ -2251,11 +2280,11 @@ msgstr "有効な設定ファイルをアップロードしてください。"
 msgid "Store the most recent log entries in the WordPress database"
 msgstr "最新のログエントリーを WordPress データベースに保存する"
 
-#: includes/class-wp-optimize-notices.php:125
+#: includes/class-wp-optimize-notices.php:114
 msgid "WP-Optimize Premium comes with a feature to easily remove orphaned images, or images that exceed a certain size from your website."
 msgstr "WP-Optimize Premiumには、孤立した画像、または、Webサイトから特定のサイズを超える画像を簡単に削除する機能が付属しています。"
 
-#: includes/class-wp-optimize-notices.php:124
+#: includes/class-wp-optimize-notices.php:113
 msgid "Remove unwanted images for better site performance."
 msgstr "サイトのパフォーマンスを向上させるために、不要な画像を削除します。"
 
@@ -2266,18 +2295,6 @@ msgstr "孤立した添付ファイルを削除する"
 #: optimizations/attachments.php:72
 msgid "No orphaned attachments found"
 msgstr "孤立した添付ファイルは見つかりませんでした"
-
-#: includes/class-wp-optimize-notices.php:114
-msgid "Upgrade today to combine over a dozen optimization options."
-msgstr "今すぐアップグレードして、多数の最適化オプションを利用してください。"
-
-#: includes/class-wp-optimize-notices.php:113
-msgid "WP-Optimize Premium offers unparalleled choice and flexibility"
-msgstr "WP-Optimize Premiumは、他にはない選択肢と柔軟性を提供します"
-
-#: includes/class-wp-optimize-notices.php:92
-msgid "WP-Optimize Premium features an advanced scheduling system that allows you to run optimizations at the quietest time of day (or night)."
-msgstr "WP-Optimize Premiumには、1日のうち最も余裕がある時間に最適化を実行できる高度なスケジューリングシステムが備わっています。"
 
 #: includes/class-updraft-smush-task.php:361
 msgid "Initialised"
@@ -2332,10 +2349,6 @@ msgid "%s unused Akismet comment meta rows in your database"
 msgid_plural "%s unused Akismet meta rows in your database"
 msgstr[0] "データベース内に未使用の Akismet メタ行が%s件あります"
 
-#: includes/class-wp-optimize-notices.php:60
-msgid "UpdraftCentral is a highly efficient way to take backup, update and manage multiple WP sites from one location."
-msgstr "UpdraftCentral は、複数の WordPress サイトを一箇所から管理、更新、バックアップするための非常に効率的な方法です。"
-
 #: optimizations/autodraft.php:185
 msgid "Remove auto-draft posts"
 msgstr "自動下書きの投稿を削除"
@@ -2345,10 +2358,6 @@ msgstr "自動下書きの投稿を削除"
 msgid "Active"
 msgstr "有効"
 
-#: includes/class-wp-optimize-notices.php:103
-msgid "WP-Optimize Premium's multisite feature includes a locking system that restricts optimization commands to users with the right permissions."
-msgstr "WP-Optimize Premium のマルチサイト機能には、最適化コマンドを適切な権限を持つユーザーに制限するロックシステムが搭載されています。"
-
 #: optimizations/optimizetables.php:175
 msgid "Optimize InnoDB tables anyway."
 msgstr "無視して InnoDB テーブルを最適化します。"
@@ -2356,10 +2365,6 @@ msgstr "無視して InnoDB テーブルを最適化します。"
 #: optimizations/commentmeta.php:179
 msgid "No Akismet comment meta rows in your database"
 msgstr "データベースに Akismet コメントのメタ行がありません"
-
-#: includes/class-wp-optimize-notices.php:102
-msgid "Manage a multisite installation? Need extra control?"
-msgstr "マルチサイトインストールを管理していて、追加コントロールが必要な場合"
 
 #: optimizations/autodraft.php:174
 msgid "Clean all auto-draft posts"
@@ -2377,7 +2382,7 @@ msgstr "最適化する前にバックアップを実行することをお勧め
 msgid "Please update UpdraftPlus to the latest version."
 msgstr "UpdraftPlus を最新バージョンに更新してください。"
 
-#: wp-optimize.php:883
+#: wp-optimize.php:888
 msgid "An unexpected response was received."
 msgstr "予期しない応答が受信されました。"
 
@@ -2389,7 +2394,7 @@ msgstr "最適化前にデータベースをバックアップするには、Upd
 msgid "Take a backup with UpdraftPlus before doing this"
 msgstr "この操作を行う前に UpdraftPlus でバックアップしてください"
 
-#: wp-optimize.php:884
+#: wp-optimize.php:889
 msgid "Optimization complete"
 msgstr "最適化完了"
 
@@ -2419,7 +2424,7 @@ msgstr "%d週間以上前のスパムやゴミ箱に入れられたコメント�
 msgid "Tables will be optimized (%s)."
 msgstr "テーブルが最適化されます (%s)。"
 
-#: wp-optimize.php:886
+#: wp-optimize.php:891
 msgid "Optimizing table:"
 msgstr "テーブルを最適化:"
 
@@ -2516,7 +2521,7 @@ msgstr "非表示 (%sヶ月間)"
 msgid "Sign up"
 msgstr "登録"
 
-#: wp-optimize.php:1005
+#: wp-optimize.php:1010
 msgid "Optimize"
 msgstr "最適化"
 
@@ -2533,7 +2538,7 @@ msgid "Trackbacks have now been disabled on all current and previously published
 msgstr "トラックバックは、現在および過去に公開されたすべての投稿で無効になりました。"
 
 #: includes/class-wp-optimize-notices.php:49
-msgid "UpdraftPlus is the world's most trusted backup plugin from the owners of WP-Optimize"
+msgid "UpdraftPlus is the world's most trusted backup plugin, from the owners of WP-Optimize."
 msgstr "UpdraftPlusは、WP-Optimize のオーナーが提供している世界で最も信頼されているバックアッププラグインです"
 
 #. translators: %s is the number of trashed posts
@@ -2544,8 +2549,8 @@ msgstr[0] "データベース内のゴミ箱にある投稿%s件"
 
 #: templates/notices/horizontal-notice.php:48
 #: templates/notices/horizontal-notice.php:50
-#: templates/notices/install-or-update-notice.php:67
-#: templates/notices/install-or-update-notice.php:100
+#: templates/notices/install-or-update-notice.php:72
+#: templates/notices/install-or-update-notice.php:105
 msgid "Dismiss"
 msgstr "非表示"
 
@@ -2571,16 +2576,11 @@ msgstr "トラックバックはすべての現在および過去に公開され
 msgid "No optimization was indicated."
 msgstr "最適化が選択されていません。"
 
-#. Author URI of the plugin
-#: wp-optimize.php
-msgid "https://updraftplus.com"
-msgstr "https://updraftplus.com"
-
-#: wp-optimize.php:1245
+#: wp-optimize.php:1250
 msgid "template not found"
 msgstr "テンプレートが見つかりません"
 
-#: wp-optimize.php:1245
+#: wp-optimize.php:1250
 msgid "Error:"
 msgstr "エラー:"
 
@@ -2634,7 +2634,7 @@ msgid "This option will, where relevant, retain data from the chosen period, and
 msgstr "このオプションは選択した期間のデータは保持し、それより古いゴミデータを削除します。"
 
 #: templates/admin-page-header.php:14
-#: templates/notices/install-or-update-notice.php:108
+#: templates/notices/install-or-update-notice.php:113
 #: templates/pages-menu.php:33
 msgid "Support"
 msgstr "サポート"
@@ -2785,14 +2785,14 @@ msgstr[0] "%s個のピンバックを削除しました"
 #: templates/cache/gzip-compression.php:59
 #: templates/settings/settings-trackback-and-comments.php:20
 #: templates/settings/settings-trackback-and-comments.php:53
-#: wp-optimize.php:893
+#: wp-optimize.php:898
 msgid "Disable"
 msgstr "無効化"
 
 #: templates/cache/browser-cache.php:51 templates/cache/gzip-compression.php:59
 #: templates/settings/settings-trackback-and-comments.php:18
 #: templates/settings/settings-trackback-and-comments.php:51
-#: wp-optimize.php:892
+#: wp-optimize.php:897
 msgid "Enable"
 msgstr "有効化"
 
@@ -2801,7 +2801,7 @@ msgstr "有効化"
 #: includes/class-wp-optimize-admin.php:74
 #: includes/class-wp-optimize-admin.php:770
 #: includes/class-wp-optimize-admin.php:771 templates/minify/status-tab.php:122
-#: templates/minify/status-tab.php:144 wp-optimize.php:1002
+#: templates/minify/status-tab.php:144 wp-optimize.php:1007
 msgid "Settings"
 msgstr "設定"
 
@@ -3071,7 +3071,7 @@ msgstr "%d週以上前にゴミ箱に移動した投稿をクリーンアップ"
 msgid "Enable admin bar menu"
 msgstr "管理バーメニューを有効化"
 
-#: cache/class-wpo-page-cache.php:1488 cache/class-wpo-page-cache.php:1509
+#: cache/class-wpo-page-cache.php:1544 cache/class-wpo-page-cache.php:1565
 msgid "WP-Optimize:"
 msgstr "WP-Optimize:"
 
@@ -3079,3 +3079,8 @@ msgstr "WP-Optimize:"
 #: templates/database/tables-list-after.php:27
 msgid "Total space saved: %s"
 msgstr "削減した総容量: %s"
+
+#. translators: 1: Opening strong tag, 2: Closing strong tag
+#: templates/database/status-box-contents.php:82
+msgid "%1$sScheduled cleaning disabled%2$s"
+msgstr "%1$sスケジュールされたクリーニングは無効です%2$s"
