@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Query Monitor &#8211; The developer tools panel for WordPress - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-30 13:16:23+0000\n"
+"PO-Revision-Date: 2025-05-29 07:50:28+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,41 @@ msgstr ""
 "X-Generator: GlotPress/4.0.1\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - Query Monitor &#8211; The developer tools panel for WordPress - Stable (latest release)\n"
+
+#: output/html/environment.php:281
+msgid "Basic Auth"
+msgstr "ベーシック認証"
+
+#: output/html/assets.php:53
+msgid "Module"
+msgstr "モジュール"
+
+#: collectors/logger.php:173
+msgid "Assertion failed"
+msgstr "アサーション失敗"
+
+#. translators: %s: Assertion message
+#: collectors/logger.php:169
+msgid "Assertion failed: %s"
+msgstr "アサーション失敗: %s"
+
+#: collectors/logger.php:161
+msgid "Assertion passed"
+msgstr "アサーション成功"
+
+#. translators: %s: Assertion message
+#: collectors/logger.php:157
+msgid "Assertion passed: %s"
+msgstr "アサーション成功: %s"
+
+#: classes/Collector.php:122 output/html/environment.php:240
+msgid "empty string"
+msgstr "空文字"
+
+#. translators: %s: Drop-in plugin file name
+#: classes/Util.php:329
+msgid "Drop-in: %s"
+msgstr "ドロップイン: %s"
 
 #. translators: %s: Total number of Doing it Wrong occurrences
 #: output/html/doing_it_wrong.php:118
@@ -31,6 +66,47 @@ msgctxt "Doing it Wrong"
 msgid "Total: %s"
 msgstr "合計: %s"
 
+#: output/html/hooks.php:36
+msgid "Hooks, Actions, & Filters"
+msgstr "フック、アクション＆フィルター"
+
+#. translators: %s: Total number of Doing it Wrong occurrences
+#: output/html/doing_it_wrong.php:43
+msgctxt "Doing it Wrong"
+msgid "Doing it Wrong (%s)"
+msgstr "Doing it Wrong (%s)"
+
+#: output/html/doing_it_wrong.php:41
+msgid "Doing it Wrong occurrences"
+msgstr "Doing it Wrong 発生数"
+
+#: output/html/doing_it_wrong.php:31
+msgid "Doing it Wrong"
+msgstr "Doing it Wrong"
+
+#. translators: 1: WordPress hook name, 2: Version number, 3: Optional message
+#. regarding the change.
+#: collectors/doing_it_wrong.php:397
+msgid "Hook %1$s is deprecated since version %2$s with no alternative available. %3$s"
+msgstr "フック %1$s はバージョン %2$s から廃止され、代替手段はありません。 %3$s"
+
+#. translators: 1: WordPress hook name, 2: Version number, 3: Alternative hook
+#. name, 4: Optional message regarding the change.
+#: collectors/doing_it_wrong.php:388
+msgid "Hook %1$s is deprecated since version %2$s! Use %3$s instead. %4$s"
+msgstr "フック %1$s はバージョン %2$s で廃止されました! 代わりに %3$s を利用してください。 %4$s"
+
+#. translators: 1: PHP function name, 2: Version number.
+#: collectors/doing_it_wrong.php:349
+msgid "Function %1$s was called with an argument that is deprecated since version %2$s with no alternative available."
+msgstr "関数 %1$s がバージョン %2$s で廃止された引数と一緒に呼び出されました。代替手段はありません。"
+
+#. translators: 1: PHP function name, 2: Version number, 3: Optional message
+#. regarding the change.
+#: collectors/doing_it_wrong.php:341
+msgid "Function %1$s was called with an argument that is deprecated since version %2$s! %3$s"
+msgstr "関数 %1$s がバージョン %2$s で廃止された引数と一緒に呼び出されました! %3$s"
+
 #. translators: %s: Number of PHP errors
 #: output/html/php_errors.php:185
 msgctxt "PHP error count"
@@ -46,11 +122,10 @@ msgstr "ブロックテンプレート"
 msgid "Timings"
 msgstr "タイミング"
 
-#: dispatchers/Html.php:616
+#: dispatchers/Html.php:618
 msgid "Appearance"
 msgstr "外観"
 
-#. translators: %s: Memory used in megabytes
 #. translators: %s: Memory usage in megabytes with a decimal fraction. Note the
 #. space between value and unit symbol.
 #: output/headers/overview.php:40 output/html/overview.php:391
@@ -68,8 +143,6 @@ msgstr "WordPress コア"
 
 #. translators: %s: A time in seconds with a decimal fraction. No space between
 #. value and unit symbol.
-#. translators: %s: A time in seconds with a decimal fraction. No space between
-#. value and unit.
 #: output/html/db_queries.php:487 output/html/overview.php:105
 #: output/html/overview.php:190 output/html/overview.php:238
 #: output/html/overview.php:386
@@ -151,7 +224,7 @@ msgctxt "Enqueued scripts"
 msgid "Total: %s"
 msgstr "合計: %s"
 
-#: dispatchers/Html.php:682
+#: dispatchers/Html.php:684
 msgid "Configuration"
 msgstr "設定"
 
@@ -331,22 +404,22 @@ msgstr "プロパティ"
 msgid "Single %1$s: #%2$d"
 msgstr "シングル %1$s: #%2$d"
 
-#: collectors/php_errors.php:423
+#: collectors/php_errors.php:360
 msgctxt "Suppressed PHP error level"
 msgid "Deprecated (Suppressed)"
 msgstr "非推奨 (抑制)"
 
-#: collectors/php_errors.php:422
+#: collectors/php_errors.php:359
 msgctxt "Suppressed PHP error level"
 msgid "Strict (Suppressed)"
 msgstr "Strict (抑制)"
 
-#: collectors/php_errors.php:420
+#: collectors/php_errors.php:357
 msgctxt "Suppressed PHP error level"
 msgid "Warning (Suppressed)"
 msgstr "警告 (抑制)"
 
-#: collectors/php_errors.php:421
+#: collectors/php_errors.php:358
 msgctxt "Suppressed PHP error level"
 msgid "Notice (Suppressed)"
 msgstr "Notice (抑制)"
@@ -356,22 +429,22 @@ msgstr "Notice (抑制)"
 msgid "Current Site: #%d"
 msgstr "現在のサイト: #%d"
 
-#: collectors/php_errors.php:417
+#: collectors/php_errors.php:354
 msgctxt "PHP error level"
 msgid "Deprecated"
 msgstr "非推奨"
 
-#: collectors/php_errors.php:414
+#: collectors/php_errors.php:351
 msgctxt "PHP error level"
 msgid "Warning"
 msgstr "警告"
 
-#: collectors/php_errors.php:416
+#: collectors/php_errors.php:353
 msgctxt "PHP error level"
 msgid "Strict"
 msgstr "厳格"
 
-#: collectors/php_errors.php:415
+#: collectors/php_errors.php:352
 msgctxt "PHP error level"
 msgid "Notice"
 msgstr "注意"
@@ -543,7 +616,7 @@ msgid "Help"
 msgstr "ヘルプ"
 
 #: classes/Backtrace.php:240 classes/Util.php:250
-#: collectors/environment.php:279 output/html/db_queries.php:344
+#: collectors/environment.php:281 output/html/db_queries.php:344
 #: output/html/db_queries.php:440 output/html/environment.php:70
 #: output/html/environment.php:77 output/html/environment.php:85
 #: output/html/environment.php:171 output/html/environment.php:293
@@ -777,7 +850,7 @@ msgstr "クエリー"
 
 #. Plugin Name of the plugin
 #: query-monitor.php classes/QueryMonitor.php:196 classes/QueryMonitor.php:229
-#: dispatchers/Html.php:147 dispatchers/Html.php:449 dispatchers/Html.php:840
+#: dispatchers/Html.php:147 dispatchers/Html.php:449 dispatchers/Html.php:842
 #: dispatchers/WP_Die.php:132
 msgid "Query Monitor"
 msgstr "Query Monitor"

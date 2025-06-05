@@ -1,5 +1,5 @@
-@import "settings/global-settings/style";
-@import "controls/style";
+@use "settings/global-settings/style" as globalSettings;
+@use "controls/style" as controls;
 
 .editor-styles-wrapper .wp-block-flexible-table-block-table {
 	box-sizing: border-box;
@@ -389,28 +389,8 @@
 	text-transform: uppercase;
 }
 
-.ftb-percent-group {
-	margin-top: -8px;
-
-	&:has(+ .components-base-control) {
-		margin-bottom: 16px;
-	}
-}
-
-// Backwards compatible styles for WordPress 6.6 / 6.5
+// Backwards compatible styles for WordPress 6.6
 // See: https://github.com/WordPress/gutenberg/issues/53374
 .is-outline-mode .wp-block-flexible-table-block-table.is-selected .rich-text {
 	cursor: initial;
-}
-
-// Backwards compatible styles for WordPress 6.5
-.ftb-placeholder {
-
-	.components-placeholder__instructions {
-		margin-bottom: 0;
-	}
-
-	.components-placeholder__fieldset {
-		gap: 16px;
-	}
 }

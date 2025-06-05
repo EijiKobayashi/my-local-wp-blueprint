@@ -1,9 +1,10 @@
 <?php
-$post_type_name = esc_html(get_post_type_object(get_post_type())->name);
+$post_type_object = get_post_type_object(get_post_type());
+$post_type_name = $post_type_object ? esc_html($post_type_object->name) : '';
+$post_type_label = $post_type_object ? esc_html($post_type_object->label) : '';
 if (!$post_type_name) {
   $post_type_name = esc_html(get_query_var('post_type'));
 }
-$post_type_label = esc_html(get_post_type_object(get_post_type())->label);
 $template = dirname(__FILE__) . '/templates/archive/' . $post_type_name . '.php';
 
 // カテゴリー
