@@ -5,8 +5,8 @@
 * Donate link: https://www.lazyblocks.com/pro/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=donate
 * Requires at least: 6.2
 * Tested up to: 6.8
-* Requires PHP: 7.2
-* Stable tag: 4.0.1
+* Requires PHP: 8.0
+* Stable tag: 4.1.1
 * License: GPLv2 or later
 * License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -105,6 +105,9 @@ Every UI part should be intuitive for simple custom blocks, but if you want to c
 * **Controls Conditions**
 Conditionally display/hide controls. In order not to overload your block with a huge list of controls, you can hide some of them depending on the values of other controls.
 
+* **Styles & Scripts**
+Add custom CSS and JavaScript to your blocks. Define styles for editor and frontend, and script for interactive frontend functionality. Assets are automatically loaded only when needed for optimal performance.
+
 * **Panels and Dividers**
 The Panels and Dividers provides a way to structure controls into groups. It assists in better organizing the block panel UI.
 
@@ -135,6 +138,38 @@ The manual installation method involves downloading our Lazy Blocks plugin and u
 3. Available block controls
 
 ## Changelog
+
+= 4.1.1 - Sep 25, 2025 =
+
+* security fix: prevent unauthorized block export access
+* added `$content` attribute to `lzb/block_render/output` filters
+* **Pro:**
+* fixed rendering blocks in widgets screen when Rank Math is active
+
+= 4.1.0 - Aug 18, 2025 =
+
+* !breaking change - in Theme Templates renamed `$context` to `$render_location` to use `$context` for Gutenberg blocks Context feature instead: <https://www.lazyblocks.com/docs/blocks-code/relationships/>
+* requires PHP version 8.0 or higher, with version 8.3 and above recommended
+* added JS filter for devs: `lzb.registerBlockType.args`
+* added PHP filters for devs: `lzb/register_blocks`, `lzb/get_blocks`
+* fixed content wrapper controls color inheritance from parent
+* fixed losing focus from input fields in the inspector controls when block render preview updated
+* fixed URL control rendering in Content - display fallback Text control
+* disable possibility to add URL control inside Repeater inserted inside Content
+* remove child controls when the repeater control removed
+* minor fixes
+* **Pro:**
+* added support for block relations and context
+* improved block content retrieval for SEO plugins to enable accurate analysis and added preload to prevent multiple fetches on editor page load. Learn more -> <https://www.lazyblocks.com/docs/blocks-code/relationships/>
+
+= 4.0.3 - Jul 7, 2025 =
+
+* **Pro:**
+* fixed incorrect displaying controls in inspector inside different groups
+
+= 4.0.2 - Jun 26, 2025 =
+
+* fixed displaying block border in editor when used repeater in inspector
 
 = 4.0.1 - Jun 4, 2025 =
 

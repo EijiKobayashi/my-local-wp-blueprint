@@ -3,7 +3,7 @@
         'name' => 'johnbillion/wp-crontrol',
         'pretty_version' => 'dev-release',
         'version' => 'dev-release',
-        'reference' => '525d7e0ebe9024827b5d2c155c83e6b11968bdce',
+        'reference' => '4edb22f2205bb4bfec1184d2bc22c856dfe212e9',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'johnbillion/wp-crontrol' => array(
             'pretty_version' => 'dev-release',
             'version' => 'dev-release',
-            'reference' => '525d7e0ebe9024827b5d2c155c83e6b11968bdce',
+            'reference' => '4edb22f2205bb4bfec1184d2bc22c856dfe212e9',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

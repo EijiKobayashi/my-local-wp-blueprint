@@ -364,7 +364,7 @@ class WP_Optimization_transient extends WP_Optimization {
 				FROM
 					".$this->wpdb->sitemeta." a
 				LEFT JOIN 	
-				 	".$this->wpdb->sitemeta." b
+					".$this->wpdb->sitemeta." b
 				ON
 					b.meta_key = CONCAT(
 						'_site_transient_timeout_',
@@ -375,7 +375,8 @@ class WP_Optimization_transient extends WP_Optimization {
 					)				 	
 				WHERE
 					a.meta_key LIKE '_site_transient_%' AND
-					a.meta_key NOT LIKE '_site_transient_timeout_%'";
+					a.meta_key NOT LIKE '_site_transient_timeout_%' AND 
+					b.meta_key IS NOT NULL";
 
 			$expired_suffix_sql = " AND b.meta_value < UNIX_TIMESTAMP()";
 
@@ -389,8 +390,12 @@ class WP_Optimization_transient extends WP_Optimization {
 		}
 
 		if ($this->found_count_all > 0) {
-			// translators: %1$d is the number of expired transient options, %2$d is the number of all transient options
-			$message = sprintf(_n('%1$d of %2$d transient option expired', '%1$d of %2$d transient options expired', $this->found_count_all, 'wp-optimize'), number_format_i18n($this->found_count), number_format_i18n($this->found_count_all));
+			$message = sprintf(
+			// translators: %1$s is the number of expired transient options, %2$s is the number of all transient options
+			_n('%1$s of %2$s transient option expired', '%1$s of %2$s transient options expired', $this->found_count, 'wp-optimize'),
+				number_format_i18n($this->found_count),
+				number_format_i18n($this->found_count_all)
+			);
 		} else {
 			$message = __('No transient options found', 'wp-optimize');
 		}
@@ -431,11 +436,6 @@ class WP_Optimization_transient extends WP_Optimization {
 	 */
 	public function get_info() {
 
-		$blogs = $this->get_optimization_blogs();
-
-		foreach ($blogs as $blog_id) {
-			$this->switch_to_blog($blog_id);
-
 			$options_table_sql = "
 			SELECT
 				COUNT(*)
@@ -465,15 +465,23 @@ class WP_Optimization_transient extends WP_Optimization {
 			// get count of all transients.
 			$options_table_transients = $this->wpdb->get_var($options_table_sql); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- safe, no user input used
 			$this->found_count_all += $options_table_transients;
-			$this->restore_current_blog();
-		}
 
 	}
 
+	/**
+	 * Returns settings label
+	 *
+	 * @return string
+	 */
 	public function settings_label() {
 		return __('Remove expired transient options', 'wp-optimize');
 	}
 
+	/**
+	 * Returns description
+	 *
+	 * @return string
+	 */
 	public function get_auto_option_description() {
 		return __('Remove expired transient options', 'wp-optimize');
 	}

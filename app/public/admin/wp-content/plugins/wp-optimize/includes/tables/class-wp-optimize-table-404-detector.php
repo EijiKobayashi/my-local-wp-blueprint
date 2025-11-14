@@ -43,7 +43,7 @@ class WP_Optimize_Table_404_Detector implements WP_Optimize_Table_Interface {
 			'unique' => 'url(75),request_timestamp,referrer(75)'
 		);
 	}
-
+	
 	/**
 	 * Returns singleton instance
 	 *
@@ -52,7 +52,7 @@ class WP_Optimize_Table_404_Detector implements WP_Optimize_Table_Interface {
 	public static function get_instance() {
 		static $instance = null;
 		if (null === $instance) {
-			$instance = new self();
+			$instance = new static();
 		}
 		return $instance;
 	}

@@ -17,7 +17,7 @@
 		</label>
 		<span tabindex="0" data-tooltip="<?php esc_attr_e('Host gravatars locally to reduce http requests and enhanced privacy.', 'wp-optimize');?>"><span class="dashicons dashicons-editor-help"></span> </span>
 	</div>
-	<p><a href="<?php echo esc_url(WP_Optimize()->premium_version_link); ?>" target="_blank"><?php esc_html_e('Upgrade to WP-Optimize Premium to unlock this feature.', 'wp-optimize'); ?></a></p>
+	<p><a href="<?php echo esc_url(WP_Optimize()->premium_version_link); ?>&utm_content=host-gravatars-locally" target="_blank"><?php esc_html_e('Upgrade to WP-Optimize Premium to unlock this feature.', 'wp-optimize'); ?></a></p>
 </div>
 <h3 class="wpo-first-child"><?php esc_html_e('URLs to exclude from caching', 'wp-optimize'); ?></h3>
 
@@ -47,6 +47,24 @@
 </div>
 
 <?php do_action('wpo_after_cache_exception_urls_fieldgroup'); ?>
+
+<h3 class="wpo-first-child"><?php esc_html_e('Ignore these query variables when caching', 'wp-optimize'); ?></h3>
+
+<div class="wpo-fieldgroup">
+
+	<p>
+		<label for="cache_ignore_query_variables">
+			<?php esc_html_e('List query variables that should be ignored while caching (one per line)', 'wp-optimize'); ?>
+		</label>
+		<textarea name="cache_ignore_query_variables" id="cache_ignore_query_variables" class="cache-settings" placeholder="wpo_cache_debug" disabled><?php echo esc_textarea($cache_ignore_query_variables); ?></textarea>
+	</p>
+	<p><a href="<?php echo esc_url(WP_Optimize()->premium_version_link); ?>&utm_content=cache_ignore_query_variables" target="_blank"><?php esc_html_e('Upgrade to WP-Optimize Premium to unlock this feature.', 'wp-optimize'); ?></a></p>
+	
+	<?php do_action('wpo_after_cache_ignore_query_variables'); ?>
+
+</div>
+
+<?php do_action('wpo_after_cache_ignore_query_variables_fieldgroup'); ?>
 
 <h3 class="wpo-first-child"><?php esc_html_e('Cookies which, if present, will prevent caching (one per line)', 'wp-optimize'); ?></h3>
 

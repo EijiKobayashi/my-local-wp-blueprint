@@ -9,11 +9,11 @@ class WP_Optimize_WebP {
 	private $_htaccess = null;
 
 	/**
-	 * Set to true when webp is enabled and vice-versa
+	 * Set to true when webp is enabled and vice versa
 	 *
 	 * @var boolean
 	 */
-	private $_should_use_webp = false;
+	private $_should_use_webp;
 
 	/**
 	 * The logger for this instance
@@ -127,15 +127,6 @@ class WP_Optimize_WebP {
 		if (!empty($redirection_possible)) return 'true' === $redirection_possible;
 		return $this->run_webp_serving_self_test();
 	}
-
-	/**
-	 * Decide whether the browser requesting the URL can accept webp images or not
-	 *
-	 * @return bool
-	 */
-	private function is_browser_accepting_webp(): bool {
-		return false !== strpos(sanitize_text_field(wp_unslash($_SERVER['HTTP_ACCEPT'] ?? '')), 'image/webp');
-	}
 	
 	/**
 	 * Detect whether using alter HTML method is possible or not
@@ -143,10 +134,7 @@ class WP_Optimize_WebP {
 	 * @return bool
 	 */
 	private function is_alter_html_possible() {
-		if ($this->is_browser_accepting_webp()) {
-			return true;
-		}
-		return false;
+		return WPO_WebP_Utils::is_browser_accepting_webp();
 	}
 
 	/**
@@ -296,7 +284,7 @@ class WP_Optimize_WebP {
 	 */
 	public function should_run_webp_conversion_test() {
 		$webp_conversion_test = $this->get_webp_conversion_test_result();
-		return (true !== $webp_conversion_test);
+		return true !== $webp_conversion_test;
 	}
 
 	/**
@@ -432,7 +420,7 @@ class WP_Optimize_WebP {
 	}
 
 	/**
-	 * Return the true if webp conversion is enabled and vice-versa
+	 * Return the true if webp conversion is enabled and vice versa
 	 *
 	 * @return bool
 	 */
@@ -489,7 +477,7 @@ class WP_Optimize_WebP {
 	}
 
 	/**
-	 * Check if all of the functions from the list is available.
+	 * Check if all the functions from the list is available.
 	 *
 	 * @param array $functions
 	 * @return bool
