@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - My WP Customize Admin/Frontend - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-01-24 01:31:43+0000\n"
+"PO-Revision-Date: 2025-09-26 06:58:39+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,157 @@ msgstr ""
 "X-Generator: GlotPress/4.0.1\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - My WP Customize Admin/Frontend - Stable (latest release)\n"
+
+#: setting/modules/mywp.setting.admin.posts.php:618
+msgid "Modified Date"
+msgstr "更新日"
+
+#: setting/modules/mywp.setting.admin.posts.php:602
+msgid "Status"
+msgstr "ステータス"
+
+#: setting/modules/mywp.setting.admin.post-edit.php:535
+msgid "Selectable post statuses"
+msgstr "選択可能な投稿ステータス"
+
+#: setting/modules/mywp.setting.admin.post-edit.php:526
+msgid "Custom post statuses"
+msgstr "カスタム投稿ステータス"
+
+#: controller/modules/mywp.controller.module.admin.posts.php:569
+#: controller/modules/mywp.controller.module.admin.posts.php:575
+msgid "g:i a"
+msgstr "g:i a"
+
+#: controller/modules/mywp.controller.module.admin.posts.php:569
+#: controller/modules/mywp.controller.module.admin.posts.php:575
+msgid "Y/m/d"
+msgstr "Y/m/d"
+
+#: controller/modules/mywp.controller.module.admin.posts.php:569
+#: controller/modules/mywp.controller.module.admin.posts.php:575
+msgid "%1$s at %2$s"
+msgstr "%1$s %2$s"
+
+#: controller/modules/mywp.controller.module.admin.post.edit.php:1069
+msgid "Status:"
+msgstr "ステータス:"
+
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:223
+msgid "Bulk update"
+msgstr "一括更新"
+
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:217
+msgid "Bulk update (Dry run)"
+msgstr "一括更新 (Dry run)"
+
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:164
+msgid "Confirm update details"
+msgstr "更新内容を確認"
+
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:152
+msgid "Select posts to update"
+msgstr "更新する投稿を選択"
+
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:138
+msgid "Filter and search for posts to update"
+msgstr "更新したい投稿を絞り込み検索"
+
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:78
+msgid "Please input meta_key."
+msgstr "メタキーを入力してください。"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:325
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:259
+msgid "Bulk process"
+msgstr "一括処理"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:324
+msgid "Post ID"
+msgstr "投稿ID"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:318
+msgid "Bulk items"
+msgstr "一括アイテム"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:311
+msgid "Please duplicate posts."
+msgstr "投稿を複製してください。"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:284
+msgid "Duplicate Posts"
+msgstr "投稿を複製"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:257
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:191
+msgid "Selected Post IDs"
+msgstr "選択された投稿ID"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:248
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:182
+msgid "Please select the posts."
+msgstr "投稿を選択してください。"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:228
+msgid "Confirm duplication details"
+msgstr "複製内容を確認"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:216
+msgid "Select posts to duplicate"
+msgstr "複製する投稿を選択"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:200
+msgid "Filter and search for posts to duplicate"
+msgstr "複製する投稿を絞り込み検索"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:93
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:144
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:67
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:92
+msgid "%s Post"
+msgid_plural "%s Posts"
+msgstr[0] "%s件の投稿"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:29
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:110
+msgid "Please select Site."
+msgstr "サイトを選択してください。"
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:21
+msgid "Bulk duplicate posts from site in Network"
+msgstr "ネットワーク他サイト一括投稿複製"
+
+#: setting/abstract.setting.bulk.module.php:1135
+msgid "Bulk processing results"
+msgstr "一括処理の結果"
+
+#: setting/abstract.setting.bulk.module.php:1110
+msgid "Terms"
+msgstr "ターム"
+
+#: setting/abstract.setting.bulk.module.php:1063
+msgid "Please filter and search."
+msgstr "絞り込み検索をしてください。"
+
+#: setting/abstract.setting.bulk.module.php:829
+msgid "Filter and Search"
+msgstr "絞り込み検索"
+
+#: core/class.helper.php:73
+msgid "%s is error %s."
+msgstr "%s はエラー %s."
+
+#: setting/modules/mywp.setting.admin.users.php:289
+msgid "Add User"
+msgstr "ユーザーを追加"
+
+#: setting/modules/mywp.setting.admin.uploads.php:297
+msgid "Add Media File"
+msgstr "メディアファイルを追加"
+
+#: setting/modules/mywp.setting.admin.post-edit.php:36
+msgid "Add Post"
+msgstr "投稿を追加"
 
 #: setting/modules/mywp.setting.debug.general.php:125
 msgid "debug_backtrace()"
@@ -48,14 +199,15 @@ msgstr "重い処理のデバッグ項目"
 #: developer/modules/mywp.developer.module.dev.debugtrace.php:34
 #: developer/modules/mywp.developer.module.dev.debugtrace.php:50
 #: developer/modules/mywp.developer.module.dev.request.php:78
-#: developer/modules/mywp.developer.module.dev.times.php:219
-#: developer/modules/mywp.developer.module.dev.times.php:315
+#: developer/modules/mywp.developer.module.dev.times.php:270
+#: developer/modules/mywp.developer.module.dev.times.php:366
 #: developer/modules/mywp.developer.module.mywp.cache.php:42
 #: developer/modules/mywp.developer.module.mywp.cache.php:66
 msgid "Not activated."
 msgstr "有効化されていません"
 
 #: setting/modules/mywp.setting.admin.comments.php:302
+#: setting/modules/mywp.setting.admin.post-edit.php:530
 #: setting/modules/mywp.setting.admin.posts.php:436
 #: setting/modules/mywp.setting.admin.uploads.php:321
 #: setting/modules/mywp.setting.admin.users.php:313
@@ -72,7 +224,7 @@ msgstr "カスタム検索フィルター"
 #: setting/abstract.setting.columns.module.php:559
 #: setting/modules/mywp.setting.admin.comments.php:445
 #: setting/modules/mywp.setting.admin.posts.php:419
-#: setting/modules/mywp.setting.admin.posts.php:680
+#: setting/modules/mywp.setting.admin.posts.php:703
 #: setting/modules/mywp.setting.admin.terms.php:561
 #: setting/modules/mywp.setting.admin.uploads.php:484
 #: setting/modules/mywp.setting.admin.users.php:487
@@ -100,7 +252,7 @@ msgstr "MIME タイプ"
 msgid "Post Date"
 msgstr "投稿日時"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1197
+#: controller/modules/mywp.controller.module.admin.posts.php:1223
 #: controller/modules/mywp.controller.module.admin.uploads.php:816
 msgid "Post Parent"
 msgstr "親ページ"
@@ -193,14 +345,6 @@ msgstr "Rest API"
 msgid "Unknown translation file."
 msgstr "不明な翻訳ファイル"
 
-#: setting/modules/mywp.setting.admin.users.php:289
-msgid "Add New User"
-msgstr "新規ユーザーを追加"
-
-#: setting/modules/mywp.setting.admin.uploads.php:297
-msgid "Add New Media File"
-msgstr "新しいメディアファイルを追加"
-
 #: setting/modules/mywp.setting.frontend.general.php:113
 msgid "Hide X-Pingback"
 msgstr "X-Pingback を隠す"
@@ -235,7 +379,7 @@ msgstr "Rest API リンクを隠す"
 msgid "Response Header"
 msgstr "レスポンス Headers"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:314
+#: setting/modules/mywp.setting.admin.post-edit.php:360
 msgid "Change Permalink Structure"
 msgstr "パーマリンク構造を変更"
 
@@ -269,8 +413,8 @@ msgid "Name"
 msgstr "名前"
 
 #: setting/modules/mywp.setting.admin.posts.php:520
-#: setting/modules/mywp.setting.admin.posts.php:621
-#: setting/modules/mywp.setting.admin.posts.php:730
+#: setting/modules/mywp.setting.admin.posts.php:644
+#: setting/modules/mywp.setting.admin.posts.php:753
 msgctxt "post"
 msgid "Featured image"
 msgstr "アイキャッチ画像"
@@ -290,14 +434,6 @@ msgstr "言語を選択"
 #: views/elements/setting-screen-input-post.php:29
 msgid "Enter a post id"
 msgstr "投稿IDを入力"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:816
-msgid "Bulk update post custom fields"
-msgstr "カスタムフィールドの一括更新"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:24
-msgid "Bulk Post custom fields"
-msgstr "投稿のカスタムフィールド"
 
 #: setting/modules/mywp.setting.debug.post-type-structure.php:35
 msgid "The structure of all custom fields used in the post type."
@@ -355,6 +491,7 @@ msgid "Force show list"
 msgstr "強制リスト表示"
 
 #: setting/modules/mywp.setting.admin.posts.php:406
+#: setting/setting.init.php:177
 msgid "Bulk actions"
 msgstr "一括操作"
 
@@ -432,12 +569,12 @@ msgstr "このメニューアイテムはシングルページでのみ表示さ
 msgid "Example menu title"
 msgstr "メニュータイトル"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:244
+#: setting/modules/mywp.setting.admin.post-edit.php:290
 #: setting/modules/mywp.setting.admin.site-editor.php:47
 msgid "Change to back icon"
 msgstr "戻るアイコンに変更"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:240
+#: setting/modules/mywp.setting.admin.post-edit.php:286
 #: setting/modules/mywp.setting.admin.site-editor.php:43
 msgid "Top left button"
 msgstr "左上ボタン"
@@ -457,99 +594,55 @@ msgstr "このメニューアイテムは投稿の編集でのみ表示されま
 msgid "Collapse menu"
 msgstr "メニューを閉じる"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:952
+#: setting/abstract.setting.bulk.module.php:1109
 msgid "All Post Metas"
 msgstr "すべての投稿メタ"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1181
+#: controller/modules/mywp.controller.module.admin.posts.php:1207
 #: controller/modules/mywp.controller.module.admin.uploads.php:800
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:950
+#: setting/abstract.setting.bulk.module.php:1106
 msgid "Post Status"
 msgstr "投稿ステータス"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:941
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:991
+#: setting/abstract.setting.bulk.module.php:949
 msgid "Post not found."
 msgstr "投稿が見つかりませんでした。"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:937
-msgid "posts"
-msgstr "件"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:937
-msgid "Search Results"
-msgstr "検索結果"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:887
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:262
 msgid "To meta value"
 msgstr "変更するメタ値"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:885
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:260
 msgid "From meta value"
 msgstr "元のメタ値"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:884
-msgid "Updated"
-msgstr "更新済み"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:875
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:250
 msgid "Please bulk update."
 msgstr "一括更新を行ってください。"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:855
-msgid "Bulk update post meta of checked posts"
-msgstr "チェックした投稿のメタを一括更新"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:851
-msgid "Bulk update post meta of checked posts (Dry run)"
-msgstr "チェックした投稿のメタを一括更新（テスト動作）"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:847
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:212
 msgid "It is recommend that you backup your database and do a dry run."
 msgstr "サーバのバックアップとテスト動作をすることをお勧めします。"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:830
-msgid "Update Post IDs"
-msgstr "更新する投稿ID"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:821
-msgid "Please check posts you want to bulk update."
-msgstr "一括更新したい投稿をチェックしてください。"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:799
-msgid "Filter"
-msgstr "絞り込み"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:776
-msgid "Filter post"
-msgstr "投稿の絞り込み"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:729
-msgid "Dry run"
-msgstr "テスト動作"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:870
-#: setting/setting.init.php:487
+#: setting/setting.init.php:488
 msgid "Finished"
 msgstr "完了"
 
-#: setting/setting.init.php:485
+#: setting/setting.init.php:486
 msgid "Are you sure you want to update?"
 msgstr "更新してもよいですか ?"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:133
-msgid "Please enter the Meta key."
-msgstr "メタキーを入力してください。"
-
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:119
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:104
 msgid "Please select an Post."
 msgstr "投稿を選択してください。"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:67
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:41
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:35
 msgid "Please select an Post Status."
 msgstr "投稿ステータスを選択してください。"
 
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:59
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:35
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:29
 msgid "Please select an Post Type."
 msgstr "投稿タイプを選択してください"
 
@@ -558,6 +651,7 @@ msgid "Edit"
 msgstr "編集"
 
 #: setting/modules/mywp.setting.admin.terms.php:28
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:273
 #: setting/modules/mywp.setting.debug.terms.php:24
 msgid "All Terms"
 msgstr "すべてのターム"
@@ -570,7 +664,7 @@ msgstr "投稿の属性"
 msgid "Page Attributes"
 msgstr "固定ページの属性"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:172
+#: setting/modules/mywp.setting.admin.post-edit.php:218
 msgid "Management of Document panels (block editor)"
 msgstr "ドキュメントパネル（block editor）の管理"
 
@@ -611,7 +705,7 @@ msgstr "ログイン後URL"
 msgid "Forced Redirect"
 msgstr "強制リダイレクト"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:288
+#: setting/modules/mywp.setting.admin.post-edit.php:334
 msgid "Add title"
 msgstr "タイトルを追加"
 
@@ -620,7 +714,7 @@ msgstr "タイトルを追加"
 msgid "Remove Cache"
 msgstr "キャッシュを削除"
 
-#: setting/setting.init.php:143
+#: setting/setting.init.php:144
 msgid "Log in"
 msgstr "ログイン"
 
@@ -658,7 +752,7 @@ msgid "%s Documentation"
 msgstr "%s ドキュメント"
 
 #: setting/modules/mywp.setting.admin.posts.php:596
-#: setting/modules/mywp.setting.admin.posts.php:702
+#: setting/modules/mywp.setting.admin.posts.php:725
 msgid "Order"
 msgstr "並び順"
 
@@ -743,7 +837,7 @@ msgstr "サイドバーへのカスタムメニュー、メタボックスのタ
 msgid "Admin Customize"
 msgstr "管理画面カスタマイズ"
 
-#: setting/setting.init.php:109
+#: setting/setting.init.php:110
 msgid "My WP Customize"
 msgstr "My WP Customize"
 
@@ -808,6 +902,8 @@ msgstr "ファイルURL"
 
 #: setting/modules/mywp.setting.admin.uploads.php:445
 #: setting/modules/mywp.setting.admin.uploads.php:516
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:326
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:263
 msgid "Details"
 msgstr "詳細"
 
@@ -858,7 +954,7 @@ msgstr "カラムを追加"
 msgid "%1$s: %2$s is not found. Please refresh the %2$s."
 msgstr "%1$s: %2$s がありません。%2$sを更新してください。"
 
-#: setting/setting.init.php:488
+#: setting/setting.init.php:489
 msgid "Not found update URL."
 msgstr "更新URLが見つかりません。"
 
@@ -876,36 +972,37 @@ msgid "Active"
 msgstr "有効"
 
 #: setting/modules/mywp.setting.admin.posts.php:588
-#: setting/modules/mywp.setting.admin.posts.php:693
+#: setting/modules/mywp.setting.admin.posts.php:716
 #: setting/modules/mywp.setting.admin.terms.php:492
 #: setting/modules/mywp.setting.admin.terms.php:573
 msgid "Parent"
 msgstr "親"
 
+#: setting/abstract.setting.bulk.module.php:1104
 #: setting/modules/mywp.setting.admin.comments.php:390
 #: setting/modules/mywp.setting.admin.comments.php:451
 #: setting/modules/mywp.setting.admin.posts.php:582
-#: setting/modules/mywp.setting.admin.posts.php:686
+#: setting/modules/mywp.setting.admin.posts.php:709
 #: setting/modules/mywp.setting.admin.terms.php:486
 #: setting/modules/mywp.setting.admin.terms.php:567
 #: setting/modules/mywp.setting.admin.uploads.php:419
 #: setting/modules/mywp.setting.admin.uploads.php:490
 #: setting/modules/mywp.setting.admin.users.php:405
 #: setting/modules/mywp.setting.admin.users.php:493
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:883
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:948
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:258
 msgid "ID"
 msgstr "ID"
 
-#: setting/modules/mywp.setting.admin.posts.php:602
-#: setting/modules/mywp.setting.admin.posts.php:709
+#: setting/modules/mywp.setting.admin.posts.php:625
+#: setting/modules/mywp.setting.admin.posts.php:732
 #: setting/modules/mywp.setting.admin.terms.php:441
 msgid "Slug"
 msgstr "スラッグ"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1192
+#: controller/modules/mywp.controller.module.admin.posts.php:1218
 #: post-type/modules/mywp.post-type.module.logger.php:102
 #: setting/modules/mywp.setting.admin.posts.php:509
+#: setting/modules/mywp.setting.admin.posts.php:610
 msgid "Date"
 msgstr "日付"
 
@@ -915,7 +1012,8 @@ msgstr "日付"
 msgid "Author"
 msgstr "投稿者"
 
-#: setting/modules/mywp.setting.admin.posts.php:655
+#: setting/modules/mywp.setting.admin.posts.php:678
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:265
 #: setting/modules/mywp.setting.debug.post-structure.php:93
 #: setting/modules/mywp.setting.debug.post-type-structure.php:115
 msgid "Custom Fields"
@@ -934,19 +1032,19 @@ msgstr "カラムを更新"
 msgid "Columns"
 msgstr "カラム"
 
-#: setting/setting.init.php:489
+#: setting/setting.init.php:490
 msgid "It column can not be added because it has already added."
 msgstr "既にカラムが追加されているため追加できません。"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:157
+#: setting/modules/mywp.setting.admin.post-edit.php:203
 msgid "Use Classic Editor"
 msgstr "旧エディターを使う"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:153
+#: setting/modules/mywp.setting.admin.post-edit.php:199
 msgid "Change the Editor"
 msgstr "エディターを変更"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:149
+#: setting/modules/mywp.setting.admin.post-edit.php:195
 msgid "For Block/Classic Editor"
 msgstr "ブロック/旧 エディター"
 
@@ -955,8 +1053,8 @@ msgid "Discussion"
 msgstr "ディスカッション"
 
 #: setting/class.setting.block-editor.php:88
-#: setting/modules/mywp.setting.admin.posts.php:609
-#: setting/modules/mywp.setting.admin.posts.php:717
+#: setting/modules/mywp.setting.admin.posts.php:632
+#: setting/modules/mywp.setting.admin.posts.php:740
 msgid "Excerpt"
 msgstr "抜粋"
 
@@ -964,7 +1062,7 @@ msgstr "抜粋"
 msgid "Featured Images"
 msgstr "アイキャッチ画像"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:433
+#: setting/modules/mywp.setting.admin.post-edit.php:517
 msgid "Revisions"
 msgstr "リビジョン"
 
@@ -977,25 +1075,25 @@ msgstr "すべて表示"
 msgid "Remove the %s settings data"
 msgstr "%s の設定データを削除"
 
-#: setting/setting.init.php:486
+#: setting/setting.init.php:487
 msgid "Are you sure you want to delete this?"
 msgstr "本当に削除してもよろしいですか？"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:351
+#: setting/modules/mywp.setting.admin.post-edit.php:397
 msgctxt "Name for the Visual editor tab"
 msgid "Visual"
 msgstr "ビジュアルエディタ"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:351
-#: setting/modules/mywp.setting.admin.post-edit.php:352
+#: setting/modules/mywp.setting.admin.post-edit.php:397
+#: setting/modules/mywp.setting.admin.post-edit.php:398
 msgid "Only use %s"
 msgstr "%s のみ使用"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:300
+#: setting/modules/mywp.setting.admin.post-edit.php:346
 msgid "Auto Change"
 msgstr "自動変更"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:296
+#: setting/modules/mywp.setting.admin.post-edit.php:342
 msgid "Change Post title to Post ID"
 msgstr "投稿タイトルを投稿IDに変更"
 
@@ -1084,12 +1182,12 @@ msgid "Add"
 msgstr "追加"
 
 #: setting/abstract.setting.toolbar.module.php:2824
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:838
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:201
 msgid "Meta value"
 msgstr "メタ値"
 
 #: setting/abstract.setting.toolbar.module.php:2824
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:834
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:195
 msgid "Meta key"
 msgstr "メタキー"
 
@@ -1135,23 +1233,23 @@ msgstr "ユーザー管理画面を無効化"
 msgid "Search Users"
 msgstr "ユーザーを検索"
 
-#: core/class.helper.php:223
+#: core/class.helper.php:241
 msgid "Bytes"
 msgstr "Bytes"
 
-#: core/class.helper.php:217
+#: core/class.helper.php:235
 msgid "KB"
 msgstr "KB"
 
-#: core/class.helper.php:211
+#: core/class.helper.php:229
 msgid "MB"
 msgstr "MB"
 
-#: core/class.helper.php:205
+#: core/class.helper.php:223
 msgid "GB"
 msgstr "GB"
 
-#: core/class.helper.php:199
+#: core/class.helper.php:217
 msgid "TB"
 msgstr "TB"
 
@@ -1159,7 +1257,7 @@ msgstr "TB"
 msgid "Close"
 msgstr "閉じる"
 
-#: setting/setting.init.php:484
+#: setting/setting.init.php:485
 msgid "Are you sure you want to do this?"
 msgstr "本当に実行していいですか ?"
 
@@ -1248,8 +1346,8 @@ msgstr "変更"
 msgid "Change the capability for create_posts"
 msgstr "create_posts へ権限を変更"
 
+#: setting/abstract.setting.bulk.module.php:1105
 #: setting/modules/mywp.setting.site.post-type.php:24
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:949
 #: views/elements/setting-screen-select-post-type.php:29
 msgid "Post Type"
 msgstr "投稿タイプ"
@@ -1265,6 +1363,7 @@ msgstr "投稿タイプ"
 #: setting/modules/mywp.setting.admin.user-edit.php:86
 #: setting/modules/mywp.setting.admin.users.php:277
 #: setting/modules/mywp.setting.admin.users.php:399
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:261
 msgid "Other"
 msgstr "その他"
 
@@ -1272,7 +1371,7 @@ msgstr "その他"
 msgid "Bulk Updated Messages"
 msgstr "一括更新メッセージ"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:209
+#: setting/modules/mywp.setting.admin.post-edit.php:255
 msgid "Updated Messages"
 msgstr "更新メッセージ"
 
@@ -1301,92 +1400,92 @@ msgid "%s post updated."
 msgid_plural "%s posts updated."
 msgstr[0] "%s件の投稿を更新しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:126
+#: controller/modules/mywp.controller.module.admin.post.edit.php:132
 msgid "Preview Post Link"
 msgstr "投稿プレビューリンク"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:126
+#: controller/modules/mywp.controller.module.admin.post.edit.php:132
 msgid "Post draft updated."
 msgstr "投稿の下書きを更新しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:125
+#: controller/modules/mywp.controller.module.admin.post.edit.php:131
 msgid "Post draft updated"
 msgstr "投稿の下書き更新"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:122
+#: controller/modules/mywp.controller.module.admin.post.edit.php:128
 msgid "Schedule Link"
 msgstr "予約投稿リンク"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:122
+#: controller/modules/mywp.controller.module.admin.post.edit.php:128
 msgid "Schedule Date"
 msgstr "予約投稿日"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:122
+#: controller/modules/mywp.controller.module.admin.post.edit.php:128
 msgid "Post scheduled for: %s."
 msgstr "投稿の公開を %s に予約しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:121
+#: controller/modules/mywp.controller.module.admin.post.edit.php:127
 msgid "Post Scheduled"
 msgstr "予約投稿"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:118
+#: controller/modules/mywp.controller.module.admin.post.edit.php:124
 msgid "Post submitted."
 msgstr "投稿を送信しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:117
+#: controller/modules/mywp.controller.module.admin.post.edit.php:123
 msgid "Post submitted"
 msgstr "投稿の送信"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:114
+#: controller/modules/mywp.controller.module.admin.post.edit.php:120
 msgid "Post saved."
 msgstr "投稿を保存しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:113
+#: controller/modules/mywp.controller.module.admin.post.edit.php:119
 msgid "Post saved"
 msgstr "投稿の保存"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:110
+#: controller/modules/mywp.controller.module.admin.post.edit.php:116
 msgid "Post published."
 msgstr "投稿を公開しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:109
+#: controller/modules/mywp.controller.module.admin.post.edit.php:115
 msgid "Post published"
 msgstr "投稿の公開"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:106
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:951
+#: controller/modules/mywp.controller.module.admin.post.edit.php:112
+#: setting/abstract.setting.bulk.module.php:1107
 msgid "Post Title"
 msgstr "投稿タイトル"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:106
+#: controller/modules/mywp.controller.module.admin.post.edit.php:112
 msgid "Post restored to revision from %s."
 msgstr "リビジョン %s から投稿を復元しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:105
+#: controller/modules/mywp.controller.module.admin.post.edit.php:111
 #: setting/class.setting.block-editor.php:38
 msgid "Revision"
 msgstr "リビジョン"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:97
+#: controller/modules/mywp.controller.module.admin.post.edit.php:103
 msgid "Custom field deleted"
 msgstr "カスタムフィールドの削除"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:94
-#: controller/modules/mywp.controller.module.admin.post.edit.php:98
+#: controller/modules/mywp.controller.module.admin.post.edit.php:100
+#: controller/modules/mywp.controller.module.admin.post.edit.php:104
 msgid "Custom field updated."
 msgstr "カスタムフィールドを更新しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:93
+#: controller/modules/mywp.controller.module.admin.post.edit.php:99
 msgid "Custom field updated"
 msgstr "カスタムフィールドの更新"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:90
-#: controller/modules/mywp.controller.module.admin.post.edit.php:102
+#: controller/modules/mywp.controller.module.admin.post.edit.php:96
+#: controller/modules/mywp.controller.module.admin.post.edit.php:108
 msgid "Post updated."
 msgstr "投稿を更新しました。"
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:89
-#: controller/modules/mywp.controller.module.admin.post.edit.php:101
+#: controller/modules/mywp.controller.module.admin.post.edit.php:95
+#: controller/modules/mywp.controller.module.admin.post.edit.php:107
 msgid "Post updated"
 msgstr "投稿の更新"
 
@@ -1424,40 +1523,40 @@ msgstr "すべての Cron"
 msgid "Edit User"
 msgstr "ユーザーを編集"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:424
+#: setting/modules/mywp.setting.admin.post-edit.php:508
 msgid "Changes Publish On"
 msgstr "公開日時の変更"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:415
+#: setting/modules/mywp.setting.admin.post-edit.php:499
 msgid "Changes Publish Status"
 msgstr "公開状態の変更"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:406
+#: setting/modules/mywp.setting.admin.post-edit.php:490
 msgid "Changes Post Status"
 msgstr "ステータスの変更"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:397
+#: setting/modules/mywp.setting.admin.post-edit.php:481
 msgid "Preview Changes"
 msgstr "変更をプレビュー"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:388
+#: setting/modules/mywp.setting.admin.post-edit.php:472
 msgid "Save Draft"
 msgstr "下書きとして保存"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:384
+#: setting/modules/mywp.setting.admin.post-edit.php:468
 msgid "Publish metabox"
 msgstr "公開メタボックス"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:352
+#: setting/modules/mywp.setting.admin.post-edit.php:398
 msgctxt "Name for the Text editor tab (formerly HTML)"
 msgid "Text"
 msgstr "テキスト"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:347
+#: setting/modules/mywp.setting.admin.post-edit.php:393
 msgid "Forced Editor"
 msgstr "エディターの強制"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:285
+#: setting/modules/mywp.setting.admin.post-edit.php:331
 msgid "Change title placeholder"
 msgstr "プレースホルダーを変更"
 
@@ -1601,15 +1700,15 @@ msgstr "My WP ショートコード"
 msgid "Current Setting"
 msgstr "現在の設定"
 
-#: setting/setting.init.php:482
+#: setting/setting.init.php:483
 msgid "Please try again."
 msgstr "もう一度お試しください。"
 
-#: setting/setting.init.php:133
+#: setting/setting.init.php:134
 msgid "Frontend"
 msgstr "フロントエンド"
 
-#: setting/setting.init.php:123
+#: setting/setting.init.php:124
 msgid "Admin"
 msgstr "管理"
 
@@ -1745,7 +1844,7 @@ msgstr "%sのデバッグ表示"
 
 #: setting/modules/mywp.setting.debug.general.php:24
 #: setting/modules/mywp.setting.main.general.php:79
-#: setting/setting.init.php:186 setting/setting.init.php:190
+#: setting/setting.init.php:187 setting/setting.init.php:191
 msgid "Debug"
 msgstr "デバッグ"
 
@@ -1763,7 +1862,7 @@ msgid "Biographical Info"
 msgstr "プロフィール情報"
 
 #: setting/modules/mywp.setting.admin.user-edit.php:46
-#: setting/setting.init.php:153
+#: setting/setting.init.php:154
 msgid "Website"
 msgstr "ウェブサイト"
 
@@ -1895,10 +1994,11 @@ msgstr "区切り線"
 msgid "Custom Link"
 msgstr "カスタムリンク"
 
+#: controller/modules/mywp.controller.module.admin.post.edit.php:1236
 #: setting/abstract.setting.toolbar.module.php:2679
 #: setting/modules/mywp.setting.admin.sidebar.php:1590
 #: setting/modules/mywp.setting.admin.sidebar.php:2419
-#: setting/setting.init.php:176 views/elements/setting-screen-input-post.php:35
+#: views/elements/setting-screen-input-post.php:35
 msgid "Update"
 msgstr "更新"
 
@@ -1929,7 +2029,7 @@ msgstr "現在のサイドバー"
 msgid "Add Item"
 msgstr "アイテムを追加"
 
-#: setting/setting.init.php:483
+#: setting/setting.init.php:484
 msgid "An error has occurred. Please reload the page and try again."
 msgstr "エラーが発生しました。リロードしてもう一度お試しください。"
 
@@ -1946,14 +2046,13 @@ msgid "Number of items per page:"
 msgstr "ページごとに表示する項目数:"
 
 #: setting/modules/mywp.setting.admin.posts.php:28
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:810
 msgid "All Posts"
 msgstr "すべての投稿"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:664
-#: setting/modules/mywp.setting.admin.post-edit.php:678
-#: setting/modules/mywp.setting.admin.posts.php:945
-#: setting/modules/mywp.setting.admin.posts.php:959
+#: setting/modules/mywp.setting.admin.post-edit.php:823
+#: setting/modules/mywp.setting.admin.post-edit.php:837
+#: setting/modules/mywp.setting.admin.posts.php:968
+#: setting/modules/mywp.setting.admin.posts.php:982
 #: setting/modules/mywp.setting.admin.terms.php:709
 #: setting/modules/mywp.setting.admin.terms.php:723
 #: setting/modules/mywp.setting.frontend.taxonomy-archive.php:177
@@ -1961,19 +2060,19 @@ msgstr "すべての投稿"
 msgid "The %s is not found data."
 msgstr "%s のデータが見つかりません。"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:323
+#: setting/modules/mywp.setting.admin.post-edit.php:369
 msgid "Content"
 msgstr "コンテンツ"
 
 #: setting/class.setting.block-editor.php:45
-#: setting/modules/mywp.setting.admin.post-edit.php:305
+#: setting/modules/mywp.setting.admin.post-edit.php:351
 msgid "Permalinks"
 msgstr "パーマリンク"
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1187
+#: controller/modules/mywp.controller.module.admin.posts.php:1213
 #: controller/modules/mywp.controller.module.admin.uploads.php:806
 #: setting/abstract.setting.columns.module.php:643
-#: setting/modules/mywp.setting.admin.post-edit.php:273
+#: setting/modules/mywp.setting.admin.post-edit.php:319
 #: setting/modules/mywp.setting.admin.posts.php:487
 #: setting/modules/mywp.setting.admin.uploads.php:426
 #: setting/modules/mywp.setting.admin.uploads.php:497
@@ -1981,18 +2080,17 @@ msgstr "パーマリンク"
 msgid "Title"
 msgstr "タイトル"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:36
-#: setting/modules/mywp.setting.admin.post-edit.php:261
+#: setting/modules/mywp.setting.admin.post-edit.php:307
 msgctxt "post"
 msgid "Add New"
 msgstr "新規追加"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:90
+#: setting/modules/mywp.setting.admin.post-edit.php:136
 #: setting/modules/mywp.setting.debug.post-type-structure.php:48
 msgid "Invalid Post Type"
 msgstr "無効な投稿タイプ"
 
-#: setting/modules/mywp.setting.admin.post-edit.php:90
+#: setting/modules/mywp.setting.admin.post-edit.php:136
 #: setting/modules/mywp.setting.debug.post-type-structure.php:48
 #: setting/modules/mywp.setting.frontend.taxonomy-archive.php:79
 msgid "%1$s: %2$s is not found."
@@ -2152,12 +2250,12 @@ msgid "WordPress core updates"
 msgstr "WordPress アップデート"
 
 #: setting/modules/mywp.setting.admin.dashboard.php:83
-#: setting/modules/mywp.setting.admin.post-edit.php:339
+#: setting/modules/mywp.setting.admin.post-edit.php:385
 msgid "Prevent"
 msgstr "防止"
 
 #: setting/modules/mywp.setting.admin.dashboard.php:79
-#: setting/modules/mywp.setting.admin.post-edit.php:335
+#: setting/modules/mywp.setting.admin.post-edit.php:381
 msgid "Re-arrange meta boxes"
 msgstr "メタボックスの順序変更"
 
@@ -2169,17 +2267,17 @@ msgstr "メタボックスの順序変更"
 #: setting/modules/mywp.setting.admin.nav-menu.php:70
 #: setting/modules/mywp.setting.admin.nav-menu.php:104
 #: setting/modules/mywp.setting.admin.nav-menu.php:138
-#: setting/modules/mywp.setting.admin.post-edit.php:268
-#: setting/modules/mywp.setting.admin.post-edit.php:277
-#: setting/modules/mywp.setting.admin.post-edit.php:309
-#: setting/modules/mywp.setting.admin.post-edit.php:318
-#: setting/modules/mywp.setting.admin.post-edit.php:327
-#: setting/modules/mywp.setting.admin.post-edit.php:392
-#: setting/modules/mywp.setting.admin.post-edit.php:401
-#: setting/modules/mywp.setting.admin.post-edit.php:410
-#: setting/modules/mywp.setting.admin.post-edit.php:419
-#: setting/modules/mywp.setting.admin.post-edit.php:428
-#: setting/modules/mywp.setting.admin.post-edit.php:437
+#: setting/modules/mywp.setting.admin.post-edit.php:314
+#: setting/modules/mywp.setting.admin.post-edit.php:323
+#: setting/modules/mywp.setting.admin.post-edit.php:355
+#: setting/modules/mywp.setting.admin.post-edit.php:364
+#: setting/modules/mywp.setting.admin.post-edit.php:373
+#: setting/modules/mywp.setting.admin.post-edit.php:476
+#: setting/modules/mywp.setting.admin.post-edit.php:485
+#: setting/modules/mywp.setting.admin.post-edit.php:494
+#: setting/modules/mywp.setting.admin.post-edit.php:503
+#: setting/modules/mywp.setting.admin.post-edit.php:512
+#: setting/modules/mywp.setting.admin.post-edit.php:521
 #: setting/modules/mywp.setting.admin.posts.php:392
 #: setting/modules/mywp.setting.admin.posts.php:401
 #: setting/modules/mywp.setting.admin.posts.php:410
@@ -2217,7 +2315,7 @@ msgstr "非表示"
 #: setting/modules/mywp.setting.admin.dashboard.php:66
 #: setting/modules/mywp.setting.admin.general.php:31
 #: setting/modules/mywp.setting.admin.nav-menu.php:129
-#: setting/modules/mywp.setting.admin.post-edit.php:233
+#: setting/modules/mywp.setting.admin.post-edit.php:279
 #: setting/modules/mywp.setting.admin.site-editor.php:39
 #: setting/modules/mywp.setting.admin.user-edit.php:54
 #: setting/modules/mywp.setting.frontend.general.php:30
@@ -2229,7 +2327,7 @@ msgstr "一般"
 
 #: setting/modules/mywp.setting.admin.dashboard.php:52
 #: setting/modules/mywp.setting.admin.nav-menu.php:56
-#: setting/modules/mywp.setting.admin.post-edit.php:180
+#: setting/modules/mywp.setting.admin.post-edit.php:226
 msgid "Management of meta boxes"
 msgstr "メタボックス管理"
 
@@ -2269,29 +2367,28 @@ msgstr "エラーはありません。"
 msgid "Cache"
 msgstr "キャッシュ"
 
-#: developer/modules/mywp.developer.module.dev.times.php:280
-#: developer/modules/mywp.developer.module.dev.times.php:400
+#: developer/modules/mywp.developer.module.dev.times.php:331
+#: developer/modules/mywp.developer.module.dev.times.php:451
 msgid "Total"
 msgstr "合計"
 
-#: developer/modules/mywp.developer.module.dev.times.php:267
-#: developer/modules/mywp.developer.module.dev.times.php:379
+#: developer/modules/mywp.developer.module.dev.times.php:318
+#: developer/modules/mywp.developer.module.dev.times.php:430
 msgid "Screen"
 msgstr "画面"
 
-#: developer/modules/mywp.developer.module.dev.times.php:255
-#: developer/modules/mywp.developer.module.dev.times.php:363
+#: developer/modules/mywp.developer.module.dev.times.php:306
+#: developer/modules/mywp.developer.module.dev.times.php:414
 msgid "Before Screen"
 msgstr "画面表示前"
 
-#: developer/modules/mywp.developer.module.dev.times.php:241
-#: developer/modules/mywp.developer.module.dev.times.php:341
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:781
-#: setting/modules/mywp.setting.update.bulk-post-meta.php:790
+#: developer/modules/mywp.developer.module.dev.times.php:292
+#: developer/modules/mywp.developer.module.dev.times.php:392
+#: setting/abstract.setting.bulk.module.php:874
 msgid "All"
 msgstr "すべて"
 
-#: developer/modules/mywp.developer.module.dev.times.php:208
+#: developer/modules/mywp.developer.module.dev.times.php:259
 msgid "Action Times"
 msgstr "アクションの時間"
 
@@ -2356,7 +2453,7 @@ msgstr ""
 "My WP はこのWordPressと<strong>互換性がありません</strong>。\n"
 "必要なバージョン %s。"
 
-#: core/class.helper.php:117
+#: core/class.helper.php:135
 #: setting/modules/mywp.setting.frontend.taxonomy-archive.php:100
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"

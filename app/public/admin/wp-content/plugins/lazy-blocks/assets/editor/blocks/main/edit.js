@@ -39,7 +39,7 @@ if (!options || !options.blocks || !options.blocks.length) {
 const blocksWithErrors = {};
 
 export default function BlockEdit(props) {
-	const { lazyBlockData, clientId, isSelected, attributes } = props;
+	const { lazyBlockData, clientId, isSelected, attributes, context } = props;
 
 	const isFirstLoad = useRef(true);
 	const isMounted = useRef(true);
@@ -271,10 +271,12 @@ export default function BlockEdit(props) {
 			}
 		}
 
-		hasContentControls =
-			hasContentControls ||
-			lazyBlockData.controls[k].placement === 'content' ||
-			lazyBlockData.controls[k].placement === 'both';
+		if (!lazyBlockData.controls[k].child_of) {
+			hasContentControls =
+				hasContentControls ||
+				lazyBlockData.controls[k].placement === 'content' ||
+				lazyBlockData.controls[k].placement === 'both';
+		}
 	});
 
 	// reserved attributes.
@@ -394,6 +396,7 @@ export default function BlockEdit(props) {
 					block={lazyBlockData.slug}
 					clientId={clientId}
 					attributes={attsForRender}
+					context={context}
 					withBlockProps
 				/>
 			</>
@@ -445,6 +448,7 @@ export default function BlockEdit(props) {
 							block={lazyBlockData.slug}
 							clientId={clientId}
 							attributes={attsForRender}
+							context={context}
 						/>
 					</div>
 				) : null}

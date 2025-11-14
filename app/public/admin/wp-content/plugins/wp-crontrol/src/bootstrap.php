@@ -1765,7 +1765,7 @@ function show_cron_form( $editing ) {
 								);
 							}
 							?>
-							<input type="url" class="regular-text code" id="crontrol_url" name="crontrol_url" value="<?php echo esc_url( $is_editing_url ? $existing['args'][0]['url'] : '' ); ?>" />
+							<input type="url" class="regular-text code" id="crontrol_url" name="crontrol_url" value="<?php echo esc_attr( $is_editing_url ? $existing['args'][0]['url'] : '' ); ?>" />
 							<?php do_action( 'crontrol/manage/url', $existing ); ?>
 						</td>
 					</tr>
@@ -2291,7 +2291,13 @@ function get_hook_callbacks( $name ) {
 function populate_callback( array $callback ) {
 	// If Query Monitor is installed, use its rich callback analysis.
 	if ( method_exists( '\QM_Util', 'populate_callback' ) ) {
-		return \QM_Util::populate_callback( $callback );
+		$qm_callback = \QM_Util::populate_callback( $callback );
+
+		if ( ( ! isset( $qm_callback['name'] ) ) && is_object( $callback['function'] ) && is_a( $callback['function'], 'Closure' ) ) {
+			$qm_callback['name'] = '{closure:/}';
+		}
+
+		return $qm_callback;
 	}
 
 	if ( is_string( $callback['function'] ) && ( false !== strpos( $callback['function'], '::' ) ) ) {
@@ -2564,7 +2570,7 @@ function filter_removable_query_args( array $args ) {
  * @return array<int,string> Array of hook names.
  */
 function get_persistent_core_hooks() {
-	return array(
+	$hooks = array(
 		'wp_update_plugins', // 2.7.0
 		'wp_update_themes', // 2.7.0
 		'wp_version_check', // 2.7.0
@@ -2576,8 +2582,13 @@ function get_persistent_core_hooks() {
 		'recovery_mode_clean_expired_keys', // 5.2.0
 		'wp_site_health_scheduled_check', // 5.4.0
 		'wp_https_detection', // 5.7.0
-		'wp_update_user_counts', // 6.0.0
 	);
+
+	if ( ! is_multisite() ) {
+		$hooks[] = 'wp_update_user_counts'; // 6.0.0
+	}
+
+	return $hooks;
 }
 
 /**
@@ -2586,7 +2597,7 @@ function get_persistent_core_hooks() {
  * @return array<int,string> Array of hook names.
  */
 function get_all_core_hooks() {
-	return array_merge(
+	$hooks = array_merge(
 		get_persistent_core_hooks(),
 		array(
 			'do_pings', // 2.1.0
@@ -2599,6 +2610,12 @@ function get_all_core_hooks() {
 			'wp_delete_temp_updater_backups', // 6.3.0
 		)
 	);
+
+	if ( is_multisite() ) {
+		$hooks[] = 'wp_update_user_counts'; // 6.0.0
+	}
+
+	return $hooks;
 }
 
 /**
@@ -2709,7 +2726,7 @@ function action_url_cron_event( array $args ): void {
 			home_url( '/' )
 		),
 	);
-	$response = wp_remote_request( $url, $request_args );
+	$response = wp_safe_remote_request( $url, $request_args );
 
 	if ( is_wp_error( $response ) ) {
 		throw new Exception(
