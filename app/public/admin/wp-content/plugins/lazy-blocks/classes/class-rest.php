@@ -182,7 +182,23 @@ class LazyBlocks_Rest extends WP_REST_Controller {
 	 * @return WP_REST_Response|true
 	 */
 	public function block_builder_preview_permission( $request ) {
-		return $this->get_block_data_permission( $request );
+		$base_permission = $this->get_block_data_permission( $request );
+
+		if ( is_wp_error( $base_permission ) || true !== $base_permission ) {
+			return $base_permission;
+		}
+
+		// Check if the block uses PHP output method and requires unfiltered_html capability.
+		$block = $request->get_param( 'block' );
+		if (
+			isset( $block['code_output_method'] ) &&
+			'php' === $block['code_output_method'] &&
+			! current_user_can( 'unfiltered_html' )
+		) {
+			return $this->error( 'lazy_block_cannot_execute_php', esc_html__( 'Not allowed to execute PHP code.', 'lazy-blocks' ), true );
+		}
+
+		return true;
 	}
 
 	/**
@@ -257,6 +273,9 @@ class LazyBlocks_Rest extends WP_REST_Controller {
 			}
 
 			lazyblocks()->blocks()->save_meta_boxes( $post_id, $meta );
+
+			// Clear blocks cache after updating block data.
+			lazyblocks()->blocks()->clear_blocks_cache();
 		}
 
 		return $this->success( $meta );

@@ -2,12 +2,12 @@
 # This file is distributed under the same license as the Plugins - My WP Customize Admin/Frontend - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-09-26 06:58:39+0000\n"
+"PO-Revision-Date: 2026-01-23 13:31:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/4.0.1\n"
+"X-Generator: GlotPress/4.0.3\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - My WP Customize Admin/Frontend - Stable (latest release)\n"
 
@@ -435,6 +435,10 @@ msgstr "言語を選択"
 msgid "Enter a post id"
 msgstr "投稿IDを入力"
 
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:21
+msgid "Bulk update of Posts custom fields"
+msgstr "投稿カスタムフィールドの一括更新"
+
 #: setting/modules/mywp.setting.debug.post-type-structure.php:35
 msgid "The structure of all custom fields used in the post type."
 msgstr "投稿タイプのカスタムフィールド構造"
@@ -607,6 +611,10 @@ msgstr "投稿ステータス"
 #: setting/abstract.setting.bulk.module.php:949
 msgid "Post not found."
 msgstr "投稿が見つかりませんでした。"
+
+#: setting/abstract.setting.bulk.module.php:1070
+msgid "Search results"
+msgstr "検索結果"
 
 #: setting/modules/mywp.setting.bulk.update-post-meta.php:262
 msgid "To meta value"

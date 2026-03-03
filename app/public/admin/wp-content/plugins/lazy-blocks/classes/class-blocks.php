@@ -15,6 +15,27 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class LazyBlocks_Blocks {
 	/**
+	 * Transient key prefix for blocks cache.
+	 *
+	 * @var string
+	 */
+	const BLOCKS_CACHE_KEY_PREFIX = 'lzb_blocks_cache_';
+
+	/**
+	 * Default block icon cache.
+	 *
+	 * @var string|null
+	 */
+	private static $default_icon = null;
+
+	/**
+	 * Cache hash for current request (includes controls and filter callbacks).
+	 *
+	 * @var string|null
+	 */
+	private static $cache_hash = null;
+
+	/**
 	 * Rules to sanitize SVG
 	 *
 	 * @var array
@@ -81,6 +102,24 @@ class LazyBlocks_Blocks {
 
 		// Disabled the display of statuses in the list of blocks and replaced the Draft title in the submenu to Inactive.
 		add_filter( 'views_edit-lazyblocks', array( $this, 'change_activation_views_labels' ) );
+
+		// Cache invalidation hooks.
+		add_action( 'save_post_lazyblocks', array( $this, 'clear_blocks_cache' ) );
+		add_action( 'delete_post', array( $this, 'maybe_clear_blocks_cache_on_delete' ) );
+		add_action( 'wp_trash_post', array( $this, 'maybe_clear_blocks_cache_on_delete' ) );
+		add_action( 'untrash_post', array( $this, 'maybe_clear_blocks_cache_on_delete' ) );
+
+		// Plugin and theme activation/deactivation/update cache invalidation.
+		add_action( 'activated_plugin', array( $this, 'clear_blocks_cache' ) );
+		add_action( 'deactivated_plugin', array( $this, 'clear_blocks_cache' ) );
+		add_action( 'switch_theme', array( $this, 'clear_blocks_cache' ) );
+		add_action( 'upgrader_process_complete', array( $this, 'maybe_clear_blocks_cache_on_upgrade' ), 10, 2 );
+
+		// Manual cache clear action.
+		add_action( 'admin_init', array( $this, 'handle_manual_cache_clear' ) );
+
+		// Add cache clear link to admin.
+		add_filter( 'views_edit-lazyblocks', array( $this, 'add_clear_cache_link' ) );
 
 		// add gutenberg blocks assets.
 		if ( function_exists( 'register_block_type' ) ) {
@@ -732,6 +771,16 @@ class LazyBlocks_Blocks {
 					'lazyblocks_style_block' === $meta ||
 					'lazyblocks_script_view' === $meta
 				) {
+					// Disallow PHP code for users without unfiltered_html capability.
+					if (
+						(
+							'lazyblocks_code_editor_html' === $meta ||
+							'lazyblocks_code_frontend_html' === $meta
+						) &&
+						! $this->is_allowed_unfiltered_html()
+					) {
+						continue;
+					}
 					$new_meta_value = wp_slash( $data[ $meta ] );
 				} else {
 					$new_meta_value = wp_slash( $data[ $meta ] );
@@ -890,9 +939,13 @@ class LazyBlocks_Blocks {
 	public function prepare_block_icon( $icon ) {
 		// add default icon.
 		if ( ! $icon ) {
-			// phpcs:ignore
-			$icon = file_get_contents( lazyblocks()->plugin_path() . 'assets/svg/icon-lazyblocks.svg' );
-			$icon = str_replace( 'fill="white"', 'fill="currentColor"', $icon );
+			// Use cached default icon to avoid repeated file reads.
+			if ( null === self::$default_icon ) {
+				// phpcs:ignore
+				self::$default_icon = file_get_contents( lazyblocks()->plugin_path() . 'assets/svg/icon-lazyblocks.svg' );
+				self::$default_icon = str_replace( 'fill="white"', 'fill="currentColor"', self::$default_icon );
+			}
+			$icon = self::$default_icon;
 		}
 
 		if ( $icon && strpos( $icon, 'dashicons' ) === 0 ) {
@@ -1048,24 +1101,44 @@ class LazyBlocks_Blocks {
 	public function get_blocks( $db_only = false, $no_cache = false, $keep_duplicates = false ) {
 		// fetch blocks.
 		if ( null === $this->blocks || $no_cache ) {
-			$this->blocks = array();
+			// Try to get blocks from transient cache first.
+			if ( ! $no_cache ) {
+				$cached_blocks = get_transient( $this->get_cache_key() );
 
-			// get all lazyblocks post types.
-			// Don't use WP_Query on the admin side https://core.trac.wordpress.org/ticket/18408 .
-			$all_blocks = get_posts(
-				array(
-					'post_type'      => 'lazyblocks',
-					// phpcs:ignore
-					'posts_per_page' => -1,
-					'showposts'      => -1,
-					'paged'          => -1,
-				)
-			);
+				if ( false !== $cached_blocks && is_array( $cached_blocks ) ) {
+					$this->blocks = $cached_blocks;
+				}
+			}
 
-			$all_controls = lazyblocks()->controls()->get_controls();
+			// If no cache or cache miss, fetch from database.
+			if ( null === $this->blocks || empty( $this->blocks ) || $no_cache ) {
+				$this->blocks = array();
 
-			foreach ( $all_blocks as $block ) {
-				$this->blocks[] = $this->marshal_block_data_with_controls( $block->ID, $block->post_title, null, $all_controls );
+				// get all lazyblocks post types.
+				// Don't use WP_Query on the admin side https://core.trac.wordpress.org/ticket/18408 .
+				$all_blocks = get_posts(
+					array(
+						'post_type'      => 'lazyblocks',
+						// phpcs:ignore
+						'posts_per_page' => -1,
+						'showposts'      => -1,
+						'paged'          => -1,
+					)
+				);
+
+				$all_controls = lazyblocks()->controls()->get_controls();
+
+				foreach ( $all_blocks as $block ) {
+					$this->blocks[] = $this->marshal_block_data_with_controls( $block->ID, $block->post_title, null, $all_controls );
+				}
+
+				// Cache the DB blocks.
+				// Default expiration is 1 day (86400 seconds).
+				$cache_expiration = apply_filters( 'lzb/cache_expiration', DAY_IN_SECONDS );
+
+				if ( $cache_expiration > 0 && ! $no_cache ) {
+					set_transient( $this->get_cache_key(), $this->blocks, $cache_expiration );
+				}
 			}
 		}
 
@@ -1154,6 +1227,166 @@ class LazyBlocks_Blocks {
 		}
 
 		return $custom_categories;
+	}
+
+	/**
+	 * Get the cache key for blocks.
+	 *
+	 * The key includes a hash of registered control types and filter callbacks
+	 * to automatically invalidate cache when controls or filters change
+	 * (e.g., plugin activation/deactivation, Pro version toggle).
+	 *
+	 * @return string
+	 */
+	private function get_cache_key() {
+		if ( null === self::$cache_hash ) {
+			global $wp_filter;
+
+			$all_controls = lazyblocks()->controls()->get_controls();
+
+			// Count filter callbacks for block-related filters.
+			// This ensures cache invalidates when Pro or third-party plugins add/remove filters.
+			$block_data_count     = isset( $wp_filter['lzb/block_data'] ) ? count( $wp_filter['lzb/block_data']->callbacks ) : 0;
+			$block_defaults_count = isset( $wp_filter['lzb/block_defaults'] ) ? count( $wp_filter['lzb/block_defaults']->callbacks ) : 0;
+
+			$hash_data = array(
+				'controls'               => array_keys( $all_controls ),
+				'block_data_filters'     => $block_data_count,
+				'block_defaults_filters' => $block_defaults_count,
+			);
+
+			self::$cache_hash = md5( wp_json_encode( $hash_data ) );
+		}
+
+		return self::BLOCKS_CACHE_KEY_PREFIX . self::$cache_hash;
+	}
+
+	/**
+	 * Clear blocks cache.
+	 *
+	 * This method can be called programmatically to clear the blocks cache.
+	 * It's automatically triggered when blocks are created, updated, deleted, trashed, or restored.
+	 */
+	public function clear_blocks_cache() {
+		global $wpdb;
+
+		// Delete all transients with the blocks cache prefix.
+		// This prevents orphaned transients when the cache key changes
+		// (e.g., controls or filters change between requests).
+		$transient_prefix = '_transient_' . self::BLOCKS_CACHE_KEY_PREFIX;
+		$like             = $wpdb->esc_like( $transient_prefix ) . '%';
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+		$results = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",
+				$like
+			)
+		);
+
+		if ( ! empty( $results ) ) {
+			foreach ( $results as $option_name ) {
+				// Extract the transient key from the option name.
+				$transient_key = substr( $option_name, strlen( '_transient_' ) );
+				delete_transient( $transient_key );
+			}
+		}
+
+		// Also reset in-memory cache.
+		$this->blocks = null;
+
+		// Reset cache hash.
+		self::$cache_hash = null;
+
+		/**
+		 * Fires after the blocks cache has been cleared.
+		 *
+		 * @since 4.2.0
+		 */
+		do_action( 'lzb/cache_cleared' );
+	}
+
+	/**
+	 * Clear blocks cache on post delete/trash/untrash if it's a lazyblocks post type.
+	 *
+	 * @param int $post_id - Post ID.
+	 */
+	public function maybe_clear_blocks_cache_on_delete( $post_id ) {
+		if ( 'lazyblocks' === get_post_type( $post_id ) ) {
+			$this->clear_blocks_cache();
+		}
+	}
+
+	/**
+	 * Clear blocks cache on plugin or theme updates.
+	 *
+	 * @param WP_Upgrader $upgrader - WP_Upgrader instance.
+	 * @param array       $hook_extra - Array of bulk item update data.
+	 */
+	public function maybe_clear_blocks_cache_on_upgrade( $upgrader, $hook_extra ) {
+		// Only clear cache for plugin or theme updates.
+		if ( isset( $hook_extra['type'] ) && in_array( $hook_extra['type'], array( 'plugin', 'theme' ), true ) ) {
+			$this->clear_blocks_cache();
+		}
+	}
+
+	/**
+	 * Handle manual cache clear action from admin.
+	 */
+	public function handle_manual_cache_clear() {
+		if (
+			isset( $_GET['lzb_clear_cache'] ) &&
+			isset( $_GET['_wpnonce'] ) &&
+			wp_verify_nonce( wp_unslash( $_GET['_wpnonce'] ), 'lzb_clear_cache' ) &&
+			current_user_can( 'manage_options' )
+		) {
+			$this->clear_blocks_cache();
+
+			// Redirect to remove the query args.
+			wp_safe_redirect(
+				add_query_arg(
+					array( 'lzb_cache_cleared' => '1' ),
+					remove_query_arg( array( 'lzb_clear_cache', '_wpnonce' ) )
+				)
+			);
+			exit;
+		}
+
+		// Show admin notice after cache clear.
+		if ( isset( $_GET['lzb_cache_cleared'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['lzb_cache_cleared'] ) ) ) {
+			add_action( 'admin_notices', array( $this, 'cache_cleared_notice' ) );
+		}
+	}
+
+	/**
+	 * Display admin notice after cache has been cleared.
+	 */
+	public function cache_cleared_notice() {
+		?>
+		<div class="notice notice-success is-dismissible">
+			<p><?php esc_html_e( 'Lazy Blocks cache has been cleared.', 'lazy-blocks' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Add clear cache link to the views on the blocks list page.
+	 *
+	 * @param array $views - List of views.
+	 * @return array
+	 */
+	public function add_clear_cache_link( $views ) {
+		$clear_cache_url = wp_nonce_url(
+			add_query_arg( 'lzb_clear_cache', '1' ),
+			'lzb_clear_cache'
+		);
+
+		$views['clear_cache'] = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( $clear_cache_url ),
+			esc_html__( 'Clear Cache', 'lazy-blocks' )
+		);
+
+		return $views;
 	}
 
 	/**
@@ -1588,6 +1821,12 @@ class LazyBlocks_Blocks {
 			} elseif ( isset( $code[ $custom_render_name ] ) ) {
 				// PHP output.
 				if ( isset( $code['output_method'] ) && 'php' === $code['output_method'] ) {
+					// Only check capabilities when in block builder preview context (creating/editing unsaved blocks).
+					// Saved blocks should render for all users regardless of who is viewing.
+					global $lzb_block_builder_preview;
+					if ( ! empty( $lzb_block_builder_preview ) && ! $this->is_allowed_unfiltered_html() ) {
+						return new WP_Error( 'lazy_block_cannot_execute_php', __( 'Not allowed to execute PHP code.', 'lazy-blocks' ) );
+					}
 					$result = $this->php_eval( $code[ $custom_render_name ], $attributes, $context );
 
 					// Handlebars.
@@ -1718,7 +1957,18 @@ class LazyBlocks_Blocks {
 			// Then they are removed this option and we reverted this anchor render back
 			//
 			// @link https://github.com/WordPress/gutenberg/pull/51288.
-			if ( isset( $attributes['anchor'] ) && $attributes['anchor'] ) {
+			// Check if WordPress will add the id via apply_block_supports() to avoid duplication.
+			// get_block_wrapper_attributes() merges extra_attributes with block supports, concatenating duplicate ids.
+			$wp_block_supports_attrs = array();
+			if ( class_exists( 'WP_Block_Supports' ) && ! empty( WP_Block_Supports::$block_to_render ) ) {
+				$wp_block_supports_attrs = WP_Block_Supports::get_instance()->apply_block_supports();
+			}
+
+			// Only set anchor if:
+			// 1. id is not already set from useBlockProps attributes.
+			// 2. anchor attribute exists and has a value.
+			// 3. WordPress block supports won't add it (would cause duplication).
+			if ( isset( $attributes['anchor'] ) && $attributes['anchor'] && ! isset( $array_atts['id'] ) && empty( $wp_block_supports_attrs['id'] ) ) {
 				$array_atts['id'] = esc_attr( $attributes['anchor'] );
 			}
 

@@ -77,6 +77,15 @@
          "Description": [
             ""
          ],
+         "Lazy Blocks cache has been cleared.": [
+            ""
+         ],
+         "Clear Cache": [
+            ""
+         ],
+         "Not allowed to execute PHP code.": [
+            ""
+         ],
          "Basic": [
             ""
          ],
@@ -708,6 +717,15 @@
          "Upgrade Now": [
             ""
          ],
+         "Value": [
+            ""
+         ],
+         "Choices": [
+            ""
+         ],
+         "+ Add Choice": [
+            ""
+         ],
          "Control": [
             ""
          ],
@@ -809,9 +827,6 @@
             ""
          ],
          "Allows you to change attribute output format": [
-            ""
-         ],
-         "Value": [
             ""
          ],
          "Both (Array)": [
@@ -968,12 +983,6 @@
          "Collapsed by Default": [
             ""
          ],
-         "Choices": [
-            ""
-         ],
-         "+ Add Choice": [
-            ""
-         ],
          "-- Select --": [
             ""
          ],
@@ -984,6 +993,15 @@
             ""
          ],
          "Looks like this control does not exists.": [
+            ""
+         ],
+         "Edit URL": [
+            ""
+         ],
+         "Add URL": [
+            ""
+         ],
+         "URL Editor": [
             ""
          ]
       }

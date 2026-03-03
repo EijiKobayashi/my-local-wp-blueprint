@@ -603,6 +603,7 @@ class WP_Optimize_Commands {
 	 * Returns array of translations used by the WPO plugin. Primarily used for UpdraftCentral
 	 * consumption.
 	 *
+	 * @param array $params Optional parameters for the translation request
 	 * @return array The WPO translations
 	 */
 	public function get_js_translation($params = array()) {
@@ -653,7 +654,12 @@ class WP_Optimize_Commands {
 	 * @return bool|int
 	 */
 	public function wipe_settings() {
-		return $this->options->wipe_settings();
+		$result = $this->options->wipe_settings();
+
+		$onboarding = WP_Optimize()->get_onboarding();
+		$onboarding->activate_onboarding_wizard();
+
+		return $result;
 	}
 
 	/**
@@ -1313,7 +1319,6 @@ class WP_Optimize_Commands {
 	 */
 	public function get_table_list_data() {
 		$wp_optimize = WP_Optimize();
-		$wp_optimize->get_db_info()->update_plugin_json();
 
 		$size = $this->optimizer->get_current_db_size();
 
@@ -1933,27 +1938,18 @@ class WP_Optimize_Commands {
 			// Backwards compatibility:
 			if ('wpo_otherweekly' == $schedule_type_saved_id) $schedule_type_saved_id = 'wpo_fortnightly';
 
-			$schedule_options = array(
-				array(
-					'id' => 'wpo_daily',
-					'label' => __('Daily', 'wp-optimize'),
-					'selected' => 'wpo_daily' === $schedule_type_saved_id,
-				),
-				array(
-					'id' => 'wpo_weekly',
-					'label' => __('Weekly', 'wp-optimize'),
-					'selected' => 'wpo_weekly' === $schedule_type_saved_id,
-				),
-				array(
-					'id' => 'wpo_fortnightly',
-					'label' => __('Fortnightly', 'wp-optimize'),
-					'selected' => 'wpo_fortnightly' === $schedule_type_saved_id,
-				),
-				array(
-					'id' => 'wpo_monthly',
-					'label' => __('Monthly (approx. - every 30 days)', 'wp-optimize'),
-					'selected' => 'wpo_monthly' === $schedule_type_saved_id,
-				),
+			$schedule_types = $wp_optimize::get_schedule_types();
+
+			$schedule_options = array_map(
+				function ($value, $key) use ($schedule_type_saved_id) {
+					return array(
+						'id'       => $key,
+						'label'    => $value,
+						'selected' => ($key === $schedule_type_saved_id)
+					);
+				},
+				$schedule_types,
+				array_keys($schedule_types)
 			);
 	
 			$wpo_auto_options = $this->options->get_option('auto');
@@ -1961,9 +1957,13 @@ class WP_Optimize_Commands {
 			$optimizations = $this->optimizer->sort_optimizations($this->optimizer->get_optimizations());
 	
 			$optimizations_data = array();
-	
-			foreach ($optimizations as $optimization) {
+
+			$does_server_allows_table_optimization = WP_Optimize()->does_server_allows_table_optimization();
+
+			foreach ($optimizations as $id => $optimization) {
 				if (empty($optimization->available_for_auto)) continue;
+
+				if ('optimizetables' == $id && false === $does_server_allows_table_optimization) continue;
 	
 				$auto_id = $optimization->get_auto_id();
 	
@@ -2018,7 +2018,7 @@ class WP_Optimize_Commands {
 			}
 
 			$all_provided_optimizations = array_values(WP_Optimize_Premium::get_auto_optimizations());
-			$all_schedule_types = WP_Optimize_Premium::get_schedule_types();
+			$all_schedule_types = WP_Optimize::get_schedule_types();
 			$week_days = WP_Optimize_Premium::get_week_days();
 			$days = WP_Optimize_Premium::get_days();
 			$weeks = array('1st' => __('1st', 'wp-optimize'), '2nd' => __('2nd', 'wp-optimize'));
@@ -2148,5 +2148,73 @@ class WP_Optimize_Commands {
 		$replaceable_md_tags = $system_status->get_replaceable_md_tags();
 
 		return array('report_data' => $report_data, 'replaceable_md_tags' => $replaceable_md_tags);
+	}
+
+	/**
+	 * Get data for the UDC reports.
+	 *
+	 * @return array
+	 */
+	public function get_report_data() {
+		$wp_optimize = WP_Optimize();
+		$schedule_types = WP_Optimize::get_schedule_types();
+		$scheduled_optimizations_enabled = $this->options->get_option('schedule', 'false') == 'true';
+		$schedule_frequency = '';
+		$unused_posts_images = 0;
+		$optimized_images_percentage = 0;
+
+		if (WP_Optimize::is_premium()) {
+			$wp_optimize_premium = WP_Optimize_Premium();
+			$scheduled_optimizations = $wp_optimize_premium->get_scheduled_optimizations();
+
+			if (!empty($scheduled_optimizations)) {
+				foreach ($scheduled_optimizations as $optimization) {
+					if (isset($optimization['status']) && 1 === absint($optimization['status'])) {
+						$scheduled_optimizations_enabled = true;
+						$schedule_frequency = $schedule_types[$optimization['schedule_type']] ?? '';
+						break;
+					}
+				}
+			}
+
+			// Force calculate unused images.
+			WP_Optimization_images::instance()->get_optimization_info();
+			$unused_posts_images = WP_Optimization_images::instance()->get_unused_images_count();
+			$optimized_images_percentage = WP_Optimize_Bulk_Smush::get_instance()->get_optimized_images_percentage();
+
+		} elseif ($scheduled_optimizations_enabled) {
+			$schedule_type_saved_id = $this->options->get_option('schedule-type', 'wpo_weekly');
+
+			// Backwards compatibility:
+			if ('wpo_otherweekly' == $schedule_type_saved_id) $schedule_type_saved_id = 'wpo_fortnightly';
+
+			$schedule_frequency = $schedule_types[$schedule_type_saved_id] ?? '';
+		}
+
+		$total_cleaned = $this->options->get_option('total-cleaned-previous-month');
+		$total_cleanup_size = $wp_optimize->format_size($total_cleaned);
+
+		$cache = $wp_optimize->get_page_cache();
+		$page_caching_enabled = $cache->is_enabled();
+
+		$minification_enabled = wp_optimize_minify_config()->get('enabled') ?? false;
+
+		return array(
+			'report_data' => array(
+				'is_premium' => WP_Optimize::is_premium(),
+				'scheduled_optimizations_enabled' => $scheduled_optimizations_enabled,
+				'schedule_frequency' => $schedule_frequency,
+				'total_cleaned' => $total_cleaned,
+				'total_cleanup_size' => $total_cleanup_size,
+				'unused_posts_images' => $unused_posts_images,
+				'page_caching_enabled' => $page_caching_enabled,
+				'minification_enabled' => $minification_enabled,
+				'optimized_images_percentage' => $optimized_images_percentage . '%',
+			),
+			'variables' => array(
+				/* translators: %s is the cleaned up memory size. */
+				'performance_highlights' => sprintf(__('%s saved', 'wp-optimize'), $total_cleanup_size),
+			),
+		);
 	}
 }
