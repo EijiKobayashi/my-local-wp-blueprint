@@ -122,7 +122,24 @@
       "letterSpacing": false,
       "textDecoration": false,
       "textTransform": false,
-      "fontSizes": []
+      "fontSizes": [
+        {
+          "size": "0.875rem",
+          "slug": "small"
+        },
+        {
+          "size": "1.25rem",
+          "slug": "medium"
+        },
+        {
+          "size": "1.5rem",
+          "slug": "large"
+        },
+        {
+          "size": "1.875rem",
+          "slug": "x-large"
+        }
+      ]
     },
     "layout": {
       "contentSize": "1024px",
@@ -142,20 +159,16 @@
               "slug": "small"
             },
             {
-              "size": "1.125rem",
+              "size": "1.25rem",
               "slug": "medium"
             },
             {
-              "size": "1.25rem",
+              "size": "1.5re",
               "slug": "large"
             },
             {
-              "size": "1.5rem",
-              "slug": "x-large"
-            },
-            {
               "size": "1.875rem",
-              "slug": "xx-large"
+              "slug": "x-large"
             }
           ]
         }
@@ -190,20 +203,16 @@
               "slug": "small"
             },
             {
-              "size": "1.125rem",
+              "size": "1.25rem",
               "slug": "medium"
             },
             {
-              "size": "1.25rem",
+              "size": "1.5rem",
               "slug": "large"
             },
             {
-              "size": "1.5rem",
-              "slug": "x-large"
-            },
-            {
               "size": "1.875rem",
-              "slug": "xx-large"
+              "slug": "x-large"
             }
           ]
         }
