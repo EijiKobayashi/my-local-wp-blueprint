@@ -1,15 +1,18 @@
 {
   "folders": [
     {
-      "path": "."
-    }
+      "path": ".",
+    },
+    {
+      "path": "app/public/admin/wp-content/themes/Default",
+    },
   ],
   "settings": {
     "workbench.colorCustomizations": {
       "_comment": "アクティビティバー（左端または右端にあるバー）",
       "titleBar.activeBackground": "#51BB7B",
       "activityBarBadge.background": "#51BB7B",
-      "activityBar.foreground": "#51BB7B"
+      "activityBar.foreground": "#51BB7B",
       //"textBlockQuote.background": "#51BB7B"
     },
     "editor.codeActionsOnSave": null,
@@ -23,35 +26,35 @@
     "editor.comments.ignoreEmptyLines": true,
     "editor.comments.insertSpace": false,
     "emmet.includeLanguages": {
-      "ejs": "html"
+      "ejs": "html",
     },
     "[php]": {
       //"editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
       "editor.formatOnSave": true,
-      "editor.insertSpaces": true
+      "editor.insertSpaces": true,
     },
     "[html]": {
       "editor.defaultFormatter": "j69.ejs-beautify",
       "editor.formatOnSave": true,
-      "editor.insertSpaces": true
+      "editor.insertSpaces": true,
     },
     "[scss]": {
       "editor.formatOnSave": true,
-      "editor.insertSpaces": true
+      "editor.insertSpaces": true,
     },
     "[ejs]": {
       //"editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.formatOnSave": true,
-      "editor.insertSpaces": true
+      "editor.insertSpaces": true,
     },
     "[javascript]": {
       "editor.formatOnSave": true,
-      "editor.insertSpaces": true
+      "editor.insertSpaces": true,
     },
     "[css]": {
       "editor.formatOnSave": true,
-      "editor.insertSpaces": true
-    }
-  }
+      "editor.insertSpaces": true,
+    },
+  },
 }
