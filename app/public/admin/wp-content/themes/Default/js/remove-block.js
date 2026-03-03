@@ -1,7 +1,9 @@
 wp.domReady(() => {
   // テキスト
   //wp.blocks.unregisterBlockType('core/paragraph'); // 段落
+  wp.blocks.unregisterBlockVariation('core/paragraph', 'stretchy-paragraph'); // ストレッチ
   //wp.blocks.unregisterBlockType('core/heading'); // 見出し
+  wp.blocks.unregisterBlockVariation('core/heading', 'stretchy-heading'); // ストレッチ
   //wp.blocks.unregisterBlockType('core/list'); // リスト
   //wp.blocks.unregisterBlockType('core/quote'); // 引用
   wp.blocks.unregisterBlockType('core/code'); // コード
@@ -11,6 +13,7 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockType('core/pullquote'); // プルクオート
   wp.blocks.unregisterBlockType('core/table'); // テーブル
   wp.blocks.unregisterBlockType('core/verse'); // 詩
+  wp.blocks.unregisterBlockType('core/math'); // 数式
 
   // メディア
   //wp.blocks.unregisterBlockType('core/image'); // 画像
@@ -22,6 +25,9 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockType('core/video'); // 動画
 
   // デザイン
+  wp.blocks.unregisterBlockType('core/accordion'); // アコーディオン
+  wp.blocks.unregisterBlockType('core/accordion-heading'); // アコーディオンの見出し
+  wp.blocks.unregisterBlockType('core/accordion-item'); // アコーディオンの項目
   //wp.blocks.unregisterBlockType('core/buttons'); // ボタン
   //wp.blocks.unregisterBlockType('core/columns'); // カラム
   //wp.blocks.unregisterBlockType('core/group'); // グループ
@@ -68,9 +74,19 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockType('core/read-more'); // 続きを読む
   wp.blocks.unregisterBlockType('core/comments'); // コメント
   wp.blocks.unregisterBlockType('core/post-comments-form'); // 投稿コメントフォーム
+  wp.blocks.unregisterBlockType('core/post-comments-count'); // コメント数
+  wp.blocks.unregisterBlockType('core/post-comments-link'); // コメントリンク
   wp.blocks.unregisterBlockType('core/term-description'); // タームの説明
+  wp.blocks.unregisterBlockType('core/term-count'); // タームの数
+  wp.blocks.unregisterBlockType('core/term-name'); // タームの名前
+  wp.blocks.unregisterBlockType('core/terms-query'); // タームのクエリ
   wp.blocks.unregisterBlockType('core/post-author-biography'); // 投稿者のプロフィール情報
   wp.blocks.unregisterBlockType('core/post-author-name'); // 投稿者の名前
+  wp.blocks.unregisterBlockType('core/post-time-to-read'); // 読了時間
+
+  // テーマ（テンプレートパーツ）
+  wp.blocks.unregisterBlockType('core/template-part'); // テンプレートパーツ
+  wp.blocks.unregisterBlockType('core/template'); // テンプレート
 
   // 埋め込み
   wp.blocks.unregisterBlockVariation('core/embed', '');

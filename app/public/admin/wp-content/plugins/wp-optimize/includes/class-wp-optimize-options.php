@@ -121,7 +121,7 @@ class WP_Optimize_Options {
 	 * @return array
 	 */
 	public function get_option_keys() {
-		$keys = array('defaults', 'weekly-schedule', 'schedule', 'retention-enabled', 'retention-period', 'last-optimized', 'enable-admin-menu', 'schedule-type', 'total-cleaned', 'current-cleaned', 'email-address', 'email', 'auto', 'settings', 'dismiss_page_notice_until', 'dismiss_dash_notice_until', 'enable_cache_in_admin_bar');
+		$keys = array('defaults', 'weekly-schedule', 'schedule', 'retention-enabled', 'retention-period', 'last-optimized', 'enable-admin-menu', 'schedule-type', 'total-cleaned', 'current-cleaned', 'email-address', 'email', 'auto', 'settings', 'dismiss_page_notice_until', 'dismiss_dash_notice_until', 'enable_cache_in_admin_bar', 'total-cleaned-current-month', 'total-cleaned-previous-month');
 		$filtered_option_keys = apply_filters(
 			'wp_optimize_option_keys',
 			$keys
@@ -246,14 +246,14 @@ class WP_Optimize_Options {
 		$updated_admin_bar = (isset($settings['enable-admin-bar']) && $settings['enable-admin-bar']) ? 'true' : 'false';
 		
 		// Check if the value is refreshed .
-		if ($saved_admin_bar != $updated_admin_bar) {
+		if ($saved_admin_bar !== $updated_admin_bar) {
 			// Set refresh to true as the values have changed.
 			$output['refresh'] = true;
 		}
 
 		// Save cache toolbar display setting
-		$saved_enable_cache_in_admin_bar = $this->get_option('enable_cache_in_admin_bar', true);
-		if ($saved_enable_cache_in_admin_bar != $settings['enable_cache_in_admin_bar']) {
+		$saved_enable_cache_in_admin_bar = (bool) $this->get_option('enable_cache_in_admin_bar', true);
+		if ($saved_enable_cache_in_admin_bar !== (bool) $settings['enable_cache_in_admin_bar']) {
 			$this->update_option('enable_cache_in_admin_bar', $settings['enable_cache_in_admin_bar']);
 			$output['refresh'] = true;
 		}
@@ -315,6 +315,9 @@ class WP_Optimize_Options {
 			'wpo-ignores-table-deletion-warning',
 			'wpo-ignores-post-meta-deletion-warning',
 			'wpo-ignores-orphaned-relationship-data-deletion-warning',
+			'wpo-hide-minify-information-notice',
+			'wpo_hide_css_merging_notice',
+			'wpo_hide_js_merging_notice',
 		);
 		
 		foreach ($settings as $setting) {
@@ -341,9 +344,9 @@ class WP_Optimize_Options {
 		// phpcs:disable
 		// WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Only hardcoded strings are used
 		if (is_multisite()) {
-			$result = $wpdb->query("DELETE FROM `{$wpdb->sitemeta}` WHERE `meta_key` LIKE 'wp-optimize-mu-%' OR `meta_key` IN ($keys)");
+			$result = $wpdb->query("DELETE FROM `{$wpdb->sitemeta}` WHERE `meta_key` LIKE 'wp-optimize-mu%' OR `meta_key` IN ($keys)");
 		} else {
-			$result = $wpdb->query("DELETE FROM `{$wpdb->options}` WHERE `option_name` LIKE 'wp-optimize-%' OR `option_name` IN ($keys)");
+			$result = $wpdb->query("DELETE FROM `{$wpdb->options}` WHERE `option_name` LIKE 'wp-optimize%' OR `option_name` IN ($keys)");
 		}
 		// phpcs:enable
 
@@ -466,6 +469,16 @@ class WP_Optimize_Options {
 			$this->update_option('total-cleaned', '0');
 		}
 
+		// For UDC monthly reports.
+		if (false === $this->get_option('total-cleaned-current-month')) {
+			$this->update_option('total-cleaned-current-month', '0');
+		}
+
+		// For UDC monthly reports.
+		if (false === $this->get_option('total-cleaned-previous-month')) {
+			$this->update_option('total-cleaned-previous-month', '0');
+		}
+
 		$optimizer = WP_Optimize()->get_optimizer();
 
 		$optimizations = $optimizer->get_optimizations();
@@ -515,7 +528,7 @@ class WP_Optimize_Options {
 		// Save additional auto backup option values.
 		foreach ($settings as $key => $value) {
 			if (preg_match('/enable\-auto\-backup\-/', $key)) {
-				$value = ('true' == $value) ? 'true' : 'false';
+				$value = ('true' === $value) ? 'true' : 'false';
 				$this->update_option($key, $value);
 			}
 		}

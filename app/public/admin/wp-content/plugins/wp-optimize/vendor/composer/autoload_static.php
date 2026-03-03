@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43
+class ComposerStaticInit652feadfc531fc3984030b8f5894ec1a
 {
     public static $files = array (
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
@@ -166,6 +166,7 @@ class ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'HTTP_ConditionalGet' => __DIR__ . '/..' . '/mrclay/minify/lib/HTTP/ConditionalGet.php',
         'HTTP_Encoder' => __DIR__ . '/..' . '/mrclay/minify/lib/HTTP/Encoder.php',
+        'LibOnboardingWizard' => __DIR__ . '/..' . '/team-updraft/lib-onboarding-wizard/composer-plugin-extras/plugin.php',
         'Minify' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify.php',
         'Minify\\App' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/App.php',
         'Minify\\Config' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/Config.php',
@@ -215,11 +216,6 @@ class ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43
         'Minify_YUICompressor' => __DIR__ . '/..' . '/mrclay/minify/lib/Minify/YUICompressor.php',
         'MrClay\\Cli' => __DIR__ . '/..' . '/mrclay/minify/lib/MrClay/Cli.php',
         'MrClay\\Cli\\Arg' => __DIR__ . '/..' . '/mrclay/minify/lib/MrClay/Cli/Arg.php',
-        'lessc' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_classic' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_compressed' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_lessjs' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_parser' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
         'simplehtmldom\\Debug' => __DIR__ . '/..' . '/simplehtmldom/simplehtmldom/Debug.php',
         'simplehtmldom\\HtmlDocument' => __DIR__ . '/..' . '/simplehtmldom/simplehtmldom/HtmlDocument.php',
         'simplehtmldom\\HtmlElement' => __DIR__ . '/..' . '/simplehtmldom/simplehtmldom/HtmlElement.php',
@@ -230,10 +226,10 @@ class ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6bbc2cc5c8a51250a5d547a5e4b23c43::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit652feadfc531fc3984030b8f5894ec1a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit652feadfc531fc3984030b8f5894ec1a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit652feadfc531fc3984030b8f5894ec1a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit652feadfc531fc3984030b8f5894ec1a::$classMap;
 
         }, null, ClassLoader::class);
     }

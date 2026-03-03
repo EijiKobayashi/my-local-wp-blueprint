@@ -12,8 +12,8 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockStyle('core/quote', 'large');
 
   // ボタン
-  wp.blocks.unregisterBlockStyle('core/button', 'fill');
-  wp.blocks.unregisterBlockStyle('core/button', 'outline');
+  //wp.blocks.unregisterBlockStyle('core/button', 'fill');
+  //wp.blocks.unregisterBlockStyle('core/button', 'outline');
 
   // 抜粋
   wp.blocks.unregisterBlockStyle('core/pullquote', 'default');
@@ -24,6 +24,7 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockVariation('core/group', 'group-row');
   wp.blocks.unregisterBlockVariation('core/group', 'group-stack');
   wp.blocks.unregisterBlockVariation('core/group', 'group-grid');
+  wp.blocks.unregisterBlockVariation('core/group', 'layout');
 
   // 区切り
   wp.blocks.unregisterBlockStyle('core/separator', 'default');
@@ -38,4 +39,17 @@ wp.domReady(() => {
   wp.blocks.unregisterBlockStyle('core/social-links', 'default');
   wp.blocks.unregisterBlockStyle('core/social-links', 'logos-only');
   wp.blocks.unregisterBlockStyle('core/social-links', 'pill-shape');
+
+  // "core/group" の "layout" パネルを削除
+  wp.blocks.registerBlockVariation('core/group', {
+    name: 'no-layout',
+    title: 'No Layout',
+    scope: ['block'],
+    attributes: {
+      layout: undefined,
+    },
+    isDefault: false,
+    innerBlocks: [],
+    icon: null,
+  });
 });

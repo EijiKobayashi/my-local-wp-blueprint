@@ -1221,7 +1221,8 @@ var WP_Optimize_Smush = function() {
 
 		data = {
 			selected_image: selected_image,
-			smush_options: smush_options
+			smush_options: smush_options,
+			skip_notice: true
 		}
 
 		block_ui(wposmush.compress_single_image_dialog, {}, false, true);
@@ -1309,7 +1310,9 @@ var WP_Optimize_Smush = function() {
 				}
 			}
 		} else {
-			block_ui(resp.error_message);
+			// Update the error message to be user-friendly
+			if (/exceeded_max_filesize/.test(resp.error_message)) resp.error_message = wposmush.exceeded_max_filesize
+			block_ui(resp.error_message, {}, 4000);
 		}
 	}
 
@@ -1448,7 +1451,12 @@ var WP_Optimize_Smush = function() {
 
 		json_parse = ('undefined' === typeof json_parse) ? true : json_parse;
 
-		data = (data.hasOwnProperty('skip_notice') && Object.keys(data).length === 1) || $.isEmptyObject(data) ? {'use_cache' : false} : data;
+		var skip_notice = data.hasOwnProperty('skip_notice');
+		var data_has_only_skip_notice = skip_notice && 1 === Object.keys(data).length;
+		var is_data_empty = $.isEmptyObject(data);
+
+		data = is_data_empty ? {'use_cache' : false} : data;
+		if (data_has_only_skip_notice) data.use_cache = false;
 
 		(function(single_callback, _keep, _unique) {
 			heartbeat_agents.push(heartbeat.add_agent({

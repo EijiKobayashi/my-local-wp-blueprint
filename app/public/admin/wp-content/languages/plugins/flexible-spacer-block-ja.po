@@ -2,24 +2,24 @@
 # This file is distributed under the same license as the Plugins - Flexible Spacer Block - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-07-24 15:31:35+0000\n"
+"PO-Revision-Date: 2026-03-03 07:11:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/4.0.0-rc.1\n"
+"X-Generator: GlotPress/4.0.3\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - Flexible Spacer Block - Stable (latest release)\n"
 
-#: classes/class-options.php:326
+#: classes/class-options.php:327
 msgid "Default Value: Fill in all fields."
 msgstr "デフォルト値: すべての値を入力してください。"
 
-#: classes/class-options.php:288
+#: classes/class-options.php:289
 msgid "Responsive Setting: the screen width value in the left field must be equal to or smaller than the value in the right field."
 msgstr "レスポンシブ設定: 左側のフィールドの画面幅の値は、右側のフィールドの値と同じかそれ以下でなければなりません。"
 
-#: classes/class-options.php:278
+#: classes/class-options.php:279
 msgid "Responsive Setting: Fill in both fields."
 msgstr "レスポンシブ設定: 両方の値を入力してください。"
 
@@ -52,11 +52,11 @@ msgctxt "block title"
 msgid "Flexible Spacer"
 msgstr "フレキシブルスペーサー"
 
-#: classes/class-options.php:255
+#: classes/class-options.php:256
 msgid "The block will always be visible even when it is not selected."
 msgstr "ブロックが選択されていない状態でも常に表示されます。"
 
-#: classes/class-options.php:253
+#: classes/class-options.php:254
 msgid "Always show blocks in the block editor"
 msgstr "ブロックエディターでブロックを常に可視状態にする"
 
@@ -85,17 +85,17 @@ msgid "Enter the screen width (breakpoint) that will be the basis for switching 
 msgstr "各デバイスの切り替えの基準となる画面幅 (ブレークポイント) を入力します。"
 
 #: classes/class-options.php:157 classes/class-options.php:224
-#: build/js/index.js:1 src/edit.js:211
+#: build/js/index.js:1 src/edit.js:243
 msgid "Desktop"
 msgstr "デスクトップ"
 
 #: classes/class-options.php:147 classes/class-options.php:204
-#: build/js/index.js:1 src/edit.js:197
+#: build/js/index.js:1 src/edit.js:229
 msgid "Tablet"
 msgstr "タブレット"
 
 #: classes/class-options.php:137 classes/class-options.php:184
-#: build/js/index.js:1 src/edit.js:183
+#: build/js/index.js:1 src/edit.js:215
 msgid "Mobile"
 msgstr "モバイル"
 
@@ -107,7 +107,7 @@ msgstr "ブロックエディターの設定"
 msgid "Responsive Setting"
 msgstr "レスポンシブ設定"
 
-#: classes/class-init.php:37
+#: classes/class-init.php:37 build/js/index.js:1 src/edit.js:285
 msgid "Settings"
 msgstr "設定"
 
