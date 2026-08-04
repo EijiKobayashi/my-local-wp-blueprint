@@ -138,13 +138,13 @@ final class MywpDeveloper {
 
     $action = strip_tags( $action );
 
-    printf( 'debug_action = %s' , $action );
+    echo esc_html( sprintf( 'debug_action = %s' , $action ) );
     echo "\n";
 
-    printf( 'has_action = %s' , has_action( $action ) );
+    echo esc_html( sprintf( 'has_action = %s' , has_action( $action ) ) );
     echo "\n";
 
-    printf( 'did_action = %s' , did_action( $action ) );
+    echo esc_html( sprintf( 'did_action = %s' , did_action( $action ) ) );
     echo "\n";
 
     echo 'actions = ' . "\n";
@@ -155,7 +155,7 @@ final class MywpDeveloper {
 
       foreach( $filter_to_func as $func ) {
 
-        printf( '  (%d) %s' , $func['priority'] , $func['print_format'] );
+        echo esc_html( sprintf( '  (%d) %s' , $func['priority'] , $func['print_format'] ) );
         echo "\n";
 
       }
@@ -180,10 +180,10 @@ final class MywpDeveloper {
 
     $filter = strip_tags( $filter );
 
-    printf( 'debug_filter = %s' , $filter );
+    echo esc_html( sprintf( 'debug_filter = %s' , $filter ) );
     echo "\n";
 
-    printf( 'has_filter = %s' , has_filter( $filter ) );
+    echo esc_html( sprintf( 'has_filter = %s' , has_filter( $filter ) ) );
     echo "\n";
 
     echo 'filters = ' . "\n";
@@ -194,7 +194,7 @@ final class MywpDeveloper {
 
       foreach( $filter_to_func as $func ) {
 
-        printf( '  (%d) %s' , $func['priority'] , $func['print_format'] );
+        echo esc_html( sprintf( '  (%d) %s' , $func['priority'] , $func['print_format'] ) );
         echo "\n";
 
       }
@@ -342,7 +342,7 @@ final class MywpDeveloper {
 
       }
 
-      printf( '%s: %s' , $functions , $exists );
+      echo esc_html( sprintf( '%s: %s' , $functions , $exists ) );
       echo "\n";
 
     }
@@ -379,7 +379,7 @@ final class MywpDeveloper {
 
       }
 
-      printf( '%s: %s' , $defines , $exists );
+      echo esc_html( sprintf( '%s: %s' , $defines , $exists ) );
       echo "\n";
 
     }

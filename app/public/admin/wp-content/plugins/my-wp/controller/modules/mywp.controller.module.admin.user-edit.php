@@ -435,7 +435,7 @@ final class MywpControllerModuleAdminUserEdit extends MywpControllerAbstractModu
 
       $field_name = strip_tags( $field_name );
 
-      echo "body.wp-admin .user-{$field_name}-wrap { display: none; }";
+      printf( 'body.wp-admin .user-%s-wrap { display: none; }' , esc_attr( $field_name ) );
 
     }
 

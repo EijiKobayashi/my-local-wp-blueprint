@@ -75,7 +75,7 @@ final class MywpSettingScreenDebugTranslations extends MywpAbstractSettingModule
         <?php foreach( $all_translations as $translation_domain => $translation_object ) : ?>
           <tr>
             <th>
-              <?php echo $translation_domain; ?><br />
+              <?php echo esc_html( $translation_domain ); ?><br />
             </th>
             <td>
               <?php if( $translation_object instanceof MO ) : ?>
@@ -88,7 +88,7 @@ final class MywpSettingScreenDebugTranslations extends MywpAbstractSettingModule
 
               <?php endif; ?>
 
-              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php print_r( $translation_object->entries ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php echo esc_textarea( print_r( $translation_object->entries ) ); ?></textarea>
 
             </td>
           </tr>

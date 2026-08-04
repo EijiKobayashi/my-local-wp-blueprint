@@ -68,9 +68,9 @@ final class MywpSettingScreenDebugCrons extends MywpAbstractSettingModule {
               <?php echo esc_html( key( $cron ) ); ?>
             </th>
             <td>
-              <p><?php echo date( $timezone_format , $timestamp + MywpHelper::get_gmt_offset_seconds() ); ?> (<?php echo $timezone; ?>)</p>
+              <p><?php echo esc_html( date( $timezone_format , $timestamp + MywpHelper::get_gmt_offset_seconds() ) ); ?> (<?php echo esc_html( $timezone ); ?>)</p>
               <input type="text" readonly="readonly" class="large-text" value="<?php echo esc_attr( $timestamp ); ?>" /><br />
-              <?php _e( 'RAW' ); ?>: <?php echo date( $timezone_format , $timestamp ); ?> (<?php _e( 'UTC' ); ?>)
+              <?php _e( 'RAW' ); ?>: <?php echo esc_html( date( $timezone_format , $timestamp ) ); ?> (<?php _e( 'UTC' ); ?>)
             </td>
             <td>
               <textarea readonly="readonly" class="large-text" style="height: 160px;"><?php echo esc_textarea( print_r( $cron , true ) ); ?></textarea>

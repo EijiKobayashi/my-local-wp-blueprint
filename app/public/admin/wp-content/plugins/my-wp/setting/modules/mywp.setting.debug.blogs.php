@@ -77,24 +77,24 @@ final class MywpSettingScreenDebugBlogs extends MywpAbstractSettingModule {
         <?php foreach( $all_blogs as $blog ) : ?>
           <tr>
             <th>
-              [<?php echo $blog->site_id; ?>]
+              [<?php echo esc_html( $blog->site_id ); ?>]
             </th>
             <td>
-              [<?php echo $blog->blog_id; ?>]
-              <?php echo $blog->domain; ?>
-              <?php echo $blog->path; ?>
+              [<?php echo esc_html( $blog->blog_id ); ?>]
+              <?php echo esc_html( $blog->domain ); ?>
+              <?php echo esc_html( $blog->path ); ?>
             </td>
             <td>
-              <?php echo $blog->last_updated; ?> (<?php echo $blog->registered; ?>)
+              <?php echo esc_html( $blog->last_updated ); ?> (<?php echo esc_html( $blog->registered ); ?>)
             </td>
             <td>
-              <?php echo $blog->public; ?>
+              <?php echo esc_html( $blog->public ); ?>
             </td>
             <td>
-              <?php echo $blog->deleted; ?>
+              <?php echo esc_html( $blog->deleted ); ?>
             </td>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $blog ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $blog , true ) ); ?></textarea>
             </td>
           </tr>
         <?php endforeach; ?>

@@ -140,7 +140,6 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
   }
 
-
   public static function mywp_setting_print_item_content( $item ) {
 
     if( empty( $item ) ) {
@@ -802,28 +801,6 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
     }
     #setting-screen-toolbar-item-icons {
       display: none;
-    }
-    .setting-screen-toolbar-item-icons .available-icon-title {
-      font-weight: bold;
-      margin: 0 0 10px 0;
-      padding: 0;
-    }
-    .setting-screen-toolbar-item-icons ul {
-      margin: 0 0 30px 0;
-      padding: 0;
-    }
-    .setting-screen-toolbar-item-icons ul li {
-      margin: 4px;
-      padding: 0;
-      display: inline-block;
-    }
-    .wp-core-ui .setting-screen-toolbar-item-icons ul li.current button {
-      background: #F49C31;
-      border-color: #F49C31;
-      color: #fff;
-    }
-    .setting-screen-toolbar-item-icons ul li button .dashicons-before:before {
-      padding-top: 3px;
     }
     </style>
     <?php
@@ -1644,13 +1621,13 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
       <input type="hidden" class="change-icon-toolbar-item-id" value="" />
 
-      <div class="setting-screen-toolbar-item-icons">
+      <div class="setting-screen-item-icons">
 
         <div class="icons-wp">
 
           <?php foreach( $icons['categories'] as $icon_category ) : ?>
 
-            <p id="available-icon-title-<?php echo esc_attr( $icon_category['id'] ); ?>" class="available-icon-title"><?php echo $icon_category['title']; ?></p>
+            <p id="available-icon-title-<?php echo esc_attr( $icon_category['id'] ); ?>" class="available-icon-title"><?php echo esc_html( $icon_category['title'] ); ?></p>
 
             <ul>
               <?php foreach( $icons['all'] as $icon ) : ?>
@@ -2313,29 +2290,29 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
 
           <?php if( in_array( $item->item_type , array( 'default' ) ) ) : ?>
 
-            <span class="item-title"><?php echo strip_tags( strip_shortcodes( $item->item_link_title ) ); ?></span>
+            <span class="item-title"><?php echo esc_html( strip_tags( strip_shortcodes( $item->item_link_title ) ) ); ?></span>
 
           <?php endif; ?>
 
           <?php if( $item->item_type === 'group' ) : ?>
 
-            <span class="item-title"><?php _e( 'Group' , 'my-wp' ); ?> (<?php echo $item->item_default_id; ?>)</span>
+            <span class="item-title"><?php _e( 'Group' , 'my-wp' ); ?> (<?php echo esc_html( $item->item_default_id ); ?>)</span>
 
           <?php endif; ?>
 
           <?php if( $item->item_type === 'custom' ) : ?>
 
-            <span class="item-title"><?php echo wp_html_excerpt( $item->item_custom_html , 20 ); ?></span>
+            <span class="item-title"><?php echo esc_html( wp_html_excerpt( $item->item_custom_html , 20 ) ); ?></span>
             <span class="item-default-title">(<?php _e( 'Custom HTML' ); ?>)</span>
 
           <?php elseif( $item->item_type === 'link' ) : ?>
 
-            <span class="item-title"><?php echo strip_tags( strip_shortcodes( $item->item_link_title ) ); ?></span>
+            <span class="item-title"><?php echo esc_html( strip_tags( strip_shortcodes( $item->item_link_title ) ) ); ?></span>
             <span class="item-default-title">(<?php _e( 'Custom Link' ); ?>)</span>
 
           <?php elseif( ! empty( $item->item_default_title ) ) : ?>
 
-            <span class="item-default-title">(<?php echo $item->item_default_title; ?>)</span>
+            <span class="item-default-title">(<?php echo esc_html( $item->item_default_title ); ?>)</span>
 
           <?php endif; ?>
 
@@ -2421,7 +2398,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
                   <td>
                     <code>
                       <?php if( ! empty( $item->item_capability ) ) : ?>
-                        <?php echo $item->item_capability; ?>
+                        <?php echo esc_html( $item->item_capability ); ?>
                       <?php else : ?>
                         -
                       <?php endif; ?>
@@ -2432,13 +2409,13 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
                 <tr>
                   <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
                   <td>
-                    <a href="<?php echo esc_url( do_shortcode( $item->item_link_url ) ); ?>"><?php echo $item->item_link_url; ?></a>
+                    <a href="<?php echo esc_url( do_shortcode( $item->item_link_url ) ); ?>"><?php echo esc_html( $item->item_link_url ); ?></a>
                   </td>
                 </tr>
                 <tr>
                   <th><?php _e( 'LI id' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_li_id; ?>
+                    <?php echo esc_html( $item->item_li_id ); ?>
                   </td>
                 </tr>
                 <tr>
@@ -2448,7 +2425,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
                       <ul>
                         <?php foreach( $item->item_meta as $item_meta_key => $item_meta_val ) : ?>
                           <li>
-                            <?php echo $item_meta_key; ?>: <?php echo $item_meta_val; ?>
+                            <?php echo esc_html( $item_meta_key ); ?>: <?php echo esc_html( $item_meta_val ); ?>
                             <span><input type="hidden" class="item_meta_key" value="<?php echo esc_attr( $item_meta_key ); ?>" /></span>
                             <span><input type="hidden" class="item_meta_value" value="<?php echo esc_attr( $item_meta_val ); ?>" /></span>
                           </li>
@@ -2478,7 +2455,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
                   <td>
                     <code>
                       <?php if( ! empty( $item->item_capability ) ) : ?>
-                        <?php echo $item->item_capability; ?>
+                        <?php echo esc_html( $item->item_capability ); ?>
                       <?php else : ?>
                         -
                       <?php endif; ?>
@@ -2489,7 +2466,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
                 <tr>
                   <th><?php _e( 'LI id' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_li_id; ?>
+                    <?php echo esc_html( $item->item_li_id ); ?>
                   </td>
                 </tr>
                 <tr>
@@ -2499,7 +2476,7 @@ abstract class MywpAbstractSettingToolbarModule extends MywpAbstractSettingModul
                       <ul>
                         <?php foreach( $item->item_meta as $item_meta_key => $item_meta_val ) : ?>
                           <li>
-                            <?php echo $item_meta_key; ?>: <?php echo $item_meta_val; ?>
+                            <?php echo esc_html( $item_meta_key ); ?>: <?php echo esc_html( $item_meta_val ); ?>
                             <span><input type="hidden" class="item_meta_key" value="<?php echo esc_attr( $item_meta_key ); ?>" /></span>
                             <span><input type="hidden" class="item_meta_value" value="<?php echo esc_attr( $item_meta_val ); ?>" /></span>
                           </li>

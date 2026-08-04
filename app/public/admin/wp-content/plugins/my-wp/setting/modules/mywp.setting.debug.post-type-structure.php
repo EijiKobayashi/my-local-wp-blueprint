@@ -45,7 +45,7 @@ final class MywpSettingScreenDebugPostTypeStructure extends MywpAbstractSettingM
 
     if( empty( $current_setting_post_type ) ) {
 
-      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post Type' , 'my-wp' ) , $current_setting_post_type_id );
+      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post Type' , 'my-wp' ) , esc_html( $current_setting_post_type_id ) );
 
       return false;
 

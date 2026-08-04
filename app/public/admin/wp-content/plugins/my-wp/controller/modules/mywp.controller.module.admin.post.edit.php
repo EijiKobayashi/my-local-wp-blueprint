@@ -1100,6 +1100,8 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
       </select>
 
+      <input type="hidden" name="visibility" value="" />
+
     </div>
 
     <?php

@@ -80,10 +80,10 @@ final class MywpSettingScreenDebugSiteOptions extends MywpAbstractSettingModule 
           <?php endif; ?>
           <tr>
             <th>
-              [<?php echo $site_option->site_id; ?>]
+              [<?php echo esc_html( $site_option->site_id ); ?>]
             </th>
             <th>
-              [<?php echo $site_option->meta_id; ?>] <?php echo $site_option->meta_key; ?>
+              [<?php echo esc_html( $site_option->meta_id ); ?>] <?php echo esc_html( $site_option->meta_key ); ?>
               <?php if( is_array( $meta_value ) or is_object( $meta_value ) ) : ?>
                 <p><code style="background-color: #F4EFCC;">Serialize</code></p>
               <?php elseif( ! empty( $meta_value_json ) && is_object( $meta_value_json ) ) : ?>
@@ -91,15 +91,15 @@ final class MywpSettingScreenDebugSiteOptions extends MywpAbstractSettingModule 
               <?php endif; ?>
             </th>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $site_option->meta_value ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $site_option->meta_value , true ) ); ?></textarea>
             </td>
             <td>
               <?php if( is_array( $meta_value ) or is_object( $meta_value ) ) : ?>
-                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $meta_value ); ?></textarea>
+                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $meta_value , true ) ); ?></textarea>
               <?php elseif( ! empty( $meta_value_json ) && is_object( $meta_value_json ) ) : ?>
-                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $meta_value_json ); ?></textarea>
+                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $meta_value_json , true ) ); ?></textarea>
               <?php else : ?>
-                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_html( $meta_value ); ?></textarea>
+                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( $meta_value ); ?></textarea>
               <?php endif; ?>
             </td>
           </tr>

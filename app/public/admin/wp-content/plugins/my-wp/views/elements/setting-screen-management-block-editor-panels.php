@@ -57,7 +57,7 @@ $current_block_editor_panels_setting_data = MywpSettingBlockEditor::get_current_
         <?php endif; ?>
 
         <tr class="block-editor-panel-tr">
-          <th><?php echo $block_editor_panel['title']; ?></th>
+          <th><?php echo esc_html( $block_editor_panel['title'] ); ?></th>
           <td>
             <select name="mywp[data][block_editor_panels][<?php echo esc_attr( $block_editor_panel_id ); ?>][action]" class="block-editor-panel-action-select">
               <option value="" <?php selected( $action , '' ); ?>></option>

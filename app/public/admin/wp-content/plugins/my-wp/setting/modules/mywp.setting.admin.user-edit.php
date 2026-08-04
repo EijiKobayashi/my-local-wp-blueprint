@@ -56,7 +56,7 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
           <tr>
-            <th><?php echo $field_label; ?></th>
+            <th><?php echo esc_html( $field_label ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][<?php echo esc_attr( $field_name ); ?>]" class="<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data[ $field_name ] , true ); ?> />
@@ -93,7 +93,7 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
               <?php $checked = true; ?>
             <?php endif; ?>
             <tr>
-              <th><?php echo strip_tags( $field_label ); ?></th>
+              <th><?php echo esc_html( strip_tags( $field_label ) ); ?></th>
               <td>
                 <label>
                   <input type="checkbox" name="mywp[data][hide_contact_fields][<?php echo esc_attr( $field_name ); ?>]" class="hide_contact_fields-<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $checked , true ); ?> />

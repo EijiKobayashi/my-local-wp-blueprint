@@ -39,7 +39,7 @@ final class MywpDeveloperModuleDebugtrace extends MywpDeveloperAbstractModule {
 
     echo 'debug_backtrace() = ';
 
-    print_r( debug_backtrace() );
+    echo esc_html( print_r( debug_backtrace() , true ) );
 
   }
 
@@ -53,7 +53,7 @@ final class MywpDeveloperModuleDebugtrace extends MywpDeveloperAbstractModule {
 
     }
 
-    printf( '<textarea readonly="readonly">%s</textarea>' , print_r( debug_backtrace() , true ) );
+    printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( debug_backtrace() , true ) ) );
 
   }
 

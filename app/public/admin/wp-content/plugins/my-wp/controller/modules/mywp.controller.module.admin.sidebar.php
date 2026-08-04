@@ -1086,7 +1086,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
       } else {
 
-          echo do_action( 'mywp_controller_admin_sidebar_print_sidebar_item_icon' , $item );
+        echo do_action( 'mywp_controller_admin_sidebar_print_sidebar_item_icon' , $item );
 
       }
 

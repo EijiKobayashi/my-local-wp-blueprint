@@ -66,7 +66,7 @@ final class MywpSettingScreenSiteGeneral extends MywpAbstractSettingModule {
               <?php _e( 'Hide' ); ?>
             </label>
             <p>
-              <code><?php echo self::get_xmailer_header(); ?></code>
+              <code><?php echo esc_html( self::get_xmailer_header() ); ?></code>
             </p>
           </td>
         </tr>
@@ -78,7 +78,7 @@ final class MywpSettingScreenSiteGeneral extends MywpAbstractSettingModule {
                 <input type="checkbox" name="mywp[data][disable_user_admin]" class="disable_user_admin" value="1" <?php checked( $setting_data['disable_user_admin'] , true ); ?> />
                 <?php _e( 'Disable' , 'my-wp' ); ?>
               </label>
-              <a href="<?php echo esc_url( user_admin_url() ); ?>" target="_blank"><?php echo user_admin_url(); ?></a>
+              <a href="<?php echo esc_url( user_admin_url() ); ?>" target="_blank"><?php echo esc_html( user_admin_url() ); ?></a>
             </td>
           </tr>
         <?php endif; ?>

@@ -113,7 +113,7 @@ final class MywpTaxonomyModuleMywpTerm extends MywpTaxonomyAbstractModule {
 
       $edit_url = add_query_arg( array( 'taxonomy' => $term->taxonomy , 'term' => $term->slug , 'post_type' => $post_type , 'post_status' => 'publish' ) , admin_url( 'edit.php' ) );
 
-      printf( '<a href="%s">%d</a>' , esc_url( $edit_url ) , $count );
+      printf( '<a href="%s">%d</a>' , esc_url( $edit_url ) , esc_html( $count ) );
 
     } elseif( $column_name === 'draft' ) {
 
@@ -131,7 +131,7 @@ final class MywpTaxonomyModuleMywpTerm extends MywpTaxonomyAbstractModule {
 
       $edit_url = add_query_arg( array( 'taxonomy' => $term->taxonomy , 'term' => $term->slug , 'post_type' => $post_type , 'post_status' => 'draft' ) , admin_url( 'edit.php' ) );
 
-      printf( '<a href="%s">%d</a>' , esc_url( $edit_url ) , $count );
+      printf( '<a href="%s">%d</a>' , esc_url( $edit_url ) , esc_html( $count ) );
 
     }
 

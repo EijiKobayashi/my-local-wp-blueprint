@@ -288,7 +288,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
 
       <tr class="result-item item item-<?php echo esc_attr( $post_id ); ?> wait">
         <th class="id">
-          <?php echo $post_id; ?>
+          <?php echo esc_html( $post_id ); ?>
           <input type="hidden" class="item-id" value="<?php echo esc_attr( $post_id ); ?>" />
         </th>
         <td class="is-process">

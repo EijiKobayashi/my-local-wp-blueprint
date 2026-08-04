@@ -292,7 +292,7 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
       MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-      echo $comment_id;
+      echo esc_html( $comment_id );
 
     } elseif( $column_id === 'comment_author' ) {
 
@@ -300,7 +300,7 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
       MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-      echo $comment->comment_author;
+      echo esc_html( $comment->comment_author );
 
     } elseif( $column_id === 'comment_author_email' ) {
 
@@ -308,7 +308,7 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
       MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-      echo $comment->comment_author_email;
+      echo esc_html( $comment->comment_author_email );
 
     } elseif( $column_id === 'comment_author_url' ) {
 
@@ -316,7 +316,7 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
       MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-      echo $comment->comment_author_url;
+      echo esc_html( $comment->comment_author_url );
 
     }
 

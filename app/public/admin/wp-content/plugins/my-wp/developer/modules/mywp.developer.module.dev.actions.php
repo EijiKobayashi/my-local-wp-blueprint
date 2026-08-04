@@ -69,7 +69,7 @@ final class MywpDeveloperModuleDevActions extends MywpDeveloperAbstractModule {
 
     foreach( $actions as $wp_action => $count ) {
 
-      echo ' - ' . $wp_action . "\n";
+      echo esc_html( ' - ' . $wp_action ) . "\n";
 
       $filter_to_func = MywpDeveloper::get_filter_to_func( $wp_action );
 
@@ -78,7 +78,7 @@ final class MywpDeveloperModuleDevActions extends MywpDeveloperAbstractModule {
         foreach( $filter_to_func as $func ) {
 
           echo '  ';
-          printf( '(%d) %s' , $func['priority'] , $func['print_format'] );
+          echo esc_html( sprintf( '(%d) %s' , $func['priority'] , $func['print_format'] ) );
           echo "\n";
 
         }
@@ -115,7 +115,7 @@ final class MywpDeveloperModuleDevActions extends MywpDeveloperAbstractModule {
 
       }
 
-      echo '<li class="core-action ' . esc_attr( $add_class ) . '">' . $wp_action;
+      echo '<li class="core-action ' . esc_attr( $add_class ) . '">' . esc_html( $wp_action );
 
       $filter_to_func = MywpDeveloper::get_filter_to_func( $wp_action );
 

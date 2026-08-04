@@ -217,12 +217,12 @@ final class MywpSettingScreenDebugTransients extends MywpAbstractSettingModule {
 
           <tr>
             <th>
-              [<?php echo $transient['id']; ?>]
-              <?php echo $transient['name']; ?><br />
+              [<?php echo esc_html( $transient['id'] ); ?>]
+              <?php echo esc_html( $transient['name'] ); ?><br />
               <p class="transient-timeout">
                 <?php if( ! empty( $transient['timeout'] ) ) : ?>
-                  [<?php echo $transient['timeout']['id']; ?>]
-                  <?php echo $transient['timeout']['name']; ?><br />
+                  [<?php echo esc_html( $transient['timeout']['id'] ); ?>]
+                  <?php echo esc_html( $transient['timeout']['name'] ); ?><br />
                 <?php else : ?>
                   <?php _e( 'Not found timeout date.' , 'my-wp' ); ?>
                 <?php endif; ?>
@@ -230,7 +230,7 @@ final class MywpSettingScreenDebugTransients extends MywpAbstractSettingModule {
             </th>
             <td>
               <?php if( ! empty( $transient['timeout'] ) ) : ?>
-                <p><?php echo date( $timezone_format , $transient['timeout']['value'] + MywpHelper::get_gmt_offset_seconds() ); ?> (<?php echo $timezone; ?>)</p>
+                <p><?php echo esc_html( date( $timezone_format , $transient['timeout']['value'] + MywpHelper::get_gmt_offset_seconds() ) ); ?> (<?php echo esc_html( $timezone ); ?>)</p>
                 <input type="text" readonly="readonly" class="large-text" value="<?php echo esc_attr( $transient['timeout']['value'] ); ?>" /><br />
               <?php else : ?>
                 <?php _e( 'Not found timeout date.' , 'my-wp' ); ?>
@@ -238,7 +238,7 @@ final class MywpSettingScreenDebugTransients extends MywpAbstractSettingModule {
 
               <p class="transient-timeout">
                 <?php if( ! empty( $transient['timeout'] ) ) : ?>
-                  <?php _e( 'RAW' ); ?>: <?php echo date( $timezone_format , $transient['timeout']['value'] ); ?> (<?php _e( 'UTC' ); ?>)<br />
+                  <?php _e( 'RAW' ); ?>: <?php echo esc_html( date( $timezone_format , $transient['timeout']['value'] ) ); ?> (<?php _e( 'UTC' ); ?>)<br />
                 <?php endif; ?>
               </p>
             </td>

@@ -474,7 +474,7 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
       MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-      echo $post_id;
+      echo esc_html( $post_id );
 
     } elseif( $column_id === 'media_title' ) {
 
@@ -504,11 +504,11 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
         if( function_exists( 'mb_substr' ) ) {
 
-          echo mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
+          echo esc_html( mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
 
         } else {
 
-          echo substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
+          echo esc_html( substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
 
         }
 
@@ -524,11 +524,11 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
         if( function_exists( 'mb_substr' ) ) {
 
-          echo mb_substr( strip_tags( $post->post_content ) , 0 , 20 ) . '.';
+          echo esc_html( mb_substr( strip_tags( $post->post_content ) , 0 , 20 ) . '.' );
 
         } else {
 
-          echo substr( strip_tags( $post->post_content ) , 0 , 20 ) . '.';
+          echo esc_html( substr( strip_tags( $post->post_content ) , 0 , 20 ) . '.' );
 
         }
 

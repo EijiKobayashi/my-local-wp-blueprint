@@ -56,7 +56,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
           <tr>
-            <th><?php echo $field_label; ?></th>
+            <th><?php echo esc_html( $field_label ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_update_notice][<?php echo esc_attr( $field_name ); ?>]" class="hide_update_notice_<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data['hide_update_notice'][$field_name] , true ); ?> />
@@ -87,7 +87,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
           <tr>
-            <th><?php echo $field_label; ?></th>
+            <th><?php echo esc_html( $field_label ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_screen_tabs][<?php echo esc_attr( $field_name ); ?>]" class="hide_screen_tabs_<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data['hide_screen_tabs'][$field_name] , true ); ?> />
@@ -124,13 +124,13 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
           <tr>
-            <th><?php echo $field_label['label']; ?></th>
+            <th><?php echo esc_html( $field_label['label'] ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_footer_text][<?php echo esc_attr( $field_name ); ?>]" class="hide_footer_text_<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data['hide_footer_text'][$field_name] , true ); ?> />
                 <?php _e( 'Hide' ); ?>
               </label>
-              <code><?php echo $field_label['code']; ?></code>
+              <code><?php echo esc_html( $field_label['code'] ); ?></code>
             </td>
           </tr>
         <?php endforeach; ?>

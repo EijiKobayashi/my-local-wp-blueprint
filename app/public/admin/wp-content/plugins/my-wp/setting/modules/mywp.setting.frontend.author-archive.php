@@ -65,7 +65,7 @@ final class MywpSettingScreenFrontendAuthorArchive extends MywpAbstractSettingMo
             </label>
             &nbsp;
             <?php if( ! empty( $author_post ) ) : ?>
-              <a target="_blank" href="<?php echo esc_url( get_author_posts_url( $author_post->post_author ) ); ?>"><?php printf( __( 'Author: %s' ) , $author_name ); ?></a>
+              <a target="_blank" href="<?php echo esc_url( get_author_posts_url( $author_post->post_author ) ); ?>"><?php printf( __( 'Author: %s' ) , esc_html( $author_name ) ); ?></a>
             <?php endif; ?>
           </td>
         </tr>

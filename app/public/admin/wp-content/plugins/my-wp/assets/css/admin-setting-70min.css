@@ -1,0 +1,27 @@
+body.mywp-setting .button .dashicons {
+  margin-top: 4px;
+}
+
+@media screen and (max-width: 782px) {
+
+  body.mywp-setting .button .dashicons {
+    margin-top: 0;
+  }
+
+}
+
+body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-section .setting-screen-title {
+  line-height: 1.6em;
+}
+
+body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-section #setting-screen-setting-list-columns .mywp-setting-screen-subtitle .button .dashicons {
+  margin-top: 5px;
+}
+
+.setting-screen-item-icons ul li button .dashicons-before:before {
+  padding-top: 3px;
+}
+
+body.mywp-setting .setting-screen-item-icons ul li button .dashicons-before:before {
+  margin-top: 2px;
+}

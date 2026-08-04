@@ -202,7 +202,7 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
       foreach( $notices['error'] as $code => $message ) {
 
-        printf( '<p class="error-notice error_%s">%s</p>' , $code , $message );
+        printf( '<p class="error-notice error_%s">%s</p>' , esc_attr( $code ) , $message );
 
       }
 

@@ -67,8 +67,8 @@
 	}
 
 	.lazyblocks-row-active th.check-column {
-		border-left: 1px solid #007cba;
-		box-shadow: -1px 0 0 #007cba;
+		border-left: 1px solid var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+		box-shadow: -1px 0 0 var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
 	}
 }
 
@@ -112,12 +112,12 @@
 
 		&.is-active {
 			padding-bottom: 2px;
-			border-bottom: #007cba solid 3px;
+			border-bottom: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9)) solid 3px;
 		}
 
 		&:hover,
 		&:focus {
-			color: #007cba;
+			color: var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
 		}
 
 		.dashicons {
@@ -127,7 +127,7 @@
 }
 
 // Go Pro links.
-#adminmenu a[href*="lazyblocks.com/pro/"],
+#adminmenu .wp-submenu a[href*="lazyblocks.com/pro/"],
 .wp-list-table.plugins a[href*="lazyblocks.com/pro/"],
 .lzb-admin-toolbar a[href*="lazyblocks.com/pro/"] {
 	font-weight: 700;
@@ -139,6 +139,6 @@
 
 	&:hover,
 	&:focus {
-		color: #e11937;
+		color: #f4647a;
 	}
 }

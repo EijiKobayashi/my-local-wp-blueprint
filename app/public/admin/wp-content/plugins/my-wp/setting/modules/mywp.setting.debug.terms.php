@@ -71,11 +71,11 @@ final class MywpSettingScreenDebugTerms extends MywpAbstractSettingModule {
         <?php foreach( $all_terms as $term ) : ?>
           <tr>
             <th>
-              [<?php echo $term->slug; ?>] <?php echo $term->name; ?><br />
+              [<?php echo esc_html( $term->slug ); ?>] <?php echo esc_html( $term->name ); ?><br />
               <a href="<?php echo esc_url( add_query_arg( array( 'taxonomy' => $term->taxonomy , 'tag_ID' => $term->term_id ) , admin_url( 'term.php' ) ) ); ?>"><?php _e( 'Edit' ); ?></a>
             </th>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php print_r( $term ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php echo esc_textarea( print_r( $term , true ) ); ?></textarea>
             </td>
           </tr>
         <?php endforeach; ?>

@@ -45,7 +45,7 @@ final class MywpSettingScreenDebugPostStructure extends MywpAbstractSettingModul
 
     if( empty( $current_setting_post ) ) {
 
-      printf( __( '%1$s: %3$s %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post' , 'my-wp' ) , $current_setting_post_id , __( 'Post' ) );
+      printf( __( '%1$s: %3$s %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post' , 'my-wp' ) , esc_html( $current_setting_post_id ) , __( 'Post' ) );
 
       return false;
 
@@ -83,8 +83,8 @@ final class MywpSettingScreenDebugPostStructure extends MywpAbstractSettingModul
       <tbody>
         <?php foreach( $post_structure['post'] as $field_name => $field_value ) : ?>
           <tr>
-            <th><?php echo $field_name; ?></th>
-            <td><textarea readonly class="large-text" style="height: 80px;"><?php echo $field_value; ?></textarea></td>
+            <th><?php echo esc_html( $field_name ); ?></th>
+            <td><textarea readonly class="large-text" style="height: 80px;"><?php echo esc_textarea( $field_value ); ?></textarea></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -98,17 +98,17 @@ final class MywpSettingScreenDebugPostStructure extends MywpAbstractSettingModul
 
           <?php foreach( $post_structure['custom_fields'] as $custom_field_key => $structure ) : ?>
             <tr>
-              <th><?php echo $custom_field_key; ?></th>
+              <th><?php echo esc_html( $custom_field_key ); ?></th>
               <td>
                 <?php foreach( $structure as $custom_field_value ) : ?>
                   <?php $custom_field_value_unserializez = maybe_unserialize( $custom_field_value ); ?>
                   <?php $custom_field_value_json = json_decode( $custom_field_value ); ?>
                   <?php if( is_array( $custom_field_value_unserializez ) or is_object( $custom_field_value_unserializez ) ) : ?>
-                    <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $custom_field_value_unserializez ); ?></textarea>
+                    <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $custom_field_value_unserializez , true ) ); ?></textarea>
                   <?php elseif( ! empty( $custom_field_value_json ) && is_object( $custom_field_value_json ) ) : ?>
-                    <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $custom_field_value_json ); ?></textarea>
+                    <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php esc_textarea( print_r( $custom_field_value_json , true ) ); ?></textarea>
                   <?php else : ?>
-                    <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo $custom_field_value_unserializez; ?></textarea>
+                    <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( $custom_field_value_unserializez ); ?></textarea>
                   <?php endif; ?>
                 <?php endforeach; ?>
               </td>

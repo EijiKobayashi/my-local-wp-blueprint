@@ -107,7 +107,7 @@ if( ! empty( $current_setting_screen_id ) ) {
 ?>
 <div class="wrap mywp mywp-setting-screen-menu-<?php echo sanitize_html_class( $current_setting_menu_id ); ?>">
 
-  <h1><?php echo $current_setting_menu['page_title']; ?></h1>
+  <h1><?php echo esc_html( $current_setting_menu['page_title'] ); ?></h1>
 
   <?php if( ! empty( $current_setting_screen_id ) ) : ?>
 
@@ -147,7 +147,7 @@ if( ! empty( $current_setting_screen_id ) ) {
               <?php $url = add_query_arg( array( 'page' => $current_setting_menu['slug'] , 'setting_screen' => $setting_screen_id ) , $current_url ); ?>
 
               <li class="setting-screen-select-screen <?php echo sanitize_html_class( $add_class ); ?>">
-                <a href="<?php echo esc_url( $url ); ?>" data-setting_screen_id="<?php echo esc_attr( $setting_screen_id ); ?>"><?php echo $setting_screen['title']; ?></a>
+                <a href="<?php echo esc_url( $url ); ?>" data-setting_screen_id="<?php echo esc_attr( $setting_screen_id ); ?>"><?php echo esc_html( $setting_screen['title'] ); ?></a>
               </li>
 
             <?php endforeach; ?>
@@ -166,11 +166,11 @@ if( ! empty( $current_setting_screen_id ) ) {
 
             <h2 class="setting-screen-title">
 
-              <?php echo $current_setting_screen['title']; ?>
+              <?php echo esc_html( $current_setting_screen['title'] ); ?>
 
               <?php if( ! empty( $current_setting_screen['document_url'] ) ) : ?>
 
-                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button button-secondary"><span class="dashicons dashicons-welcome-learn-more"></span> <?php printf( __( '%s Documentation' , 'my-wp' ) , $current_setting_screen['title'] ); ?></a>
+                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button button-secondary"><span class="dashicons dashicons-welcome-learn-more"></span> <?php printf( __( '%s Documentation' , 'my-wp' ) , esc_html( $current_setting_screen['title'] ) ); ?></a>
 
               <?php endif; ?>
 
@@ -181,7 +181,7 @@ if( ! empty( $current_setting_screen_id ) ) {
             <?php if( ! empty( $current_setting_screen['document_url'] ) ) : ?>
 
               <p style="text-align: right;">
-                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button"><span class="dashicons dashicons-welcome-learn-more"></span> <?php printf( __( '%s Documentation' , 'my-wp' ) , $current_setting_screen['title'] ); ?></a>
+                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button"><span class="dashicons dashicons-welcome-learn-more"></span> <?php printf( __( '%s Documentation' , 'my-wp' ) , esc_html( $current_setting_screen['title'] ) ); ?></a>
               </p>
 
             <?php endif; ?>
@@ -270,7 +270,7 @@ if( ! empty( $current_setting_screen_id ) ) {
             <p class="submit">
               <button type="submit" class="button button-secondary button-caution">
                 <span class="dashicons dashicons-trash"></span>
-                <?php echo $current_setting_menu['page_title']; ?>
+                <?php echo esc_html( $current_setting_menu['page_title'] ); ?>
                 &gt;
                 <?php echo esc_attr( sprintf( __( 'Remove the %s settings data' , 'my-wp' ) , strip_tags( $current_setting_screen['title'] ) ) ); ?>
               </button>

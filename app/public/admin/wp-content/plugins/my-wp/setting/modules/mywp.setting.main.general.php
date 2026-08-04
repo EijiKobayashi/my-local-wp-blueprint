@@ -96,21 +96,21 @@ final class MywpSettingScreeMainGeneral extends MywpAbstractSettingModule {
 
     <hr />
 
-    <h3><?php printf( __( 'About %s' ) , MYWP_NAME ); ?></h3>
+    <h3><?php printf( __( 'About %s' ) , esc_html( MYWP_NAME ) ); ?></h3>
 
     <table>
       <tr>
         <th><?php _e( 'Version' , 'my-wp' ); ?></th>
-        <td><?php echo MYWP_VERSION; ?></td>
+        <td><?php echo esc_html( MYWP_VERSION ); ?></td>
       </tr>
       <tr>
         <th><?php _e( 'Plugin Website' , 'my-wp' ); ?></th>
-        <td><a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>" target="_blank"><?php echo $plugin_info['website_url']; ?></a></td>
+        <td><a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>" target="_blank"><?php echo esc_html( $plugin_info['website_url'] ); ?></a></td>
       </tr>
       <tr>
         <th><?php _e( 'Developer' , 'my-wp' ); ?></th>
         <td>
-          <img src="<?php echo $schema; ?>www.gravatar.com/avatar/7e05137c5a859aa987a809190b979ed4?s=20" width="20" />
+          <img src="<?php echo esc_attr( $schema ); ?>www.gravatar.com/avatar/7e05137c5a859aa987a809190b979ed4?s=20" width="20" />
           <a href="<?php echo esc_url( 'http://gqevu6bsiz.chicappa.jp/' ); ?>" target="_blank">gqevu6bsiz</a>
         </td>
       </tr>
