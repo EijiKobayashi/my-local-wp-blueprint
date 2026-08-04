@@ -194,17 +194,17 @@ final class MywpControllerModuleAdminToolbar extends MywpAbstractControllerToolb
 
     $wp_styles = wp_styles();
 
-    printf( '<link rel="stylesheet" id="mywp_admin_toolbar-css"  href="%sadmin-toolbar.css?ver=%s" type="text/css" media="all" />' , esc_url( MywpApi::get_plugin_url( 'css' ) ) , $wp_styles->default_version );
+    printf( '<link rel="stylesheet" id="mywp_admin_toolbar-css"  href="%sadmin-toolbar.css?ver=%s" type="text/css" media="all" />' , esc_url( MywpApi::get_plugin_url( 'css' ) ) , esc_attr( $wp_styles->default_version ) );
 
-    printf( '<script type="text/javascript" src="%sadmin-toolbar.js?ver=%s"></script>' , esc_url( MywpApi::get_plugin_url( 'js' ) ) , $wp_styles->default_version );
+    printf( '<script type="text/javascript" src="%sadmin-toolbar.js?ver=%s"></script>' , esc_url( MywpApi::get_plugin_url( 'js' ) ) , esc_attr( $wp_styles->default_version ) );
 
     $setting_data = self::get_setting_data();
 
     if( ! empty( $setting_data['custom_menu_ui'] ) ) {
 
-      printf( '<link rel="stylesheet" id="mywp_admin_toolbar-custom-ui-css"  href="%sadmin-toolbar-custom-ui.css?ver=%s" type="text/css" media="all" />' , esc_url( MywpApi::get_plugin_url( 'css' ) ) , MYWP_VERSION );
+      printf( '<link rel="stylesheet" id="mywp_admin_toolbar-custom-ui-css"  href="%sadmin-toolbar-custom-ui.css?ver=%s" type="text/css" media="all" />' , esc_url( MywpApi::get_plugin_url( 'css' ) ) , esc_attr( MYWP_VERSION ) );
 
-      printf( '<script type="text/javascript" src="%sadmin-toolbar-custom-ui.js?ver=%s"></script>' , esc_url( MywpApi::get_plugin_url( 'js' ) ) , MYWP_VERSION );
+      printf( '<script type="text/javascript" src="%sadmin-toolbar-custom-ui.js?ver=%s"></script>' , esc_url( MywpApi::get_plugin_url( 'js' ) ) , esc_attr( MYWP_VERSION ) );
 
     }
 

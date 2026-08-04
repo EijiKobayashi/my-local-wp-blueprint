@@ -495,6 +495,16 @@ final class MywpSettingInit {
     wp_enqueue_style( 'mywp_admin_setting' );
     wp_enqueue_script( 'mywp_admin_setting' );
 
+    $wp_compare = version_compare( MywpHelper::get_wp_version() , 7.0 , '<' );
+
+    if( $wp_compare ) {
+
+      wp_register_style( 'mywp_admin_setting_70min' , $dir_css . 'admin-setting-70min.css' , array() , MYWP_VERSION );
+
+      wp_enqueue_style( 'mywp_admin_setting_70min' );
+
+    }
+
     $current_setting_menu_id = MywpSettingMenu::get_current_menu_id();
     $current_setting_screen_id = MywpSettingScreen::get_current_screen_id();
 

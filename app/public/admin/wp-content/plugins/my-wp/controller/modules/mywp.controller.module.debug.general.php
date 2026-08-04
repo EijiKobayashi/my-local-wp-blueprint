@@ -194,7 +194,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
       foreach( $shortcodes as $shortcode => $function ) {
 
-        printf( '<li>%s</li>' , $shortcode );
+        printf( '<li>%s</li>' , esc_html( $shortcode ) );
 
       }
 
@@ -214,7 +214,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
       foreach( $post_types as $post_type_name => $args ) {
 
-        printf( '<li>%s <textarea readonly="readonly">%s</textarea>' , $post_type_name , print_r( $args , true ) );
+        printf( '<li>%s <textarea readonly="readonly">%s</textarea>' , esc_html( $post_type_name ) , esc_textarea( print_r( $args , true ) ) );
 
       }
 
@@ -234,7 +234,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
       foreach( $taxonomy_types as $taxonomy_name => $args ) {
 
-        printf( '<li>%s <textarea readonly="readonly">%s</textarea>' , $taxonomy_name , print_r( $args , true ) );
+        printf( '<li>%s <textarea readonly="readonly">%s</textarea>' , esc_html( $taxonomy_name ) , esc_textarea( print_r( $args , true ) ) );
 
       }
 
@@ -260,7 +260,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
         }
 
-        printf( '<li>%s <textarea readonly="readonly">%s</textarea></li>' , $controller_id , print_r( $controller , true ) );
+        printf( '<li>%s <textarea readonly="readonly">%s</textarea></li>' , esc_html( $controller_id ) , esc_textarea( print_r( $controller , true ) ) );
 
       }
 
@@ -276,7 +276,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $current_setting_menu ) ) {
 
-      printf( '<p>Current Setting Menu = <textarea readonly="readonly">%s</textarea></p>' , print_r( $current_setting_menu , true ) );
+      printf( '<p>Current Setting Menu = <textarea readonly="readonly">%s</textarea></p>' , esc_textarea( print_r( $current_setting_menu , true ) ) );
 
     }
 
@@ -284,7 +284,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $current_setting_screen ) ) {
 
-      printf( '<p>Current Setting Screen = <textarea readonly="readonly">%s</textarea></p>' , print_r( $current_setting_screen , true ) );
+      printf( '<p>Current Setting Screen = <textarea readonly="readonly">%s</textarea></p>' , esc_textarea( print_r( $current_setting_screen , true ) ) );
 
     }
 
@@ -296,13 +296,13 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     }
 
-    printf( '<p>Current Setting Screen Model = <textarea readonly="readonly">%s</textarea></p>' , print_r( $mywp_model , true ) );
+    printf( '<p>Current Setting Screen Model = <textarea readonly="readonly">%s</textarea></p>' , esc_textarea( print_r( $mywp_model , true ) ) );
 
     $current_setting_post_type = MywpSettingPostType::get_current_post_type();
 
     if( ! empty( $current_setting_post_type ) ) {
 
-      printf( '<p>Current Setting Post Type = <textarea readonly="readonly">%s</textarea></p>' , print_r( $current_setting_post_type , true ) );
+      printf( '<p>Current Setting Post Type = <textarea readonly="readonly">%s</textarea></p>' , esc_textarea( print_r( $current_setting_post_type , true ) ) );
 
     }
 
@@ -310,7 +310,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $current_setting_taxonomy ) ) {
 
-      printf( '<p>Current Setting Taxonomy = <textarea readonly="readonly">%s</textarea></p>' , print_r( $current_setting_taxonomy , true ) );
+      printf( '<p>Current Setting Taxonomy = <textarea readonly="readonly">%s</textarea></p>' , esc_textarea( print_r( $current_setting_taxonomy , true ) ) );
 
     }
 
@@ -322,7 +322,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
       if( ! empty( $current_setting_screens ) ) {
 
-        printf( '<p>Current Setting Screens = <textarea readonly="readonly">%s</textarea></p>' , print_r( $current_setting_screens , true ) );
+        printf( '<p>Current Setting Screens = <textarea readonly="readonly">%s</textarea></p>' , esc_textarea( print_r( $current_setting_screens , true ) ) );
 
       }
 
@@ -338,7 +338,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $setting_menus ) ) {
 
-      printf( '<textarea readonly="readonly">%s</textarea>' , print_r( $setting_menus , true ) );
+      printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( $setting_menus , true ) ) );
 
     }
 
@@ -348,7 +348,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $menu_hook_names ) ) {
 
-      printf( '<textarea readonly="readonly">%s</textarea>' , print_r( $menu_hook_names , true ) );
+      printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( $menu_hook_names , true ) ) );
 
     }
 
@@ -358,7 +358,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $setting_screens ) ) {
 
-      printf( '<textarea readonly="readonly">%s</textarea>' , print_r( $setting_screens , true ) );
+      printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( $setting_screens , true ) ) );
 
     }
 
@@ -368,7 +368,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $setting_post_types ) ) {
 
-      printf( '<textarea readonly="readonly">%s</textarea>' , print_r( $setting_post_types , true ) );
+      printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( $setting_post_types , true ) ) );
 
     }
 
@@ -378,7 +378,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     if( ! empty( $setting_taxonomies ) ) {
 
-      printf( '<textarea readonly="readonly">%s</textarea>' , print_r( $setting_taxonomies , true ) );
+      printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( $setting_taxonomies , true ) ) );
 
     }
 
@@ -398,11 +398,11 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
         if( $plugin['activate']  ) {
 
-          printf( '<th>%s (%s)</th>' , $plugin['plugin_name'] , $plugin['plugin_data']['Version'] );
+          printf( '<th>%s (%s)</th>' , esc_html( $plugin['plugin_name'] ) , esc_html( $plugin['plugin_data']['Version'] ) );
 
         } else {
 
-          printf( '<th>%s</th>' , $plugin['plugin_name'] );
+          printf( '<th>%s</th>' , esc_html( $plugin['plugin_name'] ) );
 
         }
 
@@ -420,11 +420,11 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
         echo '<br />';
 
-        printf( __( 'plugin base name: %s' , 'my-wp' ) . '<br />' , $plugin['plugin_base_name'] );
+        echo esc_html( sprintf( __( 'plugin base name: %s' , 'my-wp' ) . '<br />' , $plugin['plugin_base_name'] ) );
 
         if( $plugin['activate']  ) {
 
-          printf( '<pre>%s</pre>' , print_r( $plugin['plugin_data'] , true ) );
+          printf( '<pre>%s</pre>' , esc_html( print_r( $plugin['plugin_data'] , true ) ) );
 
         }
         echo '</td>';
@@ -489,7 +489,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
   public static function mywp_setting_print_item_header_pre_add_title( $item ) {
 
-    echo sprintf( '[%d]' , $item->ID );
+    echo esc_html( sprintf( '[%d]' , $item->ID ) );
 
   }
 

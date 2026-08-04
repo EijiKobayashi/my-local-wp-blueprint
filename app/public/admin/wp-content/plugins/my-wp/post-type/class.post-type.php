@@ -255,11 +255,19 @@ final class MywpPostType {
       'post_type' => $post_type
     );
 
-    $post_ids = get_posts( $args );
+    $posts = get_posts( $args );
 
-    if( empty( $post_ids ) ) {
+    if( empty( $posts ) ) {
 
       return false;
+
+    }
+
+    $post_ids = array();
+
+    foreach( $posts as $post_id ) {
+
+      $post_ids[] = (int) $post_id;
 
     }
 

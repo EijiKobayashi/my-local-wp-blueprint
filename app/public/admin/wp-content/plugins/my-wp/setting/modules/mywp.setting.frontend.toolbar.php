@@ -150,7 +150,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
               <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
               <td>
                 <?php $link_url = add_query_arg( array( 'post' => '###' , 'action' => 'edit' ) , admin_url( 'post.php' ) ); ?>
-                <?php echo str_replace( '###' , '<code>current_post_id</code>' , $link_url ); ?>
+                <?php echo esc_html( str_replace( '###' , '<code>current_post_id</code>' , $link_url ) ); ?>
               </td>
             </tr>
             <tr>
@@ -158,7 +158,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
               <td>
                 <div class="item-icon-setting">
                   <div class="item-icon <?php echo esc_attr( $item->item_icon_class ); ?>"></div>
-                  <?php echo $item->item_icon_class; ?>
+                  <?php echo esc_html( $item->item_icon_class ); ?>
                 </div>
               </td>
             </tr>
@@ -167,7 +167,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
               <td>
                 <code>
                   <?php if( ! empty( $item->item_capability ) ) : ?>
-                    <?php echo $item->item_capability; ?>
+                    <?php echo esc_html( $item->item_capability ); ?>
                   <?php else : ?>
                     -
                   <?php endif; ?>
@@ -272,7 +272,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
     <?php endif; ?>
 
     <p>
-      <a href="<?php echo esc_url( $toolbar_items_link ); ?>" class="button button-secondary button-small" id="setting-screen-setting-frontend-toolbar-item-refresh-button">
+      <a href="<?php echo esc_url( $toolbar_items_link ); ?>" class="button button-secondary" id="setting-screen-setting-frontend-toolbar-item-refresh-button">
         <span class="dashicons dashicons-update"></span>
         <?php _e( 'Refresh Toolbar items' , 'my-wp' ); ?>
       </a>

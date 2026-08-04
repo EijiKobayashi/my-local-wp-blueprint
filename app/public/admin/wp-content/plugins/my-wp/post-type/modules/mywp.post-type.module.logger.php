@@ -119,7 +119,7 @@ final class MywpPostTypeModuleLogger extends MywpPostTypeAbstractModule {
 
       if( $mywp_post->ID ) {
 
-        echo $mywp_post->ID;
+        echo esc_html( $mywp_post->ID );
 
       }
 
@@ -127,7 +127,7 @@ final class MywpPostTypeModuleLogger extends MywpPostTypeAbstractModule {
 
       if( $mywp_post->blog_id ) {
 
-        echo $mywp_post->blog_id;
+        echo esc_html( $mywp_post->blog_id );
 
       }
 
@@ -135,7 +135,7 @@ final class MywpPostTypeModuleLogger extends MywpPostTypeAbstractModule {
 
       if( $mywp_post->user_id ) {
 
-        echo $mywp_post->user_id;
+        echo esc_html( $mywp_post->user_id );
 
       }
 

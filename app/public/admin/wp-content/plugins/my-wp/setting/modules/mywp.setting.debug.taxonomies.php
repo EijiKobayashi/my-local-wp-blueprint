@@ -47,11 +47,11 @@ final class MywpSettingScreenDebugTaxonomies extends MywpAbstractSettingModule {
         <?php foreach( $all_taxonomies as $key => $taxonomy ) : ?>
           <tr>
             <th>
-              [<?php echo $taxonomy->name; ?>] <?php echo $taxonomy->label; ?><br />
-              <a href="<?php echo esc_url( add_query_arg( array( 'taxonomy' => $taxonomy->name ) , admin_url( 'edit-tags.php' ) ) ); ?>"><?php echo $taxonomy->labels->all_items; ?></a>
+              [<?php echo esc_html( $taxonomy->name ); ?>] <?php echo esc_html( $taxonomy->label ); ?><br />
+              <a href="<?php echo esc_url( add_query_arg( array( 'taxonomy' => $taxonomy->name ) , admin_url( 'edit-tags.php' ) ) ); ?>"><?php echo esc_html( $taxonomy->labels->all_items ); ?></a>
             </th>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php print_r( $taxonomy ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php echo esc_textarea( print_r( $taxonomy , true ) ); ?></textarea>
             </td>
           </tr>
         <?php endforeach; ?>

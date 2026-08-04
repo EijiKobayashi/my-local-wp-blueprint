@@ -103,7 +103,7 @@ final class MywpDeveloperModuleMywpError extends MywpDeveloperAbstractModule {
 
     foreach( $errors as $key => $val ) {
 
-      echo $val . "\n";
+      echo esc_html( $val ) . "\n";
 
     }
 
@@ -123,7 +123,7 @@ final class MywpDeveloperModuleMywpError extends MywpDeveloperAbstractModule {
 
       foreach( $errors as $error ) {
 
-        printf( '<li>%s</li>' , $error );
+        printf( '<li>%s</li>' , esc_html( $error ) );
 
       }
 

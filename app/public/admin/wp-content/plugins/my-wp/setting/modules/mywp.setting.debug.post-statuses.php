@@ -49,10 +49,10 @@ final class MywpSettingScreenDebugPostStatuses extends MywpAbstractSettingModule
 
           <tr>
             <th>
-              [<?php echo $post_status->name; ?>] <?php echo $post_status->label; ?><br />
+              [<?php echo esc_html( $post_status->name ); ?>] <?php echo esc_html( $post_status->label ); ?><br />
             </th>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php print_r( $post_status ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php echo esc_textarea( print_r( $post_status , true ) ); ?></textarea>
             </td>
           </tr>
 

@@ -143,7 +143,7 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
               <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
               <td>
                 <?php $link_url = add_query_arg( array( 'p' => '###' ) , home_url() ); ?>
-                <?php echo str_replace( '###' , '<code>current_post_id</code>' , $link_url ); ?>
+                <?php echo esc_html( str_replace( '###' , '<code>current_post_id</code>' , $link_url ) ); ?>
               </td>
             </tr>
             <tr>
@@ -151,7 +151,7 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
               <td>
                 <code>
                   <?php if( ! empty( $item->item_capability ) ) : ?>
-                    <?php echo $item->item_capability; ?>
+                    <?php echo esc_html( $item->item_capability ); ?>
                   <?php else : ?>
                     -
                   <?php endif; ?>

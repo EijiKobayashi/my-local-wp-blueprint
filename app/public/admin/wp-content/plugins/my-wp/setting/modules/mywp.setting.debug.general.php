@@ -59,9 +59,9 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
                 <?php foreach( $setting_data['users'] as $user_id ) : ?>
                   <?php $user = get_userdata( $user_id ); ?>
                   <?php if( empty( $user ) ) : ?>
-                    <li>[<?php echo $user_id; ?>] <strong style="color: red;"><?php echo esc_html( sprintf( __( '%s is not found.' ) ) , __( 'User' ) ); ?></strong></li>
+                    <li>[<?php echo esc_html( $user_id ); ?>] <strong style="color: red;"><?php echo esc_html( sprintf( __( '%s is not found.' ) ) , __( 'User' ) ); ?></strong></li>
                   <?php else : ?>
-                    <li>[<?php echo $user_id; ?>] <?php echo $user->display_name; ?> <span class="description">( <?php echo $user->user_login; ?> )</span></li>
+                    <li>[<?php echo esc_html( $user_id ); ?>] <?php echo esc_html( $user->display_name ); ?> <span class="description">( <?php echo esc_html( $user->user_login ); ?> )</span></li>
                   <?php endif; ?>
                 <?php endforeach; ?>
               </ul>

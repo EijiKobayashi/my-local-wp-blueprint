@@ -922,7 +922,7 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
           </div>
 
           <p class="filter-form-submit">
-            <button type="submit" class="button button-primary"><?php _e( 'Search' ); ?></button>
+            <button type="submit" class="button button-primary"><?php esc_html_e( 'Search' ); ?></button>
           </p>
 
         </form>

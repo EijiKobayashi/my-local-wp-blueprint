@@ -82,17 +82,17 @@ abstract class MywpDeveloperAbstractModule {
 
       echo '<tr>';
 
-      printf( '<th>%s</th>' , $key );
+      printf( '<th>%s</th>' , esc_html( $key ) );
 
       echo '<td>';
 
       if( is_array( $val ) or is_object( $val ) ) {
 
-        printf( '<textarea readonly="readonly">%s</textarea>' , print_r( $val , true ) );
+        printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( $val , true ) ) );
 
       } else {
 
-        echo $val;
+        echo esc_html( $val );
 
       }
 
@@ -118,7 +118,7 @@ abstract class MywpDeveloperAbstractModule {
 
     }
 
-    printf( '--- mywp developer debug render: %s ---' , static::$id );
+    printf( '--- mywp developer debug render: %s ---' , esc_html( static::$id ) );
 
     echo "\n";
 
@@ -140,15 +140,15 @@ abstract class MywpDeveloperAbstractModule {
 
     foreach( $debug_lists as $key => $val ) {
 
-      echo $key . ' = ';
+      echo esc_html( $key ) . ' = ';
 
       if( is_array( $val ) or is_object( $val ) ) {
 
-        print_r( $val );
+        echo esc_html( print_r( $val , true ) );
 
       } else {
 
-        echo $val;
+        echo esc_html( $val );
 
       }
       echo "\n";

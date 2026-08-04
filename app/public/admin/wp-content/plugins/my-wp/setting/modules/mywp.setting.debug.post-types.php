@@ -47,11 +47,11 @@ final class MywpSettingScreenDebugPostTypes extends MywpAbstractSettingModule {
         <?php foreach( $all_post_types as $key => $post_type ) : ?>
           <tr>
             <th>
-              [<?php echo $post_type->name; ?>] <?php echo $post_type->label; ?><br />
-              <a href="<?php echo esc_url( add_query_arg( array( 'post_type' => $post_type->name ) , admin_url( 'edit.php' ) ) ); ?>"><?php echo $post_type->labels->all_items; ?></a>
+              [<?php echo esc_html( $post_type->name ); ?>] <?php echo esc_html( $post_type->label ); ?><br />
+              <a href="<?php echo esc_url( add_query_arg( array( 'post_type' => $post_type->name ) , admin_url( 'edit.php' ) ) ); ?>"><?php echo esc_html( $post_type->labels->all_items ); ?></a>
             </th>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php print_r( $post_type ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php echo esc_textarea( print_r( $post_type , true ) ); ?></textarea>
             </td>
           </tr>
         <?php endforeach; ?>

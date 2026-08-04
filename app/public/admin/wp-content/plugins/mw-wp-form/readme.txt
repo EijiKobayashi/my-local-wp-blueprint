@@ -3,8 +3,9 @@ Contributors: inc2734, ryu263, tomothumb, nanniku, mt8.biz, NExt-Season, kuck1u,
 Original Donate link: https://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, form, confirm, preview, shortcode, mail, chart, graph, html, contact form, form creation, form creator, form manager, form builder, custom form
 Requires at least: 6.0
+Requires PHP: 8.0
 Tested up to: 6.4
-Stable tag: 5.1.0
+Stable tag: 5.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +81,22 @@ Do you have questions or issues with MW WP Form? Use these support channels appr
 
 == Changelog ==
 
+= 5.1.4 =
+* Security Tighten output escaping on inquiry data detail screen
+
+= 5.1.3 =
+* Security Tighten access control on post property reference handling
+* Added Cookie SameSite=Lax attribute to CSRF / session cookies
+* Added Admin notice for [mwform_file] / [mwform_image] shortcodes, which are scheduled for removal in 5.2
+* Fixed PHP 8.3 Deprecated warning on get_class() without arguments
+* Fixed Undefined variable warning in maxfilesize (image size) validation rule
+
+= 5.1.2 =
+* Security Fix insufficient file path validation in upload file handling
+
+= 5.1.1 =
+* Security Fix insufficient file path validation in upload file handling
+
 = 5.1.0 =
 * Security Use wp_kses_post to form content/complete message
 
@@ -94,7 +111,7 @@ Do you have questions or issues with MW WP Form? Use these support channels appr
 * Fixed Delete only attachments.
 
 = 5.0.3 =
-* Remove plugin asset files. 
+* Remove plugin asset files.
 
 = 5.0.2 =
 * Fixed file upload security.

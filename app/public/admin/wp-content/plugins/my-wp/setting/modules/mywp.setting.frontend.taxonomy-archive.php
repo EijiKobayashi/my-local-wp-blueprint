@@ -76,7 +76,7 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
 
     if( empty( $current_setting_taxonomy ) ) {
 
-      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Taxonomy' , 'my-wp' ) , $current_setting_taxonomy_id );
+      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Taxonomy' , 'my-wp' ) , esc_html( $current_setting_taxonomy_id ) );
 
       return false;
 
@@ -89,7 +89,7 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php printf( __( 'Taxonomy archive of %s' , 'my-wp' ) , $current_setting_taxonomy->label ); ?></th>
+          <th><?php printf( __( 'Taxonomy archive of %s' , 'my-wp' ) , esc_html( $current_setting_taxonomy->label ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][disable_archive]" class="disable_archive" value="1" <?php checked( $setting_data['disable_archive'] , true ); ?> />
@@ -97,7 +97,7 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
             </label>
             &nbsp;
             <?php if( ! empty( $one_term ) ) : ?>
-              <a target="_blank" href="<?php echo esc_url( $term_archive_link ); ?>"><?php printf( __( '%1$s: %2$s' ) , $current_setting_taxonomy->label , $one_term->name ); ?></a>
+              <a target="_blank" href="<?php echo esc_url( $term_archive_link ); ?>"><?php printf( __( '%1$s: %2$s' ) , esc_html( $current_setting_taxonomy->label ) , esc_html( $one_term->name ) ); ?></a>
             <?php endif; ?>
           </td>
         </tr>

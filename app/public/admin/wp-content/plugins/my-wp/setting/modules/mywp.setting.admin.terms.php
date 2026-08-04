@@ -361,7 +361,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
           </td>
         </tr>
         <tr>
-          <th><?php echo $current_setting_taxonomy->labels->add_new_item; ?></th>
+          <th><?php echo esc_html( $current_setting_taxonomy->labels->add_new_item ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />
@@ -370,7 +370,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
           </td>
         </tr>
         <tr>
-          <th><?php echo $current_setting_taxonomy->labels->search_items; ?></th>
+          <th><?php echo esc_html( $current_setting_taxonomy->labels->search_items ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_search_box]" class="hide_search_box" value="1" <?php checked( $setting_data['hide_search_box'] , true ); ?> />

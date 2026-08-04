@@ -106,8 +106,8 @@ final class MywpSettingScreenDebugDefines extends MywpAbstractSettingModule {
       <tbody>
         <?php foreach( $all_defines as $define_name => $define_value ) : ?>
           <tr>
-            <th><?php echo $define_name; ?></th>
-            <td><textarea readonly class="large-text" style="height: 60px;"><?php print_r( $define_value ); ?></textarea></td>
+            <th><?php echo esc_html( $define_name ); ?></th>
+            <td><textarea readonly class="large-text" style="height: 60px;"><?php echo esc_textarea( print_r( $define_value , true ) ); ?></textarea></td>
           </tr>
         <?php endforeach; ?>
       </tbody>

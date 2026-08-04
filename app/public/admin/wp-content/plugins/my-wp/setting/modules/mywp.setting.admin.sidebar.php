@@ -760,28 +760,6 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
     #setting-screen-sidebar-item-icons {
       display: none;
     }
-    .setting-screen-sidebar-item-icons .available-icon-title {
-      font-weight: bold;
-      margin: 0 0 10px 0;
-      padding: 0;
-    }
-    .setting-screen-sidebar-item-icons ul {
-      margin: 0 0 30px 0;
-      padding: 0;
-    }
-    .setting-screen-sidebar-item-icons ul li {
-      margin: 4px;
-      padding: 0;
-      display: inline-block;
-    }
-    .wp-core-ui .setting-screen-sidebar-item-icons ul li.current button {
-      background: #F49C31;
-      border-color: #F49C31;
-      color: #fff;
-    }
-    .setting-screen-sidebar-item-icons ul li button .dashicons-before:before {
-      padding-top: 3px;
-    }
     </style>
     <?php
 
@@ -1510,13 +1488,13 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       <input type="hidden" class="change-icon-sidebar-item-id" value="" />
 
-      <div class="setting-screen-sidebar-item-icons">
+      <div class="setting-screen-item-icons">
 
         <div class="icons-wp">
 
           <?php foreach( $icons['categories'] as $icon_category ) : ?>
 
-            <p id="available-icon-title-<?php echo esc_attr( $icon_category['id'] ); ?>" class="available-icon-title"><?php echo $icon_category['title']; ?></p>
+            <p id="available-icon-title-<?php echo esc_attr( $icon_category['id'] ); ?>" class="available-icon-title"><?php echo esc_html( $icon_category['title'] ); ?></p>
 
             <ul>
               <?php foreach( $icons['all'] as $icon ) : ?>
@@ -2085,7 +2063,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           <?php if( in_array( $item->item_type , array( 'default' , 'link' ) ) ) : ?>
 
-            <span class="item-title"><?php echo strip_tags( strip_shortcodes( $item->item_link_title ) ); ?></span>
+            <span class="item-title"><?php echo esc_html( strip_tags( strip_shortcodes( $item->item_link_title ) ) ); ?></span>
 
           <?php endif; ?>
 
@@ -2095,7 +2073,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           <?php elseif( $item->item_type === 'custom' ) : ?>
 
-            <span class="item-title"><?php echo wp_html_excerpt( $item->item_custom_html , 20 ); ?></span>
+            <span class="item-title"><?php echo esc_html( wp_html_excerpt( $item->item_custom_html , 20 ) ); ?></span>
             <span class="item-default-title"><?php _e( 'Custom HTML' ); ?></span>
 
           <?php elseif( $item->item_type === 'link' ) : ?>
@@ -2104,7 +2082,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           <?php elseif( ! empty( $item->item_default_title ) ) : ?>
 
-            <span class="item-default-title">(<?php echo $item->item_default_title; ?>)</span>
+            <span class="item-default-title">(<?php echo esc_html( $item->item_default_title ); ?>)</span>
 
           <?php endif; ?>
 
@@ -2190,7 +2168,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
                   <td>
                     <code>
                       <?php if( ! empty( $item->item_capability ) ) : ?>
-                        <?php echo $item->item_capability; ?>
+                        <?php echo esc_html( $item->item_capability ); ?>
                       <?php else : ?>
                         -
                       <?php endif; ?>
@@ -2201,43 +2179,43 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
                 <tr>
                   <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
                   <td>
-                    <a href="<?php echo esc_url( $item->item_link_url ); ?>"><?php echo $item->item_link_url; ?></a>
+                    <a href="<?php echo esc_url( $item->item_link_url ); ?>"><?php echo esc_html( $item->item_link_url ); ?></a>
                   </td>
                 </tr>
                 <tr>
                   <th><?php _e( 'LI class' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_li_class; ?>
+                    <?php echo esc_html( $item->item_li_class ); ?>
                   </td>
                 </tr>
                 <tr>
                   <th><?php _e( 'LI id' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_li_id; ?>
+                    <?php echo esc_html( $item->item_li_id ); ?>
                   </td>
                 </tr>
                 <tr>
                   <th><?php _e( 'Link class' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_link_class; ?>
+                    <?php echo esc_html( $item->item_link_class ); ?>
                   </td>
                 </tr>
                 <tr>
                   <th><?php _e( 'Link id' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_link_id; ?>
+                    <?php echo esc_html( $item->item_link_id ); ?>
                   </td>
                 </tr>
                 <tr>
                   <th><?php _e( 'Icon style' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_icon_style; ?>
+                    <?php echo esc_html( $item->item_icon_style ); ?>
                   </td>
                 </tr>
                 <tr>
                   <th><?php _e( 'Icon img' , 'my-wp' ); ?></th>
                   <td>
-                    <?php echo $item->item_icon_img; ?>
+                    <?php echo esc_html( $item->item_icon_img ); ?>
                   </td>
                 </tr>
               </tbody>

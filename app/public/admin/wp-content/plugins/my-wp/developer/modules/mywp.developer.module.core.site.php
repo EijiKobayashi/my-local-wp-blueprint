@@ -63,7 +63,7 @@ final class MywpDeveloperModuleCoreSite extends MywpDeveloperAbstractModule {
 
       echo '<tr>';
 
-      printf( '<th>%s</th>' , $key );
+      printf( '<th>%s</th>' , esc_html( $key ) );
 
       echo '<td>';
 
@@ -73,7 +73,7 @@ final class MywpDeveloperModuleCoreSite extends MywpDeveloperAbstractModule {
 
       } else {
 
-        echo $val;
+        echo esc_html( $val );
 
       }
 

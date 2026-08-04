@@ -151,7 +151,7 @@ final class MywpSettingScreenDebugFindOption extends MywpAbstractSettingModule {
 
     ?>
 
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <span id="found-total"></span>/ <?php echo count( $all_sites ); ?></p>
+    <p><?php _e( 'Count' , 'my-wp' ); ?>: <span id="found-total"></span>/ <?php echo esc_html( count( $all_sites ) ); ?></p>
     <table class="form-table" id="sites-find-options">
       <thead>
         <tr>
@@ -163,12 +163,12 @@ final class MywpSettingScreenDebugFindOption extends MywpAbstractSettingModule {
         <?php foreach( $all_sites as $site ) : ?>
           <tr>
             <th>
-              <?php echo $site->blog_id; ?>
+              <?php echo esc_html( $site->blog_id ); ?>
             </th>
             <td>
               <?php $option = self::get_option( $site->blog_id ); ?>
               <?php if( is_array( $option ) or is_object( $option ) ) : ?>
-                <textarea readonly="readonly" class="large-text" style="height: 200px;"><?php print_r( $option ); ?></textarea>
+                <textarea readonly="readonly" class="large-text" style="height: 200px;"><?php echo esc_textarea( print_r( $option , true ) ); ?></textarea>
               <?php else : ?>
                 <?php echo esc_html( $option ); ?>
               <?php endif; ?>

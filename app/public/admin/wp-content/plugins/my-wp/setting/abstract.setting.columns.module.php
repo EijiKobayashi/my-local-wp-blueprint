@@ -96,7 +96,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
         <?php _e( 'Columns' , 'my-wp' ); ?>
 
-        <a href="<?php echo esc_url( $list_link ); ?>" class="button button-secondary button-small" id="setting-screen-setting-list-columns-refresh-button">
+        <a href="<?php echo esc_url( $list_link ); ?>" class="button button-secondary" id="setting-screen-setting-list-columns-refresh-button">
           <span class="dashicons dashicons-update"></span>
           <?php _e( 'Refresh Columns' , 'my-wp' ); ?>
         </a>
@@ -636,7 +636,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
               <tr>
                 <th><?php _e( 'Column ID' ); ?></th>
                 <td>
-                  <?php echo $column['id']; ?>
+                  <?php echo esc_html( $column['id'] ); ?>
                 </td>
               </tr>
               <tr>
@@ -660,7 +660,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
                 <th><?php _e( 'Width' ); ?></th>
                 <td>
                   <input type="text" name="mywp[data][list_columns][<?php echo esc_attr( $column['id'] ); ?>][width]" class="list-column-item-width regular-text" value="<?php echo esc_attr( $column['width'] ); ?>" placeholder="<?php echo esc_attr( '1em / 10% / auto' ); ?>" />
-                  <span class="description"><?php _e( 'Default' ); ?>: <code><?php echo $column['default_width']; ?></code></span>
+                  <span class="description"><?php _e( 'Default' ); ?>: <code><?php echo esc_html( $column['default_width'] ); ?></code></span>
                 </td>
               </tr>
             </tbody>

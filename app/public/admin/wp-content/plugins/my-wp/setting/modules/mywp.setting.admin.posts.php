@@ -360,7 +360,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
             <?php $val = $setting_data['bulk_post_updated_messages'][ $bulk_update_message_key ]; ?>
           <?php endif; ?>
           <tr>
-            <th><?php echo $bulk_update_message_key; ?></th>
+            <th><?php echo esc_html( $bulk_update_message_key ); ?></th>
             <td>
               <label>
                 <input type="text" name="mywp[data][bulk_post_updated_messages][<?php echo esc_attr( $bulk_update_message_key ); ?>]" class="<?php echo esc_attr( $bulk_update_message_key ); ?> large-text" value="<?php echo esc_attr( $val ); ?>" placeholder="<?php echo esc_attr( $bulk_update_message ); ?>" />
@@ -385,7 +385,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           </td>
         </tr>
         <tr>
-          <th><?php echo $current_setting_post_type->labels->add_new; ?></th>
+          <th><?php echo esc_html( $current_setting_post_type->labels->add_new ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />
@@ -394,7 +394,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           </td>
         </tr>
         <tr>
-          <th><?php echo $current_setting_post_type->labels->search_items; ?></th>
+          <th><?php echo esc_html( $current_setting_post_type->labels->search_items ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_search_box]" class="hide_search_box" value="1" <?php checked( $setting_data['hide_search_box'] , true ); ?> />

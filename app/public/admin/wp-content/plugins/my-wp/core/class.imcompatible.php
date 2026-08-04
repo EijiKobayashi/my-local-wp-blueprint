@@ -40,7 +40,7 @@ final class MywpIncompatible {
 
     <div class="error">
       <p>
-        <?php printf( __( 'Sorry, My WP is <strong>Incompatible</strong> with your version of WordPress. Require version  %s.' , 'my-wp' ) , MYWP_REQUIRED_WP_VERSION ); ?>
+        <?php printf( __( 'Sorry, My WP is <strong>Incompatible</strong> with your version of WordPress. Require version  %s.' , 'my-wp' ) , esc_html( MYWP_REQUIRED_WP_VERSION ) ); ?>
       </p>
     </div>
 

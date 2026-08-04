@@ -56,7 +56,7 @@ wp_enqueue_script( 'jquery' );
         <?php endif; ?>
 
         <a href="javascript:void(0);" class="type-select type-<?php echo sanitize_html_class( $debug_type ); ?> <?php echo sanitize_html_class( $add_class ); ?>" data-type="<?php echo esc_attr( $debug_type ); ?>">
-          <?php echo $type_label; ?>
+          <?php echo esc_html( $type_label ); ?>
         </a>
 
       <?php endforeach; ?>
@@ -83,7 +83,7 @@ wp_enqueue_script( 'jquery' );
 
             <?php if( ! empty( $render['title'] ) ) : ?>
 
-              <p class="render-title"><?php echo $render['title']; ?></p>
+              <p class="render-title"><?php echo esc_html( $render['title'] ); ?></p>
 
             <?php endif; ?>
 
@@ -92,7 +92,7 @@ wp_enqueue_script( 'jquery' );
               <?php do_action( "mywp_debug_render_{$render_id}" ); ?>
               <?php do_action( 'mywp_debug_render' , $render_id ); ?>
 
-              <!-- do_action( "mywp_debug_render_<?php echo $render_id; ?>" ); -->
+              <!-- do_action( "mywp_debug_render_<?php echo esc_attr( $render_id ); ?>" ); -->
 
             </div><!-- .render-content -->
 

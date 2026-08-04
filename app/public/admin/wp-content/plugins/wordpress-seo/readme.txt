@@ -4,8 +4,8 @@ Donate link: https://yoa.st/1up
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Content analysis, Readability, Schema
-Tested up to: 6.9
-Stable tag: 27.0
+Tested up to: 7.0
+Stable tag: 28.1
 Requires PHP: 7.4
 
 Improve your SEO with real-time feedback, schema, and clear guidance. Upgrade for AI tools, Google Docs integration, and 24/7 support, no hidden fees.
@@ -303,48 +303,33 @@ Your question has most likely been answered on our help center: [yoast.com/help/
 
 == Changelog ==
 
-= 27.0 =
+= 28.1 =
 
-Release date: 2026-02-17
+Release date: 2026-07-21
 
-Yoast SEO 27.0 brings more enhancements and bugfixes. [Find more information about our software releases and updates here](https://yoa.st/releases).
+Yoast SEO 28.1 redesigns the Bulk editor into a focused workspace with new search and status filters, so you can find and fix titles and meta descriptions across posts, pages, and custom post types in one place. [Read the full release post here](https://yoa.st/57c).
 
 #### Enhancements
 
-* Adds `html-react-parser` dependency for improved HTML string handling in React components.
-* Adds `images` array to FAQ and How-to blocks attributes for explicit image handling.
-* Migrates FAQ block's question/answer fields from array-based formats to HTML strings for better compatibility with WordPress components.
-* Migrates How-to block's step name/text fields from array-based formats to HTML strings for better compatibility with WordPress components.
-* Updates the design for the search appearance mode switcher.
+* Redesigns the bulk editor page, which allows users to edit Metadata for multiple posts at once.
+
+= 28.0 =
+
+Release date: 2026-07-06
+
+Yoast SEO now works smoothly with Elementor's version 4 release. [Read the full release post here](https://yoa.st/578).
+
+#### Enhancements
+
+* Improves the compatibility with the atomic editor in Elementor V4.
 
 #### Bugfixes
 
-* Fixes a bug where inline link icon was missing when editing a sync pattern in the block editor with WordPress 6.9.
-* Fixes a bug where the AI Optimize buttons remained active even when another button had been pressed.
-* Fixes a bug where the _subheading distribution assessment_ threw an error when there was some text with no subheadings plus a block containing a subheading (like the Yoast Table of contents block).
+* Fixes a bug where raw `type` and `id` attributes were written on a link instead of `data-type` and `data-id`, when the link was added by selecting a suggestion in the block editor link popover.
 
 #### Other
 
-* Changes the AI Generator `Generate 5 more` button design and preview background.
-* Modernizes how translations of the plugin work by removing the unneeded `load_plugin_textdomain()` calls.
-* Restores the suggestions title and `Generate 5 more` button when the suggestions are loading.
-* Updates the name of the Yoast SEO AI+ card on the plans page.
-
-= 26.9 =
-
-Release date: 2026-02-03
-
-Yoast SEO 26.9 brings more enhancements and bugfixes. [Find more information about our software releases and updates here](https://yoa.st/releases).
-
-#### Other
-
-* Ensures no deprecated props are used for WordPress components `ToggleControl` and `TextControl` for How-to block.
-* Improves performance in large sites with lots of inbound links by adding appropriate database indices.
-* Improves the general security of the plugin via sanitization and escaping.
-* Replaces deprecated standard WordPress components with their modern variants.
-* WooCommerce introduced a [new logic for permalinks in version 10.5](https://developer.woocommerce.com/2026/01/13/product-permalink-changes-coming-in-woocommerce-10-5/). Since this update could result in mismatching Yoast SEO metadata (such as Schema.org data), this version of Yoast SEO temporarily restores the old behavior. Note that for users of Yoast WooCommerce SEO the new permanent link structure will apply.
-* Sets the minimum supported WordPress version to 6.8.
-* Updates the OAuth2 Client library for improved compatibility with PHP 8.5.
+* Updates the guzzlehttp/guzzle and guzzlehttp/psr7 dependencies to patched releases that address known security advisories.
 
 = Earlier versions =
 For the changelog of earlier versions, please refer to [the changelog on yoast.com](https://yoa.st/yoast-seo-changelog).

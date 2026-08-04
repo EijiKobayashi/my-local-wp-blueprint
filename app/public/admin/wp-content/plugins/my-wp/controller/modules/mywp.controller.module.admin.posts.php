@@ -668,7 +668,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
       if( is_array( $post_meta_maybe_serialize ) or is_object( $post_meta_maybe_serialize ) ) {
 
-        printf( '<textarea class="large-text" readonly="readonly">%s</textarea>' , print_r( $post_meta_maybe_serialize , true ) );
+        printf( '<textarea class="large-text" readonly="readonly">%s</textarea>' , esc_textarea( print_r( $post_meta_maybe_serialize , true ) ) );
 
       } else {
 
@@ -676,11 +676,11 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         if( ! empty( $post_meta_maybe_json ) && is_object( $post_meta_maybe_json ) ) {
 
-          printf( '<textarea class="large-text" readonly="readonly">%s</textarea>' , print_r( $post_meta_maybe_json , true ) );
+          printf( '<textarea class="large-text" readonly="readonly">%s</textarea>' , esc_textarea( print_r( $post_meta_maybe_json , true ) ) );
 
         } else {
 
-          echo $post_meta;
+          echo esc_html( $post_meta );
 
         }
 
@@ -708,7 +708,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         }
 
-        echo $post_id;
+        echo esc_html( $post_id );
 
       }
 
@@ -726,7 +726,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         }
 
-        echo sanitize_title( $post->post_name );
+        echo esc_html( sanitize_title( $post->post_name ) );
 
       }
 
@@ -744,7 +744,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         }
 
-        echo $post->post_parent;
+        echo esc_html( $post->post_parent );
 
       }
 
@@ -762,7 +762,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         }
 
-        echo get_post_format_string( get_post_format( $post_id ) );
+        echo esc_html( get_post_format_string( get_post_format( $post_id ) ) );
 
       }
 
@@ -784,11 +784,11 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
           if( function_exists( 'mb_substr' ) ) {
 
-            echo mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
+            echo esc_html( mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
 
           } else {
 
-            echo substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.';
+            echo esc_html( substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
 
           }
 
@@ -810,7 +810,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         }
 
-        echo $post->menu_order;
+        echo esc_html( $post->menu_order );
 
       }
 
@@ -864,7 +864,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
             foreach( $post_terms as $post_term ) {
 
-              printf( '<span class="post-term post-term-%d">[%s]</span> ' , esc_attr( $post_term->term_id ) , $post_term->name );
+              printf( '<span class="post-term post-term-%d">[%s]</span> ' , esc_attr( $post_term->term_id ) , esc_html( $post_term->name ) );
 
             }
 
@@ -890,7 +890,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
             if( is_array( $post_meta_maybe_serialize ) or is_object( $post_meta_maybe_serialize ) ) {
 
-              print_r( $post_meta_maybe_serialize );
+              echo esc_html( print_r( $post_meta_maybe_serialize , true ) );
 
             } else {
 
@@ -898,11 +898,11 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
               if( ! empty( $post_meta_maybe_json ) && is_object( $post_meta_maybe_json ) ) {
 
-                print_r( $post_meta_maybe_json );
+                echo esc_html( print_r( $post_meta_maybe_json , true ) );
 
               } else {
 
-                echo $post_meta;
+                echo esc_html( $post_meta );
 
               }
 

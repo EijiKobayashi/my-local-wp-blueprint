@@ -63,7 +63,7 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
             <?php $checked = true; ?>
           <?php endif; ?>
           <tr>
-            <th><?php echo $meta_box['title']; ?></th>
+            <th><?php echo esc_html( $meta_box['title'] ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][remove_meta_boxes_items][<?php echo esc_attr( $metabox_id ); ?>]" class="remove_meta_boxes_item remove_meta_box_item-<?php echo esc_attr( $metabox_id ); ?>" value="1" <?php checked( $checked , true ); ?> />
@@ -97,7 +97,7 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
           <tr>
-            <th><?php echo $field_label; ?></th>
+            <th><?php echo esc_html( $field_label ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][<?php echo esc_attr( $field_name ); ?>]" class="<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data[$field_name] , true ); ?> />
@@ -131,7 +131,7 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
           <tr>
-            <th><?php echo $field_label; ?></th>
+            <th><?php echo esc_html( $field_label ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][<?php echo esc_attr( $field_name ); ?>]" class="<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data[$field_name] , true ); ?> />

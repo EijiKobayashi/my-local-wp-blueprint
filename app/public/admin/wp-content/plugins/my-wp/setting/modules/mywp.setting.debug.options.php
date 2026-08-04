@@ -62,7 +62,7 @@ final class MywpSettingScreenDebugOptions extends MywpAbstractSettingModule {
           <?php endif; ?>
           <tr>
             <th>
-              [<?php echo $option->option_id; ?>] <?php echo $option->option_name; ?>
+              [<?php echo esc_html( $option->option_id ); ?>] <?php echo esc_html( $option->option_name ); ?>
               <?php if( is_array( $option_value ) or is_object( $option_value ) ) : ?>
                 <p><code style="background-color: #F4EFCC;">Serialize</code></p>
               <?php elseif( ! empty( $option_value_json ) && is_object( $option_value_json ) ) : ?>
@@ -70,19 +70,19 @@ final class MywpSettingScreenDebugOptions extends MywpAbstractSettingModule {
               <?php endif; ?>
             </th>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $option->option_value ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $option->option_value , true ) ); ?></textarea>
             </td>
             <td>
               <?php if( is_array( $option_value ) or is_object( $option_value ) ) : ?>
-                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $option_value ); ?></textarea>
+                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $option_value , true ) ); ?></textarea>
               <?php elseif( ! empty( $option_value_json ) && is_object( $option_value_json ) ) : ?>
-                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php print_r( $option_value_json ); ?></textarea>
+                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $option_value_json , true ) ); ?></textarea>
               <?php else : ?>
-                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_html( $option_value ); ?></textarea>
+                <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( $option_value ); ?></textarea>
               <?php endif; ?>
             </td>
             <td>
-              <?php echo $option->autoload; ?>
+              <?php echo esc_html( $option->autoload ); ?>
             </td>
           </tr>
         <?php endforeach; ?>

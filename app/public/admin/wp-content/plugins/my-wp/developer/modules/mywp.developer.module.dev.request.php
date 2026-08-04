@@ -95,7 +95,7 @@ final class MywpDeveloperModuleDevRequest extends MywpDeveloperAbstractModule {
 
       echo '<tr>';
 
-      printf( '<th>%s</th>' , $key );
+      printf( '<th>%s</th>' , esc_html( $key ) );
 
       echo '<td>';
 
@@ -107,11 +107,11 @@ final class MywpDeveloperModuleDevRequest extends MywpDeveloperAbstractModule {
 
         }
 
-        printf( '<textarea readonly="readonly">%s</textarea>' , print_r( map_deep( $val , 'esc_html' ) , true ) );
+        printf( '<textarea readonly="readonly">%s</textarea>' , esc_textarea( print_r( $val , true ) ) );
 
       } else {
 
-        echo $val;
+        echo esc_html( $val );
 
       }
 

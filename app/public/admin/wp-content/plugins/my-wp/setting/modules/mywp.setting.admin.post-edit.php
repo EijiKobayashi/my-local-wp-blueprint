@@ -95,6 +95,11 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
       cursor: grab;
       border: 1px solid #ddd;
       background: #fafafa;
+      opacity: 0.3;
+    }
+    #selectable-post-statuses.active .selectable-post-status {
+      background: #fff;
+      opacity: 1.0;
     }
     #selectable-post-statuses .selectable-post-status:hover {
       border-color: #999;
@@ -110,7 +115,33 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
     <script>
     jQuery(function( $ ) {
 
-      $('#selectable-post-statuses').sortable();
+      let $show_select_custom_post_statuses = $('#show_select_custom_post_statuses');
+
+      let $selectable_post_statuses = $('#selectable-post-statuses');
+
+      $selectable_post_statuses.sortable();
+
+      function change_show_selectable_post_statuses() {
+
+        if( $show_select_custom_post_statuses.prop('checked') ) {
+
+          $selectable_post_statuses.addClass('active');
+
+        } else {
+
+          $selectable_post_statuses.removeClass('active');
+
+        }
+
+      }
+
+      $show_select_custom_post_statuses.on('change', function() {
+
+        change_show_selectable_post_statuses();
+
+      });
+
+      change_show_selectable_post_statuses();
 
     });
     </script>
@@ -133,7 +164,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     if( empty( $current_setting_post_type ) ) {
 
-      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post Type' , 'my-wp' ) , $current_setting_post_type_id );
+      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post Type' , 'my-wp' ) , esc_html( $current_setting_post_type_id ) );
 
       return false;
 
@@ -261,7 +292,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
               <?php $val = $setting_data['post_updated_messages'][ $update_message_key ]; ?>
             <?php endif; ?>
             <tr>
-              <th><?php echo $update_message['title']; ?></th>
+              <th><?php echo esc_html( $update_message['title'] ); ?></th>
               <td>
                 <label>
                   <input type="text" name="mywp[data][post_updated_messages][<?php echo esc_attr( $update_message_key ); ?>]" class="<?php echo esc_attr( $update_message_key ); ?> large-text" value="<?php echo esc_attr( $val ); ?>" placeholder="<?php echo esc_attr( $update_message['message'] ); ?>" />
@@ -526,7 +557,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
             <th><?php echo _e( 'Custom post statuses' ); ?></th>
             <td>
               <label>
-                <input type="checkbox" name="mywp[data][show_select_custom_post_statuses]" class="show_select_custom_post_statuses" value="1" <?php checked( $setting_data['show_select_custom_post_statuses'] , true ); ?> />
+                <input type="checkbox" name="mywp[data][show_select_custom_post_statuses]" id="show_select_custom_post_statuses" class="show_select_custom_post_statuses" value="1" <?php checked( $setting_data['show_select_custom_post_statuses'] , true ); ?> />
                 <?php _e( 'Show' ); ?>
               </label>
             </td>

@@ -428,17 +428,15 @@ class WP_Optimize_Database_Information {
 	}
 
 	/**
-	 * Check if $table using by any of installed plugins.
+	 * Check if any of plugins from $plugin_names is installed.
 	 *
-	 * @param string $table
+	 * @param array $plugin_names
 	 * @return bool
 	 */
-	public function is_table_using_by_plugin($table) {
-		$plugin_names = $this->get_table_plugin($table);
+	public function is_any_plugin_installed($plugin_names) {
 
-		// if we can't determine which plugin use $table then return true.
-		if (!$plugin_names) {
-			return true;
+		if (empty($plugin_names)) {
+			return false;
 		}
 
 		// is WordPress core table or using by any of installed plugins then return true.
@@ -550,12 +548,28 @@ class WP_Optimize_Database_Information {
 	public function get_table_plugin($table) {
 		global $wpdb;
 
+		$plugins = array();
+		$original_table = $table;
 		// delete table prefix.
 		$table = preg_replace('/^'.$wpdb->prefix.'([0-9]+_)?/', '', $table);
 		$plugins_tables = $this->get_all_plugin_tables_relationship();
 
+		// If a direct match exists.
 		if (array_key_exists($table, $plugins_tables)) {
-			return $plugins_tables[$table];
+			$plugins = $plugins_tables[$table];
+		}
+
+		// if has pro_quiz in name then try to match with learndash tables.
+		if (false !== stripos($original_table, 'pro_quiz')) {
+			$match_learndash_tables_plugin = $this->match_learndash_tables_plugin($original_table);
+			
+			if (!empty($match_learndash_tables_plugin)) {
+				$plugins = array_merge($plugins, $match_learndash_tables_plugin);
+			}
+		}
+
+		if (!empty($plugins)) {
+			return array_unique($plugins);
 		}
 
 		return false;
@@ -688,5 +702,38 @@ class WP_Optimize_Database_Information {
 			$rows_count = $wpdb->get_var("SELECT COUNT(*) FROM `" . esc_sql($table->Name) . "`");
 			set_transient('wpo_' . $table->Name . '_count', $rows_count, 24*60*60);
 		}
+	}
+
+	/**
+	 * Check if the give table name belongs to a LearnDash plugin table and return the plugin slug.
+	 *
+	 * @param string $table_name The original table name with prefix to check if it belongs to LearnDash plugin.
+	 * @return array
+	 */
+	private function match_learndash_tables_plugin($table_name) {
+
+		$table_names = array(
+			'pro_quiz_category',
+			'pro_quiz_form',
+			'pro_quiz_lock',
+			'pro_quiz_prerequisite',
+			'pro_quiz_question',
+			'pro_quiz_statistic',
+			'pro_quiz_statistic_ref',
+			'pro_quiz_template',
+			'pro_quiz_toplist',
+		);
+
+		$learndash_slug = 'sfwd-lms';
+
+		foreach ($table_names as $learndash_table) {
+			$table_suffix = substr($table_name, -strlen($learndash_table));
+
+			if ($table_suffix === $learndash_table) {
+				return array($learndash_slug);
+			}
+		}
+
+		return array();
 	}
 }

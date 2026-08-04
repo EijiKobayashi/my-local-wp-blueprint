@@ -54,11 +54,11 @@ final class MywpSettingScreenDebugCapabilities extends MywpAbstractSettingModule
 
           <tr>
             <th>
-              [<?php echo $user_role_name; ?>]<br />
-              <?php echo $user_role['label']; ?>
+              [<?php echo esc_html( $user_role_name ); ?>]<br />
+              <?php echo esc_html($user_role['label'] ); ?>
             </th>
             <td>
-              <textarea readonly="readonly" class="large-text" style="height: 200px;"><?php print_r( $user_role['capabilities'] ); ?></textarea>
+              <textarea readonly="readonly" class="large-text" style="height: 200px;"><?php echo esc_textarea( print_r( $user_role['capabilities'] , true ) ); ?></textarea>
             </td>
           </tr>
 

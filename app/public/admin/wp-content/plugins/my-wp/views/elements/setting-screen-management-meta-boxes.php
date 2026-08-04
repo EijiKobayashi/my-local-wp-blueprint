@@ -133,7 +133,7 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
           <?php endif; ?>
 
           <tr class="meta-box-tr">
-            <th><?php echo $meta_box['title']; ?></th>
+            <th><?php echo esc_html( $meta_box['title'] ); ?></th>
             <td>
               <select name="mywp[data][meta_boxes][<?php echo esc_attr( $meta_box_id ); ?>][action]" class="meta-box-action-select">
                 <option value="" <?php selected( $action , '' ); ?>></option>

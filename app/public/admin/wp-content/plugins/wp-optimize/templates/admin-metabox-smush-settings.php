@@ -1,4 +1,4 @@
-<?php if (!defined('WPO_VERSION')) die('No direct access.'); ?>
+<?php if (!defined('ABSPATH')) die('No direct access allowed'); ?>
 <div class='wpo_smush_single_image compression_level wpo-fieldgroup' style="<?php echo esc_attr($smush_display); ?>">
 	<div class="wpo-fieldgroup__subgroup">
 		<label for="enable_lossy_compression">
@@ -10,14 +10,14 @@
 			$message .= ' ';
 			$message .= __('The resulting images are of a slightly lower quality', 'wp-optimize');
 		?>
-		<span tabindex="0" data-tooltip="<?php echo esc_attr($message); ?>"><span class="dashicons dashicons-editor-help"></span> </span>
+		<span tabindex="0" title="<?php echo esc_attr($message); ?>"><span class="dashicons dashicons-editor-help"></span> </span>
 	</div>
 	<div class="wpo-fieldgroup__subgroup">
 		<label for="enable_lossless_compression">
 			<input type="radio" id="enable_lossless_compression" name="compression_level" class="smush-options compression_level" <?php checked($smush_options['image_quality'], 92); ?>>
 			<?php esc_html_e('Prioritize retention of detail', 'wp-optimize');?>
 		</label>
-		<span tabindex="0" data-tooltip="<?php esc_attr_e('Uses lossless compression, which results in much better image quality but lower file size savings per image', 'wp-optimize');?>"><span class="dashicons dashicons-editor-help"></span> </span>
+		<span tabindex="0" title="<?php esc_attr_e('Uses lossless compression, which results in much better image quality but lower file size savings per image', 'wp-optimize');?>"><span class="dashicons dashicons-editor-help"></span> </span>
 	</div>
 	<div class="wpo-fieldgroup__subgroup">
 		<label for="enable_custom_compression">
