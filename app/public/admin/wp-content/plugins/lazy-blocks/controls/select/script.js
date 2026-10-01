@@ -2,22 +2,22 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
+
 import {
 	PanelBody,
+	RadioControl,
 	SelectControl,
 	ToggleControl,
-	RadioControl,
 } from '@wordpress/components';
+import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import BaseControl from '../../assets/components/base-control';
-import useBlockControlProps from '../../assets/hooks/use-block-control-props';
-
 import Choices from '../../assets/components/choices';
+import useBlockControlProps from '../../assets/hooks/use-block-control-props';
 
 /**
  * Control render in editor.
@@ -46,8 +46,6 @@ addFilter('lzb.editor.control.select.render', 'lzb.editor', (render, props) => {
 				onChange={(val) => {
 					props.onChange(val);
 				}}
-				__next40pxDefaultSize
-				__nextHasNoMarginBottom
 			/>
 		</BaseControl>
 	);
@@ -114,7 +112,6 @@ addFilter(
 									allow_null: value ? 'true' : 'false',
 								})
 							}
-							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 				</PanelBody>
@@ -136,7 +133,6 @@ addFilter(
 									multiple: value ? 'true' : 'false',
 								})
 							}
-							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 				</PanelBody>

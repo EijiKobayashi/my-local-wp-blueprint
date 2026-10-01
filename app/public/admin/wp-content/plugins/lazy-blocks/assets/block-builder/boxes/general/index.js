@@ -1,16 +1,17 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+
 import {
-	PanelBody,
 	BaseControl,
-	TextareaControl,
 	Notice,
+	PanelBody,
+	TextareaControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -87,7 +88,6 @@ export const CategorySettingsControl = ({ value, onChange }) => {
 		<BaseControl
 			id="lazyblocks-boxes-general-category"
 			label={__('Category', 'lazy-blocks')}
-			__nextHasNoMarginBottom
 		>
 			<Select
 				id="lazyblocks-boxes-general-category"
@@ -112,7 +112,6 @@ export const KeywordsSettingsControl = ({ value, onChange }) => {
 				'Make it easier to discover a block with keyword aliases',
 				'lazy-blocks'
 			)}
-			__nextHasNoMarginBottom
 		>
 			<Select
 				id="lazyblocks-boxes-general-keywords"
@@ -208,7 +207,6 @@ export default function GeneralSettings({ data, updateData }) {
 				label={__('Description', 'lazy-blocks')}
 				value={description}
 				onChange={(value) => updateData({ description: value })}
-				__nextHasNoMarginBottom
 			/>
 		</PanelBody>,
 		settingsData

@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies.
  */
+
+import { BaseControl, PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, BaseControl, SelectControl } from '@wordpress/components';
 
 export default function GroupRow(props) {
 	const { updateData, data } = props;
@@ -14,7 +15,6 @@ export default function GroupRow(props) {
 			<BaseControl
 				id="lazyblocks-settings-group"
 				label={__('Group', 'lazy-blocks')}
-				__nextHasNoMarginBottom
 			>
 				<SelectControl
 					id="lazyblocks-settings-row-group"
@@ -31,8 +31,6 @@ export default function GroupRow(props) {
 							group: value,
 						})
 					}
-					__next40pxDefaultSize
-					__nextHasNoMarginBottom
 				/>
 			</BaseControl>
 		</PanelBody>

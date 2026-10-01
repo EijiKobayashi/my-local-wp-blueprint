@@ -1,10 +1,10 @@
 === SiteGuard WP Plugin ===
-Contributors: jp-secure
+Contributors: jp-secure, egsecuresolutions
 Donate link: -
 Tags: security, login lock, login alert, captcha, pingback
 Requires at least: 6.0
-Tested up to: 7.0
-Stable tag: 1.8.7
+Tested up to: 7.1
+Stable tag: 1.8.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,7 @@ SiteGuard WP Plugin helps protect WordPress sites by strengthening login and adm
 
 * WordPress multisite is not supported.
 * Apache 1.3, Apache 2.x, and Nginx are supported.
+* Rename Login cannot be combined with a login page URL change feature in another plugin. Enable it in only one plugin; using both can leave two login URLs available, or stop the login page from loading.
 * CAPTCHA requires the PHP extensions `mbstring` and `gd`.
 * WAF Tuning Support requires SiteGuard Server Edition on Apache.
 
@@ -66,6 +67,22 @@ This plugin is translated by the community. We appreciate your help with transla
 For FAQs, see the [English](https://www.jp-secure.com/siteguard_wp_plugin_en/faq.html) or [Japanese](https://www.jp-secure.com/siteguard_wp_plugin/faq.html) documentation.
 
 == Changelog ==
+
+= 1.8.9 =
+
+* Update Notifications: fixed notification emails still being sent while the feature was set to OFF.
+* CAPTCHA: fixed a fatal error on the login page on servers that cannot render the CAPTCHA image. CAPTCHA is now skipped so that login remains available, and the reason is shown on the settings screen.
+* CAPTCHA: fixed login becoming impossible when the CAPTCHA working directory could not be written to by the web server. This is now detected and reported instead of failing silently.
+* Confirmed compatibility with WordPress 7.1.
+
+Special thanks to miruko for the update notification report.
+
+= 1.8.8 =
+
+* Rename Login: shows a warning when another active plugin is also changing the login page URL.
+* Rename Login: fixed an issue where a fresh install could leave the login page inaccessible (the login URL returned 404).
+
+Special thanks to niflex for the plugin conflict report, and to kitadahi for the login URL report.
 
 = 1.8.7 =
 

@@ -4,7 +4,7 @@
 import valueParser from 'postcss-value-parser';
 import type { PropertyValue } from 'csstype';
 
-const DEFAULT_PRECISION: number = 4;
+const DEFAULT_PRECISION = 4;
 
 // Array with four values for CSS
 export type FourCssValues = [ string, string, string, string ];
@@ -73,14 +73,14 @@ export function sanitizeUnitValue(
 	initialValue: PropertyValue< string | number > | undefined,
 	options?: SanitizeOptions
 ): string {
-	const value: string = String( initialValue ).trim();
-	let num: number = parseFloat( value );
+	const value = String( initialValue ).trim();
+	let num = parseFloat( value );
 
-	if ( isNaN( num ) ) {
+	if ( Number.isNaN( num ) || num < 0 ) {
 		return '';
-	} else if ( num < 0 ) {
-		return '';
-	} else if ( num === 0 ) {
+	}
+
+	if ( num === 0 ) {
 		return '0';
 	}
 
@@ -96,7 +96,7 @@ export function sanitizeUnitValue(
 	const modifier = 10 ** ( options?.precision || DEFAULT_PRECISION );
 	num = Math.round( num * modifier ) / modifier;
 
-	const unit: string = value.match( /[\d.\-+]*\s*(.*)/ )?.[ 1 ] ?? '';
+	const unit = value.match( /[\d.\-+]*\s*(.*)/ )?.[ 1 ] ?? '';
 
 	return `${ num }${ unit.toLowerCase() }`;
 }
@@ -108,14 +108,14 @@ export function sanitizeUnitValue(
  * @return The extracted number and unit.
  */
 export function parseUnit( initialValue: string ): [ number, string ] {
-	const value: string = String( initialValue ).trim();
-	const num: number = parseFloat( value );
+	const value = String( initialValue ).trim();
+	const num = parseFloat( value );
 
-	if ( isNaN( num ) ) {
+	if ( Number.isNaN( num ) ) {
 		return [ 0, '' ];
 	}
 
-	const unit: string = value.match( /[\d.\-+]*\s*(.*)/ )?.[ 1 ] ?? '';
+	const unit = value.match( /[\d.\-+]*\s*(.*)/ )?.[ 1 ] ?? '';
 
 	return [ num, unit.toLowerCase() ];
 }
@@ -129,7 +129,7 @@ export function toInteger( value: number | string | undefined, defaultValue = 0 
 
 	const converted = parseInt( String( value ), 10 );
 
-	if ( isNaN( converted ) ) {
+	if ( Number.isNaN( converted ) ) {
 		return defaultValue;
 	}
 

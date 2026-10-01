@@ -2,7 +2,6 @@
  * External dependencies
  */
 import clsx from 'clsx';
-import type { Properties } from 'csstype';
 
 /**
  * WordPress dependencies
@@ -17,7 +16,8 @@ import {
 	// @ts-ignore: has no exported member
 	useBlockEditingMode,
 } from '@wordpress/block-editor';
-import { ToolbarDropdownMenu, PanelBody, __experimentalText as Text } from '@wordpress/components';
+import { ToolbarDropdownMenu, PanelBody } from '@wordpress/components';
+import { Text } from '@wordpress/ui';
 import {
 	blockTable,
 	justifyLeft,
@@ -37,7 +37,7 @@ import type { BlockEditProps } from '@wordpress/blocks';
 import './editor.scss';
 import { CONTENT_JUSTIFY_CONTROLS } from './constants';
 import { STORE_NAME, type StoreOptions } from './store';
-import { TableSettings, TableCaptionSettings, TableCellSettings } from './settings';
+import { TableSettings, TableCaptionSettings, TableCellSettings, GlobalSettings } from './settings';
 import { Table, TablePlaceholder, TableCaption } from './elements';
 import {
 	insertRow,
@@ -71,8 +71,8 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 	const [ selectedCells, setSelectedCells ] = useState< VSelectedCells >( undefined );
 	const [ selectedLine, setSelectedLine ] = useState< VSelectedLine >( undefined );
 
-	const tableStylesObj: Properties = convertToObject( tableStyles );
-	const captionStylesObj: Properties = convertToObject( captionStyles );
+	const tableStylesObj = convertToObject( tableStyles );
+	const captionStylesObj = convertToObject( captionStyles );
 	const options = useSelect( ( select ) => {
 		const { getOptions }: { getOptions: () => StoreOptions } = select( STORE_NAME );
 		return getOptions();
@@ -247,7 +247,7 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 		},
 	];
 
-	const isEmpty: boolean = ! [ 'head', 'body', 'foot' ].filter(
+	const isEmpty = ! [ 'head', 'body', 'foot' ].filter(
 		( sectionName ) => ! isEmptySection( vTable[ sectionName as SectionName ] )
 	).length;
 
@@ -291,7 +291,7 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 		selectedCells,
 	};
 
-	const tableCellSettingsLabel: string =
+	const tableCellSettingsLabel =
 		selectedCells && selectedCells.length > 1
 			? __( 'Multi cells settings', 'flexible-table-block' )
 			: __( 'Cell settings', 'flexible-table-block' );
@@ -344,6 +344,12 @@ function TableEdit( props: BlockEditProps< BlockAttributes > ) {
 						</>
 					) }
 					<InspectorControls>
+						<PanelBody
+							title={ __( 'Global setting', 'flexible-table-block' ) }
+							initialOpen={ false }
+						>
+							<GlobalSettings />
+						</PanelBody>
 						<PanelBody
 							title={ __( 'Table settings', 'flexible-table-block' ) }
 							initialOpen={ false }

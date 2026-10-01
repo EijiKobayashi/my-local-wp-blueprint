@@ -1,9 +1,10 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
+
 import { PanelBody, TextControl } from '@wordpress/components';
+import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -33,8 +34,6 @@ addFilter('lzb.editor.control.number.render', 'lzb.editor', (render, props) => {
 				onChange={(val) => {
 					props.onChange(parseFloat(val));
 				}}
-				__next40pxDefaultSize
-				__nextHasNoMarginBottom
 			/>
 		</BaseControl>
 	);
@@ -50,6 +49,7 @@ addFilter('lzb.editor.control.number.render', 'lzb.editor', (render, props) => {
  * @return {Object} validation data.
  */
 function validate(validationData, value, data) {
+	// biome-ignore lint/suspicious/noGlobalIsNan: the control value is a string, and Number.isNaN would report "abc" as valid.
 	if (value === '' || isNaN(value)) {
 		return { valid: false };
 	}
@@ -97,8 +97,6 @@ addFilter(
 						step={data.step}
 						value={data.min}
 						onChange={(value) => updateData({ min: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -108,8 +106,6 @@ addFilter(
 						step={data.step}
 						value={data.max}
 						onChange={(value) => updateData({ max: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -118,8 +114,6 @@ addFilter(
 						type="number"
 						value={data.step}
 						onChange={(value) => updateData({ step: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -127,8 +121,6 @@ addFilter(
 						label={__('Placeholder', 'lazy-blocks')}
 						value={data.placeholder}
 						onChange={(value) => updateData({ placeholder: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</>

@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies.
  */
+
+import { BaseControl, PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, BaseControl, ToggleControl } from '@wordpress/components';
 
 export default function HideIfNotSelectedRow(props) {
 	const { updateData, data } = props;
@@ -12,7 +13,6 @@ export default function HideIfNotSelectedRow(props) {
 			<BaseControl
 				id="lazyblocks-settings-row-hide-if-no-selected"
 				label={__('Hide if block is not selected', 'lazy-blocks')}
-				__nextHasNoMarginBottom
 			>
 				<ToggleControl
 					id="lazyblocks-settings-row-hide-if-no-selected"
@@ -23,7 +23,6 @@ export default function HideIfNotSelectedRow(props) {
 							hide_if_not_selected: value ? 'true' : 'false',
 						})
 					}
-					__nextHasNoMarginBottom
 				/>
 			</BaseControl>
 		</PanelBody>

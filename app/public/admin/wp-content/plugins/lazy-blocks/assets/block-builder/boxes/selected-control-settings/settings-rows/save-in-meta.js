@@ -1,14 +1,15 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
+
 import {
-	PanelBody,
 	BaseControl,
 	Button,
-	ToggleControl,
+	PanelBody,
 	TextControl,
+	ToggleControl,
 } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 const { plugin_version: pluginVersion } = window.lazyblocksBlockBuilderData;
 
@@ -33,7 +34,6 @@ export default function SaveInMetaRow(props) {
 						{__('How to use?', 'lazy-blocks')}
 					</Button>
 				}
-				__nextHasNoMarginBottom
 			>
 				<ToggleControl
 					label={__('Yes', 'lazy-blocks')}
@@ -41,7 +41,6 @@ export default function SaveInMetaRow(props) {
 					onChange={(value) =>
 						updateData({ save_in_meta: value ? 'true' : 'false' })
 					}
-					__nextHasNoMarginBottom
 				/>
 			</BaseControl>
 			{data.save_in_meta === 'true' ? (
@@ -54,8 +53,6 @@ export default function SaveInMetaRow(props) {
 					placeholder={
 						data.name || __('Unique metabox name', 'lazy-blocks')
 					}
-					__next40pxDefaultSize
-					__nextHasNoMarginBottom
 				/>
 			) : (
 				''

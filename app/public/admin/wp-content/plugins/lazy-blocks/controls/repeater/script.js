@@ -3,18 +3,18 @@
  * External dependencies.
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { cloneDeep } from 'lodash';
-import { arrayMoveImmutable } from 'array-move';
-import classnames from 'classnames/dedupe';
 
+import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { addFilter } from '@wordpress/hooks';
 /**
  * WordPress dependencies.
  */
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
-import { useState } from '@wordpress/element';
-import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
-import { useDispatch } from '@wordpress/data';
+import { arrayMoveImmutable } from 'array-move';
+import classnames from 'classnames/dedupe';
+import { cloneDeep } from 'lodash';
 
 /**
  * Internal dependencies.
@@ -153,7 +153,7 @@ addFilter('lzb.editor.control.repeater.getValue', 'lzb.editor', (value) => {
 			} else {
 				value = JSON.parse(decodeURIComponent(value));
 			}
-		} catch (e) {
+		} catch (_e) {
 			value = [];
 		}
 	}
@@ -216,7 +216,7 @@ function ControlsRepeaterItem(props) {
 
 	return (
 		<>
-			{/* eslint-disable-next-line react/button-has-type */}
+			{/* biome-ignore lint/a11y/useButtonType: intentional opt-out kept from ESLint. */}
 			<button
 				className={classnames(
 					'lzb-block-builder-controls-item-repeater-toggle',
@@ -290,8 +290,6 @@ addFilter(
 						)}
 						value={data.rows_label}
 						onChange={(value) => updateData({ rows_label: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -302,8 +300,6 @@ addFilter(
 						onChange={(value) =>
 							updateData({ rows_add_button_label: value })
 						}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -314,8 +310,6 @@ addFilter(
 						min={0}
 						value={data.rows_min}
 						onChange={(value) => updateData({ rows_min: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -326,8 +320,6 @@ addFilter(
 						min={0}
 						value={data.rows_max}
 						onChange={(value) => updateData({ rows_max: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -344,7 +336,6 @@ addFilter(
 									rows_collapsible: value ? 'true' : 'false',
 								})
 							}
-							__nextHasNoMarginBottom
 						/>
 						{data.rows_collapsible === 'true' ? (
 							<ToggleControl
@@ -360,7 +351,6 @@ addFilter(
 											: 'false',
 									})
 								}
-								__nextHasNoMarginBottom
 							/>
 						) : (
 							''

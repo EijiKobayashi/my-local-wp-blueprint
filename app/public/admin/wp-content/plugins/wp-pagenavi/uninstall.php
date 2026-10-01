@@ -1,47 +1,42 @@
 <?php
-/*
- * Uninstall plugin
+/**
+ * Uninstaller: removes everything the plugin stored.
+ *
+ * @package WP-PageNavi
  */
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) )
-	exit ();
 
-$option_names = array(
-	'pagenavi_options'
-);
-
-
-if ( is_multisite() ) {
-	$ms_sites = function_exists( 'get_sites' ) ? get_sites() : wp_get_sites();
-
-	if( 0 < sizeof( $ms_sites ) ) {
-		foreach ( $ms_sites as $ms_site ) {
-			$blog_id = isset( $ms_site['blog_id'] ) ? $ms_site['blog_id'] : $ms_site->blog_id;
-			switch_to_blog( $blog_id );
-			if( sizeof( $option_names ) > 0 ) {
-				foreach( $option_names as $option_name ) {
-					delete_option( $option_name );
-					plugin_uninstalled();
-				}
-			}
-		}
-	}
-
-	restore_current_blog();
-} else {
-	if( sizeof( $option_names ) > 0 ) {
-		foreach( $option_names as $option_name ) {
-			delete_option( $option_name );
-			plugin_uninstalled();
-		}
-	}
-}
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 /**
- * Delete plugin table when uninstalled
+ * Delete the plugin's options for the current site.
  *
- * @access public
  * @return void
  */
-function plugin_uninstalled() {
-	global $wpdb;
+function wp_pagenavi_uninstall_site() {
+	delete_option( 'wp_pagenavi_options' );
+	delete_option( 'wp_pagenavi_version' );
+
+	// The settings row was named pagenavi_options up to 2.94.6. It is deleted by
+	// the upgrade routine, so this only catches an install that never reached
+	// wp-admin between updating and being removed.
+	delete_option( 'pagenavi_options' );
+}
+
+if ( is_multisite() ) {
+	// 'number' => 0 lifts WP_Site_Query's default cap of 100, which would
+	// otherwise skip every site past the hundredth while reporting success.
+	$site_ids = get_sites(
+		array(
+			'fields' => 'ids',
+			'number' => 0,
+		)
+	);
+
+	foreach ( $site_ids as $site_id ) {
+		switch_to_blog( (int) $site_id );
+		wp_pagenavi_uninstall_site();
+		restore_current_blog();
+	}
+} else {
+	wp_pagenavi_uninstall_site();
 }

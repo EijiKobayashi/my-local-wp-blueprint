@@ -2,11 +2,12 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 // @ts-ignore: has no exported member
 import { store as coreStore } from '@wordpress/core-data';
-import { Button, PanelBody, Spinner, __experimentalHStack as HStack } from '@wordpress/components';
+import { Button, Spinner } from '@wordpress/components';
+import { Stack } from '@wordpress/ui';
 import { help } from '@wordpress/icons';
 
 /**
@@ -18,64 +19,52 @@ import SettingModal from './setting-modal';
 import type { StoreOptions } from '../../store';
 
 export default function GlobalSettings() {
-	const storeOptions: StoreOptions = useSelect(
-		( select ) =>
-			select( STORE_NAME )
+	const { options, canManageOptions, hasResolved } = useSelect( ( select ) => {
+		return {
+			// @ts-ignore
+			options: select( STORE_NAME ).getOptions() as StoreOptions,
+			canManageOptions: !! select( coreStore ).canUser( 'update', {
+				kind: 'root',
+				name: 'site',
+			} ),
+			hasResolved:
 				// @ts-ignore
-				.getOptions(),
-		[]
-	);
+				select( STORE_NAME ).hasFinishedResolution( 'getOptions' ) &&
+				select( coreStore ).hasFinishedResolution( 'canUser', [
+					'update',
+					{ kind: 'root', name: 'site' },
+				] ),
+		};
+	}, [] );
 
-	const isAdministrator: boolean = useSelect(
-		( select ) => select( coreStore ).canUser( 'create', 'users' ),
-		[]
-	);
+	const [ isSettingModalOpen, setIsSettingModalOpen ] = useState( false );
+	const [ isHelpModalOpen, setIsHelpModalOpen ] = useState( false );
 
-	const [ isSettingModalOpen, setIsSettingModalOpen ] = useState< boolean >( false );
-	const [ isHelpModalOpen, setIsHelpModalOpen ] = useState< boolean >( false );
-	const [ options, setOptions ] = useState< StoreOptions >();
-
-	// Set options to state.
-	useEffect( () => {
-		setOptions( storeOptions );
-	}, [ storeOptions ] );
-
-	const isGlobalSettingLoaded = isAdministrator !== undefined && options !== undefined;
-	const showGlobalSetting = isAdministrator || options?.show_global_setting;
+	const showGlobalSetting = canManageOptions || options?.show_global_setting;
 
 	return (
 		<>
-			<PanelBody
-				title={ __( 'Global setting', 'flexible-table-block' ) }
-				initialOpen={ false }
-				className="flexible-table-block-global-setting-panel"
-			>
-				<HStack>
-					{ ! isGlobalSettingLoaded && <Spinner /> }
-					{ isGlobalSettingLoaded && showGlobalSetting && (
-						<Button
-							variant="primary"
-							onClick={ () => setIsSettingModalOpen( true ) }
-							size="compact"
-						>
-							{ __( 'Edit global setting', 'flexible-table-block' ) }
-						</Button>
-					) }
-					<Button
-						icon={ help }
-						variant="link"
-						onClick={ () => setIsHelpModalOpen( true ) }
-						label={ __( 'Help', 'flexible-table-block' ) }
-						size="compact"
-					/>
-				</HStack>
-			</PanelBody>
+			<Stack align="center" justify="space-between" gap="sm">
+				{ ! hasResolved && <Spinner /> }
+				{ hasResolved && showGlobalSetting && (
+					<Button variant="primary" onClick={ () => setIsSettingModalOpen( true ) } size="compact">
+						{ __( 'Edit global setting', 'flexible-table-block' ) }
+					</Button>
+				) }
+				<Button
+					icon={ help }
+					variant="link"
+					onClick={ () => setIsHelpModalOpen( true ) }
+					label={ __( 'Help', 'flexible-table-block' ) }
+					size="compact"
+				/>
+			</Stack>
 			{ isHelpModalOpen && <HelpModal { ...{ setIsHelpModalOpen } } /> }
-			{ options && isSettingModalOpen && ( isAdministrator || options?.show_global_setting ) && (
+			{ isSettingModalOpen && (
 				<SettingModal
 					{ ...{
 						options,
-						isAdministrator,
+						canManageOptions,
 						setIsSettingModalOpen,
 					} }
 				/>

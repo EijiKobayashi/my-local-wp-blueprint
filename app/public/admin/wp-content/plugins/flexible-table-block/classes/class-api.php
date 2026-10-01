@@ -40,12 +40,12 @@ class Api {
 					'methods'             => 'POST',
 					'callback'            => array( $this, 'update_options' ),
 					'permission_callback' => function () {
-						$show_global_setting = get_option( FTB_OPTION_PREFIX . '_show_global_setting', Settings::OPTIONS['show_global_setting']['default'] );
+						$show_global_setting = get_option( Option::OPTION_NAMES['show_global_setting'], Settings::OPTIONS['show_global_setting']['default'] );
 
 						if ( $show_global_setting ) {
 							return current_user_can( 'edit_posts' );
 						} else {
-							return current_user_can( 'administrator' );
+							return current_user_can( 'manage_options' );
 						}
 					},
 				),
@@ -53,13 +53,7 @@ class Api {
 					'methods'             => 'DELETE',
 					'callback'            => array( $this, 'delete_options' ),
 					'permission_callback' => function () {
-						$show_global_setting = get_option( FTB_OPTION_PREFIX . '_show_global_setting', Settings::OPTIONS['show_global_setting']['default'] );
-
-						if ( $show_global_setting ) {
-							return current_user_can( 'edit_posts' );
-						} else {
-							return current_user_can( 'administrator' );
-						}
+						return current_user_can( 'manage_options' );
 					},
 				),
 			)
@@ -100,12 +94,31 @@ class Api {
 					continue;
 				}
 
+				$default = Settings::OPTIONS[ $key ]['default'];
+
+				// Keep only known keys; values are validated at output time.
 				$new_value = array();
 				foreach ( $value as $array_key => $array_value ) {
-					if ( isset( Settings::OPTIONS[ $key ]['default'][ $array_key ] ) ) {
+					if ( ! array_key_exists( $array_key, $default ) ) {
+						continue;
+					}
+
+					if ( is_array( $array_value ) ) {
+						// Nested values such as cell_padding.
+						$sub_default = is_array( $default[ $array_key ] ) ? $default[ $array_key ] : array();
+						$sub_value   = array();
+						foreach ( $array_value as $sub_key => $sub_item ) {
+							if ( array_key_exists( $sub_key, $sub_default ) ) {
+								$sub_value[ $sub_key ] = $sub_item;
+							}
+						}
+						$new_value[ $array_key ] = $sub_value;
+					} else {
 						$new_value[ $array_key ] = $array_value;
 					}
 				}
+
+				$value = $new_value;
 			}
 
 			if ( isset( Settings::OPTIONS[ $key ]['range'] ) ) {
@@ -122,7 +135,7 @@ class Api {
 					)
 				);
 			} else {
-				update_option( FTB_OPTION_PREFIX . '_' . $key, $value );
+				update_option( Option::OPTION_NAMES[ $key ], $value );
 			}
 		}
 
@@ -142,7 +155,7 @@ class Api {
 	 */
 	public function delete_options() {
 		foreach ( Settings::OPTIONS as $key => $value ) {
-			delete_option( FTB_OPTION_PREFIX . '_' . $key );
+			delete_option( Option::OPTION_NAMES[ $key ] );
 		}
 
 		return rest_ensure_response(

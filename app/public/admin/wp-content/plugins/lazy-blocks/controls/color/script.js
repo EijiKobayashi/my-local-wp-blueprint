@@ -1,14 +1,15 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
+
 import {
 	PanelBody,
+	RadioControl,
 	TextControl,
 	ToggleControl,
-	RadioControl,
 } from '@wordpress/components';
+import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -75,8 +76,6 @@ addFilter(
 						onChange={(value) =>
 							updateData({ alongside_text: value })
 						}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -95,7 +94,6 @@ addFilter(
 							onChange={(value) =>
 								updateData({ alpha: value ? 'true' : 'false' })
 							}
-							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 					<BaseControl
@@ -115,7 +113,6 @@ addFilter(
 									palette: value ? 'true' : 'false',
 								})
 							}
-							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 				</PanelBody>

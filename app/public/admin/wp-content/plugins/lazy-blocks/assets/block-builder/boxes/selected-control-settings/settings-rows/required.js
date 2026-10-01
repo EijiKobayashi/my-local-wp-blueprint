@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies.
  */
+
+import { BaseControl, PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, BaseControl, ToggleControl } from '@wordpress/components';
 
 export default function RequiredRow(props) {
 	const { updateData, data } = props;
@@ -12,7 +13,6 @@ export default function RequiredRow(props) {
 			<BaseControl
 				id="lazyblocks-settings-row-required"
 				label={__('Required', 'lazy-blocks')}
-				__nextHasNoMarginBottom
 			>
 				<ToggleControl
 					id="lazyblocks-settings-row-required"
@@ -21,7 +21,6 @@ export default function RequiredRow(props) {
 					onChange={(value) =>
 						updateData({ required: value ? 'true' : 'false' })
 					}
-					__nextHasNoMarginBottom
 				/>
 			</BaseControl>
 		</PanelBody>

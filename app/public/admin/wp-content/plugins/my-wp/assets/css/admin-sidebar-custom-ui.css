@@ -9,7 +9,7 @@ body.wp-admin.mywp #adminmenuwrap {
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: fixed;
   box-shadow: 4px 0px 20px rgba( 0, 0, 0, 0.2 );
 }

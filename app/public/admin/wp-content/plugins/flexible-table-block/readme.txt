@@ -2,9 +2,9 @@
 Contributors: wildworks, Toro_Unit
 Tags: gutenberg, block, table
 Donate link: https://www.paypal.me/thamanoJP
-Requires at least: 6.9
-Tested up to: 7.0
-Stable tag: 3.7.0
+Requires at least: 7.0
+Tested up to: 7.1
+Stable tag: 3.9.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -42,9 +42,20 @@ The breakpoints for switching between Desktop and mobile can be changed freely.
 
 == Changelog ==
 
+= 3.9.0 =
+* Tested to WordPress 7.1
+* Drop support for WP 6.9
+* Fix: Cell width input field width
+* a11y: Announce row and column selection state to screen readers
+
+= 3.8.0 =
+* Security: Sanitize CSS values in global style settings
+* Fix: Improve permission checks for global settings
+* a11y: Revert focusing first cell when inserting or deleting row or column
+
 = 3.7.0 =
 * Tested to WordPress 7.0
-* Drop support for WP 6.9
+* Drop support for WP 6.8
 
 = 3.6.0 =
 * Tested to WordPress 6.9
@@ -54,7 +65,7 @@ The breakpoints for switching between Desktop and mobile can be changed freely.
 * Enhancement: Parse CSS values more accurately
 * Enhancement: Add CSS classes to panels and sections
 * Enhancement: Update icons
-* Enhancement: Focus  first cell when inserting or deleting row or column
+* Enhancement: Focus first cell when inserting or deleting row or column
 * Enhancement: Show message when no cells selected
 * Enhancement: Add table min height setting
 * Enhancement: Make font size setting default control

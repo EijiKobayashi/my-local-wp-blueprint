@@ -11,11 +11,8 @@ import { createInterpolateElement } from '@wordpress/element';
 import {
 	BaseControl,
 	Button,
-	Flex,
-	FlexBlock,
 	SelectControl,
 	TextControl,
-	__experimentalSpacer as Spacer,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 	__experimentalToggleGroupControlOptionIcon as ToggleGroupControlOptionIcon,
@@ -23,6 +20,7 @@ import {
 	__experimentalUseCustomUnits as useCustomUnits,
 	__experimentalParseQuantityAndUnitFromRawValue as parseQuantityAndUnitFromRawValue,
 } from '@wordpress/components';
+import { Stack } from '@wordpress/ui';
 
 /**
  * Internal dependencies
@@ -48,6 +46,7 @@ import {
 	updateCells,
 	type VTable,
 	type VSelectedCells,
+	type CellState,
 } from '../utils/table-state';
 import { convertToObject } from '../utils/style-converter';
 import {
@@ -105,14 +104,7 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 		cellStylesObj?.width
 	);
 
-	const updateCellsState = ( state: {
-		styles?: any;
-		tag?: CellTagValue;
-		className?: string;
-		id?: string;
-		headers?: string;
-		scope?: CellScopeValue;
-	} ) => {
+	const updateCellsState = ( state: CellState ) => {
 		const newVTable = updateCells( vTable, state, selectedCells );
 		setAttributes( toTableAttributes( newVTable ) );
 	};
@@ -224,13 +216,18 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 
 	return (
 		<>
-			<Spacer marginBottom="4" as={ Flex } justify="end" className="ftb-table-cell-settings-clear">
+			<Stack
+				align="center"
+				justify="flex-end"
+				className="ftb-table-cell-settings-clear"
+				style={ { marginBottom: '16px' } }
+			>
 				<Button variant="link" isDestructive onClick={ onResetCellSettings }>
 					{ __( 'Clear cell settings', 'flexible-table-block' ) }
 				</Button>
-			</Spacer>
-			<Spacer marginBottom="4" as={ Flex }>
-				<FlexBlock className="ftb-table-cell-settings-font-size">
+			</Stack>
+			<Stack align="center" justify="space-between" gap="sm" style={ { marginBottom: '16px' } }>
+				<div className="ftb-table-cell-settings-font-size" style={ { flex: 1 } }>
 					<UnitControl
 						label={ __( 'Cell font size', 'flexible-table-block' ) }
 						value={ cellStylesObj?.fontSize }
@@ -239,8 +236,8 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 						onChange={ onChangeFontSize }
 						size="__unstable-large"
 					/>
-				</FlexBlock>
-				<FlexBlock className="ftb-table-cell-settings-line-height">
+				</div>
+				<div className="ftb-table-cell-settings-line-height" style={ { flex: 1 } }>
 					<TextControl
 						label={ __( 'Cell line height', 'flexible-table-block' ) }
 						value={ cellStylesObj?.lineHeight || '' }
@@ -249,11 +246,10 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 						step={ 0.1 }
 						min={ 0 }
 						onChange={ onChangeLineHeight }
-						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 					/>
-				</FlexBlock>
-			</Spacer>
+				</div>
+			</Stack>
 			<UnitControl
 				className="ftb-table-cell-settings-width"
 				label={ __( 'Cell width', 'flexible-table-block' ) }
@@ -262,11 +258,10 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 				min={ 0 }
 				onChange={ onChangeWidth }
 				size="__unstable-large"
-				__unstableInputWidth="calc(50% - 8px)"
+				__unstableInputWidth="calc(50% - 4px)"
 			/>
 			<ToggleGroupControl
 				className="ftb-table-cell-settings-percentage-width"
-				__nextHasNoMarginBottom
 				__next40pxDefaultSize
 				hideLabelFromVision
 				label={ __( 'Cell percentage width', 'flexible-table-block' ) }
@@ -347,10 +342,9 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 				<BaseControl.VisualLabel as="legend">
 					{ __( 'Cell alignment', 'flexible-table-block' ) }
 				</BaseControl.VisualLabel>
-				<Flex style={ { marginBottom: '-16px' } } justify="start" align="start">
+				<Stack align="flex-start" gap="sm" style={ { marginBottom: '-16px' } }>
 					<ToggleGroupControl
 						hideLabelFromVision
-						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 						label={ __( 'Text alignment', 'flexible-table-block' ) }
 						value={ cellStylesObj?.textAlign }
@@ -368,7 +362,6 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 					</ToggleGroupControl>
 					<ToggleGroupControl
 						hideLabelFromVision
-						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 						label={ __( 'Vertical alignment', 'flexible-table-block' ) }
 						value={ cellStylesObj?.verticalAlign }
@@ -384,12 +377,11 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 							/>
 						) ) }
 					</ToggleGroupControl>
-				</Flex>
+				</Stack>
 			</fieldset>
 			<hr />
 			<ToggleGroupControl
 				className="ftb-table-cell-settings-tag"
-				__nextHasNoMarginBottom
 				__next40pxDefaultSize
 				label={ __( 'Cell tag', 'flexible-table-block' ) }
 				value={ targetCell.tag }
@@ -407,7 +399,6 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 				value={ targetCell.className || '' }
 				onChange={ onChangeClass }
 				help={ __( 'Separate multiple classes with spaces.', 'flexible-table-block' ) }
-				__nextHasNoMarginBottom
 				__next40pxDefaultSize
 			/>
 			{ selectedCellTags.length === 1 && (
@@ -423,7 +414,6 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 							autoComplete="off"
 							value={ targetCell.id || '' }
 							onChange={ onChangeId }
-							__nextHasNoMarginBottom
 							__next40pxDefaultSize
 						/>
 					) }
@@ -436,7 +426,6 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 						autoComplete="off"
 						value={ targetCell.headers || '' }
 						onChange={ onChangeHeaders }
-						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 					/>
 					{ selectedCellTags.includes( 'th' ) && (
@@ -452,7 +441,6 @@ export default function TableCellSettings( { setAttributes, vTable, selectedCell
 							} ) }
 							onChange={ ( value ) => onChangeScope( value as CellScopeValue ) }
 							size="__unstable-large"
-							__nextHasNoMarginBottom
 						/>
 					) }
 				</>

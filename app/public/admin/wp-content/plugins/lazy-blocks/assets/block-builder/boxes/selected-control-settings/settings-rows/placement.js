@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies.
  */
+
+import { BaseControl, Button, PanelBody } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, BaseControl, Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
@@ -38,7 +39,6 @@ export default function PlacementRow(props) {
 			<BaseControl
 				id="lazyblocks-settings-row-placement"
 				label={__('Placement', 'lazy-blocks')}
-				__nextHasNoMarginBottom
 			>
 				<div />
 				<div

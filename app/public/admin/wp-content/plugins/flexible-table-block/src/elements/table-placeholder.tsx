@@ -10,16 +10,8 @@ import type { FormEvent } from 'react';
 import { __ } from '@wordpress/i18n';
 import { useState, createInterpolateElement } from '@wordpress/element';
 import { BlockIcon } from '@wordpress/block-editor';
-import {
-	Button,
-	Placeholder,
-	TextControl,
-	ToggleControl,
-	__experimentalHStack as HStack,
-	__experimentalVStack as VStack,
-	__experimentalSpacer as Spacer,
-	__experimentalText as Text,
-} from '@wordpress/components';
+import { Button, Placeholder, TextControl, ToggleControl } from '@wordpress/components';
+import { Stack, Text } from '@wordpress/ui';
 import { isAppleOS } from '@wordpress/keycodes';
 
 /**
@@ -45,8 +37,8 @@ type Props = {
 export default function TablePlaceholder( { setAttributes }: Props ) {
 	const [ rowCount, setRowCount ] = useState< number | undefined >( DEFAULT_PREVIEW_ROWS );
 	const [ colCount, setColCount ] = useState< number | undefined >( DEFAULT_PREVIEW_COLUMNS );
-	const [ headerSection, setHeaderSection ] = useState< boolean >( false );
-	const [ footerSection, setFooterSection ] = useState< boolean >( false );
+	const [ headerSection, setHeaderSection ] = useState( false );
+	const [ footerSection, setFooterSection ] = useState( false );
 
 	const totalRowCount: number | undefined = rowCount
 		? rowCount + Number( headerSection ) + Number( footerSection )
@@ -74,7 +66,7 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 
 	const onChangeColumnCount = ( value: string ) => {
 		const parsedValue = parseInt( value, 10 );
-		if ( isNaN( parsedValue ) ) {
+		if ( Number.isNaN( parsedValue ) ) {
 			setColCount( undefined );
 		} else {
 			setColCount( Math.max( 1, Math.min( MAX_PREVIEW_TABLE_COL, parsedValue ) ) );
@@ -82,8 +74,8 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 	};
 
 	const onChangeRowCount = ( value: string ) => {
-		const parsedValue = parseInt( value );
-		if ( isNaN( parsedValue ) ) {
+		const parsedValue = parseInt( value, 10 );
+		if ( Number.isNaN( parsedValue ) ) {
 			setRowCount( undefined );
 		} else {
 			setRowCount( Math.max( 1, Math.min( MAX_PREVIEW_TABLE_ROW, parsedValue ) ) );
@@ -94,7 +86,7 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 
 	const onToggleFooterSection = ( section: boolean ) => setFooterSection( section );
 
-	const tableClasses: string = clsx( 'ftb-placeholder__table', {
+	const tableClasses = clsx( 'ftb-placeholder__table', {
 		'is-overflow-row': totalRowCount && totalRowCount > THRESHOLD_PREVIEW_TABLE_ROW,
 		'is-overflow-col': colCount && colCount > THRESHOLD_PREVIEW_TABLE_COL,
 	} );
@@ -119,15 +111,21 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 					{ code: <code /> }
 				) }
 			</div>
-			<Spacer
-				as={ VStack }
+			<Stack
+				direction="column"
 				className="ftb-placeholder__table-wrap"
-				style={ { minHeight: MIN_PREVIEW_TABLE_HEIGHT } }
-				alignment="center"
-				padding={ 4 }
-				marginBottom={ 0 }
+				align="center"
+				justify="center"
+				gap="sm"
+				style={ {
+					minHeight: MIN_PREVIEW_TABLE_HEIGHT,
+					//  `@wordpress/ui` styles aren't loaded into the editor iframe on WP 7.0
+					//  and below, so each Stack sets `display: flex` inline as a fallback.
+					//  TODO: Remove once the minimum supported WordPress version is 7.1+.
+					display: 'flex',
+				} }
 			>
-				<Text align="center" isBlock weight="500">
+				<Text style={ { display: 'block', textAlign: 'center', fontWeight: 500 } }>
 					{ __( 'Preview', 'flexible-table-block' ) }
 				</Text>
 				{ rowCount && colCount && (
@@ -169,23 +167,44 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 						) }
 					</table>
 				) }
-			</Spacer>
-			<VStack as="form" onSubmit={ onCreateTable }>
-				<HStack wrap justify="start">
+			</Stack>
+			<Stack
+				direction="column"
+				render={ <form /> }
+				gap="sm"
+				onSubmit={ onCreateTable }
+				//  `@wordpress/ui` styles aren't loaded into the editor iframe on WP 7.0
+				//  and below, so each Stack sets `display: flex` inline as a fallback.
+				//  TODO: Remove once the minimum supported WordPress version is 7.1+.
+				style={ { display: 'flex' } }
+			>
+				{ /*
+				 * `@wordpress/ui` styles aren't loaded into the editor iframe on WP 7.0
+				 * and below, so each Stack sets `display: flex` inline as a fallback.
+				 * TODO: Remove once the minimum supported WordPress version is 7.1+.
+				 */ }
+				<Stack wrap="wrap" align="center" gap="sm" style={ { display: 'flex' } }>
 					<ToggleControl
 						label={ __( 'Header section', 'flexible-table-block' ) }
 						checked={ !! headerSection }
 						onChange={ onToggleHeaderSection }
-						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Footer section', 'flexible-table-block' ) }
 						checked={ !! footerSection }
 						onChange={ onToggleFooterSection }
-						__nextHasNoMarginBottom
 					/>
-				</HStack>
-				<HStack wrap alignment="end" justify="start">
+				</Stack>
+
+				<Stack
+					wrap="wrap"
+					align="flex-end"
+					gap="sm"
+					//  `@wordpress/ui` styles aren't loaded into the editor iframe on WP 7.0
+					//  and below, so each Stack sets `display: flex` inline as a fallback.
+					//  TODO: Remove once the minimum supported WordPress version is 7.1+.
+					style={ { display: 'flex' } }
+				>
 					<TextControl
 						label={ __( 'Column count', 'flexible-table-block' ) }
 						className="ftb-placeholder__input"
@@ -194,7 +213,6 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 						max={ MAX_PREVIEW_TABLE_COL }
 						value={ colCount || '' }
 						onChange={ onChangeColumnCount }
-						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 					/>
 					<TextControl
@@ -205,7 +223,6 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 						max={ MAX_PREVIEW_TABLE_ROW }
 						value={ rowCount || '' }
 						onChange={ onChangeRowCount }
-						__nextHasNoMarginBottom
 						__next40pxDefaultSize
 					/>
 					<Button
@@ -216,8 +233,8 @@ export default function TablePlaceholder( { setAttributes }: Props ) {
 					>
 						{ __( 'Create Table', 'flexible-table-block' ) }
 					</Button>
-				</HStack>
-			</VStack>
+				</Stack>
+			</Stack>
 		</Placeholder>
 	);
 }

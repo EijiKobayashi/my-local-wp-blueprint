@@ -1,9 +1,10 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
+
 import { PanelBody, TextControl } from '@wordpress/components';
+import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -28,8 +29,6 @@ addFilter('lzb.editor.control.email.render', 'lzb.editor', (render, props) => {
 				placeholder={props.data.placeholder}
 				value={props.getValue()}
 				onChange={props.onChange}
-				__next40pxDefaultSize
-				__nextHasNoMarginBottom
 			/>
 		</BaseControl>
 	);
@@ -75,8 +74,6 @@ addFilter(
 						label={__('Placeholder', 'lazy-blocks')}
 						value={data.placeholder}
 						onChange={(value) => updateData({ placeholder: value })}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -97,8 +94,6 @@ addFilter(
 						onChange={(value) =>
 							updateData({ characters_limit: `${value}` })
 						}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</>

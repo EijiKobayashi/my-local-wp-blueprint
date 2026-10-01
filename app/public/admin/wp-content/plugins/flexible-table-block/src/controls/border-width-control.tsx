@@ -14,12 +14,10 @@ import {
 	BaseControl,
 	Button,
 	__experimentalGrid as Grid,
-	__experimentalHStack as HStack,
-	__experimentalVStack as VStack,
-	__experimentalText as Text,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
+import { Stack } from '@wordpress/ui';
 import { useInstanceId } from '@wordpress/compose';
 
 /**
@@ -69,7 +67,6 @@ export default function BorderWidthControl( {
 		...valuesProp,
 	};
 	const instanceId = useInstanceId( BorderWidthControl, 'ftb-border-width-control' );
-	const headingId = `${ instanceId }-heading`;
 
 	const isMixed =
 		allowSides &&
@@ -77,14 +74,14 @@ export default function BorderWidthControl( {
 
 	const borderWidthUnits = useCustomUnits( { availableUnits: BORDER_WIDTH_UNITS } );
 
-	const [ isLinked, setIsLinked ] = useState< boolean >( true );
+	const [ isLinked, setIsLinked ] = useState( true );
 	const [ side, setSide ] = useState< SideValue | undefined >( undefined );
 
-	const linkedLabel: string = isLinked
+	const linkedLabel = isLinked
 		? __( 'Unlink sides', 'flexible-table-block' )
 		: __( 'Link sides', 'flexible-table-block' );
 
-	const allInputPlaceholder: string = isMixed ? __( 'Mixed', 'flexible-table-block' ) : '';
+	const allInputPlaceholder = isMixed ? __( 'Mixed', 'flexible-table-block' ) : '';
 	const allInputValue: string | 0 = isMixed ? '' : values.top;
 
 	const toggleLinked = () => {
@@ -135,17 +132,11 @@ export default function BorderWidthControl( {
 	};
 
 	return (
-		<BaseControl
-			className={ clsx( 'ftb-border-width-control', className ) }
-			help={ help }
-			__nextHasNoMarginBottom
-		>
-			<VStack aria-labelledby={ headingId } role="group">
-				<Text id={ headingId } upperCase size="11" weight="500">
-					{ label }
-				</Text>
-				<HStack alignment="center" justify="space-between" style={ { minHeight: '40px' } }>
-					<HStack justify="start">
+		<BaseControl className={ clsx( 'ftb-border-width-control', className ) } help={ help }>
+			<Stack direction="column" gap="sm" role="group" aria-labelledby={ instanceId }>
+				<BaseControl.VisualLabel id={ instanceId }>{ label }</BaseControl.VisualLabel>
+				<Stack align="center" justify="space-between" gap="sm" style={ { minHeight: '40px' } }>
+					<Stack align="center" gap="sm">
 						{ hasIndicator && <SideIndicatorControl side={ side } /> }
 						{ ( isLinked || ! allowSides ) && (
 							<div>
@@ -160,7 +151,7 @@ export default function BorderWidthControl( {
 								/>
 							</div>
 						) }
-					</HStack>
+					</Stack>
 					{ allowSides && (
 						<Button
 							label={ linkedLabel }
@@ -169,7 +160,7 @@ export default function BorderWidthControl( {
 							size="small"
 						/>
 					) }
-				</HStack>
+				</Stack>
 				{ ! isLinked && allowSides && (
 					<Grid gap={ 2 } columns={ 2 } rows={ 3 }>
 						{ SIDE_CONTROLS.map( ( item ) => {
@@ -201,7 +192,7 @@ export default function BorderWidthControl( {
 						} ) }
 					</Grid>
 				) }
-			</VStack>
+			</Stack>
 		</BaseControl>
 	);
 }
