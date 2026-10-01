@@ -4,9 +4,9 @@
 * Tags: gutenberg, blocks, custom, meta, fields
 * Donate link: https://www.lazyblocks.com/pro/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=donate
 * Requires at least: 6.2
-* Tested up to: 7.0
+* Tested up to: 7.1
 * Requires PHP: 8.0
-* Stable tag: 4.3.1
+* Stable tag: 4.4.1
 * License: GPLv2 or later
 * License URI: <http://www.gnu.org/licenses/gpl-2.0.html>
 
@@ -138,6 +138,23 @@ The manual installation method involves downloading our Lazy Blocks plugin and u
 3. Available block controls
 
 ## Changelog
+
+= 4.4.1 - Aug 31, 2026 =
+
+* changed Lazy Blocks to stay active next to Lazy Blocks Pro instead of being deactivated
+
+= 4.4.0 - Aug 26, 2026 =
+
+* added WordPress 7.1 compatibility
+* added filters for extending how a block renders in the editor preview
+* improved the Gallery control in the block builder, which now previews its images in a grid
+* improved Gallery control loading speed on galleries with many images, fetching image data in one request instead of one per image
+* fixed dragging values in a multi-select control inside the editor canvas
+* fixed Image, File and Gallery values not being read when written as raw JSON in block markup
+* fixed Repeater values not being read when written as a raw array in block markup
+* **Pro:**
+* added a Rich Text control that edits inline the way a core block does, and rebuilt the wizard presets on it
+* fixed the update notice still offering a version already installed
 
 = 4.3.1 - Jun 11, 2026 =
 

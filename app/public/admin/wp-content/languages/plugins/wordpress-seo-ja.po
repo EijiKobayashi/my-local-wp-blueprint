@@ -2,18 +2,204 @@
 # This file is distributed under the same license as the Plugins - Yoast SEO &#8211; Advanced SEO with real-time guidance and built-in AI - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-07-20 14:27:20+0000\n"
+"PO-Revision-Date: 2026-09-29 05:48:03+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/4.0.3\n"
+"X-Generator: GlotPress/4.1.0\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - Yoast SEO &#8211; Advanced SEO with real-time guidance and built-in AI - Stable (latest release)\n"
+
+#: src/bulk-editor/user-interface/posts-overview-bulk-actions-integration.php:110
+msgid "Bulk edit"
+msgstr "一括変更"
+
+#. translators: 1: description of the failing object (e.g. "post #123"); 2:
+#. underlying error message.
+#: src/exceptions/indexable/indexing-failed-exception.php:53
+msgid "Yoast SEO could not build the indexable for %1$s: %2$s"
+msgstr "Yoast SEO は %1$s のインデックス対象要素を作成できませんでした: %2$s"
+
+#: src/abilities/user-interface/abilities/update-post-seo-data-ability.php:110
+msgid "Whether search engines should be told not to index this post. true sets noindex (the post is excluded from search results); false forces the post to be indexed; null clears the setting and falls back to the post-type default."
+msgstr "検索エンジンにこの投稿をインデックスしないよう伝えるかどうか。true にすると noindex が設定されます (投稿は検索結果から除外されます)。false にすると投稿を強制的にインデックス対象にします。null にすると設定がクリアされ、投稿タイプのデフォルトに戻ります。"
+
+#. translators: %s expands to the name of the analysis, e.g. "SEO analysis".
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:84
+msgid "The result of the %s that ran on the post when it was last saved."
+msgstr "投稿が最後に保存されたときに実行された %s の結果。"
+
+#. translators: %s expands to the name of the SEO field, e.g. "SEO title".
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:96
+msgid "The %s as output on the front end: the global default template applied when no custom value is set, with replacement variables expanded. Null when nothing is output."
+msgstr "フロントエンドに出力される %s: カスタム値が設定されていない場合に適用されるグローバルデフォルトテンプレートで、置換変数が展開されます。何も出力されない場合は null。"
+
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:138
+msgid "Whether search engines are told not to index this post. true means noindex (the post is excluded from search results); false means the post is forced to be indexed; null means no setting is stored and the post-type default applies."
+msgstr "検索エンジンにこの投稿をインデックスしないよう伝えているかどうか。true は noindex を意味します (投稿は検索結果から除外されます)。false は投稿が強制的にインデックス対象になることを意味します。null は設定が保存されておらず、投稿タイプのデフォルトが適用されることを意味します。"
+
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:144
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:145
+msgid "Open Graph title"
+msgstr "Open Graph タイトル"
+
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:146
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:147
+msgid "Open Graph description"
+msgstr "Open Graph ディスクリプション"
+
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:161
+msgid "readability analysis"
+msgstr "可読性解析"
+
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:162
+msgid "inclusive language analysis"
+msgstr "インクルーシブランゲージ分析"
+
+#: src/abilities/user-interface/abilities/update-post-seo-data-ability.php:130
+msgid "The Schema.org page type for the post. Must be one of the supported page types. Use null or an empty string to clear it and fall back to the default."
+msgstr "投稿の Schema.org ページタイプです。サポートされているページタイプのいずれかを指定してください。null または空の文字列を指定すると、値がクリアされ、デフォルト値が使用されます。"
+
+#: src/abilities/user-interface/abilities/update-post-seo-data-ability.php:134
+msgid "The Schema.org article type for the post. Must be one of the supported article types. Use null or an empty string to clear it and fall back to the default."
+msgstr "投稿の Schema.org 記事タイプです。サポートされている記事タイプのいずれかを指定してください。null または空の文字列を指定すると、値がクリアされ、デフォルト値が使用されます。"
+
+#: src/abilities/user-interface/abilities/get-post-seo-data-ability.php:103
+msgid "Keywords to search for in post titles. Provide a comma-separated list to search for several titles at once; each value is matched as a whole phrase against the post title, and a post matching any value is returned. At most 10 phrases are used per request; any beyond the first 10 are ignored. Results are paginated to 10 entities per page; see the page parameter."
+msgstr "投稿タイトル内を検索するキーワード。複数のタイトルを一度に検索するには、カンマ区切りのリストを指定してください。各値は投稿タイトルに対してフレーズ全体として照合され、いずれかの値に一致する投稿が返されます。リクエストごとに使用されるフレーズは最大10個です。最初の10個を超える分は無視されます。結果は1ページあたり10件でページ送りされます。page パラメーターを参照してください。"
+
+#: src/abilities/user-interface/abilities/update-post-seo-data-ability.php:93
+msgid "The ID of the post to update."
+msgstr "更新する投稿の ID。"
+
+#: src/abilities/user-interface/abilities/update-post-seo-data-ability.php:98
+msgid "The permalink (URL) of the post to update."
+msgstr "更新する投稿の permalink (URL)。"
+
+#: src/abilities/user-interface/abilities/get-post-seo-data-ability.php:107
+msgid "The page of title-search results to return, 1-based and defaulting to 1. Matches are ordered most recently modified first, so request a later page to reach older matches. An empty result means there are no further pages. Only applies to a title search."
+msgstr "返すタイトル検索結果のページ番号。1始まりで、デフォルトは1です。一致は最近更新された順に並べられるため、より古い一致に到達するには後のページをリクエストしてください。結果が空の場合、それ以上ページがないことを意味します。タイトル検索の場合にのみ適用されます。"
+
+#: src/abilities/user-interface/abilities/update-post-seo-data-ability.php:60
+msgid "Update the SEO data for a single post. Identify the post by post_id or by permalink (URL). Only the fields you provide are changed; a provided empty value clears that field. Only posts the current user is allowed to edit can be updated."
+msgstr "単一の投稿の SEO データを更新します。投稿は post_id または permalink (URL) で指定します。指定したフィールドのみが変更されます。空の値を指定すると、そのフィールドはクリアされます。現在のユーザーが編集する権限を持つ投稿のみを更新できます。"
+
+#: src/abilities/user-interface/abilities/get-post-seo-data-ability.php:94
+msgid "The ID of the post to retrieve."
+msgstr "取得する投稿の ID。"
+
+#: src/abilities/user-interface/abilities/get-post-seo-data-ability.php:99
+msgid "The permalink (URL) of the post to retrieve."
+msgstr "取得する投稿の permalink (URL)。"
+
+#: src/abilities/user-interface/abilities/get-post-seo-data-ability.php:59
+msgid "Get the SEO data for a post. Identify the post by post_id, by permalink (URL), or by title keywords; the title may be a comma-separated list and returns the SEO data for every post matching any of the values, paginated most recently modified first (use the page parameter to reach older matches). At least one identifier is required. Only posts the current user is allowed to edit are returned."
+msgstr "投稿の SEO データを取得します。投稿は post_id、permalink (URL)、またはタイトルのキーワードで指定します。タイトルはカンマ区切りのリストにでき、いずれかの値に一致するすべての投稿の SEO データを、最近更新された順にページ送りして返します (より古い一致を取得するには page パラメーターを使用してください)。少なくとも1つの識別子が必要です。現在のユーザーが編集する権限を持つ投稿のみが返されます。"
+
+#: src/abilities/user-interface/abilities/update-post-seo-data-ability.php:59
+msgid "Update Post SEO Data"
+msgstr "投稿の SEO データを更新"
+
+#: src/abilities/application/post-seo-data-updater.php:119
+msgid "The post SEO data was saved but the indexable could not be rebuilt."
+msgstr "投稿の SEO データは保存されましたが、インデックス対象要素を再構築できませんでした。"
+
+#: src/abilities/infrastructure/post-access-checker.php:44
+msgid "Sorry, you are not allowed to edit this post."
+msgstr "この投稿を編集する権限がありません。"
+
+#: src/abilities/infrastructure/post-identifier-resolver.php:185
+msgid "No post could be found for the given identifier."
+msgstr "指定された識別子に対応する投稿が見つかりませんでした。"
+
+#: src/abilities/infrastructure/post-identifier-resolver.php:59
+msgid "Provide a post_id or a permalink to identify the post."
+msgstr "投稿を特定するには、post_id または permalink を指定してください。"
+
+#: src/abilities/infrastructure/post-identifier-resolver.php:95
+msgid "Provide a post_id, a permalink, or title keywords to identify the post."
+msgstr "投稿を特定するには、post_id、permalink、またはタイトルのキーワードを指定してください。"
+
+#: src/abilities/user-interface/abilities/get-post-seo-data-ability.php:58
+msgid "Get Post SEO Data"
+msgstr "投稿の SEO データを取得"
 
 #: src/myyoast-client/user-interface/myyoast-client-integration.php:76
 msgid "Every 90 days"
 msgstr "90日ごと"
+
+#: src/abilities/user-interface/abilities/get-seo-scores-ability.php:70
+msgid "The focus keyphrase for the post, or null if not set."
+msgstr "投稿のフォーカスキーフレーズ。設定されていない場合は null。"
+
+#: src/abilities/user-interface/abilities/get-seo-scores-ability.php:38
+msgid "Get SEO Scores"
+msgstr "SEO スコアを取得"
+
+#: src/abilities/user-interface/abilities/get-seo-scores-ability.php:47
+msgid "Get the SEO scores for the most recently modified posts."
+msgstr "最近更新された投稿の SEO スコアを取得します。"
+
+#: src/abilities/user-interface/abilities/get-readability-scores-ability.php:38
+msgid "Get Readability Scores"
+msgstr "可読性スコアを取得"
+
+#: src/abilities/user-interface/abilities/get-readability-scores-ability.php:47
+msgid "Get the readability scores for the most recently modified posts."
+msgstr "最近更新された投稿の可読性スコアを取得します。"
+
+#: src/abilities/user-interface/abilities/get-inclusive-language-scores-ability.php:38
+msgid "Get Inclusive Language Scores"
+msgstr "インクルーシブランゲージスコアを取得"
+
+#: src/abilities/user-interface/abilities/get-inclusive-language-scores-ability.php:47
+msgid "Get the inclusive language scores for the most recently modified posts."
+msgstr "最近更新された投稿のインクルーシブランゲージスコアを取得します。"
+
+#: src/abilities/user-interface/abilities/abstract-score-ability.php:140
+msgid "The number of recently modified posts to retrieve scores for. Defaults to 10."
+msgstr "スコアを取得する対象の、最近更新された投稿数。デフォルトは10です。"
+
+#: src/abilities/user-interface/abilities/abstract-score-ability.php:198
+msgid "The post title."
+msgstr "投稿のタイトル。"
+
+#: src/abilities/user-interface/abilities/abstract-score-ability.php:203
+msgid "The score slug."
+msgstr "スコアのスラッグ。"
+
+#: src/abilities/user-interface/abilities/abstract-score-ability.php:207
+msgid "A human-readable label for the score."
+msgstr "スコアの、人が読める形式のラベル。"
+
+#: src/task-list/domain/exceptions/complete-sample-page-task-exception.php:17
+msgid "Failed to delete the Sample Page."
+msgstr "サンプルページの削除に失敗しました。"
+
+#. translators: %1$s expands to <p>, %2$s expands to </p>, %3$s expands to <p>,
+#. %4$s expands to </p>, %5$s expands to <strong>, %6$s expands to </strong>,
+#. %7$s expands to <strong> and %8$s expands to </strong>.
+#: src/task-list/application/tasks/improve-default-meta-descriptions.php:111
+msgid "%1$sDefault meta descriptions don't always highlight what makes your page unique. Write your own to improve clarity and drive more clicks.%2$s%3$sShort on time? In %5$sYoast SEO Premium%6$s, use %7$sAI Generate%8$s to create tailored meta descriptions in seconds.%4$s"
+msgstr "%1$sデフォルトのメタディスクリプションは、ページの独自性を必ずしも強調するとは限りません。わかりやすさを高め、クリックを増やすために独自のものを作成しましょう。%2$s%3$s時間がありませんか ? %5$sYoast SEO Premium%6$s では、%7$sAI Generate%8$s を使って数秒でカスタマイズされたメタディスクリプションを作成できます。%4$s"
+
+#: src/task-list/application/tasks/child-tasks/improve-content-readability-child.php:37
+msgid "Improve readability"
+msgstr "可読性を改善"
+
+#: src/task-list/application/tasks/child-tasks/improve-content-seo-child.php:37
+msgid "Improve SEO"
+msgstr "SEO を改善"
+
+#: src/task-list/application/tasks/delete-sample-page.php:124
+msgid "Remove the \"Sample Page\""
+msgstr "「サンプルページ」を削除"
+
+#. translators: %1$s expands to the post type label this task is about
+#: src/task-list/application/tasks/improve-default-meta-descriptions.php:108
+msgid "Improve default meta descriptions of your recent content: %1$s"
+msgstr "最近のコンテンツのデフォルトメタディスクリプションを改善: %1$s"
 
 #. translators: %1$s expands to an opening p tag, %2$s and %4$s expand to a
 #. closing p tag, %3$s expands to an opening p tag and opening strong tag, %5$s
@@ -173,80 +359,80 @@ msgstr "摩擦を減らし、よりスマートに最適化します。"
 
 #: src/presenters/admin/sidebar-presenter.php:92 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Optimize pages for multiple keywords with guidance"
 msgstr "ガイダンスに従って複数のキーワードに合わせてページを最適化"
 
 #: src/presenters/admin/sidebar-presenter.php:91 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Manage redirects with ease and without extra plugins"
 msgstr "追加のプラグインなしで簡単にリダイレクトを管理します"
 
 #: src/presenters/admin/sidebar-presenter.php:90 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Apply AI suggestions to improve content in 1 click"
 msgstr "1 回のクリックで AI の提案を適用してコンテンツを改善します"
 
 #: src/presenters/admin/sidebar-presenter.php:89 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Create optimized SEO titles & meta descriptions in seconds"
 msgstr "最適化された SEO タイトルとメタディスクリプションを数秒で作成"
 
 #: src/presenters/admin/sidebar-presenter.php:86 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Receive clear SEO and readability guidance to optimize your products"
 msgstr "明確な SEO と読みやすさのガイダンスを受けて、製品を最適化しましょう"
 
 #: src/presenters/admin/sidebar-presenter.php:85 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Create optimized SEO titles & meta descriptions with AI"
 msgstr "AI を活用して最適化された SEO タイトルとメタディスクリプションを作成する"
 
 #: src/presenters/admin/sidebar-presenter.php:84 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Make sure search engines show the right version of your product page"
 msgstr "検索エンジンが製品ページの正しいバージョンを表示するようにしてください"
 
 #: src/presenters/admin/sidebar-presenter.php:83 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Add product details to help your listings stand out"
 msgstr "商品の詳細を追加して、商品リストを目立たせましょう"
@@ -320,6 +506,7 @@ msgid "Your recent posts are using default %1$s, which can make them easy to ove
 msgstr "最近の投稿はデフォルトの %1$s を使用しているため、検索結果で見落とされやすい可能性があります。%2$s手動で更新するか、%3$sYoast AI Generate%4$sがどのように改善するかご確認ください。%5$s"
 
 #: src/alerts/application/default-seo-data/default-seo-data-alert.php:182
+#: js/dist/bulk-editor-page.js:8 js/dist/bulk-editor-page.js:21
 msgid "SEO titles"
 msgstr "SEO タイトル"
 
@@ -381,66 +568,66 @@ msgstr "必要なフィールドがすべて揃っているわけではありま
 
 #: admin/class-premium-upsell-admin-block.php:155 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Make your articles visible, be seen in Google News"
 msgstr "記事を公開して、Google ニュースで見られるようにしましょう"
 
 #: admin/class-premium-upsell-admin-block.php:154 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Generate SEO optimized metadata in seconds with AI"
 msgstr "AI を活用して SEO に最適化されたメタデータを数秒で生成"
 
 #: admin/class-premium-upsell-admin-block.php:158 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Internal links and redirect management, easy"
 msgstr "内部リンクとリダイレクトの管理は簡単です"
 
 #: admin/class-premium-upsell-admin-block.php:157 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Easy Local SEO. Show up in Google Maps results"
 msgstr "簡単なローカル SEO。Google Maps の検索結果に表示される"
 
 #: admin/class-premium-upsell-admin-block.php:163
-#: js/dist/ai-content-planner.js:237 js/dist/block-editor.js:265
+#: js/dist/ai-content-planner.js:237 js/dist/block-editor.js:237
 #: js/dist/general-page.js:5 js/dist/new-settings.js:5 js/dist/support.js:5
 msgid "Boost visibility for your products, from 10 or 10,000+"
 msgstr "10から10,000以上の商品から、商品の認知度を高めます"
 
 #: admin/class-premium-upsell-admin-block.php:156 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Built to get found by search, AI, and real users"
 msgstr "検索、AI、実際のユーザーに見つけてもらうために構築されています"
 
 #: admin/class-premium-upsell-admin-block.php:159 js/dist/ai-consent.js:2
 #: js/dist/ai-content-planner.js:237 js/dist/ai-generator.js:2
-#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:2
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/externals-components.js:26 js/dist/general-page.js:5
-#: js/dist/integrations-page.js:57 js/dist/new-settings.js:5
+#: js/dist/block-editor.js:237 js/dist/bulk-editor-page.js:2
+#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:195
+#: js/dist/externals-components.js:105 js/dist/general-page.js:5
+#: js/dist/integrations-page.js:58 js/dist/new-settings.js:5
 #: js/dist/redirects.js:2 js/dist/support.js:5
 msgid "Access to friendly help when you need it, day or night"
 msgstr "昼夜を問わず、必要なときにサポートを受けられます。"
@@ -457,8 +644,8 @@ msgstr "30日間返金保証"
 msgid "%1$s%2$s %3$s"
 msgstr "%1$s%2$s %3$s"
 
-#: src/ai-consent/user-interface/ai-consent-integration.php:123
-#: src/ai/consent/user-interface/ai-consent-integration.php:125
+#: src/ai/consent/user-interface/ai-consent-integration.php:124
+#: src/deprecated/src/ai-consent/user-interface/ai-consent-integration.php:150
 msgid "AI features"
 msgstr "AI 機能"
 
@@ -648,6 +835,12 @@ msgstr "ハウツー"
 msgid "X username (without @)"
 msgstr "X ユーザー名（@なし）"
 
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:148
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:149
+#: js/dist/externals/socialMetadataForms.js:23
+msgid "X title"
+msgstr "X タイトル"
+
 #. translators: 1: PHP class name, 2: PHP variable name
 #: inc/class-yoast-dynamic-rewrites.php:67
 msgid "The %1$s class must not be instantiated before the %2$s global is set."
@@ -678,20 +871,20 @@ msgid "Compatibility issue: Yoast SEO is incompatible with the beta WooCommerce 
 msgstr "互換性の問題: Yoast SEO は、ベータ版の WooCommerce 製品エディターと互換性がありません。"
 
 #: admin/class-premium-upsell-admin-block.php:90
-#: admin/menu/class-base-menu.php:260 js/dist/block-editor.js:583
-#: js/dist/classic-editor.js:483 js/dist/general-page.js:8
+#: admin/menu/class-base-menu.php:260 js/dist/block-editor.js:696
+#: js/dist/classic-editor.js:596 js/dist/general-page.js:8
 #: js/dist/new-settings.js:8
 msgid "30% OFF"
 msgstr "30% OFF"
 
-#: admin/class-premium-upsell-admin-block.php:89 js/dist/block-editor.js:583
-#: js/dist/classic-editor.js:483 js/dist/general-page.js:8
+#: admin/class-premium-upsell-admin-block.php:89 js/dist/block-editor.js:696
+#: js/dist/classic-editor.js:596 js/dist/general-page.js:8
 #: js/dist/new-settings.js:8
 msgid "BLACK FRIDAY"
 msgstr "ブラックフライデー"
 
 #: admin/views/class-yoast-feature-toggles.php:202 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523
+#: js/dist/new-settings.js:524
 msgid "AI title & description generator"
 msgstr "AI タイトルと説明ジェネレーター"
 
@@ -748,11 +941,11 @@ msgid "Support"
 msgstr "サポート"
 
 #: src/integrations/admin/crawl-settings-integration.php:163
-#: js/dist/new-settings.js:28 js/dist/new-settings.js:268
+#: js/dist/new-settings.js:28 js/dist/new-settings.js:269
 msgid "Prevent Google AdsBot from crawling"
 msgstr "Google AdsBot のクロールを防止する"
 
-#: src/commands/index-command.php:174
+#: src/commands/index-command.php:175
 msgid "Your WordPress environment is running on a non-production site. Indexables can only be created on production environments. Please check your `WP_ENVIRONMENT_TYPE` settings."
 msgstr "WordPress 環境は非実稼働サイトで実行されています。 インデックス作成可能は運用環境でのみ作成できます。 「WP_ENVIRONMENT_TYPE」設定を確認してください。"
 
@@ -820,9 +1013,9 @@ msgid "Finish your %s"
 msgstr "%s を終了します"
 
 #: inc/class-wpseo-rank.php:156 inc/class-wpseo-rank.php:245
-#: js/dist/block-editor.js:583 js/dist/editor-modules.js:115
-#: js/dist/editor-modules.js:398 js/dist/externals-components.js:84
-#: js/dist/externals-components.js:384
+#: js/dist/block-editor.js:696 js/dist/editor-modules.js:194
+#: js/dist/editor-modules.js:477 js/dist/externals-components.js:163
+#: js/dist/externals-components.js:463
 #: js/dist/frontend-inspector-resources.js:1
 msgid "Potentially non-inclusive"
 msgstr "可能性のインクルーシブなし"
@@ -926,8 +1119,8 @@ msgstr "投稿タイプの表示が変更されたため、一部の SEO デー�
 
 #: src/presenters/admin/sidebar-presenter.php:21
 #: js/dist/ai-content-planner.js:75 js/dist/block-editor.js:75
-#: js/dist/block-editor.js:542 js/dist/classic-editor.js:232
-#: js/dist/editor-modules.js:111 js/dist/externals-components.js:80
+#: js/dist/block-editor.js:621 js/dist/classic-editor.js:311
+#: js/dist/editor-modules.js:190 js/dist/externals-components.js:159
 #: js/dist/general-page.js:5 js/dist/new-settings.js:5 js/dist/support.js:5
 msgid "BLACK FRIDAY | 30% OFF"
 msgstr "BLACK FRIDAY | 30% OFF"
@@ -935,13 +1128,13 @@ msgstr "BLACK FRIDAY | 30% OFF"
 #: admin/views/class-yoast-feature-toggles.php:206
 #: js/dist/ai-content-planner.js:97 js/dist/ai-content-planner.js:275
 #: js/dist/ai-content-planner.js:296 js/dist/ai-generator.js:55
-#: js/dist/block-editor.js:97 js/dist/block-editor.js:118
-#: js/dist/block-editor.js:139 js/dist/bulk-editor-page.js:4
-#: js/dist/editor-modules.js:166 js/dist/externals-components.js:76
+#: js/dist/block-editor.js:97 js/dist/block-editor.js:244
+#: js/dist/block-editor.js:265 js/dist/bulk-editor-page.js:5
+#: js/dist/editor-modules.js:245 js/dist/externals-components.js:155
 #: js/dist/general-page.js:8 js/dist/general-page.js:21
-#: js/dist/integrations-page.js:3 js/dist/integrations-page.js:6
-#: js/dist/integrations-page.js:18 js/dist/integrations-page.js:51
-#: js/dist/integrations-page.js:57 js/dist/introductions.js:13
+#: js/dist/integrations-page.js:2 js/dist/integrations-page.js:52
+#: js/dist/integrations-page.js:58 js/dist/integrations-page.js:63
+#: js/dist/integrations-page.js:71 js/dist/introductions.js:10
 #: js/dist/new-settings.js:53 js/dist/plans.js:3 js/dist/plans.js:7
 msgid "Learn more"
 msgstr "続きを読む"
@@ -976,7 +1169,7 @@ msgid "Prevent search engines from crawling /wp-json/"
 msgstr "検索エンジンが /wp-json/ をクロールしないようにする"
 
 #: src/integrations/admin/crawl-settings-integration.php:189
-#: js/dist/new-settings.js:268
+#: js/dist/new-settings.js:269
 msgid "Remove unused resources"
 msgstr "未使用のリソースを削除する"
 
@@ -985,12 +1178,12 @@ msgid "The inclusive language analysis offers suggestions to write more inclusiv
 msgstr "インクルーシブランゲージ分析は、より包括的なテキストを書くための提案を提供します。"
 
 #: admin/views/class-yoast-feature-toggles.php:87 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523
+#: js/dist/new-settings.js:524
 msgid "Inclusive language analysis"
 msgstr "インクルーシブランゲージの分析"
 
 #: admin/metabox/class-metabox-section-inclusive-language.php:30
-#: js/dist/externals-components.js:386
+#: js/dist/externals-components.js:465
 msgid "Inclusive language"
 msgstr "インクルーシブランゲージ"
 
@@ -1033,7 +1226,7 @@ msgid "Permalink cleanup settings"
 msgstr "パーマリンクのクリーンアップ設定"
 
 #: admin/views/class-yoast-feature-toggles.php:191 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:526
+#: js/dist/new-settings.js:527
 msgid "IndexNow"
 msgstr "IndexNow"
 
@@ -1042,17 +1235,17 @@ msgid "Find out how IndexNow can help your site."
 msgstr "IndexNow がサイトにどのように役立つかをご覧ください。"
 
 #: src/integrations/admin/crawl-settings-integration.php:154
-#: js/dist/new-settings.js:28 js/dist/new-settings.js:269
+#: js/dist/new-settings.js:28 js/dist/new-settings.js:270
 msgid "Filter searches with emojis and other special characters"
 msgstr "絵文字やその他の特殊文字で検索をフィルタリングする"
 
 #: src/integrations/admin/crawl-settings-integration.php:155
-#: js/dist/new-settings.js:28 js/dist/new-settings.js:269
+#: js/dist/new-settings.js:28 js/dist/new-settings.js:270
 msgid "Filter searches with common spam patterns"
 msgstr "一般的なスパム パターンで検索をフィルタリングする"
 
 #: src/integrations/admin/crawl-settings-integration.php:153
-#: js/dist/new-settings.js:28 js/dist/new-settings.js:269
+#: js/dist/new-settings.js:28 js/dist/new-settings.js:270
 msgid "Filter search terms"
 msgstr "検索語のフィルター"
 
@@ -1060,7 +1253,7 @@ msgstr "検索語のフィルター"
 msgid "Campaign tracking URL parameters"
 msgstr "キャンペーントラッキング URL の変数"
 
-#: admin/views/class-yoast-feature-toggles.php:194 js/dist/new-settings.js:526
+#: admin/views/class-yoast-feature-toggles.php:194 js/dist/new-settings.js:527
 msgid "Automatically ping search engines like Bing and Yandex whenever you publish, update or delete a post."
 msgstr "投稿を公開、更新、または削除するたびに、Bing や Yandex などの検索エンジンに自動的に ping を送信します。"
 
@@ -1130,7 +1323,7 @@ msgid "Emoji scripts"
 msgstr "絵文字スクリプト"
 
 #: src/integrations/admin/crawl-settings-integration.php:143
-#: js/dist/new-settings.js:28 js/dist/new-settings.js:268
+#: js/dist/new-settings.js:28 js/dist/new-settings.js:269
 msgid "Pingback HTTP header"
 msgstr "ピンバック HTTP ヘッダー"
 
@@ -1288,7 +1481,7 @@ msgstr "%s を更新"
 #. translators: 1: Yoast WooCommerce SEO
 #. translators: %s: Yoast WooCommerce SEO
 #: src/integrations/admin/workouts-integration.php:315
-#: js/dist/integrations-page.js:11 js/dist/new-settings.js:50
+#: js/dist/integrations-page.js:23 js/dist/new-settings.js:50
 msgid "Activate %s"
 msgstr "%s を有効化"
 
@@ -1453,13 +1646,13 @@ msgid "Find out how Insights can help you improve your content."
 msgstr "洞察がコンテンツの改善にどのように役立つかをご覧ください。"
 
 #: admin/views/class-yoast-feature-toggles.php:121 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523
+#: js/dist/new-settings.js:524
 msgid "Link suggestions"
 msgstr "リンクの提案"
 
-#: admin/views/class-yoast-feature-toggles.php:112 js/dist/block-editor.js:542
-#: js/dist/block-editor.js:599 js/dist/classic-editor.js:232
-#: js/dist/new-settings.js:28 js/dist/new-settings.js:523
+#: admin/views/class-yoast-feature-toggles.php:112 js/dist/block-editor.js:621
+#: js/dist/block-editor.js:712 js/dist/classic-editor.js:311
+#: js/dist/new-settings.js:28 js/dist/new-settings.js:524
 msgid "Insights"
 msgstr "Insights"
 
@@ -1532,9 +1725,9 @@ msgstr "自動更新は、%1$s のこの設定に基づいて無効になりま�
 
 #: src/presenters/admin/badge-presenter.php:80
 #: src/presenters/admin/badge-presenter.php:87
-#: js/dist/externals-components.js:386 js/dist/externals/componentsNew.js:563
-#: js/dist/integrations-page.js:3 js/dist/integrations-page.js:6
-#: js/dist/integrations-page.js:18 js/dist/new-settings.js:589
+#: js/dist/externals-components.js:465 js/dist/externals/componentsNew.js:563
+#: js/dist/integrations-page.js:2 js/dist/integrations-page.js:63
+#: js/dist/integrations-page.js:71 js/dist/new-settings.js:590
 msgid "New"
 msgstr "新規"
 
@@ -1565,7 +1758,7 @@ msgstr "WPML がインストールされていることがわかります。正�
 msgid "Because of a change in your category base setting, some of your SEO data needs to be reprocessed."
 msgstr "カテゴリベース設定が変更されたため、SEO データの一部を再処理する必要があります。"
 
-#: admin/views/class-yoast-feature-toggles.php:185 js/dist/new-settings.js:526
+#: admin/views/class-yoast-feature-toggles.php:185 js/dist/new-settings.js:527
 msgid "This adds an author byline and reading time estimate to the article’s snippet when shared on Slack."
 msgstr "これにより、Slack で共有されたときに、投稿者の署名欄と読書時間の見積もりが投稿のスニペットに追加されます。"
 
@@ -1628,7 +1821,7 @@ msgid "All permalinks were successfully reset"
 msgstr "すべてのパーマリンクが正常にリセットされました"
 
 #: src/presenters/admin/indexing-notification-presenter.php:59
-#: js/dist/general-page.js:45 js/dist/indexation.js:8
+#: js/dist/general-page.js:45 js/dist/indexation.js:1
 msgid "Start SEO data optimization"
 msgstr "SEO データの最適化を開始"
 
@@ -1737,8 +1930,8 @@ msgstr "ニュース記事"
 msgid "Medical Web Page"
 msgstr "医療ページ"
 
-#: src/config/schema-types.php:64 js/dist/block-editor.js:578
-#: js/dist/classic-editor.js:478
+#: src/config/schema-types.php:64 js/dist/block-editor.js:691
+#: js/dist/classic-editor.js:591
 msgid "Item Page"
 msgstr "項目ページ"
 
@@ -1772,7 +1965,7 @@ msgstr "概要ページ"
 
 #: admin/views/class-yoast-feature-toggles.php:161
 #: admin/views/class-yoast-feature-toggles.php:162 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:522
+#: js/dist/new-settings.js:523
 msgid "Usage tracking"
 msgstr "使用状況のトラッキング"
 
@@ -1980,7 +2173,7 @@ msgid "The browser you are currently using is unfortunately rather dated. Since 
 msgstr "現在使用しているブラウザは、残念ながらかなり古くなっています。可能な限り最高のエクスペリエンスを提供するよう努めているため、このブラウザはサポートしていません。代わりに、%1$sFirefox%4$s、%2$sChrome%4$s、または%3$sMicrosoft Edge%4$s をお使いください。"
 
 #: src/presenters/admin/sidebar-presenter.php:137
-#: js/dist/ai-content-planner.js:134 js/dist/block-editor.js:162
+#: js/dist/ai-content-planner.js:134 js/dist/block-editor.js:134
 #: js/dist/general-page.js:2 js/dist/new-settings.js:2 js/dist/support.js:2
 msgid "Learn SEO"
 msgstr "SEO を学ぶ"
@@ -1998,13 +2191,13 @@ msgstr "インポートする %s 設定:"
 #. translators: %1$s expands to Yoast SEO academy
 #. translators: %1$s expands to "Yoast SEO academy".
 #: src/presenters/admin/sidebar-presenter.php:154
-#: js/dist/ai-content-planner.js:135 js/dist/block-editor.js:163
+#: js/dist/ai-content-planner.js:135 js/dist/block-editor.js:135
 #: js/dist/general-page.js:3 js/dist/new-settings.js:3 js/dist/support.js:3
 msgid "Check out %1$s"
 msgstr "%1$s をチェック"
 
 #: src/presenters/admin/sidebar-presenter.php:147
-#: js/dist/ai-content-planner.js:134 js/dist/block-editor.js:162
+#: js/dist/ai-content-planner.js:134 js/dist/block-editor.js:134
 #: js/dist/general-page.js:2 js/dist/new-settings.js:2 js/dist/support.js:2
 msgid "We have both free and premium online courses to learn everything you need to know about SEO."
 msgstr "SEO について知るべきすべて学ぶための、無料とプレミアムオンラインコースがあります。"
@@ -2012,7 +2205,7 @@ msgstr "SEO について知るべきすべて学ぶための、無料とプレ�
 #. translators: %1$s expands to Yoast SEO academy, which is a clickable link.
 #. translators: %1$s expands to "Yoast SEO" academy, which is a clickable link.
 #: src/presenters/admin/sidebar-presenter.php:145
-#: js/dist/ai-content-planner.js:134 js/dist/block-editor.js:162
+#: js/dist/ai-content-planner.js:134 js/dist/block-editor.js:134
 #: js/dist/general-page.js:2 js/dist/new-settings.js:2 js/dist/support.js:2
 msgid "Want to learn SEO from Team Yoast? Check out our %1$s!"
 msgstr "チーム Yoast から SEO を学びたい方は、%1$s をご覧ください。"
@@ -2022,10 +2215,10 @@ msgstr "チーム Yoast から SEO を学びたい方は、%1$s をご覧くだ�
 msgid "Import settings from another %1$s installation by pasting them here and clicking \"%2$s\"."
 msgstr "ここに貼り付けて「%2$s」をクリックし、別の %1$s インストールから設定をインポートします。"
 
-#: admin/metabox/class-metabox.php:440 js/dist/block-editor.js:624
+#: admin/metabox/class-metabox.php:439 js/dist/block-editor.js:737
 #: js/dist/new-settings.js:21 js/dist/new-settings.js:31
 #: js/dist/new-settings.js:35 js/dist/new-settings.js:40
-#: js/dist/new-settings.js:92 js/dist/new-settings.js:409
+#: js/dist/new-settings.js:92 js/dist/new-settings.js:410
 msgid "Schema"
 msgstr "スキーマ"
 
@@ -2101,7 +2294,7 @@ msgstr "Google は Crawl Errors API を廃止したため、発生した可能�
 
 #: src/integrations/admin/first-time-configuration-integration.php:480
 #: src/integrations/admin/first-time-configuration-integration.php:493
-#: js/dist/new-settings.js:539
+#: js/dist/new-settings.js:540
 msgid "Organization"
 msgstr "組織"
 
@@ -2296,7 +2489,7 @@ msgstr "この機能はネットワーク管理者によって無効化されて
 #. translators: WooCommerce SEO
 #: admin/class-premium-popup.php:81
 #: admin/watchers/class-slug-change-watcher.php:228
-#: js/dist/externals-components.js:359
+#: js/dist/externals-components.js:438
 msgid "Get %s"
 msgstr "%s を入手"
 
@@ -2546,7 +2739,7 @@ msgid "You should create a redirect to ensure your visitors do not get a 404 err
 msgstr "訪問者が存在しない URL をクリックした際に404エラーが出ないよう、リダイレクトを設定してください。"
 
 #: inc/class-wpseo-replace-vars.php:1475 js/dist/externals-redux.js:1
-#: js/dist/new-settings.js:28 js/dist/new-settings.js:519
+#: js/dist/new-settings.js:28 js/dist/new-settings.js:520
 msgid "Tagline"
 msgstr "キャッチフレーズ"
 
@@ -2742,9 +2935,10 @@ msgid "Learn how the SEO analysis can help you rank."
 msgstr "SEO 分析がいかにランク向上に貢献するか学びましょう。"
 
 #: admin/views/class-yoast-feature-toggles.php:71
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:160
 #: src/task-list/application/tasks/child-tasks/improve-content-seo-child.php:64
-#: js/dist/externals-components.js:366 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523
+#: js/dist/externals-components.js:445 js/dist/new-settings.js:28
+#: js/dist/new-settings.js:524
 msgid "SEO analysis"
 msgstr "SEO 解析"
 
@@ -2768,7 +2962,7 @@ msgstr "テキストリンクカウンターは、サイト構造の改善を手
 msgid "Find out how the text link counter can enhance your SEO."
 msgstr "テキストリンクカウンターが SEO をどのように強化させるか学びましょう。"
 
-#: admin/views/class-yoast-feature-toggles.php:81 js/dist/new-settings.js:523
+#: admin/views/class-yoast-feature-toggles.php:81 js/dist/new-settings.js:524
 msgid "The readability analysis offers suggestions to improve the structure and style of your text."
 msgstr "可読性解析は、テキスト構造とスタイルを改善するための提案を提供します。"
 
@@ -2852,31 +3046,30 @@ msgstr "設定ウィザード"
 #: js/dist/ai-content-planner.js:292 js/dist/ai-generator.js:2
 #: js/dist/ai-generator.js:55 js/dist/ai-generator.js:67
 #: js/dist/ai-generator.js:282 js/dist/block-editor.js:85
-#: js/dist/block-editor.js:97 js/dist/block-editor.js:118
-#: js/dist/block-editor.js:123 js/dist/block-editor.js:135
-#: js/dist/block-editor.js:164 js/dist/block-editor.js:584
-#: js/dist/block-editor.js:585 js/dist/bulk-editor-page.js:2
-#: js/dist/bulk-editor-page.js:4 js/dist/bulk-editor-page.js:11
-#: js/dist/classic-editor.js:2 js/dist/editor-modules.js:116
-#: js/dist/editor-modules.js:166 js/dist/editor-modules.js:181
-#: js/dist/editor-modules.js:396 js/dist/externals-components.js:21
-#: js/dist/externals-components.js:25 js/dist/externals-components.js:26
-#: js/dist/externals-components.js:76 js/dist/externals-components.js:124
-#: js/dist/externals-components.js:339 js/dist/externals/componentsNew.js:675
-#: js/dist/externals/helpers.js:11
+#: js/dist/block-editor.js:97 js/dist/block-editor.js:136
+#: js/dist/block-editor.js:244 js/dist/block-editor.js:249
+#: js/dist/block-editor.js:261 js/dist/block-editor.js:697
+#: js/dist/block-editor.js:698 js/dist/bulk-editor-page.js:2
+#: js/dist/bulk-editor-page.js:5 js/dist/bulk-editor-page.js:6
+#: js/dist/bulk-editor-page.js:15 js/dist/classic-editor.js:2
+#: js/dist/editor-modules.js:195 js/dist/editor-modules.js:245
+#: js/dist/editor-modules.js:260 js/dist/editor-modules.js:475
+#: js/dist/externals-components.js:100 js/dist/externals-components.js:104
+#: js/dist/externals-components.js:105 js/dist/externals-components.js:155
+#: js/dist/externals-components.js:203 js/dist/externals-components.js:418
+#: js/dist/externals/componentsNew.js:675 js/dist/externals/helpers.js:11
 #: js/dist/externals/relatedKeyphraseSuggestions.js:3
 #: js/dist/externals/relatedKeyphraseSuggestions.js:7 js/dist/general-page.js:4
 #: js/dist/general-page.js:5 js/dist/general-page.js:8
 #: js/dist/general-page.js:22 js/dist/general-page.js:59
-#: js/dist/installation-success.js:5 js/dist/integrations-page.js:3
-#: js/dist/integrations-page.js:4 js/dist/integrations-page.js:5
-#: js/dist/integrations-page.js:6 js/dist/integrations-page.js:7
-#: js/dist/integrations-page.js:8 js/dist/integrations-page.js:13
-#: js/dist/integrations-page.js:18 js/dist/integrations-page.js:19
-#: js/dist/integrations-page.js:20 js/dist/integrations-page.js:52
-#: js/dist/integrations-page.js:57 js/dist/introductions.js:2
-#: js/dist/introductions.js:4 js/dist/introductions.js:8
-#: js/dist/introductions.js:13 js/dist/introductions.js:14
+#: js/dist/installation-success.js:5 js/dist/integrations-page.js:2
+#: js/dist/integrations-page.js:3 js/dist/integrations-page.js:5
+#: js/dist/integrations-page.js:25 js/dist/integrations-page.js:53
+#: js/dist/integrations-page.js:58 js/dist/integrations-page.js:63
+#: js/dist/integrations-page.js:64 js/dist/integrations-page.js:65
+#: js/dist/integrations-page.js:71 js/dist/integrations-page.js:72
+#: js/dist/integrations-page.js:73 js/dist/introductions.js:5
+#: js/dist/introductions.js:10 js/dist/introductions.js:11
 #: js/dist/new-settings.js:4 js/dist/new-settings.js:5
 #: js/dist/new-settings.js:8 js/dist/plans.js:2 js/dist/redirects.js:2
 #: js/dist/redirects.js:7 js/dist/support.js:4 js/dist/support.js:5
@@ -2934,7 +3127,7 @@ msgid "Request method %1$s is not valid."
 msgstr "リクエストメソッド %1$s は無効です。"
 
 #: admin/views/class-yoast-feature-toggles.php:104 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523
+#: js/dist/new-settings.js:524
 msgid "Text link counter"
 msgstr "テキストリンクカウンター"
 
@@ -2951,13 +3144,13 @@ msgstr "可読性スコア"
 
 #: admin/filters/class-cornerstone-filter.php:87
 #: admin/views/class-yoast-feature-toggles.php:96
-#: js/dist/externals-components.js:20 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523
+#: js/dist/externals-components.js:99 js/dist/new-settings.js:28
+#: js/dist/new-settings.js:524
 msgid "Cornerstone content"
 msgstr "コーナーストーンコンテンツ"
 
 #: admin/class-yoast-form.php:149 admin/class-yoast-form.php:154
-#: js/dist/bulk-editor-page.js:13 js/dist/general-page.js:45
+#: js/dist/bulk-editor-page.js:20 js/dist/general-page.js:45
 #: js/dist/new-settings.js:9
 msgid "Save changes"
 msgstr "変更を保存"
@@ -2987,7 +3180,7 @@ msgstr "テーブルの内容を表示するにはスクロールしてくださ
 msgid "Save all"
 msgstr "すべて保存"
 
-#: admin/class-bulk-editor-list-table.php:926 js/dist/bulk-editor-page.js:13
+#: admin/class-bulk-editor-list-table.php:926 js/dist/bulk-editor-page.js:20
 msgid "Save"
 msgstr "保存"
 
@@ -3045,7 +3238,7 @@ msgid "By the way, did you know we also have a %1$sPremium plugin%2$s? It offers
 msgstr "%1$sプレミアムプラグイン%2$sについてご存知でしたか ? リダイレクト管理や複数キーフレーズのサポートといった高度な機能を提供します。また、24時間年中無休のパーソナルサポートも付いています。"
 
 #: admin/views/class-yoast-feature-toggles.php:143 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:526 js/dist/new-settings.js:529
+#: js/dist/new-settings.js:527 js/dist/new-settings.js:530
 msgid "Admin bar menu"
 msgstr "管理バーメニュー"
 
@@ -3054,15 +3247,18 @@ msgstr "管理バーメニュー"
 msgid "The %1$s admin bar menu contains useful links to third-party tools for analyzing pages and makes it easy to see if you have new notifications."
 msgstr "%1$s 管理バーメニューには、ページを分析するためのサードパーティーツールへの便利なリンクが含まれており、新しい通知があるかどうかを簡単に確認できます。"
 
-#: admin/metabox/class-metabox.php:172 js/dist/bulk-editor-page.js:14
+#: admin/metabox/class-metabox.php:172
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:122
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:123
+#: js/dist/bulk-editor-page.js:21
 #: js/dist/externals/replacementVariableEditor.js:71
 #: js/dist/externals/searchMetadataPreviews.js:102 js/dist/new-settings.js:18
 #: js/dist/new-settings.js:24 js/dist/new-settings.js:28
 #: js/dist/new-settings.js:31 js/dist/new-settings.js:35
 #: js/dist/new-settings.js:88 js/dist/new-settings.js:108
 #: js/dist/new-settings.js:157 js/dist/new-settings.js:204
-#: js/dist/new-settings.js:309 js/dist/new-settings.js:336
-#: js/dist/new-settings.js:351 js/dist/new-settings.js:409
+#: js/dist/new-settings.js:310 js/dist/new-settings.js:337
+#: js/dist/new-settings.js:352 js/dist/new-settings.js:410
 msgid "SEO title"
 msgstr "SEO タイトル"
 
@@ -3079,12 +3275,12 @@ msgid "Middle dot"
 msgstr "中黒"
 
 #: admin/metabox/class-metabox.php:183 admin/metabox/class-metabox.php:188
-#: js/dist/block-editor.js:544 js/dist/classic-editor.js:234
+#: js/dist/block-editor.js:623 js/dist/classic-editor.js:313
 msgid "No"
 msgstr "いいえ"
 
 #: admin/metabox/class-metabox.php:182 admin/metabox/class-metabox.php:187
-#: js/dist/block-editor.js:544 js/dist/classic-editor.js:234
+#: js/dist/block-editor.js:623 js/dist/classic-editor.js:313
 msgid "Yes"
 msgstr "はい"
 
@@ -3170,8 +3366,8 @@ msgid_plural "%s notifications"
 msgstr[0] "%s件の通知"
 
 #: admin/views/class-yoast-feature-toggles.php:79
-#: js/dist/externals-components.js:358 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523
+#: js/dist/externals-components.js:437 js/dist/new-settings.js:28
+#: js/dist/new-settings.js:524
 msgid "Readability analysis"
 msgstr "可読性解析"
 
@@ -3190,9 +3386,10 @@ msgstr "メタボックスに可読性タブを表示しないようにし、読
 #: inc/class-wpseo-rank.php:208 inc/class-wpseo-rank.php:240
 #: src/task-list/application/tasks/child-tasks/improve-content-readability-child.php:52
 #: src/task-list/application/tasks/child-tasks/improve-content-seo-child.php:52
-#: js/dist/block-editor.js:583 js/dist/editor-modules.js:115
-#: js/dist/editor-modules.js:398 js/dist/externals-components.js:84
-#: js/dist/externals/analysis.js:409 js/dist/externals/dashboardFrontend.js:4
+#: js/dist/block-editor.js:696 js/dist/bulk-editor-page.js:8
+#: js/dist/editor-modules.js:194 js/dist/editor-modules.js:477
+#: js/dist/externals-components.js:163 js/dist/externals/analysis.js:410
+#: js/dist/externals/dashboardFrontend.js:4
 #: js/dist/frontend-inspector-resources.js:1
 msgid "Needs improvement"
 msgstr "改善が必要"
@@ -3203,8 +3400,8 @@ msgstr "可読性解析を停止"
 
 #: inc/class-wpseo-rank.php:138
 #: src/abilities/application/score-retriever.php:140
-#: js/dist/block-editor.js:583 js/dist/editor-modules.js:115
-#: js/dist/editor-modules.js:398 js/dist/externals-components.js:84
+#: js/dist/block-editor.js:696 js/dist/editor-modules.js:194
+#: js/dist/editor-modules.js:477 js/dist/externals-components.js:163
 #: js/dist/frontend-inspector-resources.js:1
 msgid "Not available"
 msgstr "利用できません"
@@ -3219,7 +3416,7 @@ msgid "Filter by SEO Score"
 msgstr "SEO スコアで絞り込む"
 
 #: admin/views/partial-notifications-errors.php:20
-#: js/dist/editor-modules.js:115 js/dist/externals-components.js:84
+#: js/dist/editor-modules.js:194 js/dist/externals-components.js:163
 #: js/dist/externals/analysisReport.js:38 js/dist/general-page.js:29
 msgid "Problems"
 msgstr "問題点"
@@ -3280,8 +3477,8 @@ msgid "Keep"
 msgstr "維持"
 
 #: admin/pages/network.php:20 admin/views/tabs/network/integrations.php:22
-#: src/integrations/admin/integrations-page.php:145
-#: js/dist/integrations-page.js:75
+#: src/integrations/admin/integrations-page.php:156
+#: js/dist/integrations-page.js:79
 msgid "Integrations"
 msgstr "連携"
 
@@ -3399,8 +3596,7 @@ msgstr "WordPress のオールインワン型 SEO ソリューションを提供
 
 #. Plugin Name of the plugin
 #: wp-seo.php admin/capabilities/class-capability-manager-integration.php:74
-#: src/abilities/user-interface/ability-categories-integration.php:43
-#: src/presenters/meta-description-presenter.php:36 js/dist/block-editor.js:662
+#: src/presenters/meta-description-presenter.php:36 js/dist/block-editor.js:745
 msgid "Yoast SEO"
 msgstr "Yoast SEO"
 
@@ -3438,9 +3634,9 @@ msgstr "検索結果:"
 #: inc/class-wpseo-rank.php:218 inc/class-wpseo-rank.php:250
 #: src/task-list/application/tasks/child-tasks/improve-content-readability-child.php:50
 #: src/task-list/application/tasks/child-tasks/improve-content-seo-child.php:50
-#: js/dist/block-editor.js:583 js/dist/editor-modules.js:115
-#: js/dist/editor-modules.js:398 js/dist/externals-components.js:84
-#: js/dist/externals/analysis.js:409 js/dist/externals/dashboardFrontend.js:4
+#: js/dist/block-editor.js:696 js/dist/editor-modules.js:194
+#: js/dist/editor-modules.js:477 js/dist/externals-components.js:163
+#: js/dist/externals/analysis.js:410 js/dist/externals/dashboardFrontend.js:4
 #: js/dist/frontend-inspector-resources.js:1
 msgid "Good"
 msgstr "良好"
@@ -3469,8 +3665,8 @@ msgid "Attachment caption"
 msgstr "添付ファイルのキャプション"
 
 #: admin/pages/tools.php:42
-#: src/bulk-editor/user-interface/bulk-editor-integration.php:175
-#: js/dist/bulk-editor-page.js:15
+#: src/bulk-editor/user-interface/bulk-editor-integration.php:228
+#: js/dist/bulk-editor-page.js:22
 msgid "Bulk editor"
 msgstr "一括変更"
 
@@ -3718,10 +3914,6 @@ msgstr "カンマで区切られた投稿のカスタムタクソノミーに置
 msgid "%s restored to default SEO settings."
 msgstr "%s SEO 設定をデフォルトに戻しました。"
 
-#: admin/class-plugin-availability.php:67
-msgid "Are you in Google News? Increase your traffic from Google News by optimizing for it!"
-msgstr "Google ニュースに表示されてますか? 最適化してGoogle ニュースからのトラフィックを増やしましょう!"
-
 #: admin/views/tabs/network/general.php:40
 msgid "Choose the site whose settings you want to use as default for all sites that are added to your network. If you choose 'None', the normal plugin defaults will be used."
 msgstr "ネットワークに追加されたすべてのサイトに対してのデフォルトサイト設定を選んでください。「なし」を選ぶとプラグインのデフォルトを使います。"
@@ -3731,26 +3923,13 @@ msgstr "ネットワークに追加されたすべてのサイトに対しての
 msgid "New sites in the network inherit their SEO settings from this site"
 msgstr "このサイトからの SEO 設定を継承するネットワーク内の新しいサイト"
 
-#: admin/class-plugin-availability.php:57
-msgid "Optimize your videos to show them off in search results and get more clicks!"
-msgstr "動画を最適化して検索結果に表示させ、もっとクリックされるようにします!"
-
 #: inc/class-wpseo-replace-vars.php:1497
 msgid "Permalink"
 msgstr "パーマリンク"
 
-#: admin/class-plugin-availability.php:77
-msgid "Rank better locally and in Google Maps, without breaking a sweat!"
-msgstr "Google マップのランキングで上位になりましょう!"
-
 #: admin/views/tabs/network/restore-site.php:32
 msgid "Restore site to defaults"
 msgstr "サイトをデフォルト状態に復元"
-
-#. translators: %1$s expands to Yoast SEO
-#: admin/class-plugin-availability.php:89
-msgid "Seamlessly integrate WooCommerce with %1$s and get extra features!"
-msgstr "WooCommerce を %1$s とシームレスに統合したり追加機能を使えるようにしたりします!"
 
 #: admin/views/tabs/network/general.php:27
 msgid "Site Admins (default)"
@@ -3775,8 +3954,8 @@ msgid "The premium version of %1$s with more features & support."
 msgstr "追加機能とサポートが得られるプレミアム版の %1$s です。"
 
 #: inc/class-wpseo-replace-vars.php:1471 js/dist/ai-content-planner.js:276
-#: js/dist/ai-content-planner.js:277 js/dist/block-editor.js:119
-#: js/dist/block-editor.js:120 js/dist/bulk-editor-page.js:13
+#: js/dist/ai-content-planner.js:277 js/dist/block-editor.js:245
+#: js/dist/block-editor.js:246 js/dist/bulk-editor-page.js:20
 #: js/dist/externals-redux.js:1
 msgid "Title"
 msgstr "タイトル"
@@ -3831,9 +4010,26 @@ msgid "Creating redirects is a %s feature"
 msgstr "リダイレクトを設定するのは %s 機能です。"
 
 #: src/integrations/admin/first-time-configuration-integration.php:485
-#: js/dist/new-settings.js:539
+#: js/dist/new-settings.js:540
 msgid "Person"
 msgstr "個人"
+
+#: admin/class-plugin-availability.php:57
+msgid "Optimize your videos to show them off in search results and get more clicks!"
+msgstr "動画を最適化して検索結果に表示させ、もっとクリックされるようにします !"
+
+#: admin/class-plugin-availability.php:67
+msgid "Are you in Google News? Increase your traffic from Google News by optimizing for it!"
+msgstr "Google ニュースに表示されてますか ? 最適化して Google ニュースからのトラフィックを増やしましょう !"
+
+#: admin/class-plugin-availability.php:77
+msgid "Rank better locally and in Google Maps, without breaking a sweat!"
+msgstr "Google マップのランキングで上位になりましょう !"
+
+#. translators: %1$s expands to Yoast SEO
+#: admin/class-plugin-availability.php:89
+msgid "Seamlessly integrate WooCommerce with %1$s and get extra features!"
+msgstr "WooCommerce を %1$s とシームレスに統合したり追加機能を使えるようにしたりします !"
 
 #. translators: %s is the plugin name
 #: admin/class-yoast-dashboard-widget.php:77
@@ -3851,8 +4047,7 @@ msgid "Both %1$s and %2$s can create XML sitemaps. Having two XML sitemaps is no
 msgstr "%1$s と %2$s の両方が XML サイトマップを生成できる状態です。複数のサイトマップは検索エンジンにとって良くないだけでなく、サイトの速度を遅くする原因にもなります。"
 
 #: admin/google_search_console/views/gsc-redirect-nopremium.php:27
-#: js/dist/ai-consent.js:3 js/dist/ai-consent.js:6
-#: js/dist/ai-content-planner.js:4 js/dist/ai-content-planner.js:96
+#: js/dist/ai-consent.js:6 js/dist/ai-content-planner.js:4
 #: js/dist/ai-content-planner.js:133 js/dist/ai-content-planner.js:268
 #: js/dist/ai-content-planner.js:275 js/dist/ai-content-planner.js:278
 #: js/dist/ai-content-planner.js:280 js/dist/ai-content-planner.js:288
@@ -3861,32 +4056,28 @@ msgstr "%1$s と %2$s の両方が XML サイトマップを生成できる状�
 #: js/dist/ai-generator.js:53 js/dist/ai-generator.js:61
 #: js/dist/ai-generator.js:67 js/dist/ai-generator.js:278
 #: js/dist/ai-generator.js:280 js/dist/ai-generator.js:282
-#: js/dist/block-editor.js:4 js/dist/block-editor.js:96
-#: js/dist/block-editor.js:118 js/dist/block-editor.js:121
-#: js/dist/block-editor.js:123 js/dist/block-editor.js:131
-#: js/dist/block-editor.js:135 js/dist/block-editor.js:136
-#: js/dist/block-editor.js:161 js/dist/block-editor.js:296
-#: js/dist/bulk-editor-page.js:3 js/dist/bulk-editor-page.js:4
-#: js/dist/classic-editor.js:3 js/dist/editor-modules.js:116
-#: js/dist/editor-modules.js:132 js/dist/editor-modules.js:159
-#: js/dist/editor-modules.js:164 js/dist/editor-modules.js:169
-#: js/dist/editor-modules.js:175 js/dist/editor-modules.js:181
-#: js/dist/editor-modules.js:392 js/dist/editor-modules.js:394
-#: js/dist/editor-modules.js:396 js/dist/externals-components.js:25
-#: js/dist/externals-components.js:69 js/dist/externals-components.js:74
-#: js/dist/externals-components.js:79 js/dist/externals-components.js:120
-#: js/dist/externals-components.js:124 js/dist/externals-components.js:335
-#: js/dist/externals-components.js:337 js/dist/externals-components.js:339
+#: js/dist/block-editor.js:4 js/dist/block-editor.js:133
+#: js/dist/block-editor.js:244 js/dist/block-editor.js:247
+#: js/dist/block-editor.js:249 js/dist/block-editor.js:257
+#: js/dist/block-editor.js:261 js/dist/block-editor.js:262
+#: js/dist/block-editor.js:296 js/dist/bulk-editor-page.js:3
+#: js/dist/bulk-editor-page.js:5 js/dist/editor-modules.js:195
+#: js/dist/editor-modules.js:211 js/dist/editor-modules.js:238
+#: js/dist/editor-modules.js:243 js/dist/editor-modules.js:248
+#: js/dist/editor-modules.js:254 js/dist/editor-modules.js:260
+#: js/dist/editor-modules.js:471 js/dist/editor-modules.js:473
+#: js/dist/editor-modules.js:475 js/dist/externals-components.js:104
+#: js/dist/externals-components.js:148 js/dist/externals-components.js:153
+#: js/dist/externals-components.js:158 js/dist/externals-components.js:199
+#: js/dist/externals-components.js:203 js/dist/externals-components.js:414
+#: js/dist/externals-components.js:416 js/dist/externals-components.js:418
 #: js/dist/externals/aiFrontend.js:190 js/dist/externals/aiFrontend.js:195
 #: js/dist/externals/componentsNew.js:626
 #: js/dist/externals/dashboardFrontend.js:6 js/dist/general-page.js:8
-#: js/dist/general-page.js:9 js/dist/general-page.js:29
-#: js/dist/integrations-page.js:57 js/dist/integrations-page.js:58
-#: js/dist/introductions.js:2 js/dist/introductions.js:4
-#: js/dist/introductions.js:8 js/dist/introductions.js:12
-#: js/dist/introductions.js:13 js/dist/new-settings.js:8
-#: js/dist/new-settings.js:9 js/dist/new-settings.js:38 js/dist/redirects.js:4
-#: js/dist/support.js:6
+#: js/dist/general-page.js:29 js/dist/integrations-page.js:58
+#: js/dist/introductions.js:5 js/dist/introductions.js:9
+#: js/dist/introductions.js:10 js/dist/new-settings.js:8
+#: js/dist/new-settings.js:38
 msgid "Close"
 msgstr "閉じる"
 
@@ -3895,9 +4086,9 @@ msgstr "閉じる"
 #: inc/class-wpseo-rank.php:213
 #: src/task-list/application/tasks/child-tasks/improve-content-readability-child.php:51
 #: src/task-list/application/tasks/child-tasks/improve-content-seo-child.php:51
-#: js/dist/block-editor.js:583 js/dist/editor-modules.js:115
-#: js/dist/editor-modules.js:398 js/dist/externals-components.js:84
-#: js/dist/externals/analysis.js:409 js/dist/externals/dashboardFrontend.js:4
+#: js/dist/block-editor.js:696 js/dist/editor-modules.js:194
+#: js/dist/editor-modules.js:477 js/dist/externals-components.js:163
+#: js/dist/externals/analysis.js:410 js/dist/externals/dashboardFrontend.js:4
 #: js/dist/frontend-inspector-resources.js:1
 msgid "OK"
 msgstr "OK"
@@ -3922,6 +4113,12 @@ msgstr "%s を無効化"
 msgid "Meta Desc."
 msgstr "メタディスクリプション"
 
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:150
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:151
+#: js/dist/externals/socialMetadataForms.js:23
+msgid "X description"
+msgstr "X 説明"
+
 #. translators: %1$s expands to Yoast SEO, %2$s: 'Facebook' plugin name of
 #. possibly conflicting plugin with regard to creating OpenGraph output.
 #: admin/class-plugin-conflict.php:67
@@ -3938,8 +4135,8 @@ msgstr "%1$s が %3$s のバージョン %2$s を利用していることを検�
 msgid "301 Redirect"
 msgstr "301リダイレクト"
 
-#: admin/metabox/class-metabox.php:196 js/dist/block-editor.js:549
-#: js/dist/classic-editor.js:239
+#: admin/metabox/class-metabox.php:196 js/dist/block-editor.js:628
+#: js/dist/classic-editor.js:318
 msgid "Breadcrumbs Title"
 msgstr "パンくずリストのタイトル"
 
@@ -3966,7 +4163,7 @@ msgstr "Just another WordPress site"
 
 #: admin/class-yoast-network-admin.php:43 src/config/schema-types.php:163
 #: src/integrations/settings-integration.php:645 js/dist/new-settings.js:9
-#: js/dist/new-settings.js:591
+#: js/dist/new-settings.js:592
 msgid "None"
 msgstr "なし"
 
@@ -3998,7 +4195,7 @@ msgstr "プレビュー"
 msgid "Publication date"
 msgstr "公開日"
 
-#: admin/metabox/class-metabox.php:423
+#: admin/metabox/class-metabox.php:422
 #: admin/taxonomy/class-taxonomy-metabox.php:141
 #: inc/class-wpseo-admin-bar-menu.php:790
 #: src/services/health-check/report-builder.php:168
@@ -4014,7 +4211,7 @@ msgstr "設定"
 msgid "Settings successfully imported."
 msgstr "設定をインポートしました。"
 
-#: admin/metabox/class-metabox.php:448
+#: admin/metabox/class-metabox.php:447
 #: admin/taxonomy/class-taxonomy-metabox.php:159 js/dist/new-settings.js:35
 msgid "Social"
 msgstr "ソーシャル"
@@ -4023,7 +4220,7 @@ msgstr "ソーシャル"
 msgid "Title to use for this page in breadcrumb paths"
 msgstr "パンくずリストのパスにこのページに使用するためのタイトル"
 
-#: admin/menu/class-admin-menu.php:96 js/dist/new-settings.js:529
+#: admin/menu/class-admin-menu.php:96 js/dist/new-settings.js:530
 msgid "Tools"
 msgstr "ツール"
 
@@ -4058,15 +4255,11 @@ msgid "All <span class=\"count\">(%s)</span>"
 msgid_plural "All <span class=\"count\">(%s)</span>"
 msgstr[0] "すべて <span class=\"count\">(%s)</span>"
 
-#: admin/class-bulk-editor-list-table.php:849 js/dist/bulk-editor-page.js:13
+#: admin/class-bulk-editor-list-table.php:849 js/dist/bulk-editor-page.js:20
 #: js/dist/externals/dashboardFrontend.js:4 js/dist/general-page.js:44
 #: js/dist/general-page.js:59
 msgid "Edit"
 msgstr "編集"
-
-#: admin/class-meta-columns.php:128
-msgid "SEO Title"
-msgstr "SEOタイトル"
 
 #: admin/import/class-import-settings.php:85
 msgid "Settings could not be imported:"
@@ -4077,16 +4270,16 @@ msgid "Warning: even though you can set the meta robots setting here, the entire
 msgstr "警告: メタロボット設定を設定できますが、サイト全体のプライバシー設定で noindex が設定されているため、設定は効果がありません。"
 
 #: admin/metabox/class-metabox.php:173 js/dist/ai-content-planner.js:276
-#: js/dist/ai-content-planner.js:277 js/dist/block-editor.js:119
-#: js/dist/block-editor.js:120 js/dist/bulk-editor-page.js:14
+#: js/dist/ai-content-planner.js:277 js/dist/block-editor.js:245
+#: js/dist/block-editor.js:246 js/dist/bulk-editor-page.js:21
 #: js/dist/externals/replacementVariableEditor.js:71
 #: js/dist/externals/searchMetadataPreviews.js:102 js/dist/new-settings.js:18
 #: js/dist/new-settings.js:24 js/dist/new-settings.js:31
 #: js/dist/new-settings.js:35 js/dist/new-settings.js:88
 #: js/dist/new-settings.js:108 js/dist/new-settings.js:157
-#: js/dist/new-settings.js:204 js/dist/new-settings.js:309
-#: js/dist/new-settings.js:336 js/dist/new-settings.js:351
-#: js/dist/new-settings.js:409
+#: js/dist/new-settings.js:204 js/dist/new-settings.js:310
+#: js/dist/new-settings.js:337 js/dist/new-settings.js:352
+#: js/dist/new-settings.js:410
 msgid "Meta description"
 msgstr "メタディスクリプション"
 
@@ -4098,23 +4291,23 @@ msgstr "新しい Yoast メタディスクリプション"
 msgid "Existing Yoast Meta Description"
 msgstr "既存の Yoast メタディスクリプション"
 
-#: admin/metabox/class-metabox.php:199 js/dist/block-editor.js:550
-#: js/dist/classic-editor.js:240
+#: admin/metabox/class-metabox.php:199 js/dist/block-editor.js:629
+#: js/dist/classic-editor.js:319
 msgid "Canonical URL"
 msgstr "カノニカル URL"
 
 #: admin/views/class-yoast-feature-toggles.php:132 js/dist/new-settings.js:28
-#: js/dist/new-settings.js:523 js/dist/new-settings.js:526
+#: js/dist/new-settings.js:524 js/dist/new-settings.js:527
 msgid "XML sitemaps"
 msgstr "XML サイトマップ"
 
-#: admin/metabox/class-metabox.php:193 js/dist/block-editor.js:548
-#: js/dist/classic-editor.js:238
+#: admin/metabox/class-metabox.php:193 js/dist/block-editor.js:627
+#: js/dist/classic-editor.js:317
 msgid "No Archive"
 msgstr "アーカイブなし"
 
-#: admin/metabox/class-metabox.php:194 js/dist/block-editor.js:548
-#: js/dist/classic-editor.js:238
+#: admin/metabox/class-metabox.php:194 js/dist/block-editor.js:627
+#: js/dist/classic-editor.js:317
 msgid "No Snippet"
 msgstr "スニペットなし"
 
@@ -4127,8 +4320,8 @@ msgstr "投稿に無効なコンテンツタイプがあります: %s。"
 msgid "Action"
 msgstr "操作"
 
-#: admin/metabox/class-metabox.php:192 js/dist/block-editor.js:548
-#: js/dist/classic-editor.js:238
+#: admin/metabox/class-metabox.php:192 js/dist/block-editor.js:627
+#: js/dist/classic-editor.js:317
 msgid "No Image Index"
 msgstr "画像インデックスなし"
 
@@ -4139,8 +4332,8 @@ msgid "Trash <span class=\"count\">(%s)</span>"
 msgid_plural "Trash <span class=\"count\">(%s)</span>"
 msgstr[0] "ゴミ箱 <span class=\"count\">(%s)</span>"
 
-#: admin/metabox/class-metabox.php:190 js/dist/block-editor.js:548
-#: js/dist/classic-editor.js:238
+#: admin/metabox/class-metabox.php:190 js/dist/block-editor.js:627
+#: js/dist/classic-editor.js:317
 msgid "Meta robots advanced"
 msgstr "追加 robots メタ"
 
@@ -4151,7 +4344,7 @@ msgstr "このページを示すカノニカル URL です。空欄にすると�
 
 #: admin/menu/class-network-admin-menu.php:56 admin/pages/network.php:18
 #: src/general/user-interface/general-page-integration.php:213
-#: js/dist/new-settings.js:589
+#: js/dist/new-settings.js:590
 msgid "General"
 msgstr "一般"
 
@@ -4169,7 +4362,7 @@ msgstr "絞り込み"
 msgid "View &#8220;%s&#8221;"
 msgstr "&#8220;%s&#8221; を表示"
 
-#: admin/class-admin.php:229 js/dist/externals-components.js:386
+#: admin/class-admin.php:229 js/dist/externals-components.js:465
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -4180,3 +4373,13 @@ msgstr "検索コンソール"
 #: admin/metabox/class-metabox.php:209
 msgid "The URL that this page should redirect to."
 msgstr "このページのリダイレクト先 URL。"
+
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:124
+#: src/abilities/user-interface/abilities/abstract-post-seo-data-ability.php:125
+#: js/dist/new-settings.js:28
+msgid "meta description"
+msgstr "メタディスクリプション"
+
+#: admin/class-meta-columns.php:128
+msgid "SEO Title"
+msgstr "SEO タイトル"

@@ -52,4 +52,34 @@ wp.domReady(() => {
     innerBlocks: [],
     icon: null,
   });
+
+  // core/list ブロックの設定項目（リストのスタイル、初期値、順序を逆にする）を強制非表示
+  wp.data.subscribe(() => {
+    const selectedBlock = wp.data.select('core/block-editor').getSelectedBlock();
+    if (selectedBlock && selectedBlock.name === 'core/list') {
+      // レンダリングを待つため少し遅延させる
+      setTimeout(() => {
+        const inspector = document.querySelector('.block-editor-block-inspector, .edit-post-sidebar');
+        if (inspector) {
+          const labels = inspector.querySelectorAll('label, legend');
+          labels.forEach(label => {
+            const text = label.textContent || '';
+            if (
+              text.includes('初期値') ||
+              text.includes('順序を逆にする') ||
+              text.includes('リストのスタイル') ||
+              text.includes('Start value') ||
+              text.includes('Reverse list numbering') ||
+              text.includes('List style')
+            ) {
+              const wrapper = label.closest('.components-base-control, .components-toggle-control, .components-panel__body, .components-item-group');
+              if (wrapper) {
+                wrapper.style.display = 'none';
+              }
+            }
+          });
+        }
+      }, 50);
+    }
+  });
 });

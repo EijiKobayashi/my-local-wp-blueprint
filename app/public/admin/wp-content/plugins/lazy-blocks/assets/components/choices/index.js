@@ -1,34 +1,35 @@
 /**
  * External dependencies.
  */
-import classnames from 'classnames/dedupe';
+
 import {
-	DndContext,
 	closestCenter,
+	DndContext,
 	useSensor,
 	useSensors,
 } from '@dnd-kit/core';
 import {
 	SortableContext,
-	verticalListSortingStrategy,
 	useSortable,
+	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { arrayMoveImmutable } from 'array-move';
+import { BaseControl, Button, TextControl } from '@wordpress/components';
+import { usePrevious } from '@wordpress/compose';
 
 /**
  * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { BaseControl, TextControl, Button } from '@wordpress/components';
-import { usePrevious } from '@wordpress/compose';
+import { arrayMoveImmutable } from 'array-move';
+import classnames from 'classnames/dedupe';
 
 /**
  * Internal dependencies.
  */
 import CustomPointerSensor from '../../utils/dnd-kit-custom-pointer-sensor';
 
-const SortableItem = function (props) {
+const SortableItem = (props) => {
 	const { id, values, focusInput } = props;
 
 	const {
@@ -70,8 +71,6 @@ const SortableItem = function (props) {
 						}
 						// eslint-disable-next-line jsx-a11y/no-autofocus
 						autoFocus={focusInput && i === 0}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				);
 			})}
@@ -113,7 +112,7 @@ const SortableItem = function (props) {
 					/>
 				</svg>
 			</div>
-			{/* eslint-disable-next-line react/button-has-type */}
+			{/* biome-ignore lint/a11y/useButtonType: intentional opt-out kept from ESLint. */}
 			<button
 				className="lzb-block-builder-controls-item-settings-choices-item-remove"
 				onClick={() => props.removeChoice()}
@@ -238,7 +237,7 @@ export default function Choices(props) {
 	}
 
 	return (
-		<BaseControl id={id} label={label} help={help} __nextHasNoMarginBottom>
+		<BaseControl id={id} label={label} help={help}>
 			<div className="lzb-block-builder-controls-item-settings-choices">
 				{items.length ? (
 					<div className="lzb-block-builder-controls-item-settings-choices-items">

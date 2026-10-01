@@ -1,9 +1,10 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
+
 import { PanelBody, TextControl, ToggleControl } from '@wordpress/components';
+import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -20,7 +21,6 @@ addFilter('lzb.editor.control.toggle.render', 'lzb.editor', (render, props) => (
 			label={props.data.alongside_text}
 			checked={!!props.getValue()}
 			onChange={props.onChange}
-			__nextHasNoMarginBottom
 		/>
 	</BaseControl>
 ));
@@ -47,8 +47,6 @@ addFilter(
 						onChange={(value) =>
 							updateData({ alongside_text: value })
 						}
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 				<PanelBody>
@@ -65,7 +63,6 @@ addFilter(
 									checked: value ? 'true' : 'false',
 								})
 							}
-							__nextHasNoMarginBottom
 						/>
 					</BaseControl>
 				</PanelBody>

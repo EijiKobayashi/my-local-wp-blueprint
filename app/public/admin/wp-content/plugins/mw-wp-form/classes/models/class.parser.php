@@ -91,6 +91,34 @@ class MW_WP_Form_Parser {
 	}
 
 	/**
+	 * Replace {name} for complete page.
+	 *
+	 * @param string $value Value.
+	 * @return string
+	 */
+	public function replace_for_complete_page( $value ) {
+		return $this->_replace( $value, array( $this, '_replace_for_complete_page_callback' ) );
+	}
+
+	/**
+	 * Callback for replace_for_complete_page.
+	 * Neutralizes shortcode brackets so that substituted values are never parsed as shortcodes.
+	 *
+	 * @param array $matches $matches of preg_replace_callback.
+	 * @return string|null
+	 */
+	protected function _replace_for_complete_page_callback( $matches ) {
+		$match = $matches[1];
+		$value = $this->parse( $match );
+
+		if ( is_null( $value ) ) {
+			return $value;
+		}
+
+		return str_replace( array( '[', ']' ), array( '&#91;', '&#93;' ), $value );
+	}
+
+	/**
 	 * Replace {name} for input and confirm page.
 	 *
 	 * @param string $value Value.
@@ -134,7 +162,7 @@ class MW_WP_Form_Parser {
 			return;
 		}
 
-		if ( 'publish' !== $post->post_status || post_password_required( $post ) ) {
+		if ( ! is_post_publicly_viewable( $post ) || post_password_required( $post ) ) {
 			return;
 		}
 

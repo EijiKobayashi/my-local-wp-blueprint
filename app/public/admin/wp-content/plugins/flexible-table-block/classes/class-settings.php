@@ -85,12 +85,6 @@ class Settings {
 	);
 
 	/**
-	 * Constructor
-	 */
-	public function __construct() {
-	}
-
-	/**
 	 * Get options
 	 *
 	 * @return array
@@ -99,15 +93,15 @@ class Settings {
 		$options = array();
 
 		foreach ( self::OPTIONS as $key => $value ) {
-			$options[ $key ] = get_option( FTB_OPTION_PREFIX . '_' . $key, self::OPTIONS[ $key ]['default'] );
+			$options[ $key ] = get_option( Option::OPTION_NAMES[ $key ], self::OPTIONS[ $key ]['default'] );
 
 			if ( 'boolean' === self::OPTIONS[ $key ]['type'] ) {
-				$options[ $key ] = $options[ $key ] ? true : false;
+				$options[ $key ] = (bool) $options[ $key ];
 			}
 		}
 
 		// Convert cell padding of string values to array.
-		if ( 'string' === gettype( $options['block_style']['cell_padding'] ) ) {
+		if ( is_string( $options['block_style']['cell_padding'] ) ) {
 			$padding_value = $options['block_style']['cell_padding'];
 
 			$options['block_style']['cell_padding'] = array(

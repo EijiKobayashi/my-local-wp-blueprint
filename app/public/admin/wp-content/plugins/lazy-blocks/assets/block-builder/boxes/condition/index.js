@@ -1,10 +1,11 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
-import { BaseControl } from '@wordpress/components';
+
 import apiFetch from '@wordpress/api-fetch';
+import { BaseControl } from '@wordpress/components';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -65,7 +66,6 @@ export default function ConditionSettings(props) {
 		<BaseControl
 			id="lazyblocks-boxes-condition-posts"
 			label={__('Show in posts', 'lazy-blocks')}
-			__nextHasNoMarginBottom
 		>
 			<Select
 				id="lazyblocks-boxes-condition-posts"

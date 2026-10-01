@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies.
  */
+
+import { BaseControl, PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, BaseControl, ToggleControl } from '@wordpress/components';
 
 export default function WPMLRow(props) {
 	const { updateData, data } = props;
@@ -12,7 +13,6 @@ export default function WPMLRow(props) {
 			<BaseControl
 				id="lazyblocks-settings-row-wpml"
 				label={__('WPML Translation', 'lazy-blocks')}
-				__nextHasNoMarginBottom
 			>
 				<ToggleControl
 					id="lazyblocks-settings-row-wpml"
@@ -21,7 +21,6 @@ export default function WPMLRow(props) {
 					onChange={(value) =>
 						updateData({ translate: value ? 'true' : 'false' })
 					}
-					__nextHasNoMarginBottom
 				/>
 			</BaseControl>
 		</PanelBody>

@@ -1,13 +1,14 @@
 /**
  * External dependencies.
  */
-import slugify from 'slugify';
+
+import { PanelBody, TextControl } from '@wordpress/components';
 
 /**
  * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { PanelBody, TextControl } from '@wordpress/components';
+import slugify from 'slugify';
 
 /**
  * Internal dependencies.
@@ -56,8 +57,6 @@ export default function LabelRow(props) {
 				onBlur={allowNameUpdate ? generateUniqueName : () => {}}
 				// eslint-disable-next-line jsx-a11y/no-autofocus
 				autoFocus
-				__next40pxDefaultSize
-				__nextHasNoMarginBottom
 			/>
 		</PanelBody>
 	);

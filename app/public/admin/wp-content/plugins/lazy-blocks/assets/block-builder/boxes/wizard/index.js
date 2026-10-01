@@ -3,20 +3,20 @@
  */
 import './editor.scss';
 
+import { Button, TextareaControl, TextControl } from '@wordpress/components';
+import { useEntityProp } from '@wordpress/core-data';
+import { useDispatch, useSelect, select as wpSelect } from '@wordpress/data';
+/**
+ * WordPress dependencies.
+ */
+import { useState } from '@wordpress/element';
+import { applyFilters } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies.
  */
 import classnames from 'classnames/dedupe';
 import slugify from 'slugify';
-
-/**
- * WordPress dependencies.
- */
-import { useState } from '@wordpress/element';
-import { useSelect, useDispatch, select as wpSelect } from '@wordpress/data';
-import { useEntityProp } from '@wordpress/core-data';
-import { Button, TextControl, TextareaControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -28,15 +28,33 @@ import { templates } from './templates';
 const { is_pro: isPro } = window.lazyblocksBlockBuilderData;
 
 export default function Wizard({ onClose }) {
+	// Filtered on every render and not at the module level, because the scripts
+	// adding their own templates may run after this one.
+	const wizardTemplates = applyFilters(
+		'lzb.constructor.wizard.templates',
+		templates
+	);
+
+	// A filter may replace the whole collection, so nothing here can rely on a
+	// specific preset being present.
+	const firstTemplate = Object.keys(wizardTemplates)[0] || '';
+	const firstTemplateData = wizardTemplates[firstTemplate] || {};
+
 	const [step, setStep] = useState(1);
-	const [template, setTemplate] = useState('basic');
-	const [icon, setIcon] = useState(templates.basic.blockIcon);
-	const [title, setTitle] = useState(templates.basic.title);
-	const [slug, setSlug] = useState('basic-block');
-	const [category, setCategory] = useState('text');
+	const [template, setTemplate] = useState(firstTemplate);
+	const [icon, setIcon] = useState(firstTemplateData.blockIcon);
+	const [title, setTitle] = useState(firstTemplateData.title);
+	const [slug, setSlug] = useState(
+		firstTemplate ? `${firstTemplate}-block` : ''
+	);
+	const [category, setCategory] = useState(
+		firstTemplateData.category || 'text'
+	);
 	const [styles, setStyles] = useState([]);
-	const [keywords, setKeywords] = useState(templates.basic.keywords);
-	const [description, setDescription] = useState(templates.basic.description);
+	const [keywords, setKeywords] = useState(firstTemplateData.keywords);
+	const [description, setDescription] = useState(
+		firstTemplateData.description
+	);
 	const { updateBlockData, addControl } = useDispatch(
 		'lazy-blocks/block-data'
 	);
@@ -139,6 +157,14 @@ export default function Wizard({ onClose }) {
 	}
 
 	async function finishSetup() {
+		const templateData = wizardTemplates[template];
+
+		// Every preset may be filtered out, and then there is nothing to set up.
+		if (!templateData) {
+			onClose();
+			return;
+		}
+
 		setPostTitle(title);
 
 		const newData = {
@@ -151,16 +177,16 @@ export default function Wizard({ onClose }) {
 			code_single_output: true,
 		};
 
-		const finalStyles = templates[template].style.replace(
+		const finalStyles = templateData.style.replace(
 			/__BLOCK_CLASSNAME__/g,
 			`.wp-block-lazyblock-${slug}`
 		);
 
 		if (isPro) {
-			newData.code_frontend_html = templates[template].template;
+			newData.code_frontend_html = templateData.template;
 			newData.style_block = finalStyles;
 		} else {
-			newData.code_frontend_html = `${templates[template].template}
+			newData.code_frontend_html = `${templateData.template}
 
 {{!
 	These inline styles created for example only.
@@ -172,7 +198,7 @@ ${finalStyles}
 </style>`;
 		}
 
-		await processControls(templates[template].controls);
+		await processControls(templateData.controls);
 
 		updateBlockData(newData);
 		onClose();
@@ -209,7 +235,7 @@ ${finalStyles}
 
 			{step === 1 && (
 				<div className="lzb-block-builder-wizard-step-templates">
-					{Object.keys(templates).map((k) => (
+					{Object.keys(wizardTemplates).map((k) => (
 						<Button
 							key={k}
 							onClick={(e) => {
@@ -217,13 +243,15 @@ ${finalStyles}
 
 								setTemplate(k);
 
-								setIcon(templates[k].blockIcon);
-								setCategory(templates[k].category);
-								setTitle(`${templates[k].title} Block`);
-								setKeywords(templates[k].keywords);
-								setDescription(templates[k].description);
-								generateSlug(`${templates[k].title} Block`);
-								setStyles(templates[k].styles || []);
+								setIcon(wizardTemplates[k].blockIcon);
+								setCategory(wizardTemplates[k].category);
+								setTitle(`${wizardTemplates[k].title} Block`);
+								setKeywords(wizardTemplates[k].keywords);
+								setDescription(wizardTemplates[k].description);
+								generateSlug(
+									`${wizardTemplates[k].title} Block`
+								);
+								setStyles(wizardTemplates[k].styles || []);
 							}}
 							className={classnames(
 								'lzb-block-builder-wizard-template',
@@ -231,35 +259,31 @@ ${finalStyles}
 									'lzb-block-builder-wizard-template-active'
 							)}
 						>
-							{templates[k].icon}
-							<span>{templates[k].title}</span>
+							{wizardTemplates[k].icon}
+							<span>{wizardTemplates[k].title}</span>
 						</Button>
 					))}
 				</div>
 			)}
 
 			{step === 2 && (
-				<>
-					<div className="lzb-block-builder-wizard-step-title">
-						<IconPicker
-							value={icon}
-							onChange={(value) => setIcon(value)}
+				<div className="lzb-block-builder-wizard-step-title">
+					<IconPicker
+						value={icon}
+						onChange={(value) => setIcon(value)}
+					/>
+					<div>
+						<TextControl
+							label={__('Title', 'lazy-blocks')}
+							value={title}
+							onChange={(val) => {
+								setTitle(val);
+								generateSlug(val);
+							}}
 						/>
-						<div>
-							<TextControl
-								label={__('Title', 'lazy-blocks')}
-								value={title}
-								onChange={(val) => {
-									setTitle(val);
-									generateSlug(val);
-								}}
-								__next40pxDefaultSize
-								__nextHasNoMarginBottom
-							/>
-							<span>{slug ? `lazyblock/${slug}` : ''}</span>
-						</div>
+						<span>{slug ? `lazyblock/${slug}` : ''}</span>
 					</div>
-				</>
+				</div>
 			)}
 
 			{step === 3 && (
@@ -276,7 +300,6 @@ ${finalStyles}
 						label={__('Description', 'lazy-blocks')}
 						value={description}
 						onChange={(value) => setDescription(value)}
-						__nextHasNoMarginBottom
 					/>
 				</div>
 			)}

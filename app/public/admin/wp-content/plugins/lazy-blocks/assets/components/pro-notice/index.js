@@ -3,11 +3,11 @@
  */
 import './editor.scss';
 
+import { BaseControl, PanelBody } from '@wordpress/components';
 /**
  * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { PanelBody, BaseControl } from '@wordpress/components';
 
 const { lazyblocksBlockBuilderData } = window;
 
@@ -22,7 +22,6 @@ export default function ProNotice() {
 				id="lazyblocks-pro-notice"
 				label={__('Lazy Blocks Pro', 'lazy-blocks')}
 				className="lazyblocks-component-pro-notice"
-				__nextHasNoMarginBottom
 			>
 				<div>
 					<a

@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/4.0.3\n"
+"X-Generator: GlotPress/4.1.0\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Themes - Twenty Twenty-Four\n"
 
@@ -23,31 +23,31 @@ msgstr "Twenty Twenty-Four は、柔軟で用途が広く、あらゆるウェ�
 msgid "Twenty Twenty-Four"
 msgstr "Twenty Twenty-Four"
 
-#: patterns/footer.php:96
+#: patterns/footer.php:101
 msgid "Twitter/X"
 msgstr "Twitter/X"
 
-#: patterns/footer.php:73
+#: patterns/footer.php:78
 msgid "Terms and Conditions"
 msgstr "利用規約"
 
-#: patterns/footer.php:72
+#: patterns/footer.php:77
 msgid "Privacy Policy"
 msgstr "プライバシーポリシー"
 
-#: patterns/footer.php:74
+#: patterns/footer.php:79
 msgid "Contact Us"
 msgstr "お問い合わせ"
 
-#: patterns/footer.php:51
+#: patterns/footer.php:56
 msgid "Careers"
 msgstr "採用情報"
 
-#: patterns/footer.php:50
+#: patterns/footer.php:55
 msgid "History"
 msgstr "沿革"
 
-#: patterns/footer.php:49
+#: patterns/footer.php:54
 msgid "Team"
 msgstr "メンバー"
 
@@ -56,23 +56,23 @@ msgctxt "Pattern title"
 msgid "List of posts without images, 1 column"
 msgstr "画像のないポスト一覧、1カラム"
 
-#: patterns/hidden-portfolio-hero.php:16
+#: patterns/hidden-portfolio-hero.php:21
 msgid "I’m <em>Leia Acosta</em>, a passionate photographer who finds inspiration in capturing the fleeting beauty of life."
 msgstr "私は<em>Leia Acosta</em>です。移りゆく生命の美しさを捉える情熱的な写真家です。"
 
-#: functions.php:188
+#: functions.php:189
 msgid "A collection of full page layouts."
 msgstr "フルページレイアウトのコレクション"
 
-#: functions.php:187
+#: functions.php:188
 msgctxt "Block pattern category"
 msgid "Pages"
 msgstr "固定ページ"
 
 #. Author URI of the theme
 #. Translators: WordPress link.
-#: style.css patterns/footer-centered-logo-nav.php:22
-#: patterns/footer-colophon-3-col.php:91 patterns/footer.php:117
+#: style.css patterns/footer-centered-logo-nav.php:27
+#: patterns/footer-colophon-3-col.php:96 patterns/footer.php:122
 msgid "https://wordpress.org"
 msgstr "https://ja.wordpress.org"
 
@@ -388,7 +388,7 @@ msgctxt "Font size name"
 msgid "Small"
 msgstr "小"
 
-#: patterns/text-title-left-image-right.php:35
+#: patterns/text-title-left-image-right.php:40
 msgctxt "Call to Action button text"
 msgid "About us"
 msgstr "私たちについて"
@@ -398,22 +398,22 @@ msgctxt "Pattern title"
 msgid "Project details"
 msgstr "プロジェクトの詳細"
 
-#: patterns/text-feature-grid-3-col.php:96
+#: patterns/text-feature-grid-3-col.php:101
 msgctxt "Sample feature heading"
 msgid "Project Management"
 msgstr "プロジェクト管理"
 
-#: patterns/text-feature-grid-3-col.php:84
+#: patterns/text-feature-grid-3-col.php:89
 msgctxt "Sample feature heading"
 msgid "Consulting"
 msgstr "コンサルティング"
 
-#: patterns/text-faq.php:12
+#: patterns/text-faq.php:17
 msgctxt "Name of the FAQ pattern"
 msgid "FAQs"
 msgstr "FAQ"
 
-#: patterns/text-faq.php:15
+#: patterns/text-faq.php:20
 msgctxt "Heading of the FAQs"
 msgid "FAQs"
 msgstr "FAQ"
@@ -423,19 +423,19 @@ msgctxt "Pattern title"
 msgid "FAQ"
 msgstr "FAQ"
 
-#: patterns/hidden-sidebar.php:72
+#: patterns/hidden-sidebar.php:78
 msgid "Search the website"
 msgstr "サイト内検索"
 
-#: patterns/hidden-sidebar.php:49
+#: patterns/hidden-sidebar.php:55
 msgid "Useful Links"
 msgstr "便利なリンク"
 
-#: patterns/hidden-sidebar.php:33
+#: patterns/hidden-sidebar.php:39
 msgid "Popular Categories"
 msgstr "人気のカテゴリー"
 
-#: patterns/hidden-sidebar.php:17
+#: patterns/hidden-sidebar.php:23
 msgid "About the author"
 msgstr "投稿者について"
 
@@ -444,12 +444,12 @@ msgctxt "Pattern title"
 msgid "Sidebar"
 msgstr "サイドバー"
 
-#: patterns/hidden-search.php:9
+#: patterns/hidden-search.php:14
 msgctxt "search button text"
 msgid "Search"
 msgstr "検索"
 
-#: patterns/hidden-search.php:9 patterns/hidden-sidebar.php:75
+#: patterns/hidden-search.php:14 patterns/hidden-sidebar.php:81
 msgctxt "search form label"
 msgid "Search"
 msgstr "検索"
@@ -459,19 +459,19 @@ msgctxt "Pattern title"
 msgid "Search"
 msgstr "検索"
 
-#: patterns/hidden-post-navigation.php:12
+#: patterns/hidden-post-navigation.php:17
 msgctxt "Label before the title of the next post. There is a space after the colon."
 msgid "Next: "
 msgstr "次: "
 
-#: patterns/hidden-post-navigation.php:11
+#: patterns/hidden-post-navigation.php:16
 msgctxt "Label before the title of the previous post. There is a space after the colon."
 msgid "Previous: "
 msgstr "前: "
 
-#: patterns/hidden-post-navigation.php:9 patterns/hidden-post-navigation.php:10
-#: patterns/hidden-posts-heading.php:10
-#: patterns/template-index-portfolio.php:16
+#: patterns/hidden-post-navigation.php:14
+#: patterns/hidden-post-navigation.php:15 patterns/hidden-posts-heading.php:16
+#: patterns/template-index-portfolio.php:21
 msgid "Posts"
 msgstr "投稿"
 
@@ -480,12 +480,12 @@ msgctxt "Pattern title"
 msgid "Post navigation"
 msgstr "投稿ナビゲーション"
 
-#: patterns/hidden-post-meta.php:25
+#: patterns/hidden-post-meta.php:30
 msgctxt "Prefix for the post category block: in category name"
 msgid "in "
 msgstr "in "
 
-#: patterns/hidden-post-meta.php:20
+#: patterns/hidden-post-meta.php:25
 msgctxt "Prefix for the post author block: By author name"
 msgid "by"
 msgstr "by"
@@ -495,7 +495,7 @@ msgctxt "Pattern title"
 msgid "Post meta"
 msgstr "投稿メタ"
 
-#: patterns/hidden-no-results.php:9
+#: patterns/hidden-no-results.php:15
 msgctxt "Message explaining that there are no results returned from a search"
 msgid "No posts were found."
 msgstr "投稿が見つかりませんでした。"
@@ -505,7 +505,7 @@ msgctxt "Pattern title"
 msgid "No results"
 msgstr "見つかりませんでした。"
 
-#: patterns/hidden-comments.php:12
+#: patterns/hidden-comments.php:17
 msgid "Comments"
 msgstr "コメント"
 
@@ -514,7 +514,7 @@ msgctxt "Pattern title"
 msgid "Comments"
 msgstr "コメント"
 
-#: patterns/hidden-404.php:10
+#: patterns/hidden-404.php:15
 msgctxt "Heading for a webpage that is not found"
 msgid "Page Not Found"
 msgstr "ページが見つかりませんでした"
@@ -524,79 +524,79 @@ msgctxt "Pattern title"
 msgid "404"
 msgstr "404"
 
-#: patterns/footer.php:92
+#: patterns/footer.php:97
 msgid "Social Media"
 msgstr "ソーシャルメディア"
 
-#: patterns/footer.php:86
+#: patterns/footer.php:91
 msgid "Social"
 msgstr "ソーシャル"
 
-#: patterns/footer.php:64 patterns/footer.php:70
+#: patterns/footer.php:69 patterns/footer.php:75
 msgid "Privacy"
 msgstr "プライバシー"
 
-#: patterns/footer-colophon-3-col.php:82
+#: patterns/footer-colophon-3-col.php:87
 msgid "&copy;"
 msgstr "&copy;"
 
-#: patterns/footer-colophon-3-col.php:60 patterns/footer.php:94
+#: patterns/footer-colophon-3-col.php:65 patterns/footer.php:99
 msgid "Facebook"
 msgstr "Facebook"
 
-#: patterns/footer-colophon-3-col.php:60 patterns/footer.php:95
+#: patterns/footer-colophon-3-col.php:65 patterns/footer.php:100
 msgid "Instagram"
 msgstr "Instagram"
 
-#: patterns/footer-colophon-3-col.php:57
+#: patterns/footer-colophon-3-col.php:62
 msgid "Follow"
 msgstr "フォロー"
 
-#: patterns/footer-colophon-3-col.php:42
+#: patterns/footer-colophon-3-col.php:47
 msgctxt "Example email in site footer"
 msgid "info@example.com"
 msgstr "info@example.com"
 
-#: patterns/footer-colophon-3-col.php:39
+#: patterns/footer-colophon-3-col.php:44
 msgid "Contact"
 msgstr "お問い合わせ"
 
-#: patterns/cta-subscribe-centered.php:31
+#: patterns/cta-subscribe-centered.php:36
 msgctxt "Sample text for Sign Up Button"
 msgid "Sign up"
 msgstr "登録"
 
-#: patterns/cta-pricing.php:162
+#: patterns/cta-pricing.php:167
 msgctxt "Sample price for the third pricing level"
 msgid "$28"
 msgstr "$28"
 
-#: patterns/cta-pricing.php:157
+#: patterns/cta-pricing.php:162
 msgctxt "Sample heading for the third pricing level"
 msgid "Expert"
 msgstr "エキスパート"
 
-#: patterns/cta-pricing.php:145
+#: patterns/cta-pricing.php:150
 msgctxt "Button text for the second pricing level"
 msgid "Subscribe"
 msgstr "購読"
 
-#: patterns/cta-pricing.php:104
+#: patterns/cta-pricing.php:109
 msgctxt "Sample price for the second pricing level"
 msgid "$12"
 msgstr "$12"
 
-#: patterns/cta-pricing.php:87
+#: patterns/cta-pricing.php:92
 msgctxt "Button text for the first pricing level"
 msgid "Subscribe"
 msgstr "購読"
 
-#: patterns/cta-pricing.php:42
+#: patterns/cta-pricing.php:47
 msgctxt "Sample price for the first pricing level"
 msgid "$0"
 msgstr "$0"
 
-#: patterns/cta-pricing.php:37
+#: patterns/cta-pricing.php:42
 msgctxt "Sample heading for the first pricing level"
 msgid "Free"
 msgstr "無料"
@@ -606,43 +606,43 @@ msgctxt "Pattern title"
 msgid "Pricing"
 msgstr "価格"
 
-#: patterns/cta-pricing.php:11
+#: patterns/cta-pricing.php:16
 msgctxt "Name for the pricing pattern"
 msgid "Pricing Table"
 msgstr "価格表"
 
-#: patterns/cta-pricing.php:18
+#: patterns/cta-pricing.php:23
 msgctxt "Sample heading for pricing pattern"
 msgid "Our Services"
 msgstr "提供サービス"
 
-#: patterns/cta-content-image-on-right.php:47
+#: patterns/cta-content-image-on-right.php:52
 msgctxt "Button text of this section"
 msgid "How it works"
 msgstr "仕組み"
 
-#: patterns/cta-content-image-on-right.php:41
+#: patterns/cta-content-image-on-right.php:46
 msgctxt "Button text of this section"
 msgid "Download app"
 msgstr "アプリダウンロード"
 
-#: functions.php:24
+#: functions.php:25
 msgid "Arrow icon"
 msgstr "矢印アイコン"
 
-#: functions.php:47
+#: functions.php:48
 msgid "Pill"
 msgstr "丸形"
 
-#: functions.php:70
+#: functions.php:71
 msgid "Checkmark"
 msgstr "チェック"
 
-#: functions.php:89
+#: functions.php:90
 msgid "With arrow"
 msgstr "矢印付き"
 
-#: functions.php:107
+#: functions.php:108
 msgid "With asterisk"
 msgstr "アスタリスク付き"
 
