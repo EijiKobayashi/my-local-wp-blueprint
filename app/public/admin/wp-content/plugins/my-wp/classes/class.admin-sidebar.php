@@ -39,20 +39,32 @@ final class MywpAdminSidebar {
     global $menu;
     global $submenu;
 
-    if( empty( $menu ) or empty( $submenu ) ) {
+    if( empty( $menu ) ) {
 
       return false;
 
     }
 
     $current_menus = $menu;
+
+    if( empty( $submenu ) ) {
+
+      return false;
+
+    }
+
     $current_submenus = $submenu;
 
-    $remove_classes = array( 'menu-top-first' , 'menu-top-last' , 'menu-top' );
+    $remove_classes = array(
+      'menu-top-first',
+      'menu-top-last',
+      'menu-top'
+    );
 
     foreach( $current_menus as $key => $current_menu ) {
 
       $current_menu[2] = urldecode( html_entity_decode( $current_menu[2] ) );
+
       $current_menus[ $key ][2] = $current_menu[2];
 
       $current_menus[ $key ][2] = self::get_remove_return_url( $current_menu[2] );
@@ -83,8 +95,7 @@ final class MywpAdminSidebar {
 
       }
 
-      $current_menus[ $key ][4] = ltrim( $current_menus[ $key ][4] );
-      $current_menus[ $key ][4] = rtrim( $current_menus[ $key ][4] );
+      $current_menus[ $key ][4] = trim( $current_menus[ $key ][4] );
 
     }
 
@@ -94,8 +105,6 @@ final class MywpAdminSidebar {
 
         $current_submenu[2] = urldecode( html_entity_decode( $current_submenu[2] ) );
 
-        $current_submenus[ $parent_id ][ $key ][2] = $current_submenu[2];
-
         $current_submenus[ $parent_id ][ $key ][2] = self::get_remove_return_url( $current_submenu[2] );
 
       }
@@ -103,6 +112,7 @@ final class MywpAdminSidebar {
     }
 
     $current_menus = apply_filters( 'mywp_admin_sidebar_set_default_sidebar_menus' , $current_menus );
+
     $current_submenus = apply_filters( 'mywp_admin_sidebar_set_default_sidebar_submenu' , $current_submenus );
 
     self::$default_sidebar = array( 'menu' => $current_menus , 'submenu' => $current_submenus  );
@@ -123,7 +133,13 @@ final class MywpAdminSidebar {
 
     }
 
-    if( strpos( $url , 'customize.php' ) === false or strpos( $url , 'return=' ) === false ) {
+    if( strpos( $url , 'customize.php' ) === false ) {
+
+      return $url;
+
+    }
+
+    if( strpos( $url , 'return=' ) === false ) {
 
       return $url;
 
@@ -147,7 +163,13 @@ final class MywpAdminSidebar {
 
   private static function find_default_menu( $find_id = false , $find_parent_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $find_id , $find_parent_id )' , __CLASS__ , __FUNCTION__ );
+
+    $find_id = MywpHelper::sanitize_text( do_shortcode( $find_id ) );
+
     if( empty( $find_id ) ) {
+
+      MywpHelper::error_require_message( '$find_id' , $called_text );
 
       return false;
 
@@ -157,15 +179,18 @@ final class MywpAdminSidebar {
 
     if( empty( $default_sidebar['menu'] ) ) {
 
+      MywpHelper::error_not_found_message( '$default_sidebar["menu"]' , $called_text );
+
       return false;
 
     }
 
-    $find_id = strip_tags( do_shortcode( $find_id ) );
-    $find_parent_id = strip_tags( $find_parent_id );
+    $find_parent_id = MywpHelper::sanitize_text( $find_parent_id );
 
     $found_current_default = false;
+
     $found_parent_default = false;
+
     $found_childs_default = false;
 
     if( ! empty( $find_parent_id ) ) {
@@ -196,29 +221,27 @@ final class MywpAdminSidebar {
 
       }
 
-      if( empty( $found_parent_default ) ) {
+      if( ! empty( $found_parent_default ) ) {
 
-        return false;
+        foreach( $default_sidebar['submenu'][ $find_parent_id ] as $key => $submenu ) {
 
-      }
+          if( ! isset( $submenu[2] ) ) {
 
-      foreach( $default_sidebar['submenu'][ $find_parent_id ] as $key => $submenu ) {
+            continue;
 
-        if( ! isset( $submenu[2] ) ) {
+          }
 
-          continue;
+          if( $submenu[2] !== $find_id ) {
+
+            continue;
+
+          }
+
+          $found_current_default = $submenu;
+
+          break;
 
         }
-
-        if( $submenu[2] !== $find_id ) {
-
-          continue;
-
-        }
-
-        $found_current_default = $submenu;
-
-        break;
 
       }
 
@@ -244,33 +267,49 @@ final class MywpAdminSidebar {
 
       }
 
-      if( ! empty( $found_current_default ) && ! empty( $default_sidebar['submenu'][ $find_id ] ) ) {
+      if( ! empty( $found_current_default ) ) {
 
-        $found_childs_default = $default_sidebar['submenu'][ $find_id ];
+        if( ! empty( $default_sidebar['submenu'][ $find_id ] ) ) {
+
+          $found_childs_default = $default_sidebar['submenu'][ $find_id ];
+
+        }
 
       }
 
     }
 
-    return array( 'current' => $found_current_default , 'parent' => $found_parent_default , 'childs' => $found_childs_default );
+    $find_default_menu = array(
+      'current' => $found_current_default,
+      'parent' => $found_parent_default,
+      'childs' => $found_childs_default
+    );
+
+    return $find_default_menu;
 
   }
 
   private static function is_third_party_menu( $current_menu_id = false , $parent_menu_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $current_menu_id , $parent_menu_id )' , __CLASS__ , __FUNCTION__ );
+
+    $current_menu_id = MywpHelper::sanitize_text( $current_menu_id );
+
     if( empty( $current_menu_id ) ) {
 
-      return false;
-
-    }
-
-    $current_menu_id = strip_tags( $current_menu_id );
-
-    if( in_array( $current_menu_id , array( 'index.php' ) ) ) {
+      MywpHelper::error_require_message( '$current_menu_id' , $called_text );
 
       return false;
 
     }
+
+    if( in_array( $current_menu_id , array( 'index.php' ) , true ) ) {
+
+      return false;
+
+    }
+
+    $parent_menu_id = MywpHelper::sanitize_text( $parent_menu_id );
 
     if( empty( $parent_menu_id ) ) {
 
@@ -278,15 +317,13 @@ final class MywpAdminSidebar {
 
     }
 
-    $parent_menu_id = strip_tags( $parent_menu_id );
-
     $menu_hook = get_plugin_page_hook( $current_menu_id , $parent_menu_id );
 
     $menu_file = $current_menu_id;
 
     $pos = strpos( $menu_file , '?' );
 
-    if ( false !== $pos ) {
+    if( false !== $pos ) {
 
       $menu_file = substr( $menu_file, 0, $pos );
 
@@ -296,7 +333,9 @@ final class MywpAdminSidebar {
 
       return true;
 
-    } elseif( file_exists( WP_PLUGIN_DIR . "/$menu_file" ) && ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) ) {
+    }
+
+    if( file_exists( WP_PLUGIN_DIR . "/$menu_file" ) && ! file_exists( ABSPATH . "/wp-admin/$menu_file" ) ) {
 
       return true;
 
@@ -308,17 +347,19 @@ final class MywpAdminSidebar {
 
   public static function default_item_convert( $item = false ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$item' );
+    $called_text = sprintf( '%s::%s( $item )' , __CLASS__ , __FUNCTION__ );
 
-    if( empty( $item ) or ! is_object( $item ) ) {
+    if( empty( $item ) ) {
 
-      MywpHelper::error_not_found_message( '$item' , $called_text );
+      MywpHelper::error_require_message( '$item' , $called_text );
 
       return false;
 
     }
 
     if( empty( $item->item_type ) ) {
+
+      MywpHelper::error_not_found_message( '$item->item_type' , $called_text );
 
       return false;
 
@@ -336,9 +377,13 @@ final class MywpAdminSidebar {
 
     }
 
-    if( empty( $item->item_default_id ) && empty( $item->item_default_parent_id ) ) {
+    if( empty( $item->item_default_id ) ) {
 
-      return false;
+      if( empty( $item->item_default_parent_id ) ) {
+
+        return false;
+
+      }
 
     }
 
@@ -351,6 +396,7 @@ final class MywpAdminSidebar {
     }
 
     $item->item_default_title = $default_menu['current'][0];
+
     $item->item_capability = $default_menu['current'][1];
 
     if( empty( $default_menu['parent'] ) ) {
@@ -397,7 +443,7 @@ final class MywpAdminSidebar {
 
         $pos = strpos( $menu_file , '?' );
 
-        if ( false !== $pos ) {
+        if( false !== $pos ) {
 
           $menu_file = substr( $menu_file, 0, $pos );
 
@@ -455,9 +501,13 @@ final class MywpAdminSidebar {
       if( strpos( $default_menu['current'][4] , 'wp-menu-separator' ) !== false ) {
 
         $item->item_type = 'custom';
+
         $item->item_custom_html = '<div class="separator"></div>';
+
         $item->item_li_class = '';
+
         $item->item_li_id = '';
+
         $item->item_link_url = '';
 
         return $item;
@@ -468,19 +518,23 @@ final class MywpAdminSidebar {
 
     $customizer_url = admin_url( 'customize.php' );
 
-    if( strpos( $item->item_link_url , $customizer_url ) !== false && strpos( $item->item_link_url , 'return' ) === false ) {
+    if( strpos( $item->item_link_url , $customizer_url ) !== false ) {
 
-      $param_str = false;
+      if( strpos( $item->item_link_url , 'return' ) === false ) {
 
-      if( strpos( $item->item_link_url , $customizer_url . '?' ) !== false ) {
+        $param_str = false;
 
-        $param_str = str_replace( $customizer_url . '?' , '&' , $item->item_link_url );
+        if( strpos( $item->item_link_url , $customizer_url . '?' ) !== false ) {
+
+          $param_str = str_replace( $customizer_url . '?' , '&' , $item->item_link_url );
+
+        }
+
+        $url = MywpHelper::sanitize_url( add_query_arg( array( 'return' => wp_unslash( $_SERVER['REQUEST_URI'] ) ) , $customizer_url ) );
+
+        $item->item_link_url = $url . $param_str;
 
       }
-
-      $url = urldecode( add_query_arg( array( 'return' => wp_unslash( $_SERVER['REQUEST_URI'] ) ) , $customizer_url ) );
-
-      $item->item_link_url = $url . $param_str;
 
     }
 
@@ -495,13 +549,14 @@ final class MywpAdminSidebar {
       if( strpos( $default_menu['current'][6] , 'data:image/svg+xml;base64,' ) ) {
 
         $item->item_icon_class = ' svg';
+
         $item->item_icon_style = sprintf( ' background-image: url( "%s" );' , esc_attr( $default_menu['current'][6] ) );
 
       } elseif( strpos( $default_menu['current'][6] , 'dashicons-' ) !== false ) {
 
         //$item->item_icon_class = ' dashicons-before ' . $default_menu['current'][6];
 
-      } elseif( $default_menu['current'][6] === 'none' or $default_menu['current'][6] === 'div' ) {
+      } elseif( in_array( $default_menu['current'][6] , array( 'none' , 'div' ) , true ) ) {
 
         $item->item_icon_class = ' dashicons-before ';
 

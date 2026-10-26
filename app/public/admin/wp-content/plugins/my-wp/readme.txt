@@ -4,7 +4,7 @@ Tags: admin, frontend, debug, sidebar, toolbar
 Requires at least: 4.7
 Tested up to: 7.1
 Requires PHP: 5.6
-Stable tag: 1.27.4
+Stable tag: 1.28.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -91,6 +91,11 @@ The demo site is here: [https://playground.wordpress.net/?plugin=my-wp&url=/wp-a
 10. Developer panel on footer.
 
 == Changelog ==
+
+= 1.28.0 2026-10-23 =
+* Improved sanitization and output escaping.
+* Improved code readability and maintainability.
+* Fixed minor bugs.
 
 = 1.27.4 2026-08-21 =
 * Tested: Confirmed compatibility with WordPress 7.1.

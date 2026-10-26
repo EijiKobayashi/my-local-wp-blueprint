@@ -71,35 +71,43 @@ final class MywpApi {
 
   public static function get_plugin_url( $path = 'assets' ) {
 
-    $path = strip_tags( $path );
+    $called_text = sprintf( '%s::%s( $path )' , __CLASS__ , __FUNCTION__ );
+
+    $path = MywpHelper::sanitize_text( $path );
 
     if( $path === 'assets' ) {
 
       return MYWP_PLUGIN_URL . 'assets/';
 
-    } elseif( $path === 'css' ) {
+    }
 
-        return MYWP_PLUGIN_URL . 'assets/css/';
+    if( $path === 'css' ) {
 
-    } elseif( $path === 'js' ) {
-
-        return MYWP_PLUGIN_URL . 'assets/js/';
-
-    } elseif( $path === 'img' ) {
-
-        return MYWP_PLUGIN_URL . 'assets/img/';
-
-      } elseif( $path === 'font' ) {
-
-          return MYWP_PLUGIN_URL . 'assets/font/';
-
-    } else {
-
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
-
-      MywpHelper::error_not_found_message( $path , $called_text );
+      return MYWP_PLUGIN_URL . 'assets/css/';
 
     }
+
+    if( $path === 'js' ) {
+
+      return MYWP_PLUGIN_URL . 'assets/js/';
+
+    }
+
+    if( $path === 'img' ) {
+
+      return MYWP_PLUGIN_URL . 'assets/img/';
+
+    }
+
+    if( $path === 'font' ) {
+
+      return MYWP_PLUGIN_URL . 'assets/font/';
+
+    }
+
+    MywpHelper::error_not_found_message( $path , $called_text );
+
+    return false;
 
   }
 
@@ -119,29 +127,31 @@ final class MywpApi {
 
   }
 
-  public static function include_file( $file = false ) {
+  public static function include_file( $file_path = false ) {
 
-    if( $file === false ) {
+    if( $file_path === false ) {
 
       return false;
 
     }
 
-    if ( file_exists( $file ) ) {
+    if( file_exists( $file_path ) ) {
 
       $mywp_cache = new MywpCache( 'include_file' );
 
-      $mywp_cache->add_cache( $file );
+      $mywp_cache->add_cache( $file_path );
 
-      include_once( $file );
+      include_once( $file_path );
 
-    } else {
-
-      $error_msg = sprintf( __( "There doesn't seem to be a %s file." , 'my-wp' ) , $file );
-
-      return self::add_error( $error_msg );
+      return true;
 
     }
+
+    $error_msg = sprintf( __( "There doesn't seem to be a %s file." , 'my-wp' ) , $file_path );
+
+    self::add_error( $error_msg );
+
+    return false;
 
   }
 
@@ -161,33 +171,43 @@ final class MywpApi {
 
   }
 
-  public static function require_file( $file = false ) {
+  public static function require_file( $file_path = false ) {
 
-    if( $file === false ) {
+    if( $file_path === false ) {
 
       return false;
 
     }
 
-    if ( file_exists( $file ) ) {
+    if( file_exists( $file_path ) ) {
 
       $mywp_cache = new MywpCache( 'require_file' );
 
-      $mywp_cache->add_cache( $file );
+      $mywp_cache->add_cache( $file_path );
 
-      require_once( $file );
+      require_once( $file_path );
 
-    } else {
-
-      $error_msg = sprintf( __( "There doesn't seem to be a %s file." , 'my-wp' ) , $file );
-
-      return self::add_error( $error_msg );
+      return true;
 
     }
+
+    $error_msg = sprintf( __( "There doesn't seem to be a %s file." , 'my-wp' ) , $file_path );
+
+    self::add_error( $error_msg );
+
+    return false;
 
   }
 
   public static function add_error( $message = false ) {
+
+    do_action( 'mywp_add_error' , $message );
+
+    if( has_action( 'mywp_add_error' ) !== false ) {
+
+      return false;
+
+    }
 
     $mywp_cache = new MywpCache( 'error' );
 
@@ -219,6 +239,8 @@ final class MywpApi {
 
   public static function get_all_user_roles() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     if( ! function_exists( 'get_editable_roles' ) ) {
 
       require_once ABSPATH . 'wp-admin/includes/user.php';
@@ -227,9 +249,7 @@ final class MywpApi {
 
     if( ! function_exists( 'get_editable_roles' ) ) {
 
-      $called_text = sprintf( 'get_editable_roles()' , __FUNCTION__ );
-
-      MywpHelper::error_not_found_message( '$editable_roles' , $called_text );
+      MywpHelper::error_not_found_message( 'get_editable_roles()' , $called_text );
 
       return false;
 
@@ -238,8 +258,6 @@ final class MywpApi {
     $editable_roles = get_editable_roles();
 
     if( empty( $editable_roles ) ) {
-
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$editable_roles' , $called_text );
 
@@ -252,6 +270,7 @@ final class MywpApi {
     foreach( $editable_roles as $role_group_name => $role_details ) {
 
       $role_group = $role_details;
+
       $role_group['label'] = translate_user_role( $role_details['name'] );
 
       $all_user_roles[ $role_group_name ] = $role_group;
@@ -288,21 +307,66 @@ final class MywpApi {
   public static function get_dashicons() {
 
     $categories = array(
-      'admin_menu'     => array( 'id' => 'admin_menu' , 'title' =>__( 'Admin Menu' ) ),
-      'welcome_screen' => array( 'id' => 'welcome_screen' , 'title' =>__( 'Welcome Screen' ) ),
-      'post_formats'   => array( 'id' => 'post_formats' , 'title' =>__( 'Post Formats' ) ),
-      'media'          => array( 'id' => 'media' , 'title' =>__( 'Media' ) ),
-      'image_editing'  => array( 'id' => 'image_editing' , 'title' =>__( 'Image Editing' ) ),
-      'tinymce'        => array( 'id' => 'tinymce' , 'title' =>__( 'TinyMCE' ) ),
-      'posts_screen'   => array( 'id' => 'posts_screen' , 'title' =>__( 'Posts Screen' ) ),
-      'sorting'        => array( 'id' => 'sorting' , 'title' =>__( 'Sorting' ) ),
-      'social'         => array( 'id' => 'social' , 'title' =>__( 'Social' ) ),
-      'wp'             => array( 'id' => 'wp' , 'title' =>__( 'WordPress.org Specific: Jobs, Profiles, WordCamps' ) ),
-      'products'       => array( 'id' => 'products' , 'title' =>__( 'Products' ) ),
-      'taxonomies'     => array( 'id' => 'taxonomies' , 'title' =>__( 'Taxonomies' ) ),
-      'widgets'        => array( 'id' => 'widgets' , 'title' =>__( 'Widgets' ) ),
-      'notifications'  => array( 'id' => 'notifications' , 'title' =>__( 'Notifications' ) ),
-      'misc'           => array( 'id' => 'misc' , 'title' =>__( 'Misc' ) ),
+      'admin_menu' => array(
+        'id' => 'admin_menu',
+        'title' => __( 'Admin Menu' , 'default' )
+      ),
+      'welcome_screen' => array(
+        'id' => 'welcome_screen',
+        'title' => __( 'Welcome Screen' , 'default' )
+      ),
+      'post_formats' => array(
+        'id' => 'post_formats',
+        'title' => __( 'Post Formats' , 'default' )
+      ),
+      'media' => array(
+        'id' => 'media',
+        'title' => __( 'Media' , 'default' )
+      ),
+      'image_editing' => array(
+        'id' => 'image_editing',
+        'title' => __( 'Image Editing' , 'default' )
+      ),
+      'tinymce' => array(
+        'id' => 'tinymce',
+        'title' => __( 'TinyMCE' , 'default' )
+      ),
+      'posts_screen' => array(
+        'id' => 'posts_screen',
+        'title' => __( 'Posts Screen' , 'default' )
+      ),
+      'sorting' => array(
+        'id' => 'sorting',
+        'title' => __( 'Sorting' , 'default' )
+      ),
+      'social' => array(
+        'id' => 'social',
+        'title' => __( 'Social' , 'default' )
+      ),
+      'wp' => array(
+        'id' => 'wp',
+        'title' => __( 'WordPress.org Specific: Jobs, Profiles, WordCamps' , 'default' )
+      ),
+      'products' => array(
+        'id' => 'products',
+        'title' => __( 'Products' , 'default' )
+      ),
+      'taxonomies' => array(
+        'id' => 'taxonomies',
+        'title' => __( 'Taxonomies' , 'default' )
+      ),
+      'widgets' => array(
+        'id' => 'widgets',
+        'title' => __( 'Widgets' , 'default' )
+      ),
+      'notifications' => array(
+        'id' => 'notifications',
+        'title' => __( 'Notifications' , 'default' )
+      ),
+      'misc' => array(
+        'id' => 'misc',
+        'title' =>__( 'Misc' , 'default' )
+      ),
     );
 
     $icons = array(
@@ -1497,13 +1561,11 @@ final class MywpApi {
 
   public static function get_theme_path( $parent = false ) {
 
+    $theme_path = get_stylesheet_directory();
+
     if( $parent ) {
 
       $theme_path = get_template_directory();
-
-    } else {
-
-      $theme_path = get_stylesheet_directory();
 
     }
 
@@ -1513,13 +1575,11 @@ final class MywpApi {
 
   public static function get_theme_url( $parent = false ) {
 
+    $theme_url = get_stylesheet_directory_uri();
+
     if( $parent ) {
 
       $theme_url = get_template_directory_uri();
-
-    } else {
-
-      $theme_url = get_stylesheet_directory_uri();
 
     }
 
@@ -1529,9 +1589,9 @@ final class MywpApi {
 
   public static function duplicate_post_from_site_in_network( $from_site_id = false , $from_post_id = false , $args = array() ) {
 
-    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+    $called_text = sprintf( '%s::%s( $from_site_id , $from_post_id , $args )' , __CLASS__ , __FUNCTION__ );
 
-    $from_site_id = (int) $from_site_id;
+    $from_site_id = MywpHelper::sanitize_number( $from_site_id );
 
     if( empty( $from_site_id ) ) {
 
@@ -1555,7 +1615,7 @@ final class MywpApi {
 
     }
 
-    $from_post_id = (int) $from_post_id;
+    $from_post_id = MywpHelper::sanitize_number( $from_post_id );
 
     if( empty( $from_post_id ) ) {
 
@@ -1635,6 +1695,8 @@ final class MywpApi {
 
             if( is_wp_error( $terms ) ) {
 
+              MywpHelper::error_returned_message( '$terms' , $terms->get_error_message() , $called_text );
+
               continue;
 
             }
@@ -1665,11 +1727,23 @@ final class MywpApi {
 
     $post_new_args = (array) $from_post;
 
-    foreach( array( 'ID' , 'guid' , 'post_date' , 'post_date_gmt' , 'post_modified' , 'post_modified_gmt' , 'post_content_filtered' , 'comment_count' , 'filter' ) as $key ) {
+    $post_properties = array(
+      'ID',
+      'guid',
+      'post_date',
+      'post_date_gmt',
+      'post_modified',
+      'post_modified_gmt',
+      'post_content_filtered',
+      'comment_count',
+      'filter'
+    );
 
-      if( isset( $post_new_args[ $key ] ) ) {
+    foreach( $post_properties as $post_property ) {
 
-        unset( $post_new_args[ $key ] );
+      if( isset( $post_new_args[ $post_property ] ) ) {
+
+        unset( $post_new_args[ $post_property ] );
 
       }
 
@@ -1701,7 +1775,7 @@ final class MywpApi {
 
     if( is_wp_error( $new_post_id ) ) {
 
-      MywpHelper::error_returned_message( '$new_post_id' , sprintf( '[%s] %s' , $new_post_id->get_error_code() , $new_post_id->get_error_message() ) , $called_text );
+      MywpHelper::error_returned_message( '$new_post_id' , $new_post_id->get_error_message() , $called_text );
 
       return false;
 
@@ -1711,7 +1785,7 @@ final class MywpApi {
 
     if( ! $validate_new_post ) {
 
-      MywpHelper::error_returned_message( '$validate_new_post' , '' , $called_text );
+      MywpHelper::error_not_found_message( '$validate_new_post' , $called_text );
 
       wp_delete_post( $new_post_id , true );
 
@@ -1745,7 +1819,7 @@ final class MywpApi {
 
         $from_post_attached_file_data = file_get_contents( $from_post_attached_file );
 
-        $new_attachment_id = self::create_attachment_from_filedata( $from_post_attached_file_data , $pathinfo['basename'] );
+        $new_attachment_id = self::create_attachment_from_file_data( $from_post_attached_file_data , $pathinfo['basename'] );
 
         if( empty( self::get_error() ) ) {
 
@@ -1799,7 +1873,7 @@ final class MywpApi {
 
           if( is_wp_error( $wp_set_object_terms ) ) {
 
-            MywpHelper::error_returned_message( '$wp_set_object_terms' , sprintf( '[%s] %s' , $wp_set_object_terms->get_error_code() , $wp_set_object_terms->get_error_message() ) , $called_text );
+            MywpHelper::error_returned_message( '$wp_set_object_terms' , $wp_set_object_terms->get_error_message() , $called_text );
 
             continue;
 
@@ -1817,29 +1891,29 @@ final class MywpApi {
 
   }
 
-  public static function create_attachment_from_filedata( $filedata = false , $filename = false ) {
+  public static function create_attachment_from_file_data( $file_data = false , $file_name = false ) {
 
-    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+    $called_text = sprintf( '%s::%s( $file_data , $file_name )' , __CLASS__ , __FUNCTION__ );
 
-    if( empty( $filedata ) ) {
+    if( empty( $file_data ) ) {
 
-      MywpHelper::error_require_message( '$filedata' , $called_text );
-
-      return false;
-
-    }
-
-    $filename = strip_tags( $filename );
-
-    if( empty( $filename ) ) {
-
-      MywpHelper::error_require_message( '$filename' , $called_text );
+      MywpHelper::error_require_message( '$file_data' , $called_text );
 
       return false;
 
     }
 
-    $wp_upload_bits = wp_upload_bits( $filename , null , $filedata );
+    $file_name = MywpHelper::sanitize_file_name( $file_name );
+
+    if( empty( $file_name ) ) {
+
+      MywpHelper::error_require_message( '$file_name' , $called_text );
+
+      return false;
+
+    }
+
+    $wp_upload_bits = wp_upload_bits( $file_name , null , $file_data );
 
     if( ! empty( $wp_upload_bits['error'] ) ) {
 
@@ -1853,7 +1927,7 @@ final class MywpApi {
 
     $attachment_args = array(
       'post_mime_type' => $wp_filetype['type'],
-      'post_title' => sanitize_file_name( basename( $filename ) ),
+      'post_title' => sanitize_file_name( basename( $file_name ) ),
       'post_content' => '',
       'post_status' => 'inherit',
     );

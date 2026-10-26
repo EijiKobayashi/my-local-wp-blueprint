@@ -62,14 +62,19 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
 
     $post_types = array_filter( $post_types , 'is_post_type_viewable' );
 
-    $args = array( 'public' => true );
+    $args = array(
+      'public' => true,
+    );
 
     $taxonomies = get_taxonomies( $args , 'objects' );
 
     $taxonomies = array_filter( $taxonomies , 'is_taxonomy_viewable' );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Sitemap status' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Sitemap status' , 'my-wp' ) ); ?>
+    </h3>
+
     <p>
       <a href="<?php echo esc_url( $WP_Sitemaps_Index->get_index_url() ); ?>" target="_blank" class="button button-secondary"><span class="dashicons dashicons-external"></span> sitemap.xml</a>
     </p>
@@ -77,15 +82,15 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Status of WordPress CORE sitemap.xml' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Status of WordPress CORE sitemap.xml' , 'my-wp' ) ); ?></th>
           <td>
             <?php if( $WP_Sitemaps->sitemaps_enabled() ) : ?>
 
-              <?php _e( 'Enabled' ); ?>
+              <?php echo esc_html( __( 'Enabled' , 'default' ) ); ?>
 
             <?php else : ?>
 
-              <?php _e( 'Disabled' ); ?>
+              <?php echo esc_html( __( 'Disabled' , 'default' ) ); ?>
 
             <?php endif; ?>
           </td>
@@ -95,30 +100,32 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
 
     <p>&nbsp;</p>
 
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'General' , 'my-wp' ) ); ?>
+    </h3>
 
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Hide generate WordPress CORE sitemap.xml' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide generate WordPress CORE sitemap.xml' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_sitemap]" class="hide_sitemap" value="1" <?php checked( $setting_data['hide_sitemap'] , true ); ?> />
-              <?php _e( 'Deactivate' ); ?>
+              <?php echo esc_html( __( 'Deactivate' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide users sitemap' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide users sitemap' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_users]" class="hide_users" value="1" <?php checked( $setting_data['hide_users'] , true ); ?> />
-              <?php _e( 'Hide' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'my-wp' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide post types sitemap' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide post types sitemap' , 'my-wp' ) ); ?></th>
           <td>
             <select name="mywp[data][hide_post_type][]" multiple="multiple">
 
@@ -135,8 +142,8 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
                   <?php endif; ?>
 
                   <option value="<?php echo esc_attr( $post_type ); ?>" <?php selected( $selected , true ); ?>>
-                    [<?php echo esc_attr( $post_type ); ?>]
-                    <?php echo esc_attr( $post_type_object->label ); ?>
+                    [<?php echo esc_html( $post_type ); ?>]
+                    <?php echo esc_html( $post_type_object->label ); ?>
                   </option>
 
                 <?php endforeach; ?>
@@ -145,7 +152,7 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide taxonomies sitemap' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide taxonomies sitemap' , 'my-wp' ) ); ?></th>
           <td>
             <select name="mywp[data][hide_taxonomy][]" multiple="multiple">
 
@@ -162,8 +169,8 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
                   <?php endif; ?>
 
                   <option value="<?php echo esc_attr( $taxonomy ); ?>" <?php selected( $selected , true ); ?>>
-                    [<?php echo esc_attr( $taxonomy ); ?>]
-                    <?php echo esc_attr( $taxonomy_object->label ); ?>
+                    [<?php echo esc_html( $taxonomy ); ?>]
+                    <?php echo esc_html( $taxonomy_object->label ); ?>
                   </option>
 
                 <?php endforeach; ?>
@@ -208,7 +215,7 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['hide_post_type'] as $post_type ) {
 
-        $post_type = strip_tags( $post_type );
+        $post_type = MywpHelper::sanitize_text( $post_type );
 
         $new_formatted_data['hide_post_type'][ $post_type ] = true;
 
@@ -220,7 +227,7 @@ final class MywpSettingScreenSiteSitemap extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['hide_taxonomy'] as $taxonomy ) {
 
-        $taxonomy = strip_tags( $taxonomy );
+        $taxonomy = MywpHelper::sanitize_text( $taxonomy );
 
         $new_formatted_data['hide_taxonomy'][ $taxonomy ] = true;
 

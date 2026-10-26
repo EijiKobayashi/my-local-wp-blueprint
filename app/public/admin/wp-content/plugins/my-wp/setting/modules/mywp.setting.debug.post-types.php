@@ -32,29 +32,38 @@ final class MywpSettingScreenDebugPostTypes extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $all_post_types = MywpApi::get_all_post_types();
 
     if( empty( $all_post_types ) ) {
+
+      MywpHelper::error_not_found_message( '$all_post_types' , $called_text );
 
       return false;
 
     }
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $all_post_types ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $all_post_types ); ?></p>
     <table class="form-table">
       <tbody>
+
         <?php foreach( $all_post_types as $key => $post_type ) : ?>
+
           <tr>
             <th>
-              [<?php echo esc_html( $post_type->name ); ?>] <?php echo esc_html( $post_type->label ); ?><br />
+              [<?php echo esc_html( $post_type->name ); ?>]
+              <?php echo esc_html( $post_type->label ); ?><br />
               <a href="<?php echo esc_url( add_query_arg( array( 'post_type' => $post_type->name ) , admin_url( 'edit.php' ) ) ); ?>"><?php echo esc_html( $post_type->labels->all_items ); ?></a>
             </th>
             <td>
               <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php echo esc_textarea( print_r( $post_type , true ) ); ?></textarea>
             </td>
           </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
     <p>&nbsp;</p>

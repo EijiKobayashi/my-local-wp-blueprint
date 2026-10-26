@@ -84,12 +84,16 @@ export default function BlockBuilder() {
 			title: __('Supports', 'lazy-blocks'),
 			component: SupportsSettings,
 			initialOpen: false,
+			// SupportsSettings renders its own ToolsPanel.
+			hasPanelBody: false,
 		},
 		{
 			name: 'supports-ghost-kit',
 			title: __('Supports Ghost Kit', 'lazy-blocks'),
 			component: SupportsGhostKitSettings,
 			initialOpen: false,
+			// SupportsGhostKitSettings renders its own ToolsPanel.
+			hasPanelBody: false,
 		},
 		{
 			name: 'condition',
@@ -122,9 +126,19 @@ export default function BlockBuilder() {
 									data={blockData}
 									updateData={updateBlockData}
 								/>
-								<ProNotice />
 								{panels.map((panel) => {
 									const PanelComponent = panel.component;
+
+									if (panel.hasPanelBody === false) {
+										return (
+											<PanelComponent
+												key={panel.name}
+												data={blockData}
+												updateData={updateBlockData}
+											/>
+										);
+									}
+
 									return (
 										<PanelBody
 											key={panel.name}
@@ -138,6 +152,7 @@ export default function BlockBuilder() {
 										</PanelBody>
 									);
 								})}
+								<ProNotice />
 							</>
 						);
 					}}

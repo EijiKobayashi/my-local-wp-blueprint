@@ -27,7 +27,7 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'General' ),
+      'title' => __( 'General' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'frontend_general',
       'use_advance' => true,
@@ -43,21 +43,29 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
     $setting_data = self::get_setting_data();
 
     $admin_bar_vars = array(
-      'hide' => __( 'Hide' ),
+      'hide' => __( 'Hide' , 'default' ),
       'show' => __( 'Always Show' , 'my-wp' ),
     );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'General' , 'default' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Toolbar' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Toolbar' , 'my-wp' ) ); ?></th>
           <td>
             <select name="mywp[data][admin_bar]" class="admin_bar">
               <option value="">----</option>
+
               <?php foreach( $admin_bar_vars as $key => $val ) : ?>
-                <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key , $setting_data['admin_bar'] ); ?>><?php echo esc_attr( $val ); ?></option>
+
+                <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $key , $setting_data['admin_bar'] ); ?>>
+                  <?php echo esc_html( $val ); ?>
+                </option>
+
               <?php endforeach; ?>
             </select>
           </td>
@@ -75,172 +83,192 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
 
     $api_root = get_rest_url();
 
-    $x_frame_options = array( 'SAMEORIGIN' , 'DENY' );
-
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Response Header' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Response Header' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Hide Rest link' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide Rest link' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_rest_link_header]" class="hide_rest_link_header" value="1" <?php checked( $setting_data['hide_rest_link_header'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php if( ! empty( $api_root ) ) : ?>
-                <?php echo esc_html( 'Link: <' . esc_url_raw( $api_root ) . '>; rel="https://api.w.org/"' ); ?>
-              <?php endif; ?>
-            </code></p>
+            <p>
+              <code>
+                <?php if( ! empty( $api_root ) ) : ?>
+                  <?php echo esc_html( 'Link: <' . esc_url_raw( $api_root ) . '>; rel="https://api.w.org/"' ); ?>
+                <?php endif; ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Shortlink' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide Shortlink' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_shortlink_header]" class="hide_shortlink_header" value="1" <?php checked( $setting_data['hide_shortlink_header'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php if( ! empty( $api_root ) ) : ?>
-                <?php echo esc_html( 'Link: <' . home_url( '/' ) . '>?p=***; rel=shortlink' ); ?>
-              <?php endif; ?>
-            </code></p>
+            <p>
+              <code>
+                <?php if( ! empty( $api_root ) ) : ?>
+                  <?php echo esc_html( 'Link: <' . home_url( '/' ) . '>?p=***; rel=shortlink' ); ?>
+                <?php endif; ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide X-Pingback' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide X-Pingback' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_x_pingback]" class="hide_x_pingback" value="1" <?php checked( $setting_data['hide_x_pingback'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php echo esc_html( get_bloginfo( 'pingback_url', 'display' ) ); ?>
-            </code></p>
+            <p>
+              <code>
+                <?php echo esc_html( get_bloginfo( 'pingback_url', 'display' ) ); ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'X-Frame-Options' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'X-Frame-Options' , 'my-wp' ) ); ?></th>
           <td>
             <select name="mywp[data][x_frame_option]">
               <option value=""></option>
 
-              <?php if( ! empty( $x_frame_options ) ) : ?>
+              <?php foreach( MywpControllerModuleFrontendGeneral::get_x_frame_options() as $x_frame_option ) : ?>
 
-                <?php foreach( $x_frame_options as $x_frame_option ) : ?>
+                <?php $selected = false; ?>
 
-                  <?php $selected = false; ?>
+                <?php if( $setting_data['x_frame_option'] === $x_frame_option ) : ?>
 
-                  <?php if( $setting_data['x_frame_option'] === $x_frame_option ) : ?>
+                  <?php $selected = true; ?>
 
-                    <?php $selected = true; ?>
+                <?php endif; ?>
 
-                  <?php endif; ?>
+                <option value="<?php echo esc_attr( $x_frame_option ); ?>" <?php selected( $selected , true ); ?>>
+                  <?php echo esc_html( $x_frame_option ); ?>
+                </option>
 
-                  <option value="<?php echo esc_attr( $x_frame_option ); ?>" <?php selected( $selected , true ); ?>>
-                    <?php echo esc_attr( $x_frame_option ); ?>
-                  </option>
-
-                <?php endforeach; ?>
-
-              <?php endif; ?>
+              <?php endforeach; ?>
           </td>
         </tr>
       </tbody>
     </table>
     <p>&nbsp;</p>
 
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'HTML Head' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'HTML Head' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Hide WP Generator Tag' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide WP Generator Tag' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_wp_generator]" class="hide_wp_generator" value="1" <?php checked( $setting_data['hide_wp_generator'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php echo esc_html( get_the_generator( apply_filters( 'wp_generator_type', 'xhtml' ) ) ); ?>
-            </code></p>
+            <p>
+              <code>
+                <?php echo esc_html( get_the_generator( apply_filters( 'wp_generator_type', 'xhtml' ) ) ); ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Manifest Link Tag' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide Manifest Link Tag' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_wlwmanifest_link]" class="hide_wlwmanifest_link" value="1" <?php checked( $setting_data['hide_wlwmanifest_link'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php echo esc_html( '<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="' . includes_url( 'wlwmanifest.xml' ) . '" />' ); ?>
-            </code></p>
+            <p>
+              <code>
+                <?php echo esc_html( '<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="' . includes_url( 'wlwmanifest.xml' ) . '" />' ); ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide RSD Link Tag' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide RSD Link Tag' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_rsd_link]" class="hide_rsd_link" value="1" <?php checked( $setting_data['hide_rsd_link'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php echo esc_html( '<link rel="EditURI" type="application/rsd+xml" title="RSD" href="' . esc_url( site_url( 'xmlrpc.php?rsd', 'rpc' ) ) . '" />' ); ?>
-            </code></p>
+            <p>
+              <code>
+                <?php echo esc_html( '<link rel="EditURI" type="application/rsd+xml" title="RSD" href="' . esc_url( site_url( 'xmlrpc.php?rsd', 'rpc' ) ) . '" />' ); ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Feed Links Tag' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide Feed Links Tag' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_feed_links]" class="hide_feed_links" value="1" <?php checked( $setting_data['hide_feed_links'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php echo esc_html( '<link rel="alternate" type="' . feed_content_type() . '" title="[Feed Title]" href="[Feed URL]"/>' ); ?>
-            </code></p>
+            <p>
+              <code>
+                <?php echo esc_html( '<link rel="alternate" type="' . feed_content_type() . '" title="[Feed Title]" href="[Feed URL]"/>' ); ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Feed Links Extra Tag' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide Feed Links Extra Tag' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_feed_links_extra]" class="hide_feed_links_extra" value="1" <?php checked( $setting_data['hide_feed_links_extra'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php echo esc_html( '<link rel="alternate" type="' . feed_content_type() . '" title="[Feed Content Type Title]" href="Feed Content Type URL" />' ); ?>
-            </code></p>
+            <p>
+              <code>
+                <?php echo esc_html( '<link rel="alternate" type="' . feed_content_type() . '" title="[Feed Content Type Title]" href="Feed Content Type URL" />' ); ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Rest link' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide Rest link' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_rest_link]" class="hide_rest_link" value="1" <?php checked( $setting_data['hide_rest_link'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php if( ! empty( $api_root ) ) : ?>
-                <?php echo esc_html( '<link rel="https://api.w.org/" href="' . esc_url_raw( $api_root ) . '" />' ); ?>
-              <?php endif; ?>
-            </code></p>
+            <p>
+              <code>
+                <?php if( ! empty( $api_root ) ) : ?>
+                  <?php echo esc_html( '<link rel="https://api.w.org/" href="' . esc_url_raw( $api_root ) . '" />' ); ?>
+                <?php endif; ?>
+              </code>
+            </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide Shortlink' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide Shortlink' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_shortlink]" class="hide_shortlink" value="1" <?php checked( $setting_data['hide_shortlink'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
-            <p><code>
-              <?php if( ! empty( $api_root ) ) : ?>
-                <?php echo esc_html( '<link rel="shortlink" href="' . home_url( '/' ) . '" />' ); ?>
-              <?php endif; ?>
-            </code></p>
+            <p>
+              <code>
+                <?php if( ! empty( $api_root ) ) : ?>
+                  <?php echo esc_html( '<link rel="shortlink" href="' . home_url( '/' ) . '" />' ); ?>
+                <?php endif; ?>
+              </code>
+            </p>
           </td>
         </tr>
       </tbody>
@@ -260,13 +288,16 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Include your CSS file' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Include your CSS file' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][include_css_file]" class="include_css_file large-text" value="<?php echo esc_attr( $setting_data['include_css_file'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com/frontend.css' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
               <code>[mywp_theme field="url"]/frontend.css</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_theme field="url"]' ); ?>/frontend.css</code>
@@ -274,13 +305,16 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Include your JS file' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Include your JS file' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][include_js_file]" class="include_js_file large-text" value="<?php echo esc_attr( $setting_data['include_js_file'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com/frontend.js' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
               <code>[mywp_theme field="url"]/frontend.js</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_theme field="url"]' ); ?>/frontend.js</code>
@@ -288,7 +322,7 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Custom Header Meta' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Custom Header Meta' , 'my-wp' ) ); ?></th>
           <td>
             <textarea type="text" name="mywp[data][custom_header_meta]" class="custom_header_meta large-text" placeholder="<?php echo esc_attr( '<meta name="example" content="example-content" />' ); ?>"><?php echo esc_textarea( $setting_data['custom_header_meta'] ); ?></textarea>
           </td>
@@ -328,7 +362,7 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['admin_bar'] ) ) {
 
-      $new_formatted_data['admin_bar'] = strip_tags( $formatted_data['admin_bar'] );
+      $new_formatted_data['admin_bar'] = MywpHelper::sanitize_text( $formatted_data['admin_bar'] );
 
     }
 
@@ -352,7 +386,7 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['x_frame_option'] ) ) {
 
-      $new_formatted_data['x_frame_option'] = strip_tags( $formatted_data['x_frame_option'] );
+      $new_formatted_data['x_frame_option'] = MywpHelper::sanitize_text( $formatted_data['x_frame_option'] );
 
     }
 
@@ -400,19 +434,55 @@ final class MywpSettingScreenFrontendGeneral extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['include_css_file'] ) ) {
 
-      $new_formatted_data['include_css_file'] = wp_unslash( $formatted_data['include_css_file'] );
+      $new_formatted_data['include_css_file'] = MywpHelper::sanitize_text( $formatted_data['include_css_file'] );
 
     }
 
     if( ! empty( $formatted_data['include_js_file'] ) ) {
 
-      $new_formatted_data['include_js_file'] = wp_unslash( $formatted_data['include_js_file'] );
+      $new_formatted_data['include_js_file'] = MywpHelper::sanitize_text( $formatted_data['include_js_file'] );
 
     }
 
     if( ! empty( $formatted_data['custom_header_meta'] ) ) {
 
-      $new_formatted_data['custom_header_meta'] = wp_unslash( $formatted_data['custom_header_meta'] );
+      $wp_kses_allowed_tags = array(
+        'meta' => array(
+          'name' => true,
+          'content' => true,
+          'charset' => true,
+          'http-equiv' => true,
+          'property' => true,
+        ),
+        'link' => array(
+          'rel' => true,
+          'id' => true,
+          'href' => true,
+          'type' => true,
+          'media' => true,
+          'fetchpriority' => true,
+          'sizes' => true,
+          'as' => true,
+          'crossorigin' => true,
+          'referrerpolicy' => true,
+        ),
+        'style' => array(
+          'id' => true,
+          'type' => true,
+        ),
+        'script' => array(
+          'id' => true,
+          'src' => true,
+          'async' => true,
+          'defer' => true,
+          'type'  => true,
+          'fetchpriority' => true,
+          'crossorigin' => true,
+          'referrerpolicy' => true,
+        ),
+      );
+
+      $new_formatted_data['custom_header_meta'] = wp_kses( $formatted_data['custom_header_meta'] , $wp_kses_allowed_tags );
 
     }
 

@@ -41,7 +41,7 @@ wp_enqueue_script( 'jquery' );
 
   <div id="mywp-debug">
 
-    <p class="main-title"><?php _e( 'My WP Debug' , 'my-wp' ); ?></p>
+    <p class="main-title"><?php echo esc_html( __( 'My WP Debug' , 'my-wp' ) ); ?></p>
 
     <p class="debug-types">
 
@@ -55,7 +55,7 @@ wp_enqueue_script( 'jquery' );
 
         <?php endif; ?>
 
-        <a href="javascript:void(0);" class="type-select type-<?php echo sanitize_html_class( $debug_type ); ?> <?php echo sanitize_html_class( $add_class ); ?>" data-type="<?php echo esc_attr( $debug_type ); ?>">
+        <a href="javascript:void(0);" class="type-select type-<?php echo esc_attr( $debug_type ); ?> <?php echo esc_attr( $add_class ); ?>" data-type="<?php echo esc_attr( $debug_type ); ?>">
           <?php echo esc_html( $type_label ); ?>
         </a>
 
@@ -77,9 +77,9 @@ wp_enqueue_script( 'jquery' );
 
         <?php endif; ?>
 
-        <div class="render render-<?php echo sanitize_html_class( $render_id ); ?> type-<?php echo sanitize_html_class( $debug_type ); ?> <?php echo sanitize_html_class( $add_class ); ?>">
+        <div class="render render-<?php echo esc_attr( $render_id ); ?> type-<?php echo esc_attr( $debug_type ); ?> <?php echo esc_attr( $add_class ); ?>">
 
-          <div class="render-content-wrap" id="<?php echo sanitize_html_class( $render_id ); ?>">
+          <div class="render-content-wrap" id="<?php echo esc_attr( $render_id ); ?>">
 
             <?php if( ! empty( $render['title'] ) ) : ?>
 

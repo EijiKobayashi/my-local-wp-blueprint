@@ -29,9 +29,11 @@ final class MywpModel {
 
   public function __construct( $model_id = false , $type = false , $network = false ) {
 
-    if( empty( $model_id ) ) {
+    $called_text = sprintf( 'new %s( $model_id , $type , $network )' , __CLASS__ );
 
-      $called_text = sprintf( 'new %s( %s , %s , %s )' , __CLASS__ , '$model_id' , '$type' , '$network' );
+    $model_id = MywpHelper::sanitize_text( $model_id );
+
+    if( empty( $model_id ) ) {
 
       MywpHelper::error_require_message( '$model_id' , $called_text );
 
@@ -39,11 +41,11 @@ final class MywpModel {
 
     }
 
-    $this->model_id = strip_tags( $model_id );
+    $this->model_id = $model_id;
+
+    $type = MywpHelper::sanitize_text( $type );
 
     if( empty( $type ) ) {
-
-      $called_text = sprintf( 'new %s( %s , %s , %s )' , __CLASS__ , '$model_id' , '$type' , '$network' );
 
       MywpHelper::error_require_message( '$type' , $called_text );
 
@@ -51,7 +53,7 @@ final class MywpModel {
 
     }
 
-    $this->type = strip_tags( $type );
+    $this->type = $type;
 
     $this->id = "mywp_{$this->model_id}";
 
@@ -145,11 +147,11 @@ final class MywpModel {
 
   public function get_option() {
 
+    $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
+
     $option_key = $this->get_option_key();
 
     if( empty( $option_key ) ) {
-
-      $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$option_key' , $called_text );
 
@@ -195,11 +197,11 @@ final class MywpModel {
 
   public function update_data( $update_data ) {
 
+    $called_text = sprintf( '(object) %s->%s( $update_data )' , __CLASS__ , __FUNCTION__ );
+
     $option_key = $this->get_option_key();
 
     if( empty( $option_key ) ) {
-
-      $called_text = sprintf( '(object) %s->%s( %s )' , __CLASS__ , __FUNCTION__ , '$update_data' );
 
       MywpHelper::error_not_found_message( '$option_key' , $called_text );
 
@@ -229,11 +231,11 @@ final class MywpModel {
 
   public function remove_data() {
 
+    $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
+
     $option_key = $this->get_option_key();
 
     if( empty( $option_key ) ) {
-
-      $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$option_key' , $called_text );
 
@@ -261,11 +263,11 @@ final class MywpModel {
 
   public function get_setting_data() {
 
+    $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
+
     $option_key = $this->get_option_key();
 
     if( empty( $option_key ) ) {
-
-      $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$option_key' , $called_text );
 

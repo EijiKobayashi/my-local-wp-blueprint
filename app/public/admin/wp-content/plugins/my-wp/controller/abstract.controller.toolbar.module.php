@@ -46,25 +46,57 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     global $wp_admin_bar;
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s( $posts )' , $class , __FUNCTION__ );
+
     if( empty( $posts ) ) {
 
       return $posts;
 
     }
 
+    foreach( $posts as $key => $toolbar_item ) {
+
+      if( empty( $toolbar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$toolbar_item' , $called_text );
+
+        unset( $posts[ $key ] );
+
+        continue;
+
+      }
+
+      if( ! is_object( $toolbar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$toolbar_item' , 'is_object()' , $called_text );
+
+        unset( $posts[ $key ] );
+
+        continue;
+
+      }
+
+    }
+
     if( is_multisite() ) {
 
       $found_my_sites_post_id = false;
+
       $found_my_sites_post_key = false;
+
       $found_my_sites_item_location = false;
 
-      foreach( $posts as $key => $post ) {
+      foreach( $posts as $key => $toolbar_item ) {
 
-        if( $post->item_default_id === 'my-sites' ) {
+        if( $toolbar_item->item_default_id === 'my-sites' ) {
 
-          $found_my_sites_post_id = $post->ID;
+          $found_my_sites_post_id = $toolbar_item->ID;
+
           $found_my_sites_post_key = $key;
-          $found_my_sites_item_location = $post->item_location;
+
+          $found_my_sites_item_location = $toolbar_item->item_location;
 
         }
 
@@ -94,7 +126,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
               'item_capability' => 'read',
             );
 
-            if ( current_user_can( 'read' ) ) {
+            if( current_user_can( 'read' ) ) {
 
               $menu_dashboard_id  = sprintf( '%s-d' , $menu_base_id );
 
@@ -105,8 +137,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
                 'item_location' => $found_my_sites_item_location,
                 'item_default_id' => $menu_dashboard_id,
                 'item_default_parent_id' => $menu_base_id,
-                'item_default_title' => __( 'Dashboard' ),
-                'item_link_title' => __( 'Dashboard' ),
+                'item_default_title' => __( 'Dashboard' , 'default' ),
+                'item_link_title' => __( 'Dashboard' , 'default' ),
                 'item_link_url' => admin_url(),
                 'item_link_attr' => '',
                 'item_capability' => 'read',
@@ -114,7 +146,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
             }
 
-            if ( current_user_can( 'manage_options' ) ) {
+            if( current_user_can( 'manage_options' ) ) {
 
               $menu_setting_id  = sprintf( '%s-o' , $menu_base_id );
 
@@ -126,7 +158,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
                 'item_default_id' => '',
                 'item_default_parent_id' => '',
                 'item_default_title' => '',
-                'item_link_title' => __( 'Settings' ),
+                'item_link_title' => __( 'Settings' , 'default' ),
                 'item_link_url' => admin_url( '/options-general.php' ),
                 'item_link_attr' => '',
                 'item_capability' => 'manage_options',
@@ -134,7 +166,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
             }
 
-            if ( MywpApi::is_manager() ) {
+            if( MywpApi::is_manager() ) {
 
               $menu_setting_id  = sprintf( '%s-mywp' , $menu_base_id );
 
@@ -163,8 +195,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
               'item_location' => $found_my_sites_item_location,
               'item_default_id' => $menu_frontend_id,
               'item_default_parent_id' => $menu_base_id,
-              'item_default_title' => __( 'Visit Site' ),
-              'item_link_title' => __( 'Visit Site' ),
+              'item_default_title' => __( 'Visit Site' , 'default' ),
+              'item_link_title' => __( 'Visit Site' , 'default' ),
               'item_link_url' => home_url( '/' ),
               'item_link_attr' => '',
               'item_capability' => '',
@@ -185,16 +217,20 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
       if( current_user_can( 'manage_network' ) ) {
 
         $found_network_admin_post_id = false;
+
         $found_network_admin_post_key = false;
+
         $found_network_admin_item_location = false;
 
-        foreach( $posts as $key => $post ) {
+        foreach( $posts as $key => $toolbar_item ) {
 
-          if( $post->item_default_id === 'network-admin' ) {
+          if( $toolbar_item->item_default_id === 'network-admin' ) {
 
-            $found_network_admin_post_id = $post->ID;
+            $found_network_admin_post_id = $toolbar_item->ID;
+
             $found_network_admin_post_key = $key;
-            $found_network_admin_item_location = $post->item_location;
+
+            $found_network_admin_item_location = $toolbar_item->item_location;
 
           }
 
@@ -203,8 +239,11 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
         if( ! empty( $found_network_admin_post_id ) ) {
 
           $posts[ $found_network_admin_post_key ]->item_type = 'link';
-          $posts[ $found_network_admin_post_key ]->item_default_title = __( 'Network Admin' );
+
+          $posts[ $found_network_admin_post_key ]->item_default_title = __( 'Network Admin' , 'default' );
+
           $posts[ $found_network_admin_post_key ]->item_link_url = network_admin_url();
+
           $posts[ $found_network_admin_post_key ]->item_capability = 'manage_network';
 
           $posts['network-admin-d'] = (object) array(
@@ -214,8 +253,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
             'item_location' => $found_network_admin_item_location,
             'item_default_id' => 'network-admin-d',
             'item_default_parent_id' => 'network-admin',
-            'item_default_title' => __( 'Dashboard' ),
-            'item_link_title' => __( 'Dashboard' ),
+            'item_default_title' => __( 'Dashboard' , 'default' ),
+            'item_link_title' => __( 'Dashboard' , 'default' ),
             'item_link_url' => network_admin_url(),
             'item_link_attr' => '',
             'item_capability' => 'manage_network',
@@ -228,8 +267,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
             'item_location' => $found_network_admin_item_location,
             'item_default_id' => 'network-admin-s',
             'item_default_parent_id' => 'network-admin',
-            'item_default_title' => __( 'Sites' ),
-            'item_link_title' => __( 'Sites' ),
+            'item_default_title' => __( 'Sites' , 'default' ),
+            'item_link_title' => __( 'Sites' , 'default' ),
             'item_link_url' => network_admin_url( 'sites.php' ),
             'item_link_attr' => '',
             'item_capability' => 'manage_sites',
@@ -242,8 +281,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
             'item_location' => $found_network_admin_item_location,
             'item_default_id' => 'network-admin-u',
             'item_default_parent_id' => 'network-admin',
-            'item_default_title' => __( 'Users' ),
-            'item_link_title' => __( 'Users' ),
+            'item_default_title' => __( 'Users' , 'default' ),
+            'item_link_title' => __( 'Users' , 'default' ),
             'item_link_url' => network_admin_url( 'users.php' ),
             'item_link_attr' => '',
             'item_capability' => 'manage_network_users',
@@ -256,8 +295,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
             'item_location' => $found_network_admin_item_location,
             'item_default_id' => 'network-admin-t',
             'item_default_parent_id' => 'network-admin',
-            'item_default_title' => __( 'Themes' ),
-            'item_link_title' => __( 'Themes' ),
+            'item_default_title' => __( 'Themes' , 'default' ),
+            'item_link_title' => __( 'Themes' , 'default' ),
             'item_link_url' => network_admin_url( 'themes.php' ),
             'item_link_attr' => '',
             'item_capability' => 'manage_network_themes',
@@ -270,8 +309,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
             'item_location' => $found_network_admin_item_location,
             'item_default_id' => 'network-admin-p',
             'item_default_parent_id' => 'network-admin',
-            'item_default_title' => __( 'Plugins' ),
-            'item_link_title' => __( 'Plugins' ),
+            'item_default_title' => __( 'Plugins' , 'default' ),
+            'item_link_title' => __( 'Plugins' , 'default' ),
             'item_link_url' => network_admin_url( 'plugins.php' ),
             'item_link_attr' => '',
             'item_capability' => 'manage_network_plugins',
@@ -284,8 +323,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
             'item_location' => $found_network_admin_item_location,
             'item_default_id' => 'network-admin-o',
             'item_default_parent_id' => 'network-admin',
-            'item_default_title' => __( 'Settings' ),
-            'item_link_title' => __( 'Settings' ),
+            'item_default_title' => __( 'Settings' , 'default' ),
+            'item_link_title' => __( 'Settings' , 'default' ),
             'item_link_url' => network_admin_url( 'settings.php' ),
             'item_link_attr' => '',
             'item_capability' => 'manage_network_options',
@@ -298,8 +337,8 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
             'item_location' => $found_network_admin_item_location,
             'item_default_id' => 'network-admin-o',
             'item_default_parent_id' => 'network-admin',
-            'item_default_title' => __( 'Settings' ),
-            'item_link_title' => __( 'Settings' ),
+            'item_default_title' => __( 'Settings' , 'default' ),
+            'item_link_title' => __( 'Settings' , 'default' ),
             'item_link_url' => network_admin_url( 'settings.php' ),
             'item_link_attr' => '',
             'item_capability' => 'manage_network_options',
@@ -330,14 +369,16 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
     }
 
     $found_new_content_post_id = false;
+
     $found_new_content_item_location = false;
 
-    foreach( $posts as $key => $post ) {
+    foreach( $posts as $key => $toolbar_item ) {
 
-      if( $post->item_default_id === 'new-content' ) {
+      if( $toolbar_item->item_default_id === 'new-content' ) {
 
-        $found_new_content_post_id = $post->ID;
-        $found_new_content_item_location = $post->item_location;
+        $found_new_content_post_id = $toolbar_item->ID;
+
+        $found_new_content_item_location = $toolbar_item->item_location;
 
       }
 
@@ -410,7 +451,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     if( ! empty( $setting_data['cache_timeout'] ) ) {
 
-      $timeout_min = (int) $setting_data['cache_timeout'];
+      $timeout_min = MywpHelper::sanitize_number( $setting_data['cache_timeout'] );
 
     }
 
@@ -453,13 +494,17 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     static::$toolbar = $toolbar;
 
-    if( ! empty( $timeout_min ) && ! empty( $toolbar ) ) {
+    if( ! empty( $timeout_min ) ) {
 
-      $toolbar_strlen = strlen( maybe_serialize( static::$toolbar ) );
+      if( ! empty( $toolbar ) ) {
 
-      if( $toolbar_strlen < MywpHelper::get_max_allowed_packet_size() ) {
+        $toolbar_strlen = strlen( maybe_serialize( static::$toolbar ) );
 
-        $mywp_transient->update_data( static::$toolbar , $timeout_min * MINUTE_IN_SECONDS );
+        if( $toolbar_strlen < MywpHelper::get_max_allowed_packet_size() ) {
+
+          $mywp_transient->update_data( static::$toolbar , $timeout_min * MINUTE_IN_SECONDS );
+
+        }
 
       }
 
@@ -470,6 +515,10 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
   }
 
   protected static function get_toolbar_items() {
+
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
 
     if( ! empty( static::$toolbar_items ) ) {
 
@@ -488,6 +537,22 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
     $toolbar_items = array();
 
     foreach( $toolbar as $key => $toolbar_item ) {
+
+      if( empty( $toolbar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$toolbar_item' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_object( $toolbar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$toolbar_item' , 'is_object()' , $called_text );
+
+        continue;
+
+      }
 
       if( $toolbar_item->item_type === 'default') {
 
@@ -525,6 +590,10 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
   protected static function get_toolbar_items_added_classes(){
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     if( ! empty( static::$toolbar_items_added_classes ) ) {
 
       return static::$toolbar_items_added_classes;
@@ -541,7 +610,19 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     foreach( $toolbar_items as $key => $toolbar_item ) {
 
+      if( empty( $toolbar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$toolbar_item' , $called_text );
+
+        unset( $toolbar_item[ $key ] );
+
+        continue;
+
+      }
+
       if( ! is_object( $toolbar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$toolbar_item' , 'is_object()' , $called_text );
 
         unset( $toolbar_item[ $key ] );
 
@@ -647,15 +728,10 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     unset( $tmp );
 
-    $first = true;
-
-    foreach( $toolbar_items as $key => $toolbar_item ) {
-
-    }
-
     $current_url = static::get_current_url();
 
     $current_url_parse = parse_url( $current_url );
+
     $current_url_query = array();
 
     if( isset( $current_url_parse['fragment'] ) ) {
@@ -680,7 +756,13 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     foreach( $toolbar_items as $key => $toolbar_item ) {
 
-      if( empty( $toolbar_item->item_link_url_parse['host'] ) or empty( $toolbar_item->item_link_url_parse['path'] ) ) {
+      if( empty( $toolbar_item->item_link_url_parse['host'] ) ) {
+
+        continue;
+
+      }
+
+      if( empty( $toolbar_item->item_link_url_parse['path'] ) ) {
 
         continue;
 
@@ -693,7 +775,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
         $current_url_query === $toolbar_item->item_link_url_parse_query
         ) {
 
-        $found_current_item_ids[] = $toolbar_item->ID;
+        $found_current_item_ids[] = (string) $toolbar_item->ID;
 
       }
 
@@ -727,7 +809,13 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
       foreach( $toolbar_items as $key => $toolbar_item ) {
 
-        if( empty( $toolbar_item->item_link_url_parse['host'] ) or empty( $toolbar_item->item_link_url_parse['path'] ) ) {
+        if( empty( $toolbar_item->item_link_url_parse['host'] ) ) {
+
+          continue;
+
+        }
+
+        if( empty( $toolbar_item->item_link_url_parse['path'] ) ) {
 
           continue;
 
@@ -740,7 +828,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
           http_build_query( $identification_query ) === $toolbar_item->item_link_url_parse['query']
         ) {
 
-          $found_current_item_ids[] = $toolbar_item->ID;
+          $found_current_item_ids[] = (string) $toolbar_item->ID;
 
         }
 
@@ -752,7 +840,11 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     if( ! empty( $found_current_item_ids ) ) {
 
-      $found_current_item_ids = array_map( 'strip_tags' , $found_current_item_ids );
+      foreach( $found_current_item_ids as $key => $found_current_item_id ) {
+
+        $found_current_item_ids[ $key ] = MywpHelper::sanitize_text( $found_current_item_id );
+
+      }
 
     }
 
@@ -760,9 +852,10 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
       foreach( $toolbar_items as $key => $toolbar_item ) {
 
-        if( in_array( $toolbar_item->ID , $found_current_item_ids ) ) {
+        if( in_array( (string) $toolbar_item->ID , $found_current_item_ids , true ) ) {
 
           $toolbar_items[ $key ]->item_li_class .= ' current';
+
           $toolbar_items[ $key ]->item_link_class .= ' current';
 
         }
@@ -781,6 +874,10 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
   protected static function get_find_menu_items_to_parent_id( $parent_id = 0 ) {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s( $parent_id )' , $class , __FUNCTION__ );
+
     $toolbar_items_added_classes = static::get_toolbar_items_added_classes();
 
     if( empty( $toolbar_items_added_classes ) ) {
@@ -793,11 +890,11 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
       if( is_numeric( $parent_id ) ) {
 
-        $parent_id = (int) $parent_id;
+        $parent_id = MywpHelper::sanitize_number( $parent_id );
 
       } else {
 
-        $parent_id = strip_tags( $parent_id );
+        $parent_id = MywpHelper::sanitize_text( $parent_id );
 
       }
 
@@ -819,11 +916,11 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
         if( is_numeric( $item_parent ) ) {
 
-          $item_parent = (int) $item_parent;
+          $item_parent = MywpHelper::sanitize_number( $item_parent );
 
         } else {
 
-          $item_parent = strip_tags( $item_parent );
+          $item_parent = MywpHelper::sanitize_text( $item_parent );
 
         }
 
@@ -947,7 +1044,37 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     global $wp_admin_bar;
 
-    if( empty( $item ) or empty( $item->item_type ) or empty( $item->ID ) ) {
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s( $item )' , $class , __FUNCTION__ );
+
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
+
+      return false;
+
+    }
+
+    if( ! is_object( $item ) ) {
+
+      MywpHelper::error_invalid_message( '$item' , 'is_object()' , $called_text );
+
+      return false;
+
+    }
+
+    if( empty( $item->item_type ) ) {
+
+      MywpHelper::error_not_found_message( '$item->item_type' , $called_text );
+
+      return false;
+
+    }
+
+    if( empty( $item->ID ) ) {
+
+      MywpHelper::error_not_found_message( '$item->ID' , $called_text );
 
       return false;
 
@@ -971,16 +1098,18 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     if( is_numeric( $item_id ) ) {
 
-      $item_id = (int) $item_id;
+      $item_id = MywpHelper::sanitize_number( $item_id );
 
     } else {
 
-      $item_id = strip_tags( $item_id );
+      $item_id = MywpHelper::sanitize_text( $item_id );
 
     }
 
     $item_type = $item->item_type;
+
     $node_parent = $item->item_parent;
+
     $item_location = $item->item_location;
 
     $item_meta = array();
@@ -999,7 +1128,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     if( ! empty( $item->item_link_attr ) ) {
 
-      $link_attr = strip_tags( $item->item_link_attr );
+      $link_attr = MywpHelper::sanitize_text( $item->item_link_attr );
 
       $link_attr_arr = explode( ' ' , $link_attr );
 
@@ -1021,7 +1150,13 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
           $link_attrs = explode( '=' , $link_attr_field );
 
-          if( empty( $link_attrs[0] ) or empty( $link_attrs[1] ) ) {
+          if( empty( $link_attrs[0] ) ) {
+
+            continue;
+
+          }
+
+          if( empty( $link_attrs[1] ) ) {
 
             continue;
 
@@ -1087,7 +1222,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
       foreach( $toolbar_items_added_classes as $toolbar_items_added_classes_item ) {
 
-        if( $toolbar_items_added_classes_item->ID === $item->item_parent ) {
+        if( (string) $toolbar_items_added_classes_item->ID === (string) $item->item_parent ) {
 
           $node_parent = $toolbar_items_added_classes_item->item_default_id;
 
@@ -1129,7 +1264,7 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     if( ! empty( $item->item_icon_class ) ) {
 
-      $title = sprintf( '<span class="%s"><span class="%s">%s</span></span>' , esc_attr( $item->item_icon_class ) , esc_attr( $title_class ) , $item->item_link_title );
+      $title = sprintf( '<span class="%s"><span class="%s">%s</span></span>' , esc_attr( $item->item_icon_class ) , esc_attr( $title_class ) , wp_kses_post( $item->item_link_title ) );
 
     } else {
 
@@ -1139,7 +1274,13 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
     if( empty( $node_group ) ) {
 
-      $add_menu = array( 'id' => $node_id , 'title' => wp_kses_post( $title ) , 'parent' => $node_parent , 'href' => $item->item_link_url , 'meta' => $item_meta );
+      $add_menu = array(
+        'id' => $node_id,
+        'title' => wp_kses_post( $title ),
+        'parent' => $node_parent,
+        'href' => $item->item_link_url,
+        'meta' => $item_meta
+      );
 
       $wp_admin_bar->add_menu( $add_menu );
 
@@ -1151,7 +1292,11 @@ abstract class MywpAbstractControllerToolbarModule extends MywpControllerAbstrac
 
       }
 
-      $add_menu = array( 'id' => $node_id , 'parent' => $node_parent , 'meta' => $item_meta );
+      $add_menu = array(
+        'id' => $node_id,
+        'parent' => $node_parent,
+        'meta' => $item_meta
+      );
 
       $wp_admin_bar->add_group( $add_menu );
 

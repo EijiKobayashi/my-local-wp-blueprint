@@ -28,7 +28,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'General' ),
+      'title' => __( 'General' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'admin_general',
       'use_advance' => true,
@@ -51,7 +51,10 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
     );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Notifications' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Notifications' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
@@ -60,7 +63,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_update_notice][<?php echo esc_attr( $field_name ); ?>]" class="hide_update_notice_<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data['hide_update_notice'][$field_name] , true ); ?> />
-                <?php _e( 'Hide notifications' , 'my-wp' ); ?>
+                <?php echo esc_html( __( 'Hide notifications' , 'my-wp' ) ); ?>
               </label>
             </td>
           </tr>
@@ -77,12 +80,15 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
     $setting_data = self::get_setting_data();
 
     $fields = array(
-      'options' => __( 'Screen Options' ),
+      'options' => __( 'Screen Options' , 'default' ),
       'help' => __( 'Help' , 'my-wp' ),
     );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Screen Options and Help Tab' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Screen Options and Help Tab' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
@@ -91,7 +97,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_screen_tabs][<?php echo esc_attr( $field_name ); ?>]" class="hide_screen_tabs_<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data['hide_screen_tabs'][$field_name] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
@@ -110,7 +116,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
     $fields = array(
       'left' => array(
         'label' => __( 'Left' , 'my-wp' ),
-        'code' => sprintf( __( 'Thank you for creating with <a href="%s">WordPress</a>.' ), __( 'https://wordpress.org/' ) ),
+        'code' => sprintf( __( 'Thank you for creating with <a href="%s">WordPress</a>.' , 'default' ), __( 'https://wordpress.org/' , 'default' ) ),
       ),
       'right' => array(
         'label' => __( 'Right' , 'my-wp' ),
@@ -119,7 +125,10 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
     );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Footer Text' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Footer Text' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
@@ -128,7 +137,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_footer_text][<?php echo esc_attr( $field_name ); ?>]" class="hide_footer_text_<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data['hide_footer_text'][$field_name] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
               <code><?php echo esc_html( $field_label['code'] ); ?></code>
             </td>
@@ -151,28 +160,31 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Custom Footer Text' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Custom Footer Text' , 'my-wp' ) ); ?></th>
           <td>
             <?php wp_editor( $setting_data['custom_footer_text'] , 'custom_footer_text' , array( 'textarea_name' => 'mywp[data][custom_footer_text]' , 'textarea_rows' => 5 ) ); ?>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Remove "WordPress" from title tag' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Remove "WordPress" from title tag' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_core_title_tag]" class="hide_core_title_tag" value="1" <?php checked( $setting_data['hide_core_title_tag'] , true ); ?> />
-              <?php _e( 'Remove' ); ?>
+              <?php echo esc_html( __( 'Remove' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Include your CSS file' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Include your CSS file' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][include_css_file]" class="include_css_file large-text" value="<?php echo esc_attr( $setting_data['include_css_file'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com/admin.css' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
               <code>[mywp_theme field="url"]/admin.css</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_theme field="url"]' ); ?>/admin.css</code>
@@ -180,13 +192,16 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Include your JS file' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Include your JS file' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][include_js_file]" class="include_js_file large-text" value="<?php echo esc_attr( $setting_data['include_js_file'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com/admin.js' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
               <code>[mywp_theme field="url"]/admin.js</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_theme field="url"]' ); ?>/admin.js</code>
@@ -194,33 +209,33 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Input CSS' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Input CSS' , 'my-wp' ) ); ?></th>
           <td>
-            <textarea type="text" name="mywp[data][input_css]" class="input_css large-text" placeholder="<?php echo esc_attr( 'body.wp-admin{ background-color: #000; }' ); ?>"><?php echo esc_attr( $setting_data['input_css'] ); ?></textarea>
+            <textarea type="text" name="mywp[data][input_css]" class="input_css large-text" placeholder="<?php echo esc_attr( 'body.wp-admin{ background-color: #000; }' ); ?>"><?php echo esc_textarea( $setting_data['input_css'] ); ?></textarea>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Max Post Revision' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Max Post Revision' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="text" name="mywp[data][max_post_revision]" class="max_post_revision small-text" value="<?php echo esc_attr( $setting_data['max_post_revision'] ); ?>" placeholder="-1" />
             </label>
             <p class="mywp-description">
               <span class="dashicons dashicons-warning"></span>
-              <?php printf( __( '%s is infinite stored.' , 'my-wp' ) , '-1' ); ?>
+              <?php echo esc_html( sprintf( __( '%s is infinite stored.' , 'my-wp' ) , '-1' ) ); ?>
             </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Not use Admin Screen' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Not use Admin Screen' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][not_use_admin]" class="not_use_admin" value="1" <?php checked( $setting_data['not_use_admin'] , true ); ?> />
-              <?php _e( 'Not use' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Not use' , 'my-wp' ) ); ?>
             </label>
             <p class="mywp-desc-caution">
               <span class="dashicons dashicons-warning"></span>
-              <?php _e( 'This feature is Locked out.' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'This feature is Locked out.' , 'my-wp' ) ); ?>
             </p>
           </td>
         </tr>
@@ -307,7 +322,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['custom_footer_text'] ) ) {
 
-      $new_formatted_data['custom_footer_text'] = wp_unslash( wp_kses_post( $formatted_data['custom_footer_text'] ) );
+      $new_formatted_data['custom_footer_text'] = wp_kses_post( $formatted_data['custom_footer_text'] );
 
     }
 
@@ -319,19 +334,19 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['include_css_file'] ) ) {
 
-      $new_formatted_data['include_css_file'] = wp_unslash( $formatted_data['include_css_file'] );
+      $new_formatted_data['include_css_file'] = MywpHelper::sanitize_text( $formatted_data['include_css_file'] );
 
     }
 
     if( ! empty( $formatted_data['include_js_file'] ) ) {
 
-      $new_formatted_data['include_js_file'] = wp_unslash( $formatted_data['include_js_file'] );
+      $new_formatted_data['include_js_file'] = MywpHelper::sanitize_text( $formatted_data['include_js_file'] );
 
     }
 
     if( ! empty( $formatted_data['input_css'] ) ) {
 
-      $new_formatted_data['input_css'] = strip_tags( wp_unslash( $formatted_data['input_css'] ) );
+      $new_formatted_data['input_css'] = wp_kses_post( $formatted_data['input_css'] );
 
     }
 
@@ -339,17 +354,7 @@ final class MywpSettingScreenAdminGeneral extends MywpAbstractSettingModule {
 
       if( $formatted_data['max_post_revision'] !== '' ) {
 
-        $max_post_revision = '';
-
-        if( strpos( $formatted_data['max_post_revision'] , '-' ) !== false ) {
-
-          $max_post_revision = '-';
-
-        }
-
-        $max_post_revision .= absint( $formatted_data['max_post_revision'] );
-
-        $new_formatted_data['max_post_revision'] = $max_post_revision;
+        $new_formatted_data['max_post_revision'] = MywpHelper::sanitize_number( $formatted_data['max_post_revision'] );
 
       }
 

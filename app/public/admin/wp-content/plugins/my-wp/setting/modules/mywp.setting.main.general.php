@@ -49,22 +49,22 @@ final class MywpSettingScreeMainGeneral extends MywpAbstractSettingModule {
     <div class="about-column column-main-right">
       <p class="right"><img src="<?php echo esc_url( MywpApi::get_plugin_url( 'assets' ) ); ?>img/admin-customize.png" /></p>
       <div class="left">
-        <p class="about-column-title"><?php _e( 'Admin Customize' , 'my-wp' ); ?></p>
-        <p class="about-column-description"><?php _e( 'Add the custom link menu to Sidebar, change the metabox title, order to list of Posts and more.' , 'my-wp' ); ?></p>
+        <p class="about-column-title"><?php echo esc_html( __( 'Admin Customize' , 'my-wp' ) ); ?></p>
+        <p class="about-column-description"><?php echo esc_html( __( 'Add the custom link menu to Sidebar, change the metabox title, order to list of Posts and more.' , 'my-wp' ) ); ?></p>
         <p>
-          <a href="<?php echo esc_url( admin_url( 'admin.php?page=mywp_admin' ) ); ?>" class="button button-primary"><?php _e( 'Admin Customize' , 'my-wp' ); ?></a>
-          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>document/admin-general/" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'Documentation' , 'my-wp' ); ?></a>
+          <a href="<?php echo esc_url( admin_url( 'admin.php?page=mywp_admin' ) ); ?>" class="button button-primary"><?php echo esc_html( __( 'Admin Customize' , 'my-wp' ) ); ?></a>
+          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>document/admin-general/" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php echo esc_html( __( 'Documentation' , 'my-wp' ) ); ?></a>
         </p>
       </div>
     </div>
 
     <div class="about-column column-main-left">
       <div class="right">
-        <p class="about-column-title"><?php _e( 'Frontend Customize' , 'my-wp' ); ?></p>
-        <p class="about-column-description"><?php _e( 'Hide the some tags, custom meta fields, disabled archive pages and more.' , 'my-wp' ); ?></p>
+        <p class="about-column-title"><?php echo esc_html( __( 'Frontend Customize' , 'my-wp' ) ); ?></p>
+        <p class="about-column-description"><?php echo esc_html( __( 'Hide the some tags, custom meta fields, disabled archive pages and more.' , 'my-wp' ) ); ?></p>
         <p>
-          <a href="<?php echo esc_url( admin_url( 'admin.php?page=mywp_frontend' ) ); ?>" class="button button-primary"> <?php _e( 'Frontend Customize' , 'my-wp' ); ?></a>
-          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>document/frontend-general/" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'Documentation' , 'my-wp' ); ?></a>
+          <a href="<?php echo esc_url( admin_url( 'admin.php?page=mywp_frontend' ) ); ?>" class="button button-primary"> <?php echo esc_html( __( 'Frontend Customize' , 'my-wp' ) ); ?></a>
+          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>document/frontend-general/" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php echo esc_html( __( 'Documentation' , 'my-wp' ) ); ?></a>
         </p>
       </div>
       <p class="left"><img src="<?php echo esc_url( MywpApi::get_plugin_url( 'assets' ) ); ?>img/frontend-customize.png" /></p>
@@ -73,21 +73,21 @@ final class MywpSettingScreeMainGeneral extends MywpAbstractSettingModule {
     <div class="about-column column-main-right">
       <p class="right"><img src="<?php echo esc_url( MywpApi::get_plugin_url( 'assets' ) ); ?>img/developer-tools.png" /></p>
       <div class="left">
-        <p class="about-column-title"><?php _e( 'For Developer' , 'my-wp' ); ?></p>
-        <p class="about-column-description"><?php _e( 'Debugging tools that are useful for developing plugin or theme.' , 'my-wp' ); ?></p>
+        <p class="about-column-title"><?php echo esc_html( __( 'For Developer' , 'my-wp' ) ); ?></p>
+        <p class="about-column-description"><?php echo esc_html( __( 'Debugging tools that are useful for developing plugin or theme.' , 'my-wp' ) ); ?></p>
         <p>
-          <a href="<?php echo esc_url( admin_url( 'admin.php?page=mywp_debug' ) ); ?>" class="button button-primary"><?php _e( 'Debug' , 'my-wp' ); ?></a>
-          <a href="<?php echo esc_url( $plugin_info['document_url'] ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'Documentation' , 'my-wp' ); ?></a>
+          <a href="<?php echo esc_url( admin_url( 'admin.php?page=mywp_debug' ) ); ?>" class="button button-primary"><?php echo esc_html( __( 'Debug' , 'my-wp' ) ); ?></a>
+          <a href="<?php echo esc_url( $plugin_info['document_url'] ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php echo esc_html( __( 'Documentation' , 'my-wp' ) ); ?></a>
         </p>
       </div>
     </div>
 
     <div class="about-column column-main-left">
       <div class="right">
-        <p class="about-column-title"><?php _e( 'Powerful add-ons' , 'my-wp' ); ?></p>
-        <p class="about-column-description"><?php _e( 'Customize only specific user roles, conditional lockout and notifications on WP and more.' , 'my-wp' ); ?></p>
+        <p class="about-column-title"><?php echo esc_html( __( 'Powerful add-ons' , 'my-wp' ) ); ?></p>
+        <p class="about-column-description"><?php echo esc_html( __( 'Customize only specific user roles, conditional lockout and notifications on WP and more.' , 'my-wp' ) ); ?></p>
         <p>
-          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>add-ons/" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'Add-ons' , 'my-wp' ); ?></a>
+          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>add-ons/" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php echo esc_html( __( 'Add-ons' , 'my-wp' ) ); ?></a>
         </p>
       </div>
       <p class="left"><img src="<?php echo esc_url( MywpApi::get_plugin_url( 'assets' ) ); ?>img/add-ons.png" /></p>
@@ -96,34 +96,36 @@ final class MywpSettingScreeMainGeneral extends MywpAbstractSettingModule {
 
     <hr />
 
-    <h3><?php printf( __( 'About %s' ) , esc_html( MYWP_NAME ) ); ?></h3>
+    <h3>
+      <?php echo esc_html( sprintf( __( 'About %s' , 'default' ) , MYWP_NAME ) ); ?>
+    </h3>
 
     <table>
       <tr>
-        <th><?php _e( 'Version' , 'my-wp' ); ?></th>
+        <th><?php echo esc_html( __( 'Version' , 'my-wp' ) ); ?></th>
         <td><?php echo esc_html( MYWP_VERSION ); ?></td>
       </tr>
       <tr>
-        <th><?php _e( 'Plugin Website' , 'my-wp' ); ?></th>
+        <th><?php echo esc_html( __( 'Plugin Website' , 'my-wp' ) ); ?></th>
         <td><a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>" target="_blank"><?php echo esc_html( $plugin_info['website_url'] ); ?></a></td>
       </tr>
       <tr>
-        <th><?php _e( 'Developer' , 'my-wp' ); ?></th>
+        <th><?php echo esc_html( __( 'Developer' , 'my-wp' ) ); ?></th>
         <td>
           <img src="<?php echo esc_attr( $schema ); ?>www.gravatar.com/avatar/7e05137c5a859aa987a809190b979ed4?s=20" width="20" />
           <a href="<?php echo esc_url( 'http://gqevu6bsiz.chicappa.jp/' ); ?>" target="_blank">gqevu6bsiz</a>
         </td>
       </tr>
       <tr>
-        <th><?php _e( 'Reviews' ); ?></th>
-        <td><a href="<?php echo esc_url( $plugin_info['review_url'] ); ?>" target="_blank"><?php _e( 'Reviews' ); ?></a></td>
+        <th><?php echo esc_html( __( 'Reviews' , 'default' ) ); ?></th>
+        <td><a href="<?php echo esc_url( $plugin_info['review_url'] ); ?>" target="_blank"><?php echo esc_html( __( 'Reviews' , 'default' ) ); ?></a></td>
       </tr>
       <tr>
-        <th><?php _e( 'Contact' , 'my-wp' ); ?></th>
+        <th><?php echo esc_html( __( 'Contact' , 'my-wp' ) ); ?></th>
         <td>
-          <a href="<?php echo esc_url( $plugin_info['forum_url'] ); ?>" target="_blank"><?php _e( 'Support Forums' , 'my-wp' ); ?></a>
-          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>contact/" target="_blank"><?php _e( 'Contact Form' , 'my-wp' ); ?></a>
-          <span class="dashicons dashicons-smiley"></span> <?php _e( 'If you find a bug, please contact me' , 'my-wp' ); ?>
+          <a href="<?php echo esc_url( $plugin_info['forum_url'] ); ?>" target="_blank"><?php echo esc_html( __( 'Support Forums' , 'my-wp' ) ); ?></a>
+          <a href="<?php echo esc_url( $plugin_info['website_url'] ); ?>contact/" target="_blank"><?php echo esc_html( __( 'Contact Form' , 'my-wp' ) ); ?></a>
+          <span class="dashicons dashicons-smiley"></span> <?php echo esc_html( __( 'If you find a bug, please contact me' , 'my-wp' ) ); ?>
         </td>
       </tr>
     </table>

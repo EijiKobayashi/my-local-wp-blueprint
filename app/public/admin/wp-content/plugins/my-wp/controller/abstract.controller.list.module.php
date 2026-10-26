@@ -74,7 +74,7 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
     $nonce_key = 'mywp_controller_' . static::$id . '_custom_search_filter';
 
-    if( empty( $_REQUEST[ $nonce_key ] ) ) {
+    if( ! isset( $_REQUEST[ $nonce_key ] ) ) {
 
       return false;
 
@@ -82,13 +82,13 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
     check_admin_referer( $nonce_key , $nonce_key );
 
-    if( empty( $_REQUEST['mywp_controller_' . static::$id ]['custom_search_filter_request'] ) ) {
+    if( ! isset( $_REQUEST['mywp_controller_' . static::$id ]['custom_search_filter_request'] ) ) {
 
       return false;
 
     }
 
-    $custom_search_filter_requests = $_REQUEST['mywp_controller_' . static::$id ]['custom_search_filter_request'];
+    $custom_search_filter_requests = wp_unslash( $_REQUEST['mywp_controller_' . static::$id ]['custom_search_filter_request'] );
 
     static::custom_search_filter_query_do( $query , $custom_search_filter_requests );
 
@@ -97,6 +97,10 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
   protected static function custom_search_filter_query_do( $query , $custom_search_filter_requests ) {}
 
   public static function print_custom_search_filter() {
+
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
 
     $custom_search_filter_fields = static::get_custom_search_filter_fields();
 
@@ -164,7 +168,7 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
         if( ! empty( $custom_search_filter_field['title'] ) ) {
 
-          $placeholder = strip_tags( $custom_search_filter_field['title'] );
+          $placeholder = MywpHelper::sanitize_text( $custom_search_filter_field['title'] );
 
         }
 
@@ -216,9 +220,9 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
     $custom_search_filter_requests = array();
 
-    if( ! empty( $_REQUEST['mywp_controller_' . static::$id ]['custom_search_filter_request'] ) ) {
+    if( isset( $_REQUEST['mywp_controller_' . static::$id ]['custom_search_filter_request'] ) ) {
 
-      $custom_search_filter_requests = $_REQUEST['mywp_controller_' . static::$id]['custom_search_filter_request'];
+      $custom_search_filter_requests = wp_unslash( $_REQUEST['mywp_controller_' . static::$id]['custom_search_filter_request'] );
 
     }
 
@@ -382,7 +386,7 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
           }
 
-          $date = MywpHelper::sanitize_date( $custom_search_filter_requests[ $custom_search_filter_field_id ][ $k ] );
+          $date = MywpHelper::sanitize_date_ymd( $custom_search_filter_requests[ $custom_search_filter_field_id ][ $k ] );
 
           if( empty( $date ) ) {
 
@@ -457,8 +461,6 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
       $custom_search_filter_add_class = ' active ';
 
     }
-
-    $class = get_called_class();
 
     ?>
 
@@ -685,7 +687,7 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
       <p class="title-toggle">
         <a href="javascript:void(0);">
           <span class="icon"></span>
-          <span class="title"><?php _e( 'Search Filter' , 'my-wp' ); ?></span>
+          <span class="title"><?php echo esc_html( __( 'Search Filter' , 'my-wp' ) ); ?></span>
         </a>
       </p>
 
@@ -765,7 +767,13 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
                         <?php foreach( $custom_search_filter_field['choices'] as $key => $val ) : ?>
 
-                          <?php if( is_array( $key ) or is_array( $val ) ) : ?>
+                          <?php if( is_array( $key ) ) : ?>
+
+                            <?php continue; ?>
+
+                          <?php endif; ?>
+
+                          <?php if( is_array( $val ) ) : ?>
 
                             <?php continue; ?>
 
@@ -775,9 +783,13 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
                           <?php if( ! empty( $custom_search_filter_field['multiple'] ) ) : ?>
 
-                            <?php if( is_array( $custom_search_filter_field['input_value'] ) && in_array( (string) $key , $custom_search_filter_field['input_value'] , true ) ) : ?>
+                            <?php if( is_array( $custom_search_filter_field['input_value'] ) ) : ?>
 
-                              <?php $selected = true; ?>
+                              <?php if( in_array( (string) $key , $custom_search_filter_field['input_value'] , true ) ) : ?>
+
+                                <?php $selected = true; ?>
+
+                              <?php endif; ?>
 
                             <?php endif; ?>
 
@@ -809,7 +821,13 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
                         <?php foreach( $custom_search_filter_field['choices'] as $key => $val ) : ?>
 
-                          <?php if( is_array( $key ) or is_array( $val ) ) : ?>
+                          <?php if( is_array( $key ) ) : ?>
+
+                            <?php continue; ?>
+
+                          <?php endif; ?>
+
+                          <?php if( is_array( $val ) ) : ?>
 
                             <?php continue; ?>
 
@@ -827,7 +845,9 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
                       </ul>
 
                       <p class="clear-radio">
-                        <button type="button" class="button button-secondary button-small"><?php _e( 'Clear' ); ?></button>
+                        <button type="button" class="button button-secondary button-small">
+                          <?php echo esc_html( __( 'Clear' , 'default' ) ); ?>
+                        </button>
                       </p>
 
                     <?php endif; ?>
@@ -840,7 +860,13 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
                         <?php foreach( $custom_search_filter_field['choices'] as $key => $val ) : ?>
 
-                          <?php if( is_array( $key ) or is_array( $val ) ) : ?>
+                          <?php if( is_array( $key ) ) : ?>
+
+                            <?php continue; ?>
+
+                          <?php endif; ?>
+
+                          <?php if( is_array( $val ) ) : ?>
 
                             <?php continue; ?>
 
@@ -870,12 +896,12 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
                   <?php elseif( $custom_search_filter_field['type'] === 'date' ) : ?>
 
                     <label class="from">
-                      <?php _e( 'From' ); ?>
+                      <?php echo esc_html( __( 'From' , 'default' ) ); ?>
                       <input type="text" name="<?php echo esc_attr( $custom_search_filter_field['input_name'] ); ?>[from]" value="<?php echo esc_attr( $custom_search_filter_field['input_value']['from'] ); ?>" placeholder="<?php echo esc_attr( $custom_search_filter_field['placeholder'] ); ?>" class="from" />
                     </label>
 
                     <label class="to">
-                      <?php _e( 'To' ); ?>
+                      <?php echo esc_html( __( 'To' , 'default' ) ); ?>
                       <input type="text" name="<?php echo esc_attr( $custom_search_filter_field['input_name'] ); ?>[to]" value="<?php echo esc_attr( $custom_search_filter_field['input_value']['to'] ); ?>" placeholder="<?php echo esc_attr( $custom_search_filter_field['placeholder'] ); ?>" class="to" />
                     </label>
 
@@ -894,8 +920,6 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
                     <?php
                       $message = sprintf( 'Unknown $custom_search_filter_field["type"] = %s.' , $custom_search_filter_field['type'] );
 
-                      $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
-
                       MywpHelper::error_message( $message , $called_text );
 
                       //print_r($custom_search_filter_field);
@@ -907,7 +931,7 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
 
                     <div class="form-field-description">
 
-                      <?php echo $custom_search_filter_field['description']; ?>
+                      <?php echo wp_kses_post( $custom_search_filter_field['description'] ); ?>
 
                     </div>
 
@@ -922,7 +946,9 @@ abstract class MywpAbstractControllerListModule extends MywpControllerAbstractMo
           </div>
 
           <p class="filter-form-submit">
-            <button type="submit" class="button button-primary"><?php esc_html_e( 'Search' ); ?></button>
+            <button type="submit" class="button button-primary">
+              <?php echo esc_html( __( 'Search' , 'default' ) ); ?>
+            </button>
           </p>
 
         </form>

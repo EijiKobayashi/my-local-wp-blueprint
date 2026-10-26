@@ -24,7 +24,7 @@ final class MywpSettingMetaBox {
 
     if( empty( $mywp_controller['model'] ) ) {
 
-      MywpHelper::error_require_message( '$mywp_controller["model"]' , $called_text );
+      MywpHelper::error_not_found_message( '$mywp_controller["model"]' , $called_text );
 
       return false;
 
@@ -40,7 +40,7 @@ final class MywpSettingMetaBox {
 
     if( empty( $regist_meta_boxes_model ) ) {
 
-      MywpHelper::error_require_message( '$regist_meta_boxes_model' , $called_text );
+      MywpHelper::error_not_found_message( '$regist_meta_boxes_model' , $called_text );
 
       return false;
 
@@ -49,6 +49,8 @@ final class MywpSettingMetaBox {
     $option = $regist_meta_boxes_model->get_option();
 
     if( empty( $option['regist_meta_boxes'] ) ) {
+
+      MywpHelper::error_not_found_message( '$option["regist_meta_boxes"]' , $called_text );
 
       return false;
 
@@ -62,9 +64,11 @@ final class MywpSettingMetaBox {
 
   public static function get_setting_meta_box( $meta_box_screen_id = false ) {
 
-    if( empty( $meta_box_screen_id ) ) {
+    $called_text = sprintf( '%s::%s( $meta_box_screen_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$meta_box_screen_id' );
+    $meta_box_screen_id = MywpHelper::sanitize_text( $meta_box_screen_id );
+
+    if( empty( $meta_box_screen_id ) ) {
 
       MywpHelper::error_require_message( '$meta_box_screen_id' , $called_text );
 
@@ -74,7 +78,17 @@ final class MywpSettingMetaBox {
 
     $setting_meta_boxes = self::get_setting_meta_boxes();
 
-    if( empty( $setting_meta_boxes ) or empty( $setting_meta_boxes[ $meta_box_screen_id ] ) ) {
+    if( empty( $setting_meta_boxes ) ) {
+
+      MywpHelper::error_not_found_message( '$setting_meta_boxes' , $called_text );
+
+      return false;
+
+    }
+
+    if( empty( $setting_meta_boxes[ $meta_box_screen_id ] ) ) {
+
+      MywpHelper::error_not_found_message( '$setting_meta_boxes[ $meta_box_screen_id ]' , $called_text );
 
       return false;
 
@@ -86,7 +100,17 @@ final class MywpSettingMetaBox {
 
   public static function set_current_meta_box_screen_id( $meta_box_screen_id = false ) {
 
-    $meta_box_screen_id = strip_tags( $meta_box_screen_id );
+    $called_text = sprintf( '%s::%s( $meta_box_screen_id )' , __CLASS__ , __FUNCTION__ );
+
+    $meta_box_screen_id = MywpHelper::sanitize_text( $meta_box_screen_id );
+
+    if( empty( $meta_box_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$meta_box_screen_id' , $called_text );
+
+      return false;
+
+    }
 
     self::$current_meta_box_screen_id = $meta_box_screen_id;
 
@@ -102,9 +126,11 @@ final class MywpSettingMetaBox {
 
   private static function set_current_meta_boxes( $meta_box_screen_id = false ) {
 
-    if( empty( $meta_box_screen_id ) ) {
+    $called_text = sprintf( '%s::%s( $meta_box_screen_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$meta_box_screen_id' );
+    $meta_box_screen_id = MywpHelper::sanitize_text( $meta_box_screen_id );
+
+    if( empty( $meta_box_screen_id ) ) {
 
       MywpHelper::error_require_message( '$meta_box_screen_id' , $called_text );
 
@@ -115,6 +141,8 @@ final class MywpSettingMetaBox {
     $meta_boxes = self::get_setting_meta_box( $meta_box_screen_id );
 
     if( empty( $meta_boxes ) ) {
+
+      MywpHelper::error_not_found_message( '$meta_boxes' , $called_text );
 
       return false;
 
@@ -132,7 +160,17 @@ final class MywpSettingMetaBox {
 
   public static function set_current_meta_box_screen_url( $meta_box_screen_url = false ) {
 
-    $meta_box_screen_url = strip_tags( $meta_box_screen_url );
+    $called_text = sprintf( '%s::%s( $meta_box_screen_url )' , __CLASS__ , __FUNCTION__ );
+
+    $meta_box_screen_url = MywpHelper::sanitize_url( $meta_box_screen_url );
+
+    if( empty( $meta_box_screen_url ) ) {
+
+      MywpHelper::error_require_message( '$meta_box_screen_url' , $called_text );
+
+      return false;
+
+    }
 
     self::$current_metabox_screen_url = $meta_box_screen_url;
 
@@ -146,27 +184,45 @@ final class MywpSettingMetaBox {
 
   public static function set_current_meta_box_setting_data( $meta_box_setting_data = array() ) {
 
+    $called_text = sprintf( '%s::%s( $meta_box_setting_data )' , __CLASS__ , __FUNCTION__ );
+
     if( ! is_array( $meta_box_setting_data ) ) {
 
       $meta_box_setting_data = array();
 
     }
 
+    $current_meta_box_setting_data = array();
+
     if( ! empty( $meta_box_setting_data ) ) {
 
-      foreach( $meta_box_setting_data as $key => $data ) {
+      foreach( $meta_box_setting_data as $metabox_id => $data ) {
+
+        $metabox_id = MywpHelper::sanitize_text( $metabox_id );
+
+        if( empty( $metabox_id ) ) {
+
+          MywpHelper::error_not_found_message( '$metabox_id' , $called_text );
+
+          continue;
+
+        }
 
         if( ! isset( $data['action'] ) ) {
 
-          unset( $meta_box_setting_data[ $key ] );
+          MywpHelper::error_not_found_message( '$data["action"]' , $called_text );
+
+          continue;
 
         }
+
+        $current_meta_box_setting_data[ $metabox_id ] = $data;
 
       }
 
     }
 
-    self::$current_metabox_setting_data = $meta_box_setting_data;
+    self::$current_metabox_setting_data = $current_meta_box_setting_data;
 
   }
 
@@ -178,7 +234,11 @@ final class MywpSettingMetaBox {
 
   public static function delete_current_meta_boxes() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     if( empty( self::$current_meta_box_screen_id ) ) {
+
+      MywpHelper::error_not_found_message( '$current_meta_box_screen_id' , $called_text );
 
       return false;
 
@@ -188,7 +248,7 @@ final class MywpSettingMetaBox {
 
     if( empty( $regist_meta_boxes_model ) ) {
 
-      MywpHelper::error_require_message( '$regist_meta_boxes_model' , $called_text );
+      MywpHelper::error_not_found_message( '$regist_meta_boxes_model' , $called_text );
 
       return false;
 

@@ -21,7 +21,7 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'Edit User' , 'my-wp' ) . '/' . __( 'Profile' ),
+      'title' => __( 'Edit User' , 'my-wp' ) . '/' . __( 'Profile' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'admin_user_edit',
       'use_advance' => true,
@@ -37,21 +37,24 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
     $setting_data = self::get_setting_data();
 
     $fields = array(
-      'hide_rich_editing' => __( 'Visual Editor' ),
-      'hide_syntax_highlighting' => __( 'Syntax Highlighting' ),
-      'hide_admin_color' => __( 'Admin Color Scheme' ),
-      'hide_comment_shortcuts' => __( 'Keyboard Shortcuts' ),
-      'hide_toolbar' => __( 'Toolbar' ),
-      'hide_language' => __( 'Language' ),
-      'hide_url' => __( 'Website' ),
-      'hide_description' => __( 'Biographical Info' ),
-      'hide_picture' => __( 'Profile Picture' ),
-      'hide_session' => __( 'Sessions' ),
-      'hide_application_passwords' => __( 'Application Passwords' ),
+      'hide_rich_editing' => __( 'Visual Editor' , 'default' ),
+      'hide_syntax_highlighting' => __( 'Syntax Highlighting' , 'default' ),
+      'hide_admin_color' => __( 'Admin Color Scheme' , 'default' ),
+      'hide_comment_shortcuts' => __( 'Keyboard Shortcuts' , 'default' ),
+      'hide_toolbar' => __( 'Toolbar' , 'default' ),
+      'hide_language' => __( 'Language' , 'default' ),
+      'hide_url' => __( 'Website' , 'default' ),
+      'hide_description' => __( 'Biographical Info' , 'default' ),
+      'hide_picture' => __( 'Profile Picture' , 'default' ),
+      'hide_session' => __( 'Sessions' , 'default' ),
+      'hide_application_passwords' => __( 'Application Passwords' , 'default' ),
     );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'General' , 'default' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
@@ -60,7 +63,7 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][<?php echo esc_attr( $field_name ); ?>]" class="<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data[ $field_name ] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
@@ -83,32 +86,47 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
     $contact_fields = wp_get_user_contact_methods( $user );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Other' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Other' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
+
         <?php if( ! empty( $contact_fields ) ) : ?>
+
           <?php foreach( $contact_fields as $field_name => $field_label ) : ?>
+
             <?php $checked = false; ?>
-            <?php if( ! empty(  $setting_data['hide_contact_fields'][ $field_name ] ) ) : ?>
+
+            <?php if( ! empty( $setting_data['hide_contact_fields'][ $field_name ] ) ) : ?>
+
               <?php $checked = true; ?>
+
             <?php endif; ?>
+
             <tr>
-              <th><?php echo esc_html( strip_tags( $field_label ) ); ?></th>
+              <th><?php echo esc_html( $field_label ); ?></th>
               <td>
                 <label>
                   <input type="checkbox" name="mywp[data][hide_contact_fields][<?php echo esc_attr( $field_name ); ?>]" class="hide_contact_fields-<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $checked , true ); ?> />
-                  <?php _e( 'Hide' ); ?>
+                  <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
                 </label>
               </td>
             </tr>
+
           <?php endforeach; ?>
+
         <?php else : ?>
+
           <tr>
             <td>
-              <?php _e( 'Not found contact methods.' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Not found contact methods.' , 'my-wp' ) ); ?>
             </td>
           </tr>
+
         <?php endif; ?>
+
       </tbody>
     </table>
     <p>&nbsp;</p>
@@ -117,6 +135,8 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
   }
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
+
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
 
     $mywp_model = self::get_model();
 
@@ -200,7 +220,15 @@ final class MywpSettingScreenAdminUserEdit extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['hide_contact_fields'] as $field_name => $field_val ) {
 
-        $field_name = strip_tags( $field_name );
+        $field_name = MywpHelper::sanitize_text( $field_name );
+
+        if( empty( $field_name ) ) {
+
+          MywpHelper::error_not_found_message( '$field_name' , $called_text );
+
+          continue;
+
+        }
 
         $new_formatted_data['hide_contact_fields'][ $field_name ] = true;
 

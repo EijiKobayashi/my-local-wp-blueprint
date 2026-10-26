@@ -55,7 +55,9 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
   public static function mywp_wp_loaded() {
 
     add_action( 'mywp_request_admin' , array( __CLASS__ , 'mywp_request_admin' ) , 49 );
+
     add_action( 'mywp_request_frontend' , array( __CLASS__ , 'mywp_request_frontend' ) , 49 );
+
     add_action( 'mywp_ajax' , array( __CLASS__ , 'mywp_ajax' ) , 49 );
 
   }
@@ -84,7 +86,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
     }
 
-    if( in_array( $user_id , $setting_data['users'] ) ) {
+    if( in_array( (int) $user_id , $setting_data['users'] , true ) ) {
 
       return true;
 
@@ -105,15 +107,23 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
     }
 
     add_filter( 'mywp_post_types' , array( __CLASS__ , 'mywp_post_types' ) , 49 );
+
     add_filter( 'mywp_taxonomy_types' , array( __CLASS__ , 'mywp_taxonomy_types' ) , 49 );
 
     add_filter( 'mywp_debug_renders' , array( __CLASS__ , 'mywp_debug_renders' ) , 11 );
+
     add_action( 'mywp_debug_render_shortcode' , array( __CLASS__ , 'mywp_debug_render_shortcode' ) , 11 );
+
     add_action( 'mywp_debug_render_post_type' , array( __CLASS__ , 'mywp_debug_render_post_type' ) , 11 );
+
     add_action( 'mywp_debug_render_taxonomy' , array( __CLASS__ , 'mywp_debug_render_taxonomy' ) , 11 );
+
     add_action( 'mywp_debug_render_controller' , array( __CLASS__ , 'mywp_debug_render_controller' ) , 11 );
+
     add_action( 'mywp_debug_render_current_setting' , array( __CLASS__ , 'mywp_debug_render_current_setting' ) , 11 );
+
     add_action( 'mywp_debug_render_settings' , array( __CLASS__ , 'mywp_debug_render_settings' ) , 11 );
+
     add_action( 'mywp_debug_render_thirdparty' , array( __CLASS__ , 'mywp_debug_render_thirdparty' ) , 11 );
 
   }
@@ -123,6 +133,7 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
     foreach( $post_types as $post_type_name => $post_type_setting ) {
 
       $post_types[ $post_type_name ]['show_ui'] = true;
+
       $post_types[ $post_type_name ]['delete_with_user'] = true;
 
     }
@@ -254,9 +265,13 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
       foreach( $controllers as $controller_id => $controller ) {
 
-        if( ! empty( $controller['model'] ) && is_object( $controller['model'] ) ) {
+        if( ! empty( $controller['model'] ) ) {
 
-          $controller['model']->get_setting_data();
+          if( is_object( $controller['model'] ) ) {
+
+            $controller['model']->get_setting_data();
+
+          }
 
         }
 
@@ -410,17 +425,19 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
 
         if( $plugin['activate']  ) {
 
-          printf( '<strong>%s</strong>' , __( 'Activated' , 'my-wp' ) );
+          printf( '<strong>%s</strong>' , esc_html( __( 'Activated' , 'my-wp' ) ) );
 
         } else {
 
-          _e( 'Not Activated' , 'my-wp' );
+          echo esc_html( __( 'Not Activated' , 'my-wp' ) );
 
         }
 
         echo '<br />';
 
-        echo esc_html( sprintf( __( 'plugin base name: %s' , 'my-wp' ) . '<br />' , $plugin['plugin_base_name'] ) );
+        echo esc_html( sprintf( __( 'plugin base name: %s' , 'my-wp' ) , $plugin['plugin_base_name'] ) );
+
+        echo '<br />';
 
         if( $plugin['activate']  ) {
 
@@ -450,7 +467,9 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
     add_filter( 'current_edit_per_page' , array( __CLASS__ , 'current_edit_per_page' ) );
 
     add_action( 'mywp_setting_admin_sidebar_print_item_header_pre_add_title' , array( __CLASS__ , 'mywp_setting_print_item_header_pre_add_title' ) , 10 , 2 );
+
     add_action( 'mywp_setting_admin_toolbar_print_item_header_pre_add_title' , array( __CLASS__ , 'mywp_setting_print_item_header_pre_add_title' ) , 10 , 2 );
+
     add_action( 'mywp_setting_frontend_toolbar_print_item_header_pre_add_title' , array( __CLASS__ , 'mywp_setting_print_item_header_pre_add_title' ) , 10 , 2 );
 
   }
@@ -474,7 +493,9 @@ final class MywpControllerModuleDebugGeneral extends MywpControllerAbstractModul
     }
 
     add_action( 'mywp_setting_admin_sidebar_print_item_header_pre_add_title' , array( __CLASS__ , 'mywp_setting_print_item_header_pre_add_title' ) , 10 , 2 );
+
     add_action( 'mywp_setting_admin_toolbar_print_item_header_pre_add_title' , array( __CLASS__ , 'mywp_setting_print_item_header_pre_add_title' ) , 10 , 2 );
+
     add_action( 'mywp_setting_frontend_toolbar_print_item_header_pre_add_title' , array( __CLASS__ , 'mywp_setting_print_item_header_pre_add_title' ) , 10 , 2 );
 
   }

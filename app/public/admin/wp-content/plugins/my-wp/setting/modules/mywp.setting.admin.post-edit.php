@@ -33,7 +33,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => sprintf( '%s/%s' , __( 'Edit Post' ) , __( 'Add Post' ) ),
+      'title' => sprintf( '%s/%s' , __( 'Edit Post' , 'default' ) , __( 'Add Post' , 'default' ) ),
       'menu' => self::$menu,
       'controller' => 'admin_post_edit',
       'use_advance' => true,
@@ -164,7 +164,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     if( empty( $current_setting_post_type ) ) {
 
-      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post Type' , 'my-wp' ) , esc_html( $current_setting_post_type_id ) );
+      echo esc_html( sprintf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post Type' , 'my-wp' ) , $current_setting_post_type_id ) );
 
       return false;
 
@@ -223,15 +223,18 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     <?php if( function_exists( 'use_block_editor_for_post_type' ) ) : ?>
 
-      <h3 class="mywp-setting-screen-subtitle"><?php _e( 'For Block/Classic Editor' , 'my-wp' ); ?></h3>
+      <h3 class="mywp-setting-screen-subtitle">
+        <?php echo esc_html( __( 'For Block/Classic Editor' , 'my-wp' ) ); ?>
+      </h3>
+
       <table class="form-table">
         <tbody>
           <tr>
-            <th><?php _e( 'Change the Editor' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Change the Editor' , 'my-wp' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][use_classic_editor]" class="use_classic_editor" value="1" <?php checked( $setting_data['use_classic_editor'] , true ); ?> />
-                <?php _e( 'Use Classic Editor' , 'my-wp' ); ?>
+                <?php echo esc_html( __( 'Use Classic Editor' , 'my-wp' ) ); ?>
               </label>
             </td>
           </tr>
@@ -246,7 +249,9 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     <?php if( self::$is_use_block_editor ) : ?>
 
-      <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Management of Document panels (block editor)' , 'my-wp' ); ?></h3>
+      <h3 class="mywp-setting-screen-subtitle">
+        <?php echo esc_html( __( 'Management of Document panels (block editor)' , 'my-wp' ) ); ?>
+      </h3>
 
       <?php MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-management-block-editor-panels.php' ); ?>
 
@@ -254,7 +259,9 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     <?php endif; ?>
 
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Management of meta boxes' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Management of meta boxes' , 'my-wp' ) ); ?>
+    </h3>
 
     <?php MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-management-meta-boxes.php' ); ?>
 
@@ -283,14 +290,23 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     <?php if( ! self::$is_use_block_editor ) : ?>
 
-      <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Updated Messages' , 'my-wp' ); ?></h3>
+      <h3 class="mywp-setting-screen-subtitle">
+        <?php echo esc_html( __( 'Updated Messages' , 'my-wp' ) ); ?>
+      </h3>
+
       <table class="form-table">
         <tbody>
+
           <?php foreach( $update_messages_default as $update_message_key => $update_message ) : ?>
+
             <?php $val = ''; ?>
+
             <?php if( ! empty( $setting_data['post_updated_messages'][ $update_message_key ] ) ) : ?>
+
               <?php $val = $setting_data['post_updated_messages'][ $update_message_key ]; ?>
+
             <?php endif; ?>
+
             <tr>
               <th><?php echo esc_html( $update_message['title'] ); ?></th>
               <td>
@@ -299,7 +315,9 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
                 </label>
               </td>
             </tr>
+
           <?php endforeach; ?>
+
         </tbody>
       </table>
 
@@ -307,18 +325,21 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     <?php endif; ?>
 
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'General' , 'default' ) ); ?>
+    </h3>
 
     <table class="form-table">
       <tbody>
+
         <?php if( self::$is_use_block_editor ) : ?>
 
           <tr>
-            <th><?php _e( 'Top left button' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Top left button' , 'my-wp' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][block_editor_top_left_icon]" class="block_editor_top_left_icon" value="1" <?php checked( $setting_data['block_editor_top_left_icon'] , true ); ?> />
-                <?php _e( 'Change to back icon' , 'my-wp' ); ?>
+                <?php echo esc_html( __( 'Change to back icon' , 'my-wp' ) ); ?>
               </label>
             </td>
           </tr>
@@ -335,23 +356,23 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
               <?php else : ?>
 
-                <?php echo _x( 'Add New' , 'post' ); ?>
+                <?php echo esc_html( _x( 'Add New' , 'post' ) ); ?>
 
               <?php endif; ?>
             </th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php _e( 'Title' ); ?></th>
+            <th><?php echo esc_html( __( 'Title' , 'default' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_title]" class="hide_title" value="1" <?php checked( $setting_data['hide_title'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
@@ -359,10 +380,10 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
         <?php endif; ?>
 
         <tr>
-          <th><?php _e( 'Change title placeholder' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Change title placeholder' , 'my-wp' ) ); ?></th>
           <td>
             <label>
-              <input type="text" name="mywp[data][change_title_placeholder]" class="change_title_placeholder large-text" value="<?php echo esc_attr( $setting_data['change_title_placeholder'] ); ?>" placeholder="<?php echo esc_attr( __( 'Add title' ) ); ?>" />
+              <input type="text" name="mywp[data][change_title_placeholder]" class="change_title_placeholder large-text" value="<?php echo esc_attr( $setting_data['change_title_placeholder'] ); ?>" placeholder="<?php echo esc_attr( __( 'Add title' , 'default' ) ); ?>" />
             </label>
           </td>
         </tr>
@@ -370,38 +391,38 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
         <?php if( ! self::$is_use_block_editor ) : ?>
 
           <tr>
-            <th><?php _e( 'Change Post title to Post ID' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Change Post title to Post ID' , 'my-wp' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][auto_change_title]" class="auto_change_title" value="1" <?php checked( $setting_data['auto_change_title'] , true ); ?> />
-                <?php _e( 'Auto Change' , 'my-wp' ); ?>
+                <?php echo esc_html( __( 'Auto Change' , 'my-wp' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php _e( 'Permalinks' ); ?></th>
+            <th><?php echo esc_html( __( 'Permalinks' , 'default' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_permalink]" class="hide_permalink" value="1" <?php checked( $setting_data['hide_permalink'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php _e( 'Change Permalink Structure' ); ?></th>
+            <th><?php echo esc_html( __( 'Change Permalink Structure' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_change_permalink]" class="hide_change_permalink" value="1" <?php checked( $setting_data['hide_change_permalink'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php _e( 'Content' ); ?></th>
+            <th><?php echo esc_html( __( 'Content' , 'default' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_content]" class="hide_content" value="1" <?php checked( $setting_data['hide_content'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
@@ -409,11 +430,11 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
         <?php endif; ?>
 
         <tr>
-          <th><?php _e( 'Re-arrange meta boxes' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Re-arrange meta boxes' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][prevent_meta_box]" class="prevent_meta_box" value="1" <?php checked( $setting_data['prevent_meta_box'] , true ); ?> />
-              <?php _e( 'Prevent' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Prevent' , 'my-wp' ) ); ?>
             </label>
           </td>
         </tr>
@@ -421,12 +442,16 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
         <?php if( ! self::$is_use_block_editor ) : ?>
 
           <tr>
-            <th><?php _e( 'Forced Editor' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Forced Editor' , 'my-wp' ) ); ?></th>
             <td>
               <select name="mywp[data][forced_editor]" class="forced_editor">
                 <option value=""></option>
-                <option value="tinymce" <?php selected( 'tinymce' , $setting_data['forced_editor'] ); ?>><?php echo esc_attr( sprintf( __( 'Only use %s' , 'my-wp' ) , _x( 'Visual' , 'Name for the Visual editor tab' ) ) ); ?></option>
-                <option value="html" <?php selected( 'html' , $setting_data['forced_editor'] ); ?>><?php echo esc_attr( sprintf( __( 'Only use %s' , 'my-wp' ) , _x( 'Text' , 'Name for the Text editor tab (formerly HTML)' ) ) ); ?></option>
+                <option value="tinymce" <?php selected( 'tinymce' , $setting_data['forced_editor'] ); ?>>
+                  <?php echo esc_html( sprintf( __( 'Only use %s' , 'my-wp' ) , _x( 'Visual' , 'Name for the Visual editor tab' ) ) ); ?>
+                </option>
+                <option value="html" <?php selected( 'html' , $setting_data['forced_editor'] ); ?>>
+                  <?php echo esc_html( sprintf( __( 'Only use %s' , 'my-wp' ) , _x( 'Text' , 'Name for the Text editor tab (formerly HTML)' ) ) ); ?>
+                </option>
               </select>
             </td>
           </tr>
@@ -496,74 +521,77 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     <?php if( ! self::$is_use_block_editor ) : ?>
 
-      <h3 class="mywp-setting-screen-subtitle"><?php echo _e( 'Publish metabox' , 'my-wp' ); ?></h3>
+      <h3 class="mywp-setting-screen-subtitle">
+        <?php echo esc_html( __( 'Publish metabox' , 'my-wp' ) ); ?>
+      </h3>
+
       <table class="form-table">
         <tbody>
           <tr>
-            <th><?php echo _e( 'Save Draft' ); ?></th>
+            <th><?php echo esc_html( __( 'Save Draft' , 'default' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_publish_metabox_draft]" class="hide_publish_metabox_draft" value="1" <?php checked( $setting_data['hide_publish_metabox_draft'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php echo _e( 'Preview Changes' ); ?></th>
+            <th><?php echo esc_html( __( 'Preview Changes' , 'default' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_publish_metabox_preview]" class="hide_publish_metabox_preview" value="1" <?php checked( $setting_data['hide_publish_metabox_preview'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php echo _e( 'Changes Post Status' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Changes Post Status' , 'my-wp' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_publish_metabox_change_post_status]" class="hide_publish_metabox_change_post_status" value="1" <?php checked( $setting_data['hide_publish_metabox_change_post_status'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php echo _e( 'Changes Publish Status' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Changes Publish Status' , 'my-wp' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_publish_metabox_change_publish_status]" class="hide_publish_metabox_change_publish_status" value="1" <?php checked( $setting_data['hide_publish_metabox_change_publish_status'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php echo _e( 'Changes Publish On' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Changes Publish On' , 'my-wp' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_publish_metabox_change_publish_on]" class="hide_publish_metabox_change_publish_on" value="1" <?php checked( $setting_data['hide_publish_metabox_change_publish_on'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php echo _e( 'Revisions' ); ?></th>
+            <th><?php echo esc_html( __( 'Revisions' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][hide_publish_metabox_revisions]" class="hide_publish_metabox_revisions" value="1" <?php checked( $setting_data['hide_publish_metabox_revisions'] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php echo _e( 'Custom post statuses' ); ?></th>
+            <th><?php echo esc_html( __( 'Custom post statuses' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][show_select_custom_post_statuses]" id="show_select_custom_post_statuses" class="show_select_custom_post_statuses" value="1" <?php checked( $setting_data['show_select_custom_post_statuses'] , true ); ?> />
-                <?php _e( 'Show' ); ?>
+                <?php echo esc_html( __( 'Show' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
           <tr>
-            <th><?php echo _e( 'Selectable post statuses' ); ?></th>
+            <th><?php echo esc_html( __( 'Selectable post statuses' , 'default' ) ); ?></th>
             <td>
               <div id="selectable-post-statuses">
 
@@ -627,6 +655,8 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
 
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_model = self::get_model();
 
     if( empty( $mywp_model ) ) {
@@ -641,7 +671,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['post_type'] ) ) {
 
-      $new_formatted_data['post_type'] = strip_tags( $formatted_data['post_type'] );
+      $new_formatted_data['post_type'] = MywpHelper::sanitize_text( $formatted_data['post_type'] );
 
     }
 
@@ -649,15 +679,26 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
 
-        $meta_box_id = strip_tags( $meta_box_id );
+        $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
 
-        $new_meta_box_setting = array( 'action' => '' , 'title' => '' );
+        if( empty( $meta_box_id ) ) {
 
-        $new_meta_box_setting['action'] = strip_tags( $meta_box_setting['action'] );
+          MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+          continue;
+
+        }
+
+        $new_meta_box_setting = array(
+          'action' => '',
+          'title' => ''
+        );
+
+        $new_meta_box_setting['action'] = MywpHelper::sanitize_text( $meta_box_setting['action'] );
 
         if( ! empty( $meta_box_setting['title'] ) ) {
 
-          $new_meta_box_setting['title'] = wp_unslash( wp_kses_post( $meta_box_setting['title'] ) );
+          $new_meta_box_setting['title'] = wp_kses_post( $meta_box_setting['title'] );
 
         }
 
@@ -671,11 +712,21 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['block_editor_panels'] as $meta_box_id => $meta_box_setting ) {
 
-        $meta_box_id = strip_tags( $meta_box_id );
+        $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
 
-        $new_meta_box_setting = array( 'action' => '' );
+        if( empty( $meta_box_id ) ) {
 
-        $new_meta_box_setting['action'] = strip_tags( $meta_box_setting['action'] );
+          MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+          continue;
+
+        }
+
+        $new_meta_box_setting = array(
+          'action' => '',
+        );
+
+        $new_meta_box_setting['action'] = MywpHelper::sanitize_text( $meta_box_setting['action'] );
 
         $new_formatted_data['block_editor_panels'][ $meta_box_id ] = $new_meta_box_setting;
 
@@ -689,7 +740,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
       if( ! empty( $formatted_data['post_updated_messages'][ $key ] ) ) {
 
-        $new_formatted_data['post_updated_messages'][ $key ] = wp_unslash( strip_tags( $formatted_data['post_updated_messages'][ $key ] ) );
+        $new_formatted_data['post_updated_messages'][ $key ] = MywpHelper::sanitize_text( $formatted_data['post_updated_messages'][ $key ] );
 
       }
 
@@ -721,7 +772,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['change_title_placeholder'] ) ) {
 
-      $new_formatted_data['change_title_placeholder'] = wp_unslash( strip_tags( $formatted_data['change_title_placeholder'] ) );
+      $new_formatted_data['change_title_placeholder'] = MywpHelper::sanitize_text( $formatted_data['change_title_placeholder'] );
 
     }
 
@@ -757,7 +808,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['forced_editor'] ) ) {
 
-      $new_formatted_data['forced_editor'] = strip_tags( $formatted_data['forced_editor'] );
+      $new_formatted_data['forced_editor'] = MywpHelper::sanitize_text( $formatted_data['forced_editor'] );
 
     }
 
@@ -811,13 +862,25 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['selectable_custom_post_statuses'] as $post_type => $v ) {
 
-        if( empty( $v ) ) {
+        $post_type = MywpHelper::sanitize_text( $post_type );
+
+        if( empty( $post_type ) ) {
+
+          MywpHelper::error_not_found_message( '$post_type' , $called_text );
 
           continue;
 
         }
 
         if( ! isset( $all_post_statuses[ $post_type ] ) ) {
+
+          MywpHelper::error_not_found_message( '$all_post_statuses[ $post_type ]' , $called_text );
+
+          continue;
+
+        }
+
+        if( empty( $v ) ) {
 
           continue;
 
@@ -837,7 +900,7 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['post_type'] ) ) {
 
-      $formatted_data['post_type'] = strip_tags( $formatted_data['post_type'] );
+      $formatted_data['post_type'] = MywpHelper::sanitize_text( $formatted_data['post_type'] );
 
     }
 
@@ -847,9 +910,13 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_post_data_validate_update( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['post_type'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["post_type"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'post_type' ) );
 
@@ -861,9 +928,13 @@ final class MywpSettingScreenAdminPostEdit extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_post_data_validate_remove( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['post_type'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["post_type"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'post_type' ) );
 

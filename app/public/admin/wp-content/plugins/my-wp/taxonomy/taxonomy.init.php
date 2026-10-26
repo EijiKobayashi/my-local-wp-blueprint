@@ -59,14 +59,9 @@ final class MywpTaxonomyInit {
 
       }
 
-      $post_types = false;
+      $post_types = $args['post_type'];
 
-      if( ! empty( $args['post_type'] ) ) {
-
-        $post_types = $args['post_type'];
-        unset( $args['post_type'] );
-
-      }
+      unset( $args['post_type'] );
 
       register_taxonomy( $taxonomy_name , $post_types , $args );
 

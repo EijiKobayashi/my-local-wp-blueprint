@@ -92,31 +92,32 @@ final class MywpSettingScreenDebugFindOption extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_header() {
 
-    if( is_multisite() ) {
-
-      if( ! is_network_admin() ) {
-
-        return false;
-
-      }
-
-    } else {
+    if( ! is_multisite() ) {
 
       return false;
 
     }
 
-    if( ! empty( $_GET['setting_option_name'] ) ) {
+    if( ! is_network_admin() ) {
 
-      self::$current_find_option_name = strip_tags( $_GET['setting_option_name'] );
+      return false;
+
+    }
+
+    if( isset( $_GET['setting_option_name'] ) ) {
+
+      self::$current_find_option_name = MywpHelper::sanitize_text( wp_unslash( $_GET['setting_option_name'] ) );
 
     }
 
     ?>
 
     <div id="find-request">
+
       <input type="text" class="regular-text" id="request-find-option-name" value="<?php echo esc_attr( self::$current_find_option_name ); ?>" />
-      <input type="button" class="button button-primary" id="find-option" value="<?php echo esc_attr( __( 'Search' ) ); ?>" />
+
+      <input type="button" class="button button-primary" id="find-option" value="<?php echo esc_attr( __( 'Search' , 'default' ) ); ?>" />
+
     </div>
 
     <?php
@@ -125,15 +126,15 @@ final class MywpSettingScreenDebugFindOption extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
-    if( is_multisite() ) {
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
-      if( ! is_network_admin() ) {
+    if( ! is_multisite() ) {
 
-        return false;
+      return false;
 
-      }
+    }
 
-    } else {
+    if( ! is_network_admin() ) {
 
       return false;
 
@@ -143,15 +144,16 @@ final class MywpSettingScreenDebugFindOption extends MywpAbstractSettingModule {
 
     if( empty( $all_sites ) ) {
 
+      MywpHelper::error_not_found_message( '$all_sites' , $called_text );
+
       return false;
 
     }
 
-    $current_blog_id = get_current_blog_id();
-
     ?>
 
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <span id="found-total"></span>/ <?php echo esc_html( count( $all_sites ) ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <span id="found-total"></span>/ <?php echo esc_html( count( $all_sites ) ); ?></p>
+
     <table class="form-table" id="sites-find-options">
       <thead>
         <tr>
@@ -160,25 +162,37 @@ final class MywpSettingScreenDebugFindOption extends MywpAbstractSettingModule {
         </tr>
       </thead>
       <tbody>
+
         <?php foreach( $all_sites as $site ) : ?>
+
           <tr>
             <th>
               <?php echo esc_html( $site->blog_id ); ?>
             </th>
             <td>
               <?php $option = self::get_option( $site->blog_id ); ?>
+
               <?php if( is_array( $option ) or is_object( $option ) ) : ?>
+
                 <textarea readonly="readonly" class="large-text" style="height: 200px;"><?php echo esc_textarea( print_r( $option , true ) ); ?></textarea>
+
               <?php else : ?>
+
                 <?php echo esc_html( $option ); ?>
+
               <?php endif; ?>
+
               <?php if( $option !== false ) : ?>
+
                 <span class="found"></span>
+
               <?php endif; ?>
+
             </td>
           </tr>
+
         <?php endforeach; ?>
-        <?php switch_to_blog( $current_blog_id ); ?>
+
       </tbody>
     </table>
     <p>&nbsp;</p>

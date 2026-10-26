@@ -57,7 +57,9 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
     }
 
     add_action( 'load-index.php' , array( __CLASS__ , 'load_screen' ) , 999 );
+
     add_action( 'load-post.php' , array( __CLASS__ , 'load_screen' ) , 999 );
+
     add_action( 'load-post-new.php' , array( __CLASS__ , 'load_screen' ) , 999 );
 
   }
@@ -77,7 +79,7 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
       self::$screen_type = 'dashboard';
 
-    } elseif( in_array( $pagenow , array( 'post-new.php' , 'post.php' ) ) ) {
+    } elseif( in_array( $pagenow , array( 'post-new.php' , 'post.php' ) , true ) ) {
 
       self::$screen_type = 'post';
 
@@ -99,9 +101,13 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
     global $wp_meta_boxes;
 
-    if( empty( self::$screen_type ) && empty( self::$post_type ) ) {
+    if( empty( self::$screen_type ) ) {
 
-      return false;
+      if( empty( self::$post_type ) ) {
+
+        return false;
+
+      }
 
     }
 
@@ -149,7 +155,7 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
     }
 
-    if( ! empty( $_GET['mywp_refresh_metabox'] ) ) {
+    if( isset( $_GET['mywp_refresh_metabox'] ) ) {
 
       $option['regist_meta_boxes'][ $metabox_screen_id ] = array();
 
@@ -157,7 +163,13 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
     foreach( $current_meta_boxes as $context => $priority_meta_boxes ) {
 
-      if( empty( $priority_meta_boxes ) or ! is_array( $priority_meta_boxes ) ) {
+      if( empty( $priority_meta_boxes ) ) {
+
+        continue;
+
+      }
+
+      if( ! is_array( $priority_meta_boxes ) ) {
 
         continue;
 
@@ -165,7 +177,13 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
       foreach( $priority_meta_boxes as $priority => $meta_boxes ) {
 
-        if( empty( $meta_boxes ) or ! is_array( $meta_boxes ) ) {
+        if( empty( $meta_boxes ) ) {
+
+          continue;
+
+        }
+
+        if( ! is_array( $meta_boxes ) ) {
 
           continue;
 
@@ -173,7 +191,13 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
 
         foreach( $meta_boxes as $meta_box_id => $meta_box ) {
 
-          if( empty( $meta_box ) or ! is_array( $meta_box ) ) {
+          if( empty( $meta_box ) ) {
+
+            continue;
+
+          }
+
+          if( ! is_array( $meta_box ) ) {
 
             continue;
 
@@ -183,7 +207,7 @@ final class MywpControllerModuleAdminRegistMetaboxes extends MywpControllerAbstr
             'id' => $meta_box_id,
             'context' => $context,
             'priority' => $priority,
-            'title' => strip_tags( $meta_box['title'] ),
+            'title' => $meta_box['title'],
             'args' => $meta_box['args'],
           );
 

@@ -40,9 +40,13 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
 
     if( $is_use_block_editor && ! empty( $meta_box['args'] ) ) {
 
-      if( ! empty( $meta_box['args']['__back_compat_meta_box'] ) && empty( $meta_box['args']['__block_editor_compatible_meta_box'] ) ) {
+      if( ! empty( $meta_box['args']['__back_compat_meta_box'] ) ) {
 
-        unset( $current_meta_boxes[ $meta_box_id ] );
+        if( empty( $meta_box['args']['__block_editor_compatible_meta_box'] ) ) {
+
+          unset( $current_meta_boxes[ $meta_box_id ] );
+
+        }
 
       }
 
@@ -60,7 +64,7 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
 
     <a href="<?php echo esc_url( add_query_arg( array( 'mywp_refresh_metabox' => 1 ) , $current_meta_box_screen_url ) ); ?>" class="button button-secondary" id="meta-box-screen-refresh-button">
       <span class="dashicons dashicons-update"></span>
-      <?php _e( 'Refresh meta boxes' , 'my-wp' ); ?>
+      <?php echo esc_html( __( 'Refresh meta boxes' , 'my-wp' ) ); ?>
     </a>
 
   </p>
@@ -69,7 +73,7 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
 
     <p class="">
 
-      <?php printf( __( '%s is not found.' , 'my-wp' ) , __( 'Meta boxes' , 'my-wp' ) ); ?>
+      <?php echo esc_html( sprintf( __( '%s is not found.' , 'my-wp' ) , __( 'Meta boxes' , 'my-wp' ) ) ); ?>
 
     </p>
 
@@ -79,7 +83,7 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
 
         <span class="dashicons dashicons-warning"></span>
 
-        <?php _e( 'Please refresh the Columns.' , 'my-wp' ); ?>
+        <?php echo esc_html( __( 'Please refresh the Columns.' , 'my-wp' ) ); ?>
 
       </p>
 
@@ -89,27 +93,33 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
 
     <p class="mywp-description">
       <span class="dashicons dashicons-lightbulb"></span>
-      <?php _e( 'If you have problem after remove the meta box, please select the hide meta box.' , 'my-wp' ); ?>
+      <?php echo esc_html( __( 'If you have problem after remove the meta box, please select the hide meta box.' , 'my-wp' ) ); ?>
     </p>
 
     <ul id="meta-box-bulk-actions">
-      <li><a href="javascript:void(0);" class="button button-secondary" id="meta-box-bulk-action-show">
-        <?php _e( 'All Show' , 'my-wp' ); ?>
-      </a></li>
-      <li><a href="javascript:void(0);" class="button button-secondary" id="meta-box-bulk-action-remove">
-        <?php _e( 'All Remove' , 'my-wp' ); ?>
-      </a></li>
-      <li><a href="javascript:void(0);" class="button button-secondary" id="meta-box-bulk-action-hide">
-        <?php _e( 'All Hide' , 'my-wp' ); ?>
-      </a></li>
+      <li>
+        <a href="javascript:void(0);" class="button button-secondary" id="meta-box-bulk-action-show">
+          <?php echo esc_html( __( 'All Show' , 'my-wp' ) ); ?>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);" class="button button-secondary" id="meta-box-bulk-action-remove">
+          <?php echo esc_html( __( 'All Remove' , 'my-wp' ) ); ?>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:void(0);" class="button button-secondary" id="meta-box-bulk-action-hide">
+          <?php echo esc_html( __( 'All Hide' , 'my-wp' ) ); ?>
+        </a>
+      </li>
     </ul>
 
     <table class="form-table" id="meta-boxes-table">
       <thead>
         <tr>
           <th></th>
-          <th><?php _e( 'Remove' ); ?>/<?php _e( 'Hide' ); ?></th>
-          <th><?php _e( 'Update meta box title' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Remove' , 'default' ) ); ?>/<?php echo esc_html( __( 'Hide' , 'default' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Update meta box title' , 'my-wp' ) ); ?></th>
         </tr>
       </thead>
       <tbody>
@@ -137,8 +147,12 @@ if( $is_use_block_editor && ! empty( $current_meta_boxes ) ) {
             <td>
               <select name="mywp[data][meta_boxes][<?php echo esc_attr( $meta_box_id ); ?>][action]" class="meta-box-action-select">
                 <option value="" <?php selected( $action , '' ); ?>></option>
-                <option value="remove" <?php selected( $action , 'remove' ); ?>><?php _e( 'Remove' ); ?></option>
-                <option value="hide" <?php selected( $action , 'hide' ); ?>><?php _e( 'Hide' ); ?></option>
+                <option value="remove" <?php selected( $action , 'remove' ); ?>>
+                  <?php echo esc_html( __( 'Remove' , 'default' ) ); ?>
+                </option>
+                <option value="hide" <?php selected( $action , 'hide' ); ?>>
+                  <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
+                </option>
               </select>
             </td>
             <td>

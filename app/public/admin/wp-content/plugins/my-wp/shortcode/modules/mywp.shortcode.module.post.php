@@ -18,15 +18,23 @@ final class MywpShortcodeModulePost extends MywpShortcodeAbstractModule {
 
     global $post;
 
-    if( empty( $atts['field'] ) ) {
+    $called_text = sprintf( '%s::%s( $atts , $content , $tag )' , __CLASS__ , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+    $field = false;
+
+    if( ! empty( $atts['field'] ) ) {
+
+      $field = MywpHelper::sanitize_text( $atts['field'] );
+
+    }
+
+    if( empty( $field ) ) {
+
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 
     }
-
-    $field = strip_tags( $atts['field'] );
 
     $post_id = false;
 
@@ -34,7 +42,7 @@ final class MywpShortcodeModulePost extends MywpShortcodeAbstractModule {
 
       if( ! empty( $post->ID ) ) {
 
-        $post_id = (int) $post->ID;
+        $post_id = $post->ID;
 
       }
 
@@ -42,13 +50,17 @@ final class MywpShortcodeModulePost extends MywpShortcodeAbstractModule {
 
       if( ! empty( $atts['post_id'] ) ) {
 
-        $post_id = (int) $atts['post_id'];
+        $post_id = $atts['post_id'];
 
       }
 
     }
 
+    $post_id = MywpHelper::sanitize_number( $post_id );
+
     if( empty( $post_id ) ) {
+
+      MywpHelper::error_not_found_message( '$post_id' , $called_text );
 
       return $content;
 
@@ -84,7 +96,7 @@ final class MywpShortcodeModulePost extends MywpShortcodeAbstractModule {
 
     } else {
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 

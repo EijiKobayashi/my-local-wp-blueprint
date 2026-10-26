@@ -8,11 +8,11 @@ if ( ! class_exists( 'MywpController' ) ) :
 
 final class MywpController {
 
-  private static $controllers;
+  private static $controllers = array();
 
   public static function get_controllers() {
 
-    if( self::$controllers ) {
+    if( ! empty( self::$controllers ) ) {
 
       return self::$controllers;
 
@@ -41,8 +41,11 @@ final class MywpController {
       $controller = wp_parse_args( $controller , $default );
 
       $controller['id'] = $controller_id;
+
       $controller['initial_data'] = self::get_initial_data( $controller['initial_data'] , $controller_id );
+
       $controller['default_data'] = self::get_default_data( $controller['default_data'] , $controller_id );
+
       $controller['model'] = self::get_model( $controller , $controller_id );
 
       $controllers[ $controller_id ] = $controller;
@@ -55,9 +58,11 @@ final class MywpController {
 
   public static function get_controller( $controller_id = false ) {
 
-    if( empty( $controller_id ) ) {
+    $called_text = sprintf( '%s::%s( $controller_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$controller_id' );
+    $controller_id = MywpHelper::sanitize_text( $controller_id );
+
+    if( empty( $controller_id ) ) {
 
       MywpHelper::error_require_message( '$controller_id' , $called_text );
 
@@ -83,7 +88,19 @@ final class MywpController {
 
   }
 
-  private static function get_initial_data( $initial_data , $controller_id ) {
+  private static function get_initial_data( $initial_data = array() , $controller_id = false ) {
+
+    $called_text = sprintf( '%s::%s( $initial_data , $controller_id )' , __CLASS__ , __FUNCTION__ );
+
+    $controller_id = MywpHelper::sanitize_text( $controller_id );
+
+    if( empty( $controller_id ) ) {
+
+      MywpHelper::error_require_message( '$controller_id' , $called_text );
+
+      return false;
+
+    }
 
     $initial_data = apply_filters( "mywp_controller_initial_data_{$controller_id}" , $initial_data );
     $initial_data = apply_filters( 'mywp_controller_initial_data' , $initial_data , $controller_id );
@@ -92,7 +109,19 @@ final class MywpController {
 
   }
 
-  private static function get_default_data( $default_data , $controller_id ) {
+  private static function get_default_data( $default_data = array() , $controller_id = false ) {
+
+    $called_text = sprintf( '%s::%s( $initial_data , $controller_id )' , __CLASS__ , __FUNCTION__ );
+
+    $controller_id = MywpHelper::sanitize_text( $controller_id );
+
+    if( empty( $controller_id ) ) {
+
+      MywpHelper::error_require_message( '$controller_id' , $called_text );
+
+      return false;
+
+    }
 
     $default_data = apply_filters( "mywp_controller_default_data_{$controller_id}" , $default_data );
     $default_data = apply_filters( 'mywp_controller_default_data' , $default_data , $controller_id );
@@ -101,7 +130,27 @@ final class MywpController {
 
   }
 
-  private static function get_model( $controller , $controller_id ) {
+  private static function get_model( $controller = array() , $controller_id = false ) {
+
+    $called_text = sprintf( '%s::%s( $controller , $controller_id )' , __CLASS__ , __FUNCTION__ );
+
+    if( ! is_array( $controller ) ) {
+
+      MywpHelper::error_invalid_message( '$controller' , 'is_array()' , $called_text );
+
+      return false;
+
+    }
+
+    $controller_id = MywpHelper::sanitize_text( $controller_id );
+
+    if( empty( $controller_id ) ) {
+
+      MywpHelper::error_require_message( '$controller_id' , $called_text );
+
+      return false;
+
+    }
 
     do_action( 'mywp_controller_before_get_model' , $controller_id );
 
@@ -127,12 +176,34 @@ final class MywpController {
 
   public static function get_posts( $args = array() , $controller_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $args , $controller_id )' , __CLASS__ , __FUNCTION__ );
+
+    if( ! is_array( $args ) ) {
+
+      MywpHelper::error_invalid_message( '$args' , 'is_array()' , $called_text );
+
+      return false;
+
+    }
+
+    $controller_id = MywpHelper::sanitize_text( $controller_id );
+
+    if( empty( $controller_id ) ) {
+
+      MywpHelper::error_require_message( '$controller_id' , $called_text );
+
+      return false;
+
+    }
+
     do_action( 'mywp_controller_before_get_posts' , $args , $controller_id );
 
     $args = apply_filters( "mywp_controller_pre_get_posts_args_{$controller_id}" , $args );
     $args = apply_filters( 'mywp_controller_pre_get_posts_args' , $args , $controller_id );
 
-    $posts = apply_filters( "mywp_controller_pre_get_posts_{$controller_id}" , false , $args , $controller_id );
+    $posts = false;
+
+    $posts = apply_filters( "mywp_controller_pre_get_posts_{$controller_id}" , $posts , $args , $controller_id );
     $posts = apply_filters( 'mywp_controller_pre_get_posts' , $posts , $args , $controller_id );
 
     if( $posts !== false ) {

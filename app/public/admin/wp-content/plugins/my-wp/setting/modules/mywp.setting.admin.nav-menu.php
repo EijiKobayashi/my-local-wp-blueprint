@@ -53,25 +53,37 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
     }
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Management of meta boxes' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Management of meta boxes' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
+
         <?php foreach( $meta_boxes as $key => $meta_box ) : ?>
+
           <?php $metabox_id = $meta_box['id']; ?>
+
           <?php $checked = false; ?>
+
           <?php if( ! empty( $setting_data['remove_meta_boxes_items'][ $metabox_id ] ) ) : ?>
+
             <?php $checked = true; ?>
+
           <?php endif; ?>
+
           <tr>
             <th><?php echo esc_html( $meta_box['title'] ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][remove_meta_boxes_items][<?php echo esc_attr( $metabox_id ); ?>]" class="remove_meta_boxes_item remove_meta_box_item-<?php echo esc_attr( $metabox_id ); ?>" value="1" <?php checked( $checked , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
     <p>&nbsp;</p>
@@ -84,15 +96,18 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
     $setting_data = self::get_setting_data();
 
     $fields = array(
-      'hide_link_target' => __( 'Link Target' ),
-      'hide_title_attribute' => __( 'Title Attribute' ),
-      'hide_css_classes' => __( 'CSS Classes' ),
-      'hide_xfn' => __( 'Link Relationship (XFN)' ),
-      'hide_description' => __( 'Description' ),
+      'hide_link_target' => __( 'Link Target' , 'default' ),
+      'hide_title_attribute' => __( 'Title Attribute' , 'default' ),
+      'hide_css_classes' => __( 'CSS Classes' , 'default' ),
+      'hide_xfn' => __( 'Link Relationship (XFN)' , 'default' ),
+      'hide_description' => __( 'Description' , 'default' ),
     );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Advanced menu properties' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Advanced menu properties' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
@@ -101,7 +116,7 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][<?php echo esc_attr( $field_name ); ?>]" class="<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data[$field_name] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
@@ -119,14 +134,17 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
 
     $fields = array(
       'hide_add_new_menu' => __( 'Create a new menu' , 'my-wp' ),
-      'hide_delete_menu' => __( 'Delete Menu' ),
-      'hide_manage_locations' => __( 'Manage Locations' ),
-      'hide_menu_settings' => __( 'Menu Settings' ),
-      'hide_live_preview_button' => __( 'Manage with Live Preview' ),
+      'hide_delete_menu' => __( 'Delete Menu' , 'default' ),
+      'hide_manage_locations' => __( 'Manage Locations' , 'default' ),
+      'hide_menu_settings' => __( 'Menu Settings' , 'default' ),
+      'hide_live_preview_button' => __( 'Manage with Live Preview' , 'default' ),
     );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'General' , 'default' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <?php foreach( $fields as $field_name => $field_label ) : ?>
@@ -135,7 +153,7 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][<?php echo esc_attr( $field_name ); ?>]" class="<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( $setting_data[$field_name] , true ); ?> />
-                <?php _e( 'Hide' ); ?>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
               </label>
             </td>
           </tr>
@@ -148,6 +166,8 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
   }
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
+
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
 
     $mywp_model = self::get_model();
 
@@ -195,7 +215,15 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['remove_meta_boxes_items'] as $meta_box_id => $v ) {
 
-        $meta_box_id = strip_tags( $meta_box_id );
+        $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+        if( empty( $meta_box_id ) ) {
+
+          MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+          continue;
+
+        }
 
         $new_formatted_data['remove_meta_boxes_items'][ $meta_box_id ] = true;
 
@@ -241,7 +269,9 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
 
     $meta_boxes = array();
 
-    $args = array( 'show_in_nav_menus' => true );
+    $args = array(
+      'show_in_nav_menus' => true,
+    );
 
     $post_types = get_post_types( $args , 'objects' );
 
@@ -253,7 +283,10 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
 
           $id = sprintf( 'add-post-type-%s' , $post_type->name );
 
-          $meta_boxes[] = array( 'id' => $id , 'title' => $post_type->labels->name );
+          $meta_boxes[] = array(
+            'id' => $id,
+            'title' => $post_type->labels->name
+          );
 
         }
 
@@ -261,9 +294,14 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
 
     }
 
-    $meta_boxes[] = array( 'id' => 'add-custom-links' , 'title' => __( 'Custom Links' ) );
+    $meta_boxes[] = array(
+      'id' => 'add-custom-links',
+      'title' => __( 'Custom Links' , 'default' )
+    );
 
-    $args = array( 'show_in_nav_menus' => true );
+    $args = array(
+      'show_in_nav_menus' => true
+    );
 
     $taxonomies = get_taxonomies( $args , 'objects' );
 
@@ -275,7 +313,10 @@ final class MywpSettingScreenAdminNavMenu extends MywpAbstractSettingModule {
 
           $id = sprintf( 'add-%s' , $tax->name );
 
-          $meta_boxes[] = array( 'id' => $id , 'title' => $tax->labels->name );
+          $meta_boxes[] = array(
+            'id' => $id,
+            'title' => $tax->labels->name
+          );
 
         }
 

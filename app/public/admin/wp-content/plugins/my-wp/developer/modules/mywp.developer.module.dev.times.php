@@ -70,6 +70,8 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
   public static function mywp_after_setup_theme() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     self::add_actions( 'init' );
     self::add_actions( 'wp_loaded' );
 
@@ -124,7 +126,9 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
     foreach( $debug_times_action_items as $debug_times_action_item ) {
 
-      if( ! is_string( $debug_times_action_item ) ) {
+      if( ! is_scalar( $debug_times_action_item ) ) {
+
+        MywpHelper::error_invalid_message( '$debug_times_action_item' , 'is_scalar()' , $called_text );
 
         continue;
 
@@ -138,9 +142,11 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
   private static function add_actions( $action_hook_name = false ) {
 
-    if( empty( $action_hook_name ) ) {
+    $called_text = sprintf( '%s::%s( $action_hook_name )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , '$action_hook_name' );
+    $request_action = MywpHelper::sanitize_text( $action_hook_name );
+
+    if( empty( $action_hook_name ) ) {
 
       MywpHelper::error_not_found_message( '$action_hook_name' , $called_text );
 
@@ -289,7 +295,7 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
     }
 
-    echo esc_html( sprintf( '%s = ' , __( 'All' ) ) );
+    echo esc_html( sprintf( '%s = ' , __( 'All' , 'default' ) ) );
 
     echo esc_html( self::print_format( $first_process ) );
 
@@ -389,11 +395,13 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
     echo '<tr>';
 
-    printf( '<th>%s</th>' , __( 'All' ) );
+    printf( '<th>%s</th>' , __( 'All' , 'default' ) );
 
     printf( '<td>%s' , esc_html( self::print_format( $first_process ) ) );
 
-    echo esc_html( sprintf( ' - Memory peak: %s</td>' , MywpHelper::get_byte( memory_get_peak_usage() ) ) );
+    echo esc_html( sprintf( ' - Memory peak: %s' , MywpHelper::get_byte( memory_get_peak_usage() ) ) );
+
+    echo '</td>';
 
     echo '</tr>';
 
@@ -585,13 +593,25 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
       'load_avg' => $start_process['load_avg'],
     );
 
+    if( $format_process['memory'] < 0 ) {
+
+      $format_process['memory'] = 0;
+
+    }
+
     return $format_process;
 
   }
 
   private static function print_format( $process ) {
 
-    if( ! isset( $process['second'] ) or ! isset( $process['memory'] ) ) {
+    if( ! isset( $process['second'] ) ) {
+
+      return false;
+
+    }
+
+    if( ! isset( $process['memory'] ) ) {
 
       return false;
 
@@ -599,7 +619,7 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
     if( function_exists( 'sys_getloadavg' ) ) {
 
-      $print_format = sprintf( 'Time: %s - Memory: %s - LoadAvg: %s' , self::get_second( $process['second'] ) , MywpHelper::get_byte( $process['memory'] ) , strip_tags( $process['load_avg'] ) );
+      $print_format = sprintf( 'Time: %s - Memory: %s - LoadAvg: %s' , self::get_second( $process['second'] ) , MywpHelper::get_byte( $process['memory'] ) , MywpHelper::sanitize_text( (string) $process['load_avg'] ) );
 
     } else {
 
@@ -641,7 +661,7 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
       if( $func['priority'] >= $from_priority && $func['priority'] <= $to_priority ) {
 
-        $print_filters .= sprintf( '(%s) %s' , esc_html( $func['priority'] ) , esc_html( $func['print_format'] ) );
+        $print_filters .= sprintf( '(%s) %s' , esc_textarea( $func['priority'] ) , esc_html( $func['print_format'] ) );
 
         $print_filters .= "\n";
 
@@ -673,19 +693,9 @@ final class MywpDeveloperModuleDevTimes extends MywpDeveloperAbstractModule {
 
     $decimals = 3;
 
-    $number = false;
+    $second_format = number_format_i18n( $second , $decimals );
 
-    if( function_exists( 'number_format_i18n' ) ) {
-
-      $number = number_format_i18n( $second , $decimals );
-
-    } else {
-
-      $number = number_format( $second , $decimals );
-
-    }
-
-    return "{$number} seconds";
+    return "{$second_format} seconds";
 
   }
 

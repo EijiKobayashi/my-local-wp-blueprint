@@ -18,9 +18,9 @@ abstract class MywpThirdpartyAbstractModule {
 
     $class = get_called_class();
 
-    if( empty( static::$id ) ) {
+    $called_text = sprintf( 'class %s' , $class );
 
-      $called_text = sprintf( 'class %s' , $class );
+    if( empty( static::$id ) ) {
 
       MywpHelper::error_require_message( '"static protected $id"' , $called_text );
 
@@ -29,8 +29,6 @@ abstract class MywpThirdpartyAbstractModule {
     }
 
     if( empty( static::$base_name ) ) {
-
-      $called_text = sprintf( 'class %s' , $class );
 
       MywpHelper::error_require_message( '"static protected $base_name"' , $called_text );
 
@@ -84,7 +82,9 @@ abstract class MywpThirdpartyAbstractModule {
 
   protected static function get_model( $controller_id = false ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$controller_id' );
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s( $controller_id )' , $class , __FUNCTION__ );
 
     if( empty( $controller_id ) ) {
 

@@ -47,8 +47,9 @@ final class MywpTaxonomyModuleMywpTerm extends MywpTaxonomyAbstractModule {
 
     }
 
-    $terms_columns['publish'] = __( 'Publish' );
-    $terms_columns['draft'] = __( 'Draft' );
+    $terms_columns['publish'] = __( 'Publish' , 'default' );
+
+    $terms_columns['draft'] = __( 'Draft' , 'default' );
 
     return $terms_columns;
 
@@ -81,19 +82,21 @@ final class MywpTaxonomyModuleMywpTerm extends MywpTaxonomyAbstractModule {
 
       return false;
 
-    } elseif( is_wp_error( $term ) ) {
+    }
+
+    if( is_wp_error( $term ) ) {
 
       echo $term->get_error_message();
 
     }
 
-    if( empty( $_GET['post_type'] ) ) {
+    if( ! isset( $_GET['post_type'] ) ) {
 
       return false;
 
     }
 
-    $post_type = strip_tags( $_GET['post_type'] );
+    $post_type = MywpHelper::sanitize_text( wp_unslash( $_GET['post_type'] ) );
 
     $post_args = self::get_post_args();
 

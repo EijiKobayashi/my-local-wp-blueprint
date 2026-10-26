@@ -141,7 +141,7 @@ final class MywpSettingInit {
   public static function add_setting_menu_login( $setting_menus ) {
 
     $setting_menus['login'] = array(
-      'menu_title' => __( 'Log in' ),
+      'menu_title' => __( 'Log in' , 'default' ),
     );
 
     return $setting_menus;
@@ -262,13 +262,15 @@ final class MywpSettingInit {
 
   private static function setting_data_update() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $_POST ) ) {
 
       return false;
 
     }
 
-    if( ! MywpSetting::is_mywp_form_action( $_POST ) ) {
+    if( ! MywpSetting::is_mywp_form_action( wp_unslash( $_POST ) ) ) {
 
       return false;
 
@@ -292,13 +294,21 @@ final class MywpSettingInit {
 
     }
 
-    $form = $_POST['mywp'];
+    $form = wp_unslash( $_POST['mywp'] );
 
-    $setting_screen_id = strip_tags( $form['setting_screen'] );
+    $setting_screen_id = MywpHelper::sanitize_text( $form['setting_screen'] );
 
-    $action = strip_tags( $form['action'] );
+    $action = MywpHelper::sanitize_text( $form['action'] );
 
     $nonce_key = MywpSetting::get_nonce_key( $setting_screen_id , $action );
+
+    if( empty( $nonce_key ) ) {
+
+      MywpHelper::error_not_found_message( '$nonce_key' , $called_text );
+
+      return false;
+
+    }
 
     check_admin_referer( $nonce_key , $nonce_key );
 
@@ -329,6 +339,7 @@ final class MywpSettingInit {
     if( $is_redirect ) {
 
       wp_safe_redirect( esc_url_raw( remove_query_arg( 'updated' , add_query_arg( 'updated' , true ) ) ) );
+
       exit;
 
     }
@@ -457,9 +468,9 @@ final class MywpSettingInit {
 
     MywpSettingMenu::set_current_menu_by_page_hook( $page_hook );
 
-    if( ! empty( $_GET['setting_screen'] ) ) {
+    if( isset( $_GET['setting_screen'] ) ) {
 
-      MywpSettingScreen::set_current_screen_id( $_GET['setting_screen'] );
+      MywpSettingScreen::set_current_screen_id( wp_unslash( $_GET['setting_screen'] ) );
 
     } else {
 
@@ -474,15 +485,17 @@ final class MywpSettingInit {
   public static function admin_enqueue_scripts() {
 
     $dir_css = MywpApi::get_plugin_url( 'css' );
+
     $dir_js = MywpApi::get_plugin_url( 'js' );
 
     wp_register_style( 'mywp_admin_setting' , $dir_css . 'admin-setting.css' , array() , MYWP_VERSION );
+
     wp_register_script( 'mywp_admin_setting' , $dir_js . 'admin-setting.js' , array( 'jquery' ) , MYWP_VERSION );
 
     $mywp_admin_setting = array(
-      'error_try_again' => sprintf( 'ERROR: %s' , __( 'Please try again.' ) ),
-      'unknown_error_reload_page' => __( 'An error has occurred. Please reload the page and try again.' ),
-      'confirm_message' => __( 'Are you sure you want to do this?' ),
+      'error_try_again' => sprintf( 'ERROR: %s' , __( 'Please try again.' , 'default' ) ),
+      'unknown_error_reload_page' => __( 'An error has occurred. Please reload the page and try again.' , 'default' ),
+      'confirm_message' => __( 'Are you sure you want to do this?' , 'default' ),
       'confirm_update_message' => __( 'Are you sure you want to update?' , 'my-wp' ),
       'confirm_delete_message' => __( 'Are you sure you want to delete this?' , 'my-wp' ),
       'finish_message' => __( 'Finished' , 'my-wp' ),
@@ -493,6 +506,7 @@ final class MywpSettingInit {
     wp_localize_script( 'mywp_admin_setting' , 'mywp_admin_setting' , $mywp_admin_setting );
 
     wp_enqueue_style( 'mywp_admin_setting' );
+
     wp_enqueue_script( 'mywp_admin_setting' );
 
     $wp_compare = version_compare( MywpHelper::get_wp_version() , 7.0 , '<' );
@@ -506,6 +520,7 @@ final class MywpSettingInit {
     }
 
     $current_setting_menu_id = MywpSettingMenu::get_current_menu_id();
+
     $current_setting_screen_id = MywpSettingScreen::get_current_screen_id();
 
     do_action( "mywp_setting_admin_enqueue_scripts_{$current_setting_menu_id}" );
@@ -521,6 +536,7 @@ final class MywpSettingInit {
   public static function admin_print_styles() {
 
     $current_setting_menu_id = MywpSettingMenu::get_current_menu_id();
+
     $current_setting_screen_id = MywpSettingScreen::get_current_screen_id();
 
     do_action( "mywp_setting_admin_print_styles_{$current_setting_menu_id}" );
@@ -536,6 +552,7 @@ final class MywpSettingInit {
   public static function admin_print_scripts() {
 
     $current_setting_menu_id = MywpSettingMenu::get_current_menu_id();
+
     $current_setting_screen_id = MywpSettingScreen::get_current_screen_id();
 
     do_action( "mywp_setting_admin_print_scripts_{$current_setting_menu_id}" );
@@ -551,6 +568,7 @@ final class MywpSettingInit {
   public static function admin_print_footer_scripts() {
 
     $current_setting_menu_id = MywpSettingMenu::get_current_menu_id();
+
     $current_setting_screen_id = MywpSettingScreen::get_current_screen_id();
 
     do_action( "mywp_setting_admin_print_footer_scripts_{$current_setting_menu_id}" );
@@ -568,9 +586,11 @@ final class MywpSettingInit {
     $admin_body_class .= ' mywp-setting ';
 
     $current_setting_menu_id = MywpSettingMenu::get_current_menu_id();
+
     $current_setting_screen_id = MywpSettingScreen::get_current_screen_id();
 
     $admin_body_class .= " mywp-{$current_setting_menu_id} mywp-{$current_setting_screen_id} ";
+
     $admin_body_class .= " mywp-{$current_setting_menu_id}-{$current_setting_screen_id} ";
 
     return $admin_body_class;

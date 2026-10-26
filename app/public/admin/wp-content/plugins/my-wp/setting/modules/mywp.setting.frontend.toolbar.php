@@ -52,9 +52,11 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
 
   public static function frontend_print_item_content_show_child_items_content( $show_child_items_content , $item , $item_type ) {
 
-    if( in_array( $item->item_type , array( 'edit_post' ) ) ) {
+    if( in_array( $item->item_type , array( 'edit_post' ) , true ) ) {
 
       $show_child_items_content = false;
+
+      return $show_child_items_content;
 
     }
 
@@ -64,13 +66,17 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
 
   public static function frontend_print_item_content( $item ) {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
 
       return false;
 
     }
 
-    if( in_array( $item->item_type , array( 'edit_post' ) ) ) {
+    if( in_array( $item->item_type , array( 'edit_post' ) , true ) ) {
 
       printf( '<p class="item-content-notice">%s</p>' , __( 'This menu item is only display for single page.' , 'my-wp' ) );
 
@@ -87,7 +93,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
     }
 
     $toolbar_item_edit_post = array(
-      'title' => __( 'Edit Post' ),
+      'title' => __( 'Edit Post' , 'default' ),
       'item_type' => 'edit_post',
       'item_capability' => 'edit_post',
       'item_icon_class' => 'dashicons-before dashicons-edit',
@@ -116,8 +122,10 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
     if( $item->item_type === 'edit_post' ) {
 
       $pre_title = sprintf( '<span class="%s" style=""></span>' , esc_attr( $item->item_icon_class ) );
-      $pre_title .= sprintf( '<span class="item-title">%s</span>' , __( 'Edit Post' ) );
-      $pre_title .= sprintf( '<span class="item-default-title">(%s)</span>' , __( 'Edit Post' ) );
+
+      $pre_title .= sprintf( '<span class="item-title">%s</span>' , esc_html( __( 'Edit Post' , 'default' ) ) );
+
+      $pre_title .= sprintf( '<span class="item-default-title">(%s)</span>' , esc_html( __( 'Edit Post' , 'default' ) ) );
 
     }
 
@@ -127,6 +135,16 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
 
   public static function frontend_print_item_content_item_type( $item , $item_type ) {
 
+    $called_text = sprintf( '%s::%s( $item , $item_type )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
+
+      return false;
+
+    }
+
     if( $item_type === 'edit_post' ) {
 
       ?>
@@ -135,26 +153,28 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
 
       </div>
 
-      <p class="item-content-show-details"><a href="javascript:void(0);" class="button-item-content-show-details"><?php _e( 'More Details' ); ?></a></p>
+      <p class="item-content-show-details">
+        <a href="javascript:void(0);" class="button-item-content-show-details"><?php echo esc_html( __( 'More Details' , 'default' ) ); ?></a>
+      </p>
 
       <div class="item-content-details">
         <table class="form-table">
           <tbody>
             <tr>
-              <th><?php _e( 'Menu Title' ); ?></th>
+              <th><?php echo esc_html( __( 'Menu Title' , 'default' ) ); ?></th>
               <td>
-                <?php _e( 'Edit Post' ); ?>
+                <?php echo esc_html( __( 'Edit Post' , 'default' ) ); ?>
               </td>
             </tr>
             <tr>
-              <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Link URL' , 'my-wp' ) ); ?></th>
               <td>
-                <?php $link_url = add_query_arg( array( 'post' => '###' , 'action' => 'edit' ) , admin_url( 'post.php' ) ); ?>
-                <?php echo esc_html( str_replace( '###' , '<code>current_post_id</code>' , $link_url ) ); ?>
+                <?php $link_url = add_query_arg( array( 'post' => '*current post id*' , 'action' => 'edit' ) , admin_url( 'post.php' ) ); ?>
+                <?php echo esc_html( $link_url ); ?>
               </td>
             </tr>
             <tr>
-              <th><?php _e( 'Icon class' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Icon class' , 'my-wp' ) ); ?></th>
               <td>
                 <div class="item-icon-setting">
                   <div class="item-icon <?php echo esc_attr( $item->item_icon_class ); ?>"></div>
@@ -163,7 +183,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
               </td>
             </tr>
             <tr>
-              <th><?php _e( 'Capability' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Capability' , 'my-wp' ) ); ?></th>
               <td>
                 <code>
                   <?php if( ! empty( $item->item_capability ) ) : ?>
@@ -265,7 +285,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
 
         <span class="dashicons dashicons-warning"></span>
 
-        <?php printf( __( '%1$s: %2$s is not found. Please refresh the %2$s.' , 'my-wp' ) , __( 'Error' , 'my-wp' ) , __( 'Toolbar items' , 'my-wp' ) ); ?>
+        <?php echo esc_html( sprintf( __( '%1$s: %2$s is not found. Please refresh the %2$s.' , 'my-wp' ) , __( 'Error' , 'my-wp' ) , __( 'Toolbar items' , 'my-wp' ) ) ); ?>
 
       </p>
 
@@ -274,7 +294,7 @@ final class MywpSettingScreenFrontendToolbar extends MywpAbstractSettingToolbarM
     <p>
       <a href="<?php echo esc_url( $toolbar_items_link ); ?>" class="button button-secondary" id="setting-screen-setting-frontend-toolbar-item-refresh-button">
         <span class="dashicons dashicons-update"></span>
-        <?php _e( 'Refresh Toolbar items' , 'my-wp' ); ?>
+        <?php echo esc_html( __( 'Refresh Toolbar items' , 'my-wp' ) ); ?>
       </a>
     </p>
 

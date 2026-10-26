@@ -78,7 +78,9 @@ final class MywpDeveloperModuleDevActions extends MywpDeveloperAbstractModule {
         foreach( $filter_to_func as $func ) {
 
           echo '  ';
+
           echo esc_html( sprintf( '(%d) %s' , $func['priority'] , $func['print_format'] ) );
+
           echo "\n";
 
         }
@@ -125,7 +127,7 @@ final class MywpDeveloperModuleDevActions extends MywpDeveloperAbstractModule {
 
         foreach( $filter_to_func as $func ) {
 
-          echo esc_html( sprintf( '(%d) %s' , $func['priority'] , $func['print_format'] ) );
+          echo esc_textarea( sprintf( '(%d) %s' , $func['priority'] , $func['print_format'] ) );
 
           echo "\n";
 

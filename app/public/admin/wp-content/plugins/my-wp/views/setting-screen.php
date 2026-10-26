@@ -105,7 +105,7 @@ if( ! empty( $current_setting_screen_id ) ) {
 }
 
 ?>
-<div class="wrap mywp mywp-setting-screen-menu-<?php echo sanitize_html_class( $current_setting_menu_id ); ?>">
+<div class="wrap mywp mywp-setting-screen-menu-<?php echo esc_attr( $current_setting_menu_id ); ?>">
 
   <h1><?php echo esc_html( $current_setting_menu['page_title'] ); ?></h1>
 
@@ -123,7 +123,7 @@ if( ! empty( $current_setting_screen_id ) ) {
 
     <?php endif; ?>
 
-    <div id="setting-screen" class="<?php echo sanitize_html_class( $add_class ); ?>">
+    <div id="setting-screen" class="<?php echo esc_attr( $add_class ); ?>">
 
       <?php if( $multiple_screens ) : ?>
 
@@ -146,8 +146,10 @@ if( ! empty( $current_setting_screen_id ) ) {
 
               <?php $url = add_query_arg( array( 'page' => $current_setting_menu['slug'] , 'setting_screen' => $setting_screen_id ) , $current_url ); ?>
 
-              <li class="setting-screen-select-screen <?php echo sanitize_html_class( $add_class ); ?>">
-                <a href="<?php echo esc_url( $url ); ?>" data-setting_screen_id="<?php echo esc_attr( $setting_screen_id ); ?>"><?php echo esc_html( $setting_screen['title'] ); ?></a>
+              <li class="setting-screen-select-screen <?php echo esc_attr( $add_class ); ?>">
+                <a href="<?php echo esc_url( $url ); ?>" data-setting_screen_id="<?php echo esc_attr( $setting_screen_id ); ?>">
+                  <?php echo esc_html( $setting_screen['title'] ); ?>
+                </a>
               </li>
 
             <?php endforeach; ?>
@@ -170,7 +172,10 @@ if( ! empty( $current_setting_screen_id ) ) {
 
               <?php if( ! empty( $current_setting_screen['document_url'] ) ) : ?>
 
-                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button button-secondary"><span class="dashicons dashicons-welcome-learn-more"></span> <?php printf( __( '%s Documentation' , 'my-wp' ) , esc_html( $current_setting_screen['title'] ) ); ?></a>
+                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button button-secondary">
+                  <span class="dashicons dashicons-welcome-learn-more"></span>
+                  <?php echo esc_html( sprintf( __( '%s Documentation' , 'my-wp' ) , $current_setting_screen['title'] ) ); ?>
+                </a>
 
               <?php endif; ?>
 
@@ -181,7 +186,10 @@ if( ! empty( $current_setting_screen_id ) ) {
             <?php if( ! empty( $current_setting_screen['document_url'] ) ) : ?>
 
               <p style="text-align: right;">
-                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button"><span class="dashicons dashicons-welcome-learn-more"></span> <?php printf( __( '%s Documentation' , 'my-wp' ) , esc_html( $current_setting_screen['title'] ) ); ?></a>
+                <a id="setting-document-link" href="<?php echo esc_url( $current_setting_screen['document_url'] ); ?>" target="_blank" class="button">
+                  <span class="dashicons dashicons-welcome-learn-more"></span>
+                  <?php echo esc_html( sprintf( __( '%s Documentation' , 'my-wp' ) , $current_setting_screen['title'] ) ); ?>
+                </a>
               </p>
 
             <?php endif; ?>
@@ -198,7 +206,7 @@ if( ! empty( $current_setting_screen_id ) ) {
 
             <?php endif; ?>
 
-            <div id="setting-screen-content" class="setting-screen-<?php echo sanitize_html_class( $current_setting_screen_id ); ?>">
+            <div id="setting-screen-content" class="setting-screen-<?php echo esc_attr( $current_setting_screen_id ); ?>">
 
               <?php do_action( "mywp_setting_screen_header_{$current_setting_screen_id}" ); ?>
               <?php do_action( 'mywp_setting_screen_header' , $current_setting_screen_id , $current_setting_menu_id ); ?>
@@ -215,13 +223,17 @@ if( ! empty( $current_setting_screen_id ) ) {
 
               <?php $class = ''; ?>
 
-              <?php if( ! empty( $active_advance ) ) $class = 'active'; ?>
+              <?php if( ! empty( $active_advance ) ) : ?>
 
-              <div id="setting-screen-advance" class="<?php echo sanitize_html_class( $class ); ?>">
+                <?php $class = 'active'; ?>
+
+              <?php endif; ?>
+
+              <div id="setting-screen-advance" class="<?php echo esc_attr( $class ); ?>">
 
                 <p id="select-advance-setting">
                   <input type="hidden" name="mywp[data][advance]" id="select-advance-setting-check" value="<?php echo esc_attr( $active_advance ); ?>" />
-                  <a href="javascript:void(0);" id="select-advance-setting-toggle"><?php _e( 'Advanced settings' , 'my-wp' ); ?></a>
+                  <a href="javascript:void(0);" id="select-advance-setting-toggle"><?php echo esc_html( __( 'Advanced settings' , 'my-wp' ) ); ?></a>
                 </p>
 
                 <div id="setting-screen-advance-content">
@@ -245,7 +257,7 @@ if( ! empty( $current_setting_screen_id ) ) {
 
               <p class="submit">
                 <button type="submit" class="button button-primary">
-                  <?php _e( 'Save' ); ?>
+                  <?php echo esc_html( __( 'Save' , 'default' ) ); ?>
                 </button>
                 <span class="spinner"></span>
               </p>
@@ -260,22 +272,22 @@ if( ! empty( $current_setting_screen_id ) ) {
 
             <form id="mywp_form_<?php echo esc_attr( $current_setting_screen_id ); ?>_remove" class="mywp_form mywp_form_remove" method="post" action="">
 
-            <?php MywpSetting::print_form_item_must( $current_setting_screen_id , 'remove' ); ?>
+              <?php MywpSetting::print_form_item_must( $current_setting_screen_id , 'remove' ); ?>
 
-            <input type="hidden" name="mywp[data][remove]" value="1" />
+              <input type="hidden" name="mywp[data][remove]" value="1" />
 
-            <?php do_action( "mywp_setting_screen_remove_form_{$current_setting_screen_id}" ); ?>
-            <?php do_action( 'mywp_setting_screen_remove_form' , $current_setting_screen_id , $current_setting_menu_id ); ?>
+              <?php do_action( "mywp_setting_screen_remove_form_{$current_setting_screen_id}" ); ?>
+              <?php do_action( 'mywp_setting_screen_remove_form' , $current_setting_screen_id , $current_setting_menu_id ); ?>
 
-            <p class="submit">
-              <button type="submit" class="button button-secondary button-caution">
-                <span class="dashicons dashicons-trash"></span>
-                <?php echo esc_html( $current_setting_menu['page_title'] ); ?>
-                &gt;
-                <?php echo esc_attr( sprintf( __( 'Remove the %s settings data' , 'my-wp' ) , strip_tags( $current_setting_screen['title'] ) ) ); ?>
-              </button>
-              <span class="spinner"></span>
-            </p>
+              <p class="submit">
+                <button type="submit" class="button button-secondary button-caution">
+                  <span class="dashicons dashicons-trash"></span>
+                  <?php echo esc_html( $current_setting_menu['page_title'] ); ?>
+                  &gt;
+                  <?php echo esc_html( sprintf( __( 'Remove the %s settings data' , 'my-wp' ) , $current_setting_screen['title'] ) ); ?>
+                </button>
+                <span class="spinner"></span>
+              </p>
 
             </form>
 
@@ -301,7 +313,9 @@ if( ! empty( $current_setting_screen_id ) ) {
 
   <div id="mywp-popup-container">
 
-    <div id="mywp-popup-close-right"><a href="javascript:void(0);" class="mywp-popup-close"><span class="dashicons dashicons-no"></span></a></div>
+    <div id="mywp-popup-close-right">
+      <a href="javascript:void(0);" class="mywp-popup-close"><span class="dashicons dashicons-no"></span></a>
+    </div>
 
     <div id="mywp-popup-content">
 
@@ -309,7 +323,12 @@ if( ! empty( $current_setting_screen_id ) ) {
 
     </div>
 
-    <div id="mywp-popup-close-bottom"><buttom type="button" class="mywp-popup-close button button-secondary"><span class="dashicons dashicons-no"></span> <?php _e( 'Close' ); ?></button></div>
+    <div id="mywp-popup-close-bottom">
+      <buttom type="button" class="mywp-popup-close button button-secondary">
+        <span class="dashicons dashicons-no"></span>
+        <?php echo esc_html( __( 'Close' , 'default' ) ); ?>
+      </button>
+    </div>
 
   </div>
 

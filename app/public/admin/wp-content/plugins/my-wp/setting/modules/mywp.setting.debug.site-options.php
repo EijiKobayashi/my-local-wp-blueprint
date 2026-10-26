@@ -36,15 +36,13 @@ final class MywpSettingScreenDebugSiteOptions extends MywpAbstractSettingModule 
 
   public static function mywp_current_setting_screen_content() {
 
-    if( is_multisite() ) {
+    if( ! is_multisite() ) {
 
-      if( ! is_network_admin() ) {
+      return false;
 
-        return false;
+    }
 
-      }
-
-    } else {
+    if( ! is_network_admin() ) {
 
       return false;
 
@@ -61,23 +59,31 @@ final class MywpSettingScreenDebugSiteOptions extends MywpAbstractSettingModule 
     }
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $site_options ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $site_options ); ?></p>
+
     <table class="form-table">
       <thead>
         <tr>
-          <th><?php _e( 'Site ID' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Site ID' , 'my-wp' ) ); ?></th>
           <td>meta_key</td>
-          <td>meta_value(<?php echo _e( 'Raw' , 'my-wp' ); ?>)</td>
-          <td>meta_value(<?php echo _e( 'Decode' , 'my-wp' ); ?>)</td>
+          <td>meta_value(<?php echo esc_html( __( 'Raw' , 'my-wp' ) ); ?>)</td>
+          <td>meta_value(<?php echo esc_html( __( 'Decode' , 'my-wp' ) ); ?>)</td>
         </tr>
       </thead>
       <tbody>
+
         <?php foreach( $site_options as $site_option ) : ?>
+
           <?php $meta_value = maybe_unserialize( $site_option->meta_value ); ?>
+
           <?php $meta_value_json = ''; ?>
+
           <?php if( ! empty( $site_option->meta_value ) && ! is_array( $site_option->meta_value ) ) : ?>
+
             <?php $meta_value_json = json_decode( $site_option->meta_value ); ?>
+
           <?php endif; ?>
+
           <tr>
             <th>
               [<?php echo esc_html( $site_option->site_id ); ?>]
@@ -85,9 +91,13 @@ final class MywpSettingScreenDebugSiteOptions extends MywpAbstractSettingModule 
             <th>
               [<?php echo esc_html( $site_option->meta_id ); ?>] <?php echo esc_html( $site_option->meta_key ); ?>
               <?php if( is_array( $meta_value ) or is_object( $meta_value ) ) : ?>
+
                 <p><code style="background-color: #F4EFCC;">Serialize</code></p>
+
               <?php elseif( ! empty( $meta_value_json ) && is_object( $meta_value_json ) ) : ?>
+
                 <p><code style="background-color: #CDF3D1;">Json</code></p>
+
               <?php endif; ?>
             </th>
             <td>
@@ -95,15 +105,23 @@ final class MywpSettingScreenDebugSiteOptions extends MywpAbstractSettingModule 
             </td>
             <td>
               <?php if( is_array( $meta_value ) or is_object( $meta_value ) ) : ?>
+
                 <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $meta_value , true ) ); ?></textarea>
+
               <?php elseif( ! empty( $meta_value_json ) && is_object( $meta_value_json ) ) : ?>
+
                 <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $meta_value_json , true ) ); ?></textarea>
+
               <?php else : ?>
+
                 <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( $meta_value ); ?></textarea>
+
               <?php endif; ?>
             </td>
           </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
     <p>&nbsp;</p>

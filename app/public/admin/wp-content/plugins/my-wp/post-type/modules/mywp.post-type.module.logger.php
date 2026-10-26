@@ -62,7 +62,7 @@ final class MywpPostTypeModuleLogger extends MywpPostTypeAbstractModule {
 
     $sortables['request_uri'] = 'request_uri';
 
-    $sortables['log']     = 'log';
+    $sortables['log'] = 'log';
 
     return $sortables;
 
@@ -74,11 +74,11 @@ final class MywpPostTypeModuleLogger extends MywpPostTypeAbstractModule {
 
     $post->item_parent = $post->post_parent;
 
-    $post->blog_id = (int) MywpPostType::get_post_meta( $post_id , 'blog_id' );
+    $post->blog_id = MywpHelper::sanitize_number( MywpPostType::get_post_meta( $post_id , 'blog_id' ) );
 
-    $post->user_id = (int) MywpPostType::get_post_meta( $post_id , 'user_id' );
+    $post->user_id = MywpHelper::sanitize_number( MywpPostType::get_post_meta( $post_id , 'user_id' ) );
 
-    $post->request_uri = strip_tags( MywpPostType::get_post_meta( $post_id , 'request_uri' ) );
+    $post->request_uri = MywpHelper::sanitize_url( MywpPostType::get_post_meta( $post_id , 'request_uri' ) );
 
     $post->log = ( MywpPostType::get_post_meta( $post_id , 'log' ) );
 
@@ -99,7 +99,7 @@ final class MywpPostTypeModuleLogger extends MywpPostTypeAbstractModule {
     $posts_columns['user_id']     = 'User ID';
     $posts_columns['request_uri'] = 'Request URI';
     $posts_columns['log']         = 'Log';
-    $posts_columns['date']        = __( 'Date' );
+    $posts_columns['date']        = __( 'Date' , 'default' );
 
     return $posts_columns;
 

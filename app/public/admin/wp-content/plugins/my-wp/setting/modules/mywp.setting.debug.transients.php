@@ -97,7 +97,9 @@ final class MywpSettingScreenDebugTransients extends MywpAbstractSettingModule {
       if( ! empty( $timeout_transient ) ) {
 
         $transient['timeout']['id'] = $timeout_transient->meta_id;
+
         $transient['timeout']['name'] = $timeout_transient->meta_key;
+
         $transient['timeout']['value'] = $timeout_transient->meta_value;
 
       }
@@ -159,7 +161,9 @@ final class MywpSettingScreenDebugTransients extends MywpAbstractSettingModule {
       if( ! empty( $timeout_transient ) ) {
 
         $transient['timeout']['id'] = $timeout_transient->option_id;
+
         $transient['timeout']['name'] = $timeout_transient->option_name;
+
         $transient['timeout']['value'] = $timeout_transient->option_value;
 
       }
@@ -190,26 +194,33 @@ final class MywpSettingScreenDebugTransients extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $all_transients = self::get_transients();
 
     if( empty( $all_transients ) ) {
+
+      MywpHelper::error_not_found_message( '$all_transients' , $called_text );
 
       return false;
 
     }
 
     $timezone_format = _x( 'Y-m-d H:i:s' , 'timezone date format' );
+
     $timezone = get_option( 'timezone_string' );
 
     ?>
 
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $all_transients ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $all_transients ); ?></p>
 
     <table class="form-table">
       <thead>
-        <th><?php _e( 'Name' ); ?></th>
-        <th><?php _e( 'Expiration' ); ?></th>
-        <th><?php _e( 'Data' ); ?></th>
+        <tr>
+          <th><?php echo esc_html( __( 'Name' , 'default' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Expiration' , 'default' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Data' , 'default' ) ); ?></th>
+        </tr>
       </thead>
       <tbody>
 
@@ -219,26 +230,37 @@ final class MywpSettingScreenDebugTransients extends MywpAbstractSettingModule {
             <th>
               [<?php echo esc_html( $transient['id'] ); ?>]
               <?php echo esc_html( $transient['name'] ); ?><br />
+
               <p class="transient-timeout">
                 <?php if( ! empty( $transient['timeout'] ) ) : ?>
+
                   [<?php echo esc_html( $transient['timeout']['id'] ); ?>]
                   <?php echo esc_html( $transient['timeout']['name'] ); ?><br />
+
                 <?php else : ?>
-                  <?php _e( 'Not found timeout date.' , 'my-wp' ); ?>
+
+                  <?php echo esc_html( __( 'Not found timeout date.' , 'my-wp' ) ); ?>
+
                 <?php endif; ?>
               </p>
             </th>
             <td>
               <?php if( ! empty( $transient['timeout'] ) ) : ?>
+
                 <p><?php echo esc_html( date( $timezone_format , $transient['timeout']['value'] + MywpHelper::get_gmt_offset_seconds() ) ); ?> (<?php echo esc_html( $timezone ); ?>)</p>
                 <input type="text" readonly="readonly" class="large-text" value="<?php echo esc_attr( $transient['timeout']['value'] ); ?>" /><br />
+
               <?php else : ?>
-                <?php _e( 'Not found timeout date.' , 'my-wp' ); ?>
+
+                <?php echo esc_html( __( 'Not found timeout date.' , 'my-wp' ) ); ?>
+
               <?php endif; ?>
 
               <p class="transient-timeout">
                 <?php if( ! empty( $transient['timeout'] ) ) : ?>
-                  <?php _e( 'RAW' ); ?>: <?php echo esc_html( date( $timezone_format , $transient['timeout']['value'] ) ); ?> (<?php _e( 'UTC' ); ?>)<br />
+
+                  <?php echo esc_html( __( 'RAW' , 'default' ) ); ?>: <?php echo esc_html( date( $timezone_format , $transient['timeout']['value'] ) ); ?> (<?php echo esc_html( __( 'UTC' , 'default' ) ); ?>)<br />
+
                 <?php endif; ?>
               </p>
             </td>

@@ -17,39 +17,37 @@ final class MywpLogger {
 
   public function __construct( $logger_id = false ) {
 
-    if( $logger_id === false ) {
+    $called_text = sprintf( 'new %s( $logger_id )' , __CLASS__ );
+
+    $logger_id = MywpHelper::sanitize_number( $logger_id );
+
+    if( empty( $logger_id ) ) {
+
+      MywpHelper::error_require_message( '$logger_id' , $called_text );
 
       return false;
 
-    } else {
+    }
 
-      $logger_id = (int) $logger_id;
+    $post = get_post( $logger_id );
 
-      $post = get_post( $logger_id );
+    if( empty( $post ) ) {
 
-      if( empty( $post ) ) {
+      MywpHelper::error_not_found_message( 'get_post( $logger_id )' , $called_text );
 
-        $called_text = sprintf( 'new %s( %s )' , __CLASS__ , '$logger_id' );
-
-        MywpHelper::error_not_found_message( 'get_post( $logger_id )' , $called_text );
-
-        return false;
-
-      }
-
-      if( $post->post_type !== $this->post_type ) {
-
-        $called_text = sprintf( 'new %s( %s )' , __CLASS__ , '$logger_id' );
-
-        MywpHelper::error_require_message( 'post_type is need ' . $this->post_type , $called_text );
-
-        return false;
-
-      }
-
-      $this->id = $logger_id;
+      return false;
 
     }
+
+    if( $post->post_type !== $this->post_type ) {
+
+      MywpHelper::error_invalid_message( '$post->post_type' , '$this->post_type' , $called_text );
+
+      return false;
+
+    }
+
+    $this->id = $logger_id;
 
   }
 
@@ -157,17 +155,21 @@ final class MywpLogger {
 
     }
 
+    $blog_id = MywpHelper::sanitize_number( $blog_id );
+
     if( empty( $user_id ) ) {
 
       $user_id = get_current_user_id();
 
     }
 
+    $user_id = MywpHelper::sanitize_number( $user_id );
+
     $request_uri = false;
 
-    if( ! empty( $_SERVER['REQUEST_URI'] ) ) {
+    if( isset( $_SERVER['REQUEST_URI'] ) ) {
 
-      $request_uri = strip_tags( $_SERVER['REQUEST_URI'] );
+      $request_uri = wp_unslash( $_SERVER['REQUEST_URI'] );
 
     }
 

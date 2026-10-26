@@ -17,6 +17,60 @@
          "Lazy Blocks Team": [
             ""
          ],
+         "Abilities that read and manage blocks made in the Lazy Blocks builder.": [
+            ""
+         ],
+         "List Lazy Blocks": [
+            ""
+         ],
+         "Returns the blocks made in the Lazy Blocks builder with their ID, title, status and slug.": [
+            ""
+         ],
+         "Get Lazy Block": [
+            ""
+         ],
+         "Returns one Lazy Blocks block with all its builder data: controls, code, supports, styles and condition.": [
+            ""
+         ],
+         "Block post ID.": [
+            ""
+         ],
+         "Create Lazy Block": [
+            ""
+         ],
+         "Creates and publishes a new Lazy Blocks block. Data keys not given take the builder defaults.": [
+            ""
+         ],
+         "Block title.": [
+            ""
+         ],
+         "Update Lazy Block": [
+            ""
+         ],
+         "Updates the title or builder data of a Lazy Blocks block. Only the given top-level data keys change, and each given key is replaced whole: a given controls or supports object replaces the stored one instead of merging into it.": [
+            ""
+         ],
+         "New block title.": [
+            ""
+         ],
+         "Block builder data. Keys: %s.": [
+            ""
+         ],
+         "Comma-separated keywords.": [
+            ""
+         ],
+         "Controls keyed by control ID.": [
+            ""
+         ],
+         "Block slug must include only lowercase alphanumeric characters or dashes, and start with a letter.": [
+            ""
+         ],
+         "Another block already uses this slug.": [
+            ""
+         ],
+         "Block not found.": [
+            ""
+         ],
          "Documentation": [
             ""
          ],
@@ -126,6 +180,15 @@
             ""
          ],
          "Sorry, you are not allowed to read Gutenberg blocks data as this user.": [
+            ""
+         ],
+         "Sorry, you are not allowed to update this block data.": [
+            ""
+         ],
+         "Sorry, you are not allowed to read icons as this user.": [
+            ""
+         ],
+         "Sorry, you are not allowed to preview blocks in the block builder.": [
             ""
          ],
          "Invalid block.": [
@@ -390,6 +453,9 @@
          "Note 2: supported custom PHP callback to output block": [
             ""
          ],
+         "Code": [
+            ""
+         ],
          "Show in posts": [
             ""
          ],
@@ -399,34 +465,58 @@
          "Loading…": [
             ""
          ],
+         "Add control": [
+            ""
+         ],
+         "Copied": [
+            ""
+         ],
+         "Copy name %s": [
+            ""
+         ],
+         "Control label": [
+            ""
+         ],
          "(no label)": [
+            ""
+         ],
+         "Control actions": [
             ""
          ],
          "(copy)": [
             ""
          ],
-         "Remove": [
+         "Copy name": [
             ""
          ],
          "Do you really want to remove control?": [
             ""
          ],
-         "Copied!": [
+         "Remove": [
             ""
          ],
-         "Copy Name": [
-            ""
-         ],
-         "Add Child Control": [
-            ""
-         ],
-         "Add Control": [
+         "Add child control": [
             ""
          ],
          "Content Controls": [
             ""
          ],
          "Inspector Controls": [
+            ""
+         ],
+         "Controls placement": [
+            ""
+         ],
+         "Most used": [
+            ""
+         ],
+         "Search control types": [
+            ""
+         ],
+         "Search": [
+            ""
+         ],
+         "No control types found.": [
             ""
          ],
          "Block slug must include only lowercase alphanumeric characters or dashes, and start with a letter. Example: lazyblock/my-custom-block": [
@@ -444,7 +534,40 @@
          "Type keyword and push Enter": [
             ""
          ],
-         "Select control to see settings.": [
+         "Change icon": [
+            ""
+         ],
+         "(no title)": [
+            ""
+         ],
+         "Done": [
+            ""
+         ],
+         "Edit slug": [
+            ""
+         ],
+         "General": [
+            ""
+         ],
+         "Required": [
+            ""
+         ],
+         "Hide until the block is selected": [
+            ""
+         ],
+         "Translate with WPML": [
+            ""
+         ],
+         "Save in post meta": [
+            ""
+         ],
+         "Select a control in the list to edit its settings.": [
+            ""
+         ],
+         "Settings": [
+            ""
+         ],
+         "Behavior": [
             ""
          ],
          "Default value": [
@@ -462,9 +585,6 @@
          "Instructions under control": [
             ""
          ],
-         "Hide if block is not selected": [
-            ""
-         ],
          "Label": [
             ""
          ],
@@ -477,19 +597,16 @@
          "Control name must include only alphanumeric characters, dashes or underscores. Example: my-control-name": [
             ""
          ],
-         "Placement": [
-            ""
-         ],
-         "Placement options": [
-            ""
-         ],
          "Inspector": [
             ""
          ],
-         "Required": [
+         "Both": [
             ""
          ],
-         "Save in Meta": [
+         "Placement": [
+            ""
+         ],
+         "The post cannot be saved while this field is empty.": [
             ""
          ],
          "How to use?": [
@@ -501,13 +618,10 @@
          "Unique metabox name": [
             ""
          ],
-         "WPML Translation": [
+         "%1$s in %2$s": [
             ""
          ],
-         "Type": [
-            ""
-         ],
-         "Type to Search…": [
+         "Change type: %s": [
             ""
          ],
          "25%": [
@@ -529,15 +643,6 @@
             ""
          ],
          "Add the style variation name, which will be used as a class name on your block. For example, if you add a style variation with the name `outline`, when a user selects this style, the class name `is-style-outline` will be added to the block.": [
-            ""
-         ],
-         "To see these settings in your block, you have to install Ghost Kit plugin.": [
-            ""
-         ],
-         "Read More": [
-            ""
-         ],
-         "\"Class Name\" support is required to use the following settings.": [
             ""
          ],
          "Effects": [
@@ -588,6 +693,18 @@
          "Insert custom HTML attributes with custom content.": [
             ""
          ],
+         "To see these settings in your block, you have to install Ghost Kit plugin.": [
+            ""
+         ],
+         "Read More": [
+            ""
+         ],
+         "\"Class Name\" support is required to use the following settings.": [
+            ""
+         ],
+         "Style supports are applied to the block wrapper. Your frontend code has no element with the useBlockProps attribute, so the styles go to an extra <div> wrapper. Add useBlockProps to your root element to style it directly.": [
+            ""
+         ],
          "Color": [
             ""
          ],
@@ -624,10 +741,40 @@
          "Select dimensions options": [
             ""
          ],
+         "Border": [
+            ""
+         ],
+         "Additional fields to manage block border.": [
+            ""
+         ],
+         "Select border options": [
+            ""
+         ],
+         "Background": [
+            ""
+         ],
+         "Additional fields to manage block background image.": [
+            ""
+         ],
+         "Select background options": [
+            ""
+         ],
          "Shadow": [
             ""
          ],
          "Additional fields to manage block shadow.": [
+            ""
+         ],
+         "Duotone": [
+            ""
+         ],
+         "Additional field to apply a duotone filter to the block.": [
+            ""
+         ],
+         "Sticky Position": [
+            ""
+         ],
+         "Additional field to make the block sticky.": [
             ""
          ],
          "Additional fields to manage block layout.": [
@@ -678,6 +825,12 @@
          "Allow block locking/unlocking by a user.": [
             ""
          ],
+         "Interactivity": [
+            ""
+         ],
+         "Process Interactivity API directives in the block output.": [
+            ""
+         ],
          "Block Name": [
             ""
          ],
@@ -714,6 +867,9 @@
          "Alert": [
             ""
          ],
+         "Block settings could not be saved.": [
+            ""
+         ],
          "Upgrade Now": [
             ""
          ],
@@ -726,10 +882,19 @@
          "+ Add Choice": [
             ""
          ],
+         "Copied!": [
+            ""
+         ],
          "Control": [
             ""
          ],
          "Search Icon": [
+            ""
+         ],
+         "Type to Search…": [
+            ""
+         ],
+         "Could not load icons.": [
             ""
          ],
          "No icons found.": [
@@ -744,28 +909,13 @@
          "Only a single <InnerBlocks /> component can be used per block. Multiple <InnerBlocks /> found inside block \"%s\".": [
             ""
          ],
-         "Lazy Blocks Pro": [
+         "Lazy Blocks Pro adds conditional logic, panels, and post, taxonomy and user controls.": [
             ""
          ],
-         "Custom block collections and slug namespaces": [
+         "Learn more": [
             ""
          ],
-         "Controls Conditional Logic": [
-            ""
-         ],
-         "Panels and Dividers": [
-            ""
-         ],
-         "Posts, Taxonomy, User Controls": [
-            ""
-         ],
-         "Blocks Preloading": [
-            ""
-         ],
-         "SEO Enhancements": [
-            ""
-         ],
-         "And much more…": [
+         "Dismiss": [
             ""
          ],
          "Custom fields are not enabled for this post type. Enable \"custom-fields\" support to use this control.": [

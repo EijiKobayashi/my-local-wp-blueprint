@@ -14,21 +14,19 @@ final class MywpNotice {
 
   public function __construct( $user_id = false ) {
 
+    $called_text = sprintf( 'new %s( $user_id )' , __CLASS__ );
+
     if( $user_id === false ) {
 
       $user_id = get_current_user_id();
 
-    } else {
-
-      $user_id = (int) $user_id;
-
     }
+
+    $user_id = MywpHelper::sanitize_number( $user_id );
 
     if( empty( $user_id ) ) {
 
-      $called_text = sprintf( 'new %s( %s )' , __CLASS__ , '$user_id' );
-
-      MywpHelper::error_require_message( '$user_id' , $called_text );
+      MywpHelper::error_not_found_message( '$user_id' , $called_text );
 
       return false;
 
@@ -40,9 +38,9 @@ final class MywpNotice {
 
   public function get_notices() {
 
-    if( $this->user_id === false ) {
+    $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
+    if( empty( $this->user_id ) ) {
 
       MywpHelper::error_not_found_message( 'user_id' , $called_text );
 
@@ -88,9 +86,9 @@ final class MywpNotice {
 
   public function add_notice( $notice = false , $type = 'update' ) {
 
-    $called_text = sprintf( '(object) %s->%s( %s )' , __CLASS__ , __FUNCTION__ , '$notice' );
+    $called_text = sprintf( '(object) %s->%s( $notice , $type )' , __CLASS__ , __FUNCTION__ );
 
-    if( $this->user_id === false ) {
+    if( empty( $this->user_id ) ) {
 
       MywpHelper::error_not_found_message( 'user_id' , $called_text );
 
@@ -98,7 +96,7 @@ final class MywpNotice {
 
     }
 
-    if( $notice === false ) {
+    if( empty( $notice ) ) {
 
       MywpHelper::error_not_found_message( '$notice' , $called_text );
 
@@ -106,7 +104,15 @@ final class MywpNotice {
 
     }
 
-    $type = strip_tags( $type );
+    $type = MywpHelper::sanitize_text( $type );
+
+    if( empty( $type ) ) {
+
+      MywpHelper::error_not_found_message( '$type' , $called_text );
+
+      return false;
+
+    }
 
     $notices = $this->get_notices();
 
@@ -130,9 +136,9 @@ final class MywpNotice {
 
   public function update_notice( $notices = false ) {
 
-    $called_text = sprintf( '(object) %s->%s( %s )' , __CLASS__ , __FUNCTION__ , '$notices' );
+    $called_text = sprintf( '(object) %s->%s( $notices )' , __CLASS__ , __FUNCTION__ );
 
-    if( $this->user_id === false ) {
+    if( empty( $this->user_id ) ) {
 
       MywpHelper::error_not_found_message( 'user_id' , $called_text );
 
@@ -156,9 +162,9 @@ final class MywpNotice {
 
   public function delete_notice() {
 
-    if( $this->user_id === false ) {
+    $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
+    if( empty( $this->user_id ) ) {
 
       MywpHelper::error_not_found_message( 'user_id' , $called_text );
 

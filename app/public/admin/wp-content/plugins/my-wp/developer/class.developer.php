@@ -18,13 +18,13 @@ final class MywpDeveloper {
 
   public static function is_debug_item( $debug_item = false ) {
 
+    $called_text = sprintf( '%s::%s( $debug_item )' , __CLASS__ , __FUNCTION__ );
+
+    $debug_item = MywpHelper::sanitize_text( $debug_item );
+
     if( empty( $debug_item ) ) {
 
-      return false;
-
-    }
-
-    if( ! is_string( $debug_item ) ) {
+      MywpHelper::error_not_found_message( '$debug_item' , $called_text );
 
       return false;
 
@@ -47,6 +47,8 @@ final class MywpDeveloper {
     );
 
     if( ! in_array( $debug_item , $debug_items , true ) ) {
+
+      MywpHelper::error_invalid_message( '$debug_item' , '$debug_items' , $called_text );
 
       return false;
 
@@ -126,17 +128,17 @@ final class MywpDeveloper {
 
   public static function debug_action( $action = false ) {
 
-    if( $action === false ) {
+    $called_text = sprintf( '%s::%s( $action )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$action' );
+    $action = MywpHelper::sanitize_text( $action );
+
+    if( empty( $action ) ) {
 
       MywpHelper::error_not_found_message( '$action' , $called_text );
 
       return false;
 
     }
-
-    $action = strip_tags( $action );
 
     echo esc_html( sprintf( 'debug_action = %s' , $action ) );
     echo "\n";
@@ -168,17 +170,17 @@ final class MywpDeveloper {
 
   public static function debug_filter( $filter = false ) {
 
-    if( $filter === false ) {
+    $called_text = sprintf( '%s::%s( $filter )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$filter' );
+    $filter = MywpHelper::sanitize_text( $filter );
+
+    if( empty( $filter ) ) {
 
       MywpHelper::error_not_found_message( '$filter' , $called_text );
 
       return false;
 
     }
-
-    $filter = strip_tags( $filter );
 
     echo esc_html( sprintf( 'debug_filter = %s' , $filter ) );
     echo "\n";
@@ -209,9 +211,11 @@ final class MywpDeveloper {
 
     global $wp_filter;
 
-    if( empty( $filter_name ) ) {
+    $called_text = sprintf( '%s::%s( $filter_name )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$filter_name' );
+    $filter_name = MywpHelper::sanitize_text( $filter_name );
+
+    if( empty( $filter_name ) ) {
 
       MywpHelper::error_not_found_message( '$filter_name' , $called_text );
 
@@ -296,11 +300,11 @@ final class MywpDeveloper {
 
   public static function get_current_filter() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $filter = current_filter();
 
     if( empty( $filter ) ) {
-
-      $called_text = sprintf( '%s::%s()' , __CLASS__ );
 
       MywpHelper::error_not_found_message( 'filter' , $called_text );
 
@@ -314,9 +318,9 @@ final class MywpDeveloper {
 
   public static function exists_function( $functions = false ) {
 
-    if( empty( $functions ) ) {
+    $called_text = sprintf( '%s::%s( $functions )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$functions' );
+    if( empty( $functions ) ) {
 
       MywpHelper::error_not_found_message( '$functions' , $called_text );
 
@@ -351,9 +355,9 @@ final class MywpDeveloper {
 
   public static function exists_define( $defines = false ) {
 
-    if( empty( $defines ) ) {
+    $called_text = sprintf( '%s::%s( $defines )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$defines' );
+    if( empty( $defines ) ) {
 
       MywpHelper::error_not_found_message( '$defines' , $called_text );
 
@@ -402,7 +406,13 @@ final class MywpDeveloper {
 
     }
 
-    return array( 'microtime' => microtime( true ) , 'memory_get_usage' => memory_get_usage() , 'load_avg' => $load_avg );
+    $process = array(
+      'microtime' => microtime( true ),
+      'memory_get_usage' => memory_get_usage(),
+      'load_avg' => $load_avg
+    );
+
+    return $process;
 
   }
 

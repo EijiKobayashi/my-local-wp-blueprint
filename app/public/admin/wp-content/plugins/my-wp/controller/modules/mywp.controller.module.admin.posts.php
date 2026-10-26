@@ -92,6 +92,16 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
   public static function mywp_model_get_option_key( $option_key ) {
 
+    $called_text = sprintf( '%s::%s( $option_key )' , __CLASS__ , __FUNCTION__ );
+
+    $option_key = MywpHelper::sanitize_text( $option_key );
+
+    if( empty( $option_key ) ) {
+
+      MywpHelper::error_not_found_message( '$option_key' , $called_text );
+
+    }
+
     if( empty( self::$post_type ) ) {
 
       return $option_key;
@@ -106,25 +116,27 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
   public static function mywp_ajax() {
 
-    if( empty( $_POST['action'] ) or $_POST['action'] !== 'inline-save' ) {
+    if( ! isset( $_POST['action'] ) ) {
 
       return false;
 
     }
 
-    if( empty( $_POST['screen'] ) ) {
+    $request_action = MywpHelper::sanitize_text( wp_unslash( $_POST['action'] ) );
+
+    if( $request_action !== 'inline-save' ) {
 
       return false;
 
     }
 
-    if( empty( $_POST['post_type'] ) ) {
+    if( ! isset( $_POST['post_type'] ) ) {
 
       return false;
 
     }
 
-    self::$post_type = strip_tags( $_POST['post_type'] );
+    self::$post_type = MywpHelper::sanitize_text( wp_unslash( $_POST['post_type'] ) );
 
     add_filter( 'mywp_model_get_option_key_mywp_' . self::$id , array( __CLASS__ , 'mywp_model_get_option_key' ) );
 
@@ -303,6 +315,8 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['list_columns'] ) ) {
@@ -315,13 +329,31 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
-      if( empty( $column_setting['width'] ) ) {
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
 
         continue;
 
       }
 
-      $columns[ $column_id ] = $column_setting['width'];
+      $width = false;
+
+      if( ! empty( $column_setting['width'] ) ) {
+
+        $width = MywpHelper::sanitize_text( $column_setting['width'] );
+
+      }
+
+      if( empty( $width ) ) {
+
+        continue;
+
+      }
+
+      $columns[ $column_id ] = $width;
 
     }
 
@@ -400,6 +432,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
     if( $request['orderby'] === 'post-thumbnails') {
 
       $request['meta_key'] = '_thumbnail_id';
+
       $request['orderby'] = 'meta_value';
 
     } elseif( ! empty( $request['post_type'] ) ) {
@@ -409,6 +442,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
       if( isset( $posts_all_custom_fields[ $request['orderby'] ] ) ) {
 
         $request['meta_key'] = $request['orderby'];
+
         $request['orderby'] = 'meta_value';
 
       }
@@ -442,7 +476,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
       }
 
-      if( in_array( $orderby , array( 'post_excerpt' , 'post_status' , 'post_modified' ) ) ) {
+      if( in_array( $orderby , array( 'post_excerpt' , 'post_status' , 'post_modified' ) , true ) ) {
 
         $order = $wp_query->get( 'order' );
 
@@ -474,7 +508,15 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     }
 
-    $per_page = $setting_data['per_page_num'];
+    $per_page_num = MywpHelper::sanitize_number( $setting_data['per_page_num'] );
+
+    if( empty( $per_page_num ) ) {
+
+      return $per_page;
+
+    }
+
+    $per_page = $per_page_num;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -489,6 +531,8 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
       return $columns;
 
     }
+
+    $called_text = sprintf( '%s::%s( $columns )' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -510,6 +554,24 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $column_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$column_setting', 'is_array()' , $called_text );
+
+        continue;
+
+      }
+
       $columns[ $column_id ] = wp_kses( do_shortcode( $column_setting['title'] ) , $wp_kses_allowed_html );
 
     }
@@ -527,6 +589,8 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
       return false;
 
     }
+
+    $called_text = sprintf( '%s::%s( $column_id , $post_id )' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -566,13 +630,13 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     } elseif( $column_id === 'mywp_column_date' ) {
 
-      $the_time = sprintf( __( '%1$s at %2$s' ) , get_the_time( __( 'Y/m/d' ) , $post ) , get_the_time( __( 'g:i a' ) , $post ) );
+      $the_time = sprintf( __( '%1$s at %2$s' , 'default' ) , get_the_time( __( 'Y/m/d' , 'default' ) , $post ) , get_the_time( __( 'g:i a' , 'default' ) , $post ) );
 
       echo esc_html( $the_time );
 
     } elseif( $column_id === 'mywp_column_modified' ) {
 
-      $the_modified_time = sprintf( __( '%1$s at %2$s' ) , get_the_modified_time( __( 'Y/m/d' ) , $post ) , get_the_modified_time( __( 'g:i a' ) , $post ) );
+      $the_modified_time = sprintf( __( '%1$s at %2$s' , 'default' ) , get_the_modified_time( __( 'Y/m/d' , 'default' ) , $post ) , get_the_modified_time( __( 'g:i a' , 'default' ) , $post ) );
 
       echo esc_html( $the_modified_time );
 
@@ -582,7 +646,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     } elseif( $column_id === 'mywp_column_excerpt' ) {
 
-      $post_excerpt = strip_tags( $post->post_excerpt );
+      $post_excerpt = MywpHelper::sanitize_text( $post->post_excerpt );
 
       if( function_exists( 'mb_substr' ) ) {
 
@@ -690,8 +754,6 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     }
 
-    $called_text = sprintf( '%s::%s( $column_id , $post_id )' , __CLASS__ , __FUNCTION__ );
-
     $default_list_columns = self::get_default_list_colums();
 
     if( $column_id === 'id' ) {
@@ -780,15 +842,17 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         }
 
+        $post_excerpt = MywpHelper::sanitize_text( $post->post_excerpt );
+
         if( ! empty( $post->post_excerpt ) ) {
 
           if( function_exists( 'mb_substr' ) ) {
 
-            echo esc_html( mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
+            echo esc_html( mb_substr( $post_excerpt , 0 , 20 ) . '.' );
 
           } else {
 
-            echo esc_html( substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
+            echo esc_html( substr( $post_excerpt , 0 , 20 ) . '.' );
 
           }
 
@@ -930,6 +994,8 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     }
 
+    $called_text = sprintf( '%s::%s( $sortables )' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['list_columns'] ) ) {
@@ -942,9 +1008,25 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
       if( ! empty( $column_setting['sort'] ) ) {
 
-        $sortables[ $column_id ] = $column_setting['orderby'];
+        $orderby = MywpHelper::sanitize_text( $column_setting['orderby'] );
+
+        if( ! empty( $orderby ) ) {
+
+          $sortables[ $column_id ] = $orderby;
+
+        }
 
       }
 
@@ -1018,7 +1100,7 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
     foreach( $wp_post_statuses as $post_status => $wp_post_status ) {
 
-      if( in_array( $post_status , array( 'auto-draft' ) ) ) {
+      if( in_array( $post_status , array( 'auto-draft' ) , true ) ) {
 
         continue;
 
@@ -1038,19 +1120,21 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
   protected static function custom_search_filter_query_do( $query , $custom_search_filter_requests ) {
 
+    $called_text = sprintf( '%s::%s( $query , $custom_search_filter_requests )' , __CLASS__ , __FUNCTION__ );
+
     if( ! $query->is_main_query() ) {
 
       return false;
 
     }
 
-    if( empty( $_REQUEST['post_type'] ) ) {
+    if( ! isset( $_REQUEST['post_type'] ) ) {
 
       return false;
 
     }
 
-    $post_type = MywpHelper::sanitize_text( $_REQUEST['post_type'] );
+    $post_type = MywpHelper::sanitize_text( wp_unslash( $_REQUEST['post_type'] ) );
 
     if( $post_type !== self::$post_type ) {
 
@@ -1108,9 +1192,11 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
         }
 
-        $date = MywpHelper::sanitize_date( $custom_search_filter_requests['mywp_custom_search_post_date'][ $date_key ] );
+        $date = MywpHelper::sanitize_date_ymd( $custom_search_filter_requests['mywp_custom_search_post_date'][ $date_key ] );
 
         if( empty( $date ) ) {
+
+          MywpHelper::error_not_found_message( '$date' , $called_text );
 
           continue;
 
@@ -1196,6 +1282,8 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
 
   protected static function get_custom_search_filter_fields() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $custom_search_filter_fields = array(
       'mywp_custom_search_id' => array(
         'id' => 'mywp_custom_search_id',
@@ -1210,12 +1298,12 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
       ),
       'mywp_custom_search_title' => array(
         'id' => 'mywp_custom_search_title',
-        'title' => __( 'Title' ),
+        'title' => __( 'Title' , 'default' ),
         'type' => 'text',
       ),
       'mywp_custom_search_post_date' => array(
         'id' => 'mywp_custom_search_post_date',
-        'title' => __( 'Date' ),
+        'title' => __( 'Date' , 'default' ),
         'type' => 'date',
       ),
       'mywp_custom_search_post_parent' => array(
@@ -1244,6 +1332,8 @@ final class MywpControllerModuleAdminPosts extends MywpAbstractControllerListMod
         }
 
         if( is_wp_error( $terms ) ) {
+
+          MywpHelper::error_returned_message( '$terms' , $terms->get_error_message() , $called_text );
 
           continue;
 

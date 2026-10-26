@@ -16,23 +16,33 @@ final class MywpShortcodeModuleTerm extends MywpShortcodeAbstractModule {
 
   public static function do_shortcode( $atts = false , $content = false , $tag = false ) {
 
-    if( empty( $atts['field'] ) ) {
+    $called_text = sprintf( '%s::%s( $atts , $content , $tag )' , __CLASS__ , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+    $field = false;
+
+    if( ! empty( $atts['field'] ) ) {
+
+      $field = MywpHelper::sanitize_text( $atts['field'] );
+
+    }
+
+    if( empty( $field ) ) {
+
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 
     }
 
-    $field = strip_tags( $atts['field'] );
-
     $term_id = false;
 
     if( ! empty( $atts['term_id'] ) ) {
 
-      $term_id = (int) $atts['term_id'];
+      $term_id = $atts['term_id'];
 
     }
+
+    $term_id = MywpHelper::sanitize_number( $term_id );
 
     if( empty( $term_id ) ) {
 
@@ -40,9 +50,15 @@ final class MywpShortcodeModuleTerm extends MywpShortcodeAbstractModule {
 
     }
 
-    $get_term = get_term( $term_id );
+    $term = get_term( $term_id );
 
-    if( empty( $get_term ) or is_wp_error( $get_term ) ) {
+    if( empty( $term ) ) {
+
+      return $content;
+
+    }
+
+    if( is_wp_error( $term ) ) {
 
       return $content;
 
@@ -54,15 +70,15 @@ final class MywpShortcodeModuleTerm extends MywpShortcodeAbstractModule {
 
     } elseif( $field === 'name' ) {
 
-      $content = $get_term->name;
+      $content = $term->name;
 
     } elseif( $field === 'slug' ) {
 
-      $content = $get_term->slug;
+      $content = $term->slug;
 
     } elseif( $field === 'link' ) {
 
-      $content = get_term_link( $get_term );
+      $content = get_term_link( $term );
 
     } else {
 

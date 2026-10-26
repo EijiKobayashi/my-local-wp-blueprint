@@ -29,9 +29,9 @@ final class MywpDeveloperModuleCoreTheme extends MywpDeveloperAbstractModule {
 
   protected static function get_debug_lists() {
 
-    if( ! did_action( 'after_setup_theme' ) ) {
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+    if( ! did_action( 'after_setup_theme' ) ) {
 
       MywpHelper::error_after_called_message( 'after_setup_theme' , $called_text );
 
@@ -74,7 +74,7 @@ final class MywpDeveloperModuleCoreTheme extends MywpDeveloperAbstractModule {
 
       echo '<td>';
 
-      if( in_array( $key , array( 'get_template_directory_uri()' , 'get_stylesheet_uri()' ) ) ) {
+      if( in_array( $key , array( 'get_template_directory_uri()' , 'get_stylesheet_uri()' ) , true ) ) {
 
         echo esc_url( $val );
 

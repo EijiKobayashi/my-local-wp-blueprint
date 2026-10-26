@@ -109,6 +109,18 @@ final class MywpPostType {
 
   public static function get_post( $post_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $post_id )' , __CLASS__ , __FUNCTION__ );
+
+    $post_id = MywpHelper::sanitize_number( $post_id );
+
+    if( empty( $post_id ) ) {
+
+      MywpHelper::error_not_found_message( '$post_id' , $called_text );
+
+      return false;
+
+    }
+
     $mywp_cache = new MywpCache( "MywpPostType_get_post_{$post_id}" );
 
     $cache = $mywp_cache->get_cache();
@@ -140,13 +152,17 @@ final class MywpPostType {
 
   public static function get_post_custom( $post_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $post_id )' , __CLASS__ , __FUNCTION__ );
+
+    $post_id = MywpHelper::sanitize_number( $post_id );
+
     if( empty( $post_id ) ) {
+
+      MywpHelper::error_not_found_message( '$post_id' , $called_text );
 
       return false;
 
     }
-
-    $post_id = (int) $post_id;
 
     $mywp_cache = new MywpCache( "MywpPostType_get_post_custom_{$post_id}" );
 
@@ -171,15 +187,27 @@ final class MywpPostType {
 
   public static function get_post_meta( $post_id = false , $find_meta_key = false ) {
 
-    if( empty( $post_id ) or empty( $find_meta_key ) ) {
+    $called_text = sprintf( '%s::%s( $post_id , $find_meta_key )' , __CLASS__ , __FUNCTION__ );
+
+    $post_id = MywpHelper::sanitize_number( $post_id );
+
+    if( empty( $post_id ) ) {
+
+      MywpHelper::error_not_found_message( '$post_id' , $called_text );
 
       return false;
 
     }
 
-    $post_id = (int) $post_id;
+    $find_meta_key = MywpHelper::sanitize_text( $find_meta_key );
 
-    $find_meta_key = strip_tags( $find_meta_key );
+    if( empty( $find_meta_key ) ) {
+
+      MywpHelper::error_not_found_message( '$find_meta_key' , $called_text );
+
+      return false;
+
+    }
 
     $mywp_cache = new MywpCache( "MywpPostType_get_post_meta_{$post_id}_{$find_meta_key}" );
 
@@ -193,7 +221,13 @@ final class MywpPostType {
 
     $all_custom_fields = self::get_post_custom( $post_id );
 
-    if( empty( $all_custom_fields ) or ! is_array( $all_custom_fields ) ) {
+    if( empty( $all_custom_fields ) ) {
+
+      return false;
+
+    }
+
+    if( ! is_array( $all_custom_fields ) ) {
 
       return false;
 
@@ -228,13 +262,17 @@ final class MywpPostType {
 
     global $wpdb;
 
+    $called_text = sprintf( '%s::%s( $post_type )' , __CLASS__ , __FUNCTION__ );
+
+    $post_type = MywpHelper::sanitize_text( $post_type );
+
     if( empty( $post_type ) ) {
+
+      MywpHelper::error_not_found_message( '$post_type' , $called_text );
 
       return false;
 
     }
-
-    $post_type = strip_tags( $post_type );
 
     $mywp_cache = new MywpCache( "MywpPostType_get_post_type_posts_all_custom_fields_{$post_type}" );
 
@@ -267,13 +305,19 @@ final class MywpPostType {
 
     foreach( $posts as $post_id ) {
 
-      $post_ids[] = (int) $post_id;
+      $post_ids[] = MywpHelper::sanitize_number( $post_id );
 
     }
 
     $posts_all_custom_fields = array();
 
-    $exclude_keys = array( 'allorany' , 'hide_on_screen' , '_edit_lock' , '_edit_last' , 'classic-editor-remember' );
+    $exclude_keys = array(
+      'allorany',
+      'hide_on_screen',
+      '_edit_lock',
+      '_edit_last',
+      'classic-editor-remember'
+    );
 
     $exclude_keys = apply_filters( 'mywp_post_type_get_post_type_posts_all_custom_fields_exclude_keys' , $exclude_keys );
 
@@ -287,11 +331,15 @@ final class MywpPostType {
 
       }
 
-      if( ! empty( $exclude_keys ) && is_array( $exclude_keys ) ) {
+      if( ! empty( $exclude_keys ) ) {
 
-        if( in_array( $meta_key , $exclude_keys ) ) {
+        if( is_array( $exclude_keys ) ) {
 
-          continue;
+          if( in_array( $meta_key , $exclude_keys , true ) ) {
+
+            continue;
+
+          }
 
         }
 

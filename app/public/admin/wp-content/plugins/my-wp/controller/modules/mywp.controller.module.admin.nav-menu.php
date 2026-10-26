@@ -81,11 +81,17 @@ final class MywpControllerModuleAdminNavMenu extends MywpControllerAbstractModul
   public static function load_nav_menus() {
 
     add_action( 'admin_print_styles' , array( __CLASS__ , 'hide_menus' ) );
+
     add_action( 'admin_print_styles' , array( __CLASS__ , 'hide_advanced_menu_properties' ) );
+
     add_action( 'admin_print_styles' , array( __CLASS__ , 'hide_delete_menu' ) );
+
     add_action( 'admin_print_styles' , array( __CLASS__ , 'hide_manage_locations' ) );
+
     add_action( 'admin_print_styles' , array( __CLASS__ , 'hide_menu_settings' ) );
+
     add_action( 'admin_print_styles' , array( __CLASS__ , 'hide_live_preview_button' ) );
+
     add_action( 'admin_head-nav-menus.php' , array( __CLASS__ , 'remove_menu_meta_boxes_items' ) );
 
   }
@@ -345,6 +351,14 @@ final class MywpControllerModuleAdminNavMenu extends MywpControllerAbstractModul
   private static function get_meta_box_context( $find_meta_box_id ) {
 
     global $wp_meta_boxes;
+
+    $find_meta_box_id = MywpHelper::sanitize_text( $find_meta_box_id );
+
+    if( empty( $find_meta_box_id ) ) {
+
+      return false;
+
+    }
 
     if( empty( $wp_meta_boxes['nav-menus'] ) ) {
 

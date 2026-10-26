@@ -26,7 +26,7 @@ $selectable_taxonomies = MywpSettingTaxonomy::get_setting_taxonomies();
 
 <div id="setting-screen-select-taxonomies">
 
-  <?php printf( __( 'Select %s' ) , __( 'Taxonomy' , 'my-wp' ) ); ?>
+  <?php echo esc_html( sprintf( __( 'Select %s' , 'default' ) , __( 'Taxonomy' , 'my-wp' ) ) ); ?>
 
   <select name="mywp[data][taxonomy]" id="setting-screen-select-taxonomy" disabled="disabled">
 
@@ -34,7 +34,9 @@ $selectable_taxonomies = MywpSettingTaxonomy::get_setting_taxonomies();
 
       <?php $taxonomy_url = add_query_arg( array( 'setting_taxonomy' => $selectable_taxonomy->name ) , remove_query_arg( 'setting_taxonomy' ) ); ?>
 
-      <option value="<?php echo esc_attr( $selectable_taxonomy->name ); ?>" data-taxonomy_url="<?php echo esc_url( $taxonomy_url ); ?>" <?php selected( $current_setting_taxonomy_name , $selectable_taxonomy->name ); ?>><?php echo esc_attr( $selectable_taxonomy->labels->name ); ?></option>
+      <option value="<?php echo esc_attr( $selectable_taxonomy->name ); ?>" data-taxonomy_url="<?php echo esc_url( $taxonomy_url ); ?>" <?php selected( $current_setting_taxonomy_name , $selectable_taxonomy->name ); ?>>
+        <?php echo esc_html( $selectable_taxonomy->labels->name ); ?>
+      </option>
 
     <?php endforeach; ?>
 

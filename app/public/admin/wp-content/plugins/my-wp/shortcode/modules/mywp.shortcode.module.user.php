@@ -16,29 +16,45 @@ final class MywpShortcodeModuleUser extends MywpShortcodeAbstractModule {
 
   public static function do_shortcode( $atts = false , $content = false , $tag = false ) {
 
-    if( empty( $atts['field'] ) ) {
+    $called_text = sprintf( '%s::%s( $atts , $content , $tag )' , __CLASS__ , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+    $field = false;
+
+    if( ! empty( $atts['field'] ) ) {
+
+      $field = MywpHelper::sanitize_text( $atts['field'] );
+
+    }
+
+    if( empty( $field ) ) {
+
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 
     }
 
-    $field = strip_tags( $atts['field'] );
+    $user_id = get_current_user_id();
 
-    if( empty( $atts['user_id'] ) ) {
+    if( ! empty( $atts['user_id'] ) ) {
 
-      $user_id = get_current_user_id();
+      $user_id = $atts['user_id'];
 
-    } else {
+    }
 
-      $user_id = (int) $atts['user_id'];
+    $user_id = MywpHelper::sanitize_number( $user_id );
+
+    if( empty( $user_id ) ) {
+
+      return $content;
 
     }
 
     $mywp_user = new MywpUser( $user_id );
 
     if( empty( $mywp_user ) ) {
+
+      MywpHelper::error_not_found_message( '$mywp_user' , $called_text );
 
       return $content;
 
@@ -82,7 +98,7 @@ final class MywpShortcodeModuleUser extends MywpShortcodeAbstractModule {
 
       if( ! empty( $atts['size'] ) ) {
 
-        $size = $atts['size'];
+        $size = MywpHelper::sanitize_number( $atts['size'] );
 
       }
 
@@ -90,7 +106,7 @@ final class MywpShortcodeModuleUser extends MywpShortcodeAbstractModule {
 
     } else {
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 

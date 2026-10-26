@@ -21,7 +21,7 @@ final class MywpSettingScreenAdminSiteEditor extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'Site Editor' ),
+      'title' => __( 'Site Editor' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'admin_site_editor',
       'document_url' => self::get_document_url( 'document/admin-site-editor/' ),
@@ -36,15 +36,18 @@ final class MywpSettingScreenAdminSiteEditor extends MywpAbstractSettingModule {
     $setting_data = self::get_setting_data();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'General' , 'default' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Top left button' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Top left button' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][top_left_icon]" class="top_left_icon" value="1" <?php checked( $setting_data['top_left_icon'] , true ); ?> />
-              <?php _e( 'Change to back icon' , 'my-wp' ); ?>
+              <?php echo esc_html( __('Change to back icon' , 'my-wp' ) ); ?>
             </label>
           </td>
         </tr>

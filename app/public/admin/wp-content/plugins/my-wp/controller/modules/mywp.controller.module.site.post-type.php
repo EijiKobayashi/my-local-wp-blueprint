@@ -50,13 +50,25 @@ final class MywpControllerModuleSitePostType extends MywpControllerAbstractModul
 
     }
 
-    if( empty( $post_type ) or empty( $post_type_object ) ) {
+    if( empty( $post_type ) ) {
 
       return false;
 
     }
 
-    if( empty( $post_type_object->cap ) or empty( $post_type_object->cap->create_posts ) ) {
+    if( empty( $post_type_object ) ) {
+
+      return false;
+
+    }
+
+    if( empty( $post_type_object->cap ) ) {
+
+      return false;
+
+    }
+
+    if( empty( $post_type_object->cap->create_posts ) ) {
 
       return false;
 
@@ -68,9 +80,9 @@ final class MywpControllerModuleSitePostType extends MywpControllerAbstractModul
 
     }
 
-    $exclude = array( 'custom_css' );
+    $excludes = array( 'custom_css' );
 
-    if( in_array( $post_type , $exclude ) ) {
+    if( in_array( $post_type , $excludes , true ) ) {
 
       return false;
 

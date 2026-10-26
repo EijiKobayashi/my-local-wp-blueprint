@@ -21,7 +21,7 @@ final class MywpSettingScreenDebugCapabilities extends MywpAbstractSettingModule
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'Capabilities' ),
+      'title' => __( 'Capabilities' , 'default' ),
       'menu' => self::$menu,
       'use_form' => false,
     );
@@ -32,21 +32,26 @@ final class MywpSettingScreenDebugCapabilities extends MywpAbstractSettingModule
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $user_roles = MywpApi::get_all_user_roles();
 
     if( empty( $user_roles ) ) {
+
+      MywpHelper::error_not_found_message( '$user_roles' , $called_text );
 
       return false;
 
     }
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $user_roles ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $user_roles ); ?></p>
+
     <table class="form-table">
       <thead>
         <tr>
-          <th><?php _e( 'User Roles' ); ?></th>
-          <td><?php _e( 'Capabilities' ); ?></td>
+          <th><?php echo esc_html( __( 'User Roles' , 'default' ) ); ?></th>
+          <td><?php echo esc_html( __( 'Capabilities' , 'default' ) ); ?></td>
         </tr>
       </thead>
       <tbody>
@@ -55,7 +60,7 @@ final class MywpSettingScreenDebugCapabilities extends MywpAbstractSettingModule
           <tr>
             <th>
               [<?php echo esc_html( $user_role_name ); ?>]<br />
-              <?php echo esc_html($user_role['label'] ); ?>
+              <?php echo esc_html( $user_role['label'] ); ?>
             </th>
             <td>
               <textarea readonly="readonly" class="large-text" style="height: 200px;"><?php echo esc_textarea( print_r( $user_role['capabilities'] , true ) ); ?></textarea>

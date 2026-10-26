@@ -61,9 +61,13 @@ final class MywpControllerModuleAdminRegistListColumns extends MywpControllerAbs
     }
 
     add_action( 'load-edit.php' , array( __CLASS__ , 'load_screen' ) , 999 );
+
     add_action( 'load-edit-tags.php' , array( __CLASS__ , 'load_screen' ) , 999 );
+
     add_action( 'load-edit-comments.php' , array( __CLASS__ , 'load_screen' ) , 999 );
+
     add_action( 'load-upload.php' , array( __CLASS__ , 'load_screen' ) , 999 );
+
     add_action( 'load-users.php' , array( __CLASS__ , 'load_screen' ) , 999 );
 
   }

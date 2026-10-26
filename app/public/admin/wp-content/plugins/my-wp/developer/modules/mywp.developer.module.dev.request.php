@@ -44,11 +44,11 @@ final class MywpDeveloperModuleDevRequest extends MywpDeveloperAbstractModule {
       'is_ssl()' => is_ssl(),
       'is_admin()' => is_admin(),
       'is_network_admin()' => is_network_admin(),
-      '$_POST' => $_POST,
-      '$_GET' => $_GET,
+      '$_POST' => wp_unslash( $_POST ),
+      '$_GET' => wp_unslash( $_GET ),
       '$_FILES' => $_FILES,
-      '$_COOKIE' => $_COOKIE,
-      'parse_url' => parse_url( $_SERVER['REQUEST_URI'] ),
+      '$_COOKIE' => wp_unslash( $_COOKIE ),
+      'parse_url' => parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
       '$wp' => $wp,
       '$wp_query' => $wp_query,
       '$wp_rewrite' => $wp_rewrite,
@@ -99,11 +99,11 @@ final class MywpDeveloperModuleDevRequest extends MywpDeveloperAbstractModule {
 
       echo '<td>';
 
-      if( in_array( $key , array( '$_POST' , '$_GET' , '$_FILES' , '$_COOKIE' , 'parse_url' , 'queries' , '$wp' , '$wp_query' , '$wp_rewrite' , '$wp_locale' ) ) ) {
+      if( in_array( $key , array( '$_POST' , '$_GET' , '$_FILES' , '$_COOKIE' , 'parse_url' , 'queries' , '$wp' , '$wp_query' , '$wp_rewrite' , '$wp_locale' ) , true ) ) {
 
         if( is_array( $val ) ) {
 
-          printf( 'Count: %s<br />' , number_format( count( $val ) ) );
+          printf( 'Count: %s<br />' , esc_html( number_format_i18n( count( $val ) ) ) );
 
         }
 

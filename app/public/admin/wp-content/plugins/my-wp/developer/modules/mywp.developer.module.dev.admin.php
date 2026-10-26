@@ -126,15 +126,18 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
       '$current_screen' => $current_screen,
     );
 
-    if( in_array( $pagenow , array( 'post.php' , 'post-new.php' ) ) ) {
+    if( in_array( $pagenow , array( 'post.php' , 'post-new.php' ) , true ) ) {
 
       $post_id = (int) $post->ID;
 
       $debug_lists['post_id'] = $post_id;
+
       $debug_lists['post'] = $post;
+
       $debug_lists['custom_fields'] = get_post_meta( $post_id );
 
       $debug_lists['taxonomies'] = array();
+
       $debug_lists['terms'] = array();
 
       $post_taxonomies = get_post_taxonomies( $post_id );
@@ -144,6 +147,7 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
         foreach( $post_taxonomies as $taxonomy_name ) {
 
           $debug_lists['taxonomies'][ $taxonomy_name ] = false;
+
           $debug_lists['terms'][ $taxonomy_name ] = false;
 
           $taxonomy = get_taxonomy( $taxonomy_name );
@@ -171,12 +175,15 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
       $debug_lists['post_updated_messages'] = self::$post_updated_messages;
 
       $debug_lists['get_post( ' . $post_id . ' )'] = get_post( $post_id );
+
       $debug_lists['MywpPostType::get_post( ' . $post_id . ' )'] = MywpPostType::get_post( $post_id );
+
       $debug_lists['SELECT * FROM $wpdb->posts WHERE ID = ' . $post_id] = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post_id ) );
 
-    } elseif( in_array( $pagenow , array( 'edit.php' ) ) ) {
+    } elseif( in_array( $pagenow , array( 'edit.php' ) , true ) ) {
 
       $debug_lists['post_type'] = $typenow;
+
       $debug_lists['counts'] = wp_count_posts( $typenow );
 
       $debug_lists['taxonomies'] = array();
@@ -233,7 +240,7 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
 
       $debug_lists['bulk_post_updated_messages'] = self::$bulk_post_updated_messages;
 
-    } elseif( in_array( $pagenow , array( 'edit-tags.php' ) ) ) {
+    } elseif( in_array( $pagenow , array( 'edit-tags.php' ) , true ) ) {
 
       $debug_lists['taxonomy'] = $taxnow;
       $debug_lists['count'] = wp_count_terms( $taxnow );
@@ -247,24 +254,30 @@ final class MywpDeveloperModuleDevAdmin extends MywpDeveloperAbstractModule {
       $debug_lists['bulk_action_filter'] = sprintf( 'bulk_actions-%s (bulk_actions-{$this->screen->id})' , $current_screen_id );
 
 
-    } elseif( in_array( $pagenow , array( 'term.php' ) ) ) {
+    } elseif( in_array( $pagenow , array( 'term.php' ) , true ) ) {
 
       $debug_lists['taxonomy'] = $taxnow;
+
       $debug_lists['post_type'] = $typenow;
 
-      $term_id = absint( $_REQUEST['tag_ID'] );
+      $term_id = absint( wp_unslash( $_REQUEST['tag_ID'] ) );
+
       $deaub_lists['term_id'] = $term_id;
+
       $debug_lists['term'] = get_term( $term_id );
+
       $debug_lists['custom_meta'] = get_term_meta( $term_id );
 
-    } elseif( in_array( $pagenow , array( 'users.php' ) ) ) {
+    } elseif( in_array( $pagenow , array( 'users.php' ) , true ) ) {
 
       $debug_lists['count'] = count_users();
 
-    } elseif( in_array( $pagenow , array( 'user-edit.php' , 'profile.php' ) ) ) {
+    } elseif( in_array( $pagenow , array( 'user-edit.php' , 'profile.php' ) , true ) ) {
 
       $debug_lists['user_id'] = $user_id;
+
       $debug_lists['get_userdata()'] = get_userdata( $user_id );
+
       $debug_lists['get_user_meta()'] = get_user_meta( $user_id );
 
     }

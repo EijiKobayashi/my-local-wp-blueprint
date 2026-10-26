@@ -16,11 +16,21 @@ final class MywpShortcodeModuleUpdateCount extends MywpShortcodeAbstractModule {
 
   public static function do_shortcode( $atts = false , $content = false , $tag = false ) {
 
+    $called_text = sprintf( '%s::%s( $atts , $content , $tag )' , __CLASS__ , __FUNCTION__ );
+
     $type = 'total';
 
     if( ! empty( $atts['type'] ) ) {
 
-      $type = strip_tags( $atts['type'] );
+      $type = MywpHelper::sanitize_text( $atts['type'] );
+
+    }
+
+    if( empty( $type ) ) {
+
+      MywpHelper::error_not_found_message( '$type' , $called_text );
+
+      return $content;
 
     }
 
@@ -32,11 +42,21 @@ final class MywpShortcodeModuleUpdateCount extends MywpShortcodeAbstractModule {
 
     }
 
+    $tag = false;
+
     if( ! empty( $atts['tag'] ) ) {
+
+      $tag = MywpHelper::sanitize_text( $atts['tag'] );
+
+    }
+
+    if( ! empty( $tag ) ) {
 
       $class = 'update';
 
-      if( $type === 'plugins' ) {
+      if( $type === 'total' ) {
+
+      } elseif( $type === 'plugins' ) {
 
         $class = 'plugin';
 
@@ -48,13 +68,19 @@ final class MywpShortcodeModuleUpdateCount extends MywpShortcodeAbstractModule {
 
         $class = 'translation';
 
+      } else {
+
+        MywpHelper::error_not_found_message( '$type' , $called_text );
+
+        return $content;
+
       }
 
       $content = sprintf(
         '<span class="update-plugins count-%d"><span class="%s-count">%s</span></span>',
-        $update_count,
-        $class,
-        number_format_i18n( $update_count )
+        esc_attr( $update_count ),
+        esc_attr( $class ),
+        esc_html( number_format_i18n( $update_count ) ),
       );
 
     } else {
@@ -71,25 +97,29 @@ final class MywpShortcodeModuleUpdateCount extends MywpShortcodeAbstractModule {
 
   private static function get_update_count( $type = '' ) {
 
+    $called_text = sprintf( '%s::%s( $type )' , __CLASS__ , __FUNCTION__ );
+
+    $type = MywpHelper::sanitize_text( $type );
+
     if( empty( $type ) ) {
+
+      MywpHelper::error_not_found_message( '$type' , $called_text );
 
       return 0;
 
     }
-
-    $type = strip_tags( $type );
 
     $wp_update_data = wp_get_update_data();
 
-    if( ! isset( $wp_update_data['counts'][ $type ] ) ) {
-
-      MywpHelper::error_not_found_message( $type , sprintf( '[%s] shortcode' , self::$id ) );
+    if( empty( $wp_update_data['counts'] ) ) {
 
       return 0;
 
     }
 
-    if( empty( $wp_update_data['counts'] ) ) {
+    if( ! isset( $wp_update_data['counts'][ $type ] ) ) {
+
+      MywpHelper::error_not_found_message( '$wp_update_data["counts"][ $type ]' , $called_text );
 
       return 0;
 

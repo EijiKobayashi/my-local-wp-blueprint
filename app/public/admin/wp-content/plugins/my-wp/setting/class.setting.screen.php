@@ -50,9 +50,11 @@ final class MywpSettingScreen {
 
   public static function get_setting_screen( $setting_screen_id = false ) {
 
-    if( empty( $setting_screen_id ) ) {
+    $called_text = sprintf( '%s::%s( $setting_screen_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' );
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
+
+    if( empty( $setting_screen_id ) ) {
 
       MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
 
@@ -64,6 +66,8 @@ final class MywpSettingScreen {
 
     if( empty( $setting_screens[ $setting_screen_id ] ) ) {
 
+      MywpHelper::error_not_found_message( '$setting_screens[ $setting_screen_id ]' , $called_text );
+
       return false;
 
     }
@@ -74,7 +78,17 @@ final class MywpSettingScreen {
 
   public static function set_current_screen_id( $setting_screen_id = false ) {
 
-    $setting_screen_id = esc_attr( strip_tags( $setting_screen_id ) );
+    $called_text = sprintf( '%s::%s( $setting_screen_id )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
+
+    if( empty( $setting_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
+
+      return false;
+
+    }
 
     self::$current_screen_id = $setting_screen_id;
 
@@ -90,9 +104,11 @@ final class MywpSettingScreen {
 
   private static function set_current_screen( $setting_screen_id = false ) {
 
-    if( empty( $setting_screen_id ) ) {
+    $called_text = sprintf( '%s::%s( $setting_screen_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' );
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
+
+    if( empty( $setting_screen_id ) ) {
 
       MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
 
@@ -103,6 +119,8 @@ final class MywpSettingScreen {
     $setting_screen = self::get_setting_screen( $setting_screen_id );
 
     if( empty( $setting_screen ) ) {
+
+      MywpHelper::error_not_found_message( '$setting_screen' , $called_text );
 
       return false;
 
@@ -120,9 +138,11 @@ final class MywpSettingScreen {
 
   public static function set_current_screen_by_menu_id( $setting_menu_id = false ) {
 
-    if( empty( $setting_menu_id ) ) {
+    $called_text = sprintf( '%s::%s( $setting_menu_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$setting_menu_id' );
+    $setting_menu_id = MywpHelper::sanitize_text( $setting_menu_id );
+
+    if( empty( $setting_menu_id ) ) {
 
       MywpHelper::error_require_message( '$setting_menu_id' , $called_text );
 
@@ -134,6 +154,8 @@ final class MywpSettingScreen {
 
     if( empty( $current_setting_screens ) ) {
 
+      MywpHelper::error_not_found_message( '$current_setting_screens' , $called_text );
+
       return false;
 
     }
@@ -143,11 +165,14 @@ final class MywpSettingScreen {
     foreach( $current_setting_screens as $setting_screens ) {
 
       $current_setting_screen_id = $setting_screens['id'];
+
       break;
 
     }
 
     if( empty( $current_setting_screen_id ) ) {
+
+      MywpHelper::error_not_found_message( '$current_setting_screen_id' , $called_text );
 
       return false;
 
@@ -159,9 +184,11 @@ final class MywpSettingScreen {
 
   public static function get_setting_screens_by_menu_id( $find_setting_menu_id = false ) {
 
-    if( empty( $find_setting_menu_id ) ) {
+    $called_text = sprintf( '%s::%s( $find_setting_menu_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$find_setting_menu_id' );
+    $find_setting_menu_id = MywpHelper::sanitize_text( $find_setting_menu_id );
+
+    if( empty( $find_setting_menu_id ) ) {
 
       MywpHelper::error_require_message( '$find_setting_menu_id' , $called_text );
 
@@ -172,6 +199,8 @@ final class MywpSettingScreen {
     $setting_screens = self::get_setting_screens();
 
     if( empty( $setting_screens ) ) {
+
+      MywpHelper::error_not_found_message( '$setting_screens' , $called_text );
 
       return false;
 

@@ -50,20 +50,20 @@ final class MywpSettingScreenSiteGeneral extends MywpAbstractSettingModule {
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Disable File Edit' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Disable File Edit' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][disable_file_edit]" class="disable_file_edit" value="1" <?php checked( $setting_data['disable_file_edit'] , true ); ?> />
-              <?php _e( 'Disable' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Disable' , 'my-wp' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Hide PHP X-Mailer version' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Hide PHP X-Mailer version' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][disable_php_mailer_version]" class="disable_php_mailer_version" value="1" <?php checked( $setting_data['disable_php_mailer_version'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
             <p>
               <code><?php echo esc_html( self::get_xmailer_header() ); ?></code>
@@ -72,11 +72,11 @@ final class MywpSettingScreenSiteGeneral extends MywpAbstractSettingModule {
         </tr>
         <?php if( is_multisite() ) : ?>
           <tr>
-            <th><?php _e( 'Disable User Admin' , 'my-wp' ); ?></th>
+            <th><?php echo esc_html( __( 'Disable User Admin' , 'my-wp' ) ); ?></th>
             <td>
               <label>
                 <input type="checkbox" name="mywp[data][disable_user_admin]" class="disable_user_admin" value="1" <?php checked( $setting_data['disable_user_admin'] , true ); ?> />
-                <?php _e( 'Disable' , 'my-wp' ); ?>
+                <?php echo esc_html( __( 'Disable' , 'my-wp' ) ); ?>
               </label>
               <a href="<?php echo esc_url( user_admin_url() ); ?>" target="_blank"><?php echo esc_html( user_admin_url() ); ?></a>
             </td>
@@ -151,7 +151,7 @@ final class MywpSettingScreenSiteGeneral extends MywpAbstractSettingModule {
 
       $phpmailer_tmp = $phpmailer;
 
-      if ( ( $phpmailer_tmp instanceof WPMailSMTP\MailCatcherV6 ) ) {
+      if( $phpmailer_tmp instanceof WPMailSMTP\MailCatcherV6 ) {
 
         $class_name = get_class( $phpmailer_tmp );
 
@@ -183,7 +183,7 @@ final class MywpSettingScreenSiteGeneral extends MywpAbstractSettingModule {
 
       if( $is_new_ver ) {
 
-        if ( ! ( $phpmailer instanceof PHPMailer\PHPMailer\PHPMailer ) ) {
+        if( ! $phpmailer instanceof PHPMailer\PHPMailer\PHPMailer ) {
 
           require_once $php_mailer_file_path;
 

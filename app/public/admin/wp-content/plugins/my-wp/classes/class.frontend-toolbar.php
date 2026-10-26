@@ -38,7 +38,13 @@ final class MywpFrontendToolbar {
 
   private static function find_default_menu( $find_id = false , $find_parent_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $item )' , __CLASS__ , __FUNCTION__ );
+
+    $find_id = MywpHelper::sanitize_text( do_shortcode( $find_id ) );
+
     if( empty( $find_id ) ) {
+
+      MywpHelper::error_require_message( '$find_id' , $called_text );
 
       return false;
 
@@ -52,23 +58,35 @@ final class MywpFrontendToolbar {
 
     }
 
-    $find_id = strip_tags( do_shortcode( $find_id ) );
-    $find_parent_id = strip_tags( $find_parent_id );
+    $find_parent_id = MywpHelper::sanitize_text( $find_parent_id );
 
     $found_current_default = false;
+
     $found_parent_default = array();
+
     $found_childs_default = array();
 
     foreach( $default_toolbar as $menu_location => $menus ) {
 
       foreach( $menus as $menu_key => $menu ) {
 
-        if( (string) $menu->id === (string) $find_id && (string) $menu->parent === (string) $find_parent_id ) {
+        if( (string) $menu->id === (string) $find_id ) {
 
-          $found_current_default = $menu;
-          break;
+          if( (string) $menu->parent === (string) $find_parent_id ) {
+
+            $found_current_default = $menu;
+
+            break;
+
+          }
 
         }
+
+      }
+
+      if( ! empty( $found_current_default ) ) {
+
+        break;
 
       }
 
@@ -105,26 +123,36 @@ final class MywpFrontendToolbar {
           }
 
         }
+
       }
 
     }
 
-    return array( 'current' => $found_current_default , 'parent' => $found_parent_default , 'childs' => $found_childs_default );
+    $find_default_menu = array(
+      'current' => $found_current_default,
+      'parent' => $found_parent_default,
+      'childs' => $found_childs_default
+    );
+
+    return $find_default_menu;
 
   }
 
   public static function default_item_convert( $item = false ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$item' );
+    $called_text = sprintf( '%s::%s( $item )' , __CLASS__ , __FUNCTION__ );
 
-    if( empty( $item ) or ! is_object( $item ) ) {
+    if( empty( $item ) ) {
 
-      MywpHelper::error_not_found_message( '$item' , $called_text );
+      MywpHelper::error_require_message( '$item' , $called_text );
+
       return false;
 
     }
 
     if( empty( $item->item_type ) ) {
+
+      MywpHelper::error_not_found_message( '$item->item_type' , $called_text );
 
       return false;
 
@@ -136,9 +164,13 @@ final class MywpFrontendToolbar {
 
     }
 
-    if( empty( $item->item_default_id ) && empty( $item->item_default_parent_id ) ) {
+    if( empty( $item->item_default_id ) ) {
 
-      return false;
+      if( empty( $item->item_default_parent_id ) ) {
+
+        return false;
+
+      }
 
     }
 
@@ -151,9 +183,10 @@ final class MywpFrontendToolbar {
     }
 
     $item->item_default_title = $default_menu['current']->title;
+
     $item->item_meta = $default_menu['current']->meta;
 
-    if( ! in_array( $item->item_default_id , array( 'site-name' , 'edit' , 'logout' ) ) ) {
+    if( ! in_array( $item->item_default_id , array( 'site-name' , 'edit' , 'logout' ) , true ) ) {
 
       $item->item_link_url = $default_menu['current']->href;
 

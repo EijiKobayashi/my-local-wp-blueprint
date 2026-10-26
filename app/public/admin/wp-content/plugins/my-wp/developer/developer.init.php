@@ -150,7 +150,25 @@ final class MywpDeveloperInit {
 
     }
 
-    if( MywpHelper::is_doing( 'cron' ) or MywpHelper::is_doing( 'xmlrpc' ) or MywpHelper::is_doing( 'ajax' ) or MywpHelper::is_doing( 'rest' ) ) {
+    if( MywpHelper::is_doing( 'cron' ) ) {
+
+      return false;
+
+    }
+
+    if( MywpHelper::is_doing( 'xmlrpc' ) ) {
+
+      return false;
+
+    }
+
+    if( MywpHelper::is_doing( 'ajax' ) ) {
+
+      return false;
+
+    }
+
+    if( MywpHelper::is_doing( 'rest' ) ) {
 
       return false;
 

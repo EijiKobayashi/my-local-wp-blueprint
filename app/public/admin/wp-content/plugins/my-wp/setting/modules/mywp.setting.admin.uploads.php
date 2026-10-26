@@ -23,7 +23,7 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'Media Library' ),
+      'title' => __( 'Media Library' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'admin_uploads',
       'use_advance' => true,
@@ -36,9 +36,11 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
 
   public static function ajax_add_column() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'add_column' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -46,19 +48,29 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['add_column_id'] ) ) {
+    if( ! isset( $_POST['add_column_id'] ) ) {
 
       return false;
 
     }
 
-    $add_column_id = strip_tags( $_POST['add_column_id'] );
+    $add_column_id = MywpHelper::sanitize_text( wp_unslash( $_POST['add_column_id'] ) );
+
+    if( empty( $add_column_id ) ) {
+
+      MywpHelper::error_not_found_message( '$add_column_id' , $called_text );
+
+      return false;
+
+    }
 
     static::set_list_column_id();
 
     $available_list_columns = self::get_available_list_columns();
 
     if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_not_found_message( '$available_list_columns' , $called_text );
 
       return false;
 
@@ -67,6 +79,12 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
     $found_column = false;
 
     foreach( $available_list_columns as $group => $list_columns ) {
+
+      if( $found_column ) {
+
+        break;
+
+      }
 
       if( empty( $list_columns['columns'] ) ) {
 
@@ -89,6 +107,8 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
     }
 
     if( empty( $found_column ) ) {
+
+      MywpHelper::error_not_found_message( '$found_column' , $called_text );
 
       return false;
 
@@ -272,21 +292,28 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
     $setting_data = self::get_setting_data();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Other' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Other' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Force show list' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Force show list' , 'my-wp' ) ); ?></th>
           <td>
             <select name="mywp[data][force_show_list]" class="force_show_list">
               <option value=""></option>
-              <option value="list" <?php selected( 'list' , $setting_data['force_show_list'] ); ?>><?php echo esc_attr( __( 'List view' ) ); ?></option>
-              <option value="grid" <?php selected( 'grid' , $setting_data['force_show_list'] ); ?>><?php echo esc_attr( __( 'Grid view' ) ); ?></option>
+              <option value="list" <?php selected( 'list' , $setting_data['force_show_list'] ); ?>>
+                <?php echo esc_html( __( 'List view' , 'default' ) ); ?>
+              </option>
+              <option value="grid" <?php selected( 'grid' , $setting_data['force_show_list'] ); ?>>
+                <?php echo esc_html( __( 'Grid view' , 'default' ) ); ?>
+              </option>
             </select>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Number of items per page:' ); ?></th>
+          <th><?php echo esc_html( __( 'Number of items per page:' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="number" name="mywp[data][per_page_num]" class="per_page_num small-text" value="<?php echo esc_attr( $setting_data['per_page_num'] ); ?>" placeholder="20" />
@@ -294,31 +321,35 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
           </td>
         </tr>
         <tr>
-          <th><?php echo esc_html__( 'Add Media File' ); ?></th>
+          <th><?php echo esc_html__( 'Add Media File' , 'default' ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Search Media' ); ?></th>
+          <th><?php echo esc_html( __( 'Search Media' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_search_box]" class="hide_search_box" value="1" <?php checked( $setting_data['hide_search_box'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
           <th>
-            <?php _e( 'Custom search filter' , 'my-wp' ); ?>
+            <?php echo esc_html( __( 'Custom search filter' , 'my-wp' ) ); ?>
           </th>
           <td>
             <select name="mywp[data][custom_search_filter]" class="custom_search_filter">
-              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Hide' , 'my-wp' ) ); ?></option>
-              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Show' , 'my-wp' ) ); ?></option>
+              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>>
+                <?php echo esc_html( __( 'Hide' , 'my-wp' ) ); ?>
+              </option>
+              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>>
+                <?php echo esc_html( __( 'Show' , 'my-wp' ) ); ?>
+              </option>
             </select>
           </td>
         </tr>
@@ -364,7 +395,7 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
         'type' => 'core',
         'sort' => true,
         'orderby' => 'author',
-        'title' => __( 'Author' ),
+        'title' => __( 'Author' , 'default' ),
         'width' => '10%',
       ),
       'parent' => array(
@@ -380,7 +411,7 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
         'type' => 'core',
         'sort' => true,
         'orderby' => 'comment_count',
-        'title' => '<span class="vers comment-grey-bubble" title="' . esc_attr__( 'Comments' ) . '"><span class="screen-reader-text">' . __( 'Comments' ) . '</span></span>',
+        'title' => '<span class="vers comment-grey-bubble" title="' . esc_attr( __( 'Comments' , 'default' ) ) . '"><span class="screen-reader-text">' . esc_html( __( 'Comments' , 'default' ) ) . '</span></span>',
         'width' => '5.5em',
       ),
       'date' => array(
@@ -399,11 +430,19 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
 
   public static function current_available_list_columns( $available_list_columns ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$available_list_columns' );
+    $called_text = sprintf( '%s::%s( $available_list_columns )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_require_message( '$available_list_columns' , $called_text );
+
+      return false;
+
+    }
 
     if( empty( $available_list_columns['core']['columns'] ) ) {
 
-      MywpHelper::error_require_message( '$available_list_columns["core"]["columns"]' , $called_text );
+      MywpHelper::error_not_found_message( '$available_list_columns["core"]["columns"]' , $called_text );
 
       return false;
 
@@ -423,31 +462,31 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
           'type' => 'other',
           'sort' => true,
           'orderby' => 'title',
-          'title' => __( 'Title' ),
+          'title' => __( 'Title' , 'default' ),
         ),
         'mywp_column_image_alt' => array(
           'id' => 'mywp_column_image_alt',
           'type' => 'other',
           'sort' => true,
           'orderby' => 'image_alt',
-          'title' => __( 'Alternative Text' ),
+          'title' => __( 'Alternative Text' , 'default' ),
         ),
         'mywp_column_post_excerpt' => array(
           'id' => 'mywp_column_post_excerpt',
           'type' => 'other',
           'sort' => true,
           'orderby' => 'post_excerpt',
-          'title' => __( 'Caption' ),
+          'title' => __( 'Caption' , 'default' ),
         ),
         'mywp_column_post_content' => array(
           'id' => 'mywp_column_post_content',
           'type' => 'other',
-          'title' => __( 'Details' ),
+          'title' => __( 'Details' , 'default' ),
         ),
         'mywp_column_file_url' => array(
           'id' => 'mywp_column_file_url',
           'type' => 'other',
-          'title' => __( 'File URL' ),
+          'title' => __( 'File URL' , 'default' ),
         ),
       ),
     );
@@ -494,31 +533,31 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
           'type' => 'deprecated',
           'sort' => true,
           'orderby' => 'title',
-          'title' => __( 'Title' ),
+          'title' => __( 'Title' , 'default' ),
         ),
         'image_alt' => array(
           'id' => 'image_alt',
           'type' => 'deprecated',
           'sort' => true,
           'orderby' => 'image_alt',
-          'title' => __( 'Alternative Text' ),
+          'title' => __( 'Alternative Text' , 'default' ),
         ),
         'post_excerpt' => array(
           'id' => 'post_excerpt',
           'type' => 'deprecated',
           'sort' => true,
           'orderby' => 'post_excerpt',
-          'title' => __( 'Caption' ),
+          'title' => __( 'Caption' , 'default' ),
         ),
         'post_content' => array(
           'id' => 'post_content',
           'type' => 'deprecated',
-          'title' => __( 'Details' ),
+          'title' => __( 'Details' , 'default' ),
         ),
         'file_url' => array(
           'id' => 'file_url',
           'type' => 'deprecated',
-          'title' => __( 'File URL' ),
+          'title' => __( 'File URL' , 'default' ),
         ),
       ),
     );
@@ -528,6 +567,8 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
   }
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
+
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
 
     $mywp_model = self::get_model();
 
@@ -555,7 +596,15 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
 
       foreach( $formatted_data['list_columns'] as $list_column_id => $list_column_setting ) {
 
-        $list_column_id = strip_tags( $list_column_id );
+        $list_column_id = MywpHelper::sanitize_text( $list_column_id );
+
+        if( empty( $list_column_id ) ) {
+
+          MywpHelper::error_not_found_message( '$list_column_id' , $called_text );
+
+          continue;
+
+        }
 
         $new_list_column_setting = wp_parse_args( array( 'id' => $list_column_id ) , $list_column_default );
 
@@ -567,19 +616,19 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
 
         if( ! empty( $list_column_setting['title'] ) ) {
 
-          $new_list_column_setting['title'] = wp_unslash( wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html ) );
+          $new_list_column_setting['title'] = wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html );
 
         }
 
         if( ! empty( $list_column_setting['orderby'] ) ) {
 
-          $new_list_column_setting['orderby'] = wp_unslash( $list_column_setting['orderby'] );
+          $new_list_column_setting['orderby'] = MywpHelper::sanitize_text( $list_column_setting['orderby'] );
 
         }
 
         if( ! empty( $list_column_setting['width'] ) ) {
 
-          $new_list_column_setting['width'] = strip_tags( $list_column_setting['width'] );
+          $new_list_column_setting['width'] = MywpHelper::sanitize_text( $list_column_setting['width'] );
 
         }
 
@@ -591,13 +640,13 @@ final class MywpSettingScreenAdminUploads extends MywpAbstractSettingColumnsModu
 
     if( ! empty( $formatted_data['force_show_list'] ) ) {
 
-      $new_formatted_data['force_show_list'] = strip_tags( $formatted_data['force_show_list'] );
+      $new_formatted_data['force_show_list'] = MywpHelper::sanitize_text( $formatted_data['force_show_list'] );
 
     }
 
     if( ! empty( $formatted_data['per_page_num'] ) ) {
 
-      $new_formatted_data['per_page_num'] = (int) $formatted_data['per_page_num'];
+      $new_formatted_data['per_page_num'] = MywpHelper::sanitize_number( $formatted_data['per_page_num'] );
 
     }
 

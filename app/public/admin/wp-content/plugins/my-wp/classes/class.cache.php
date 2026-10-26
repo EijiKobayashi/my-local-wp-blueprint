@@ -12,11 +12,11 @@ final class MywpCache {
 
   public function __construct( $cache_key = false ) {
 
-    $cache_key = strip_tags( $cache_key );
+    $called_text = sprintf( 'new %s( $cache_key )' , __CLASS__ );
+
+    $cache_key = MywpHelper::sanitize_text( $cache_key );
 
     if( empty( $cache_key ) ) {
-
-      $called_text = sprintf( 'new %s( %s )' , __CLASS__ , '$cache_key' );
 
       MywpHelper::error_require_message( '$cache_key' , $called_text );
 

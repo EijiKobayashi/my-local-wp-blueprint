@@ -66,9 +66,11 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
   public static function ajax_add_column() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'add_column' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -76,29 +78,47 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['add_column_id'] ) ) {
+    if( ! isset( $_POST['add_column_id'] ) ) {
 
       return false;
 
     }
 
-    $add_column_id = strip_tags( $_POST['add_column_id'] );
+    $add_column_id = MywpHelper::sanitize_text( wp_unslash( $_POST['add_column_id'] ) );
 
-    if( empty( $_POST['setting_taxonomy'] ) ) {
+    if( empty( $add_column_id ) ) {
+
+      MywpHelper::error_not_found_message( '$add_column_id' , $called_text );
 
       return false;
 
     }
 
-    MywpSettingTaxonomy::set_current_taxonomy_id( $_POST['setting_taxonomy'] );
+    if( ! isset( $_POST['setting_taxonomy'] ) ) {
+
+      return false;
+
+    }
+
+    MywpSettingTaxonomy::set_current_taxonomy_id( wp_unslash( $_POST['setting_taxonomy'] ) );
 
     $current_setting_taxonomy_name = MywpSettingTaxonomy::get_current_taxonomy_id();
+
+    if( empty( $current_setting_taxonomy_name ) ) {
+
+      MywpHelper::error_not_found_message( '$current_setting_taxonomy_name' , $called_text );
+
+      return false;
+
+    }
 
     static::set_list_column_id();
 
     $available_list_columns = self::get_available_list_columns();
 
     if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_not_found_message( '$available_list_columns' , $called_text );
 
       return false;
 
@@ -107,6 +127,12 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
     $found_column = false;
 
     foreach( $available_list_columns as $group => $list_columns ) {
+
+      if( $found_column ) {
+
+        break;
+
+      }
 
       if( empty( $list_columns['columns'] ) ) {
 
@@ -129,6 +155,8 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
     }
 
     if( empty( $found_column ) ) {
+
+      MywpHelper::error_not_found_message( '$found_column' , $called_text );
 
       return false;
 
@@ -349,11 +377,14 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
     }
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Other' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Other' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Number of items per page:' ); ?></th>
+          <th><?php echo esc_html( __( 'Number of items per page:' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="number" name="mywp[data][per_page_num]" class="per_page_num small-text" value="<?php echo esc_attr( $setting_data['per_page_num'] ); ?>" placeholder="20" />
@@ -365,7 +396,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -374,7 +405,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_search_box]" class="hide_search_box" value="1" <?php checked( $setting_data['hide_search_box'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -399,7 +430,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     if( empty( $current_setting_taxonomy_id ) ) {
 
-      MywpHelper::error_require_message( '$current_setting_taxonomy_id' , $called_text );
+      MywpHelper::error_not_found_message( '$current_setting_taxonomy_id' , $called_text );
 
       return false;
 
@@ -432,13 +463,13 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
         'type' => 'core',
         'sort' => true,
         'orderby' => 'description',
-        'title' => __( 'Description' ),
+        'title' => __( 'Description' , 'default' ),
       ),
       'slug' => array(
         'id' => 'slug',
         'type' => 'core',
         'orderby' => 'slug',
-        'title' => __( 'Slug' ),
+        'title' => __( 'Slug' , 'default' ),
         'width' => '25%',
       ),
       'posts' => array(
@@ -456,11 +487,19 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
   public static function current_available_list_columns( $available_list_columns ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$available_list_columns' );
+    $called_text = sprintf( '%s::%s( $available_list_columns )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_require_message( '$available_list_columns' , $called_text );
+
+      return false;
+
+    }
 
     if( empty( $available_list_columns['core']['columns'] ) ) {
 
-      MywpHelper::error_require_message( '$available_list_columns["core"]["columns"]' , $called_text );
+      MywpHelper::error_not_found_message( '$available_list_columns["core"]["columns"]' , $called_text );
 
       return false;
 
@@ -470,7 +509,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     if( empty( $current_taxonomy_id ) ) {
 
-      MywpHelper::error_require_message( '$current_taxonomy_id' , $called_text );
+      MywpHelper::error_not_found_message( '$current_taxonomy_id' , $called_text );
 
       return false;
 
@@ -489,7 +528,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
           'id' => 'mywp_column_parent',
           'type' => 'other',
           'orderby' => 'parent',
-          'title' => __( 'Parent' ),
+          'title' => __( 'Parent' , 'default' ),
           'width' => '10%',
         ),
       ),
@@ -570,7 +609,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
           'id' => 'parent',
           'type' => 'deprecated',
           'orderby' => 'parent',
-          'title' => __( 'Parent' ),
+          'title' => __( 'Parent' , 'default' ),
           'width' => '10%',
         ),
       ),
@@ -600,6 +639,8 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
 
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_model = self::get_model();
 
     if( empty( $mywp_model ) ) {
@@ -614,7 +655,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     if( ! empty( $formatted_data['taxonomy'] ) ) {
 
-      $new_formatted_data['taxonomy'] = strip_tags( $formatted_data['taxonomy'] );
+      $new_formatted_data['taxonomy'] = MywpHelper::sanitize_text( $formatted_data['taxonomy'] );
 
     }
 
@@ -632,7 +673,15 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
       foreach( $formatted_data['list_columns'] as $list_column_id => $list_column_setting ) {
 
-        $list_column_id = strip_tags( $list_column_id );
+        $list_column_id = MywpHelper::sanitize_text( $list_column_id );
+
+        if( empty( $list_column_id ) ) {
+
+          MywpHelper::error_not_found_message( '$list_column_id' , $called_text );
+
+          continue;
+
+        }
 
         $new_list_column_setting = wp_parse_args( array( 'id' => $list_column_id ) , $list_column_default );
 
@@ -644,19 +693,19 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
         if( ! empty( $list_column_setting['title'] ) ) {
 
-          $new_list_column_setting['title'] = wp_unslash( wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html ) );
+          $new_list_column_setting['title'] = wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html );
 
         }
 
         if( ! empty( $list_column_setting['orderby'] ) ) {
 
-          $new_list_column_setting['orderby'] = wp_unslash( $list_column_setting['orderby'] );
+          $new_list_column_setting['orderby'] = MywpHelper::sanitize_text( $list_column_setting['orderby'] );
 
         }
 
         if( ! empty( $list_column_setting['width'] ) ) {
 
-          $new_list_column_setting['width'] = strip_tags( $list_column_setting['width'] );
+          $new_list_column_setting['width'] = MywpHelper::sanitize_text( $list_column_setting['width'] );
 
         }
 
@@ -668,7 +717,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     if( ! empty( $formatted_data['per_page_num'] ) ) {
 
-      $new_formatted_data['per_page_num'] = (int) $formatted_data['per_page_num'];
+      $new_formatted_data['per_page_num'] = MywpHelper::sanitize_number( $formatted_data['per_page_num'] );
 
     }
 
@@ -684,6 +733,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     }
 
+
     return $new_formatted_data;
 
   }
@@ -692,7 +742,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
     if( ! empty( $formatted_data['taxonomy'] ) ) {
 
-      $formatted_data['taxonomy'] = strip_tags( $formatted_data['taxonomy'] );
+      $formatted_data['taxonomy'] = MywpHelper::sanitize_text( $formatted_data['taxonomy'] );
 
     }
 
@@ -702,9 +752,13 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_setting_post_data_validate_update( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['taxonomy'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["taxonomy"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'taxonomy' ) );
 
@@ -716,9 +770,13 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_setting_post_data_validate_remove( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['taxonomy'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["taxonomy"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'taxonomy' ) );
 
@@ -742,7 +800,7 @@ final class MywpSettingScreenAdminTerms extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_setting_before_post_data_action_remove( $validated_data ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , get_called_class() , __FUNCTION__ , '$validated_data' );
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
 
     if( ! empty( $validated_data['taxonomy'] ) ) {
 

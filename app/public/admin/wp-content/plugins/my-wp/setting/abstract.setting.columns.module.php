@@ -12,13 +12,15 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   protected static function get_list_columns_model() {
 
-    $called_text = sprintf( '%s::%s()' , get_called_class() , __FUNCTION__ );
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
 
     $mywp_controller = MywpController::get_controller( 'admin_regist_list_columns' );
 
     if( empty( $mywp_controller['model'] ) ) {
 
-      MywpHelper::error_require_message( '$mywp_controller["model"]' , $called_text );
+      MywpHelper::error_not_found_message( '$mywp_controller["model"]' , $called_text );
 
       return false;
 
@@ -52,13 +54,15 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   public static function mywp_current_setting_screen_content() {
 
-    static::set_list_column_id();
+    $class = get_called_class();
 
-    $called_text = sprintf( '%s::%s()' , get_called_class() , __FUNCTION__ );
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
+    static::set_list_column_id();
 
     if( empty( static::$list_column_id ) ) {
 
-      MywpHelper::error_require_message( 'static::$list_column_id' , $called_text );
+      MywpHelper::error_not_found_message( 'static::$list_column_id' , $called_text );
 
       return false;
 
@@ -68,7 +72,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
     if( empty( $list_link ) ) {
 
-      MywpHelper::error_require_message( '$list_link' , $called_text );
+      MywpHelper::error_not_found_message( '$list_link' , $called_text );
 
     }
 
@@ -76,7 +80,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
     if( empty( $available_list_columns ) ) {
 
-      MywpHelper::error_require_message( '$available_list_columns' , $called_text );
+      MywpHelper::error_not_found_message( '$available_list_columns' , $called_text );
 
     }
 
@@ -94,11 +98,11 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
       <h3 class="mywp-setting-screen-subtitle">
 
-        <?php _e( 'Columns' , 'my-wp' ); ?>
+        <?php echo esc_html( __( 'Columns' , 'my-wp' ) ); ?>
 
         <a href="<?php echo esc_url( $list_link ); ?>" class="button button-secondary" id="setting-screen-setting-list-columns-refresh-button">
           <span class="dashicons dashicons-update"></span>
-          <?php _e( 'Refresh Columns' , 'my-wp' ); ?>
+          <?php echo esc_html( __( 'Refresh Columns' , 'my-wp' ) ); ?>
         </a>
 
       </h3>
@@ -111,7 +115,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
             <span class="dashicons dashicons-warning"></span>
 
-            <?php printf( __( '%1$s: %2$s is not found. Please refresh the %2$s.' , 'my-wp' ) , __( 'Error' , 'my-wp' ) , __( 'Columns' , 'my-wp' ) ); ?>
+            <?php echo esc_html( sprintf( __( '%1$s: %2$s is not found. Please refresh the %2$s.' , 'my-wp' ) , __( 'Error' , 'my-wp' ) , __( 'Columns' , 'my-wp' ) ) ); ?>
 
           </p>
 
@@ -135,7 +139,10 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
                       <?php foreach( $group_item['columns'] as $key => $available_item ) : ?>
 
-                        <option value="<?php echo esc_attr( $key ); ?>" class="available-item">[<?php echo esc_attr( $key ); ?>] <?php echo esc_attr( strip_shortcodes( $available_item['title'] ) ); ?></option>
+                        <option value="<?php echo esc_attr( $key ); ?>" class="available-item">
+                          [<?php echo esc_html( $key ); ?>]
+                          <?php echo esc_html( strip_shortcodes( $available_item['title'] ) ); ?>
+                        </option>
 
                       <?php endforeach; ?>
 
@@ -147,7 +154,10 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
               </select>
 
-              <a href="javascript:void(0);" id="setting-list-columns-available-add-column" class="button button-secondary"><span class="dashicons dashicons-plus"></span> <?php _e( 'Add Column' , 'my-wp' ); ?></a>
+              <a href="javascript:void(0);" id="setting-list-columns-available-add-column" class="button button-secondary">
+                <span class="dashicons dashicons-plus"></span>
+                <?php echo esc_html( __( 'Add Column' , 'my-wp' ) ); ?>
+              </a>
 
               <span class="spinner"></span>
 
@@ -181,7 +191,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
           <p class="mywp-description">
             <span class="dashicons dashicons-lightbulb"></span>
-            <?php _e( 'All columns place behind "title or name" and "checkbox" when show on mobile device.' , 'my-wp' ); ?>
+            <?php echo esc_html( __( 'All columns place behind "title or name" and "checkbox" when show on mobile device.' , 'my-wp' ) ); ?>
           </p>
 
           <div id="setting-list-columns-setting-columns">
@@ -220,23 +230,25 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   protected static function get_default_list_columns() {
 
-    $called_text = sprintf( '%s::%s()' , get_called_class() , __FUNCTION__ );
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
 
     if( empty( static::$list_column_id ) ) {
 
-      MywpHelper::error_require_message( 'static::$list_column_id' , $called_text );
+      MywpHelper::error_not_found_message( 'static::$list_column_id' , $called_text );
 
       return false;
 
     }
 
-    static::$list_column_id = strip_tags( static::$list_column_id );
+    static::$list_column_id = MywpHelper::sanitize_text( static::$list_column_id );
 
     $list_columns_model = self::get_list_columns_model();
 
     if( empty( $list_columns_model ) ) {
 
-      MywpHelper::error_require_message( '$list_columns_model' , $called_text );
+      MywpHelper::error_not_found_message( '$list_columns_model' , $called_text );
 
       return false;
 
@@ -258,13 +270,15 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   protected static function get_available_list_columns() {
 
-    $called_text = sprintf( '%s::%s()' , get_called_class() , __FUNCTION__ );
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
 
     $default_list_columns = static::get_default_list_columns();
 
     if( empty( $default_list_columns ) ) {
 
-      MywpHelper::error_require_message( '$default_list_columns' , $called_text );
+      MywpHelper::error_not_found_message( '$default_list_columns' , $called_text );
 
       return false;
 
@@ -289,8 +303,6 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
       ),
     );
 
-    $class = get_called_class();
-
     add_filter( "mywp_setting_{$class::$id}_get_available_list_columns_{$class::$list_column_id}" , array( $class , 'current_available_list_columns' ) , 9 );
 
     $available_list_columns = apply_filters( "mywp_setting_{$class::$id}_get_available_list_columns_{$class::$list_column_id}"  , $available_list_columns );
@@ -300,7 +312,13 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
       foreach( $available_list_columns as $group => $available_columns ) {
 
-        if( ! is_array( $available_columns ) or empty( $available_columns['columns'] ) ) {
+        if( ! is_array( $available_columns ) ) {
+
+          continue;
+
+        }
+
+        if( empty( $available_columns['columns'] ) ) {
 
           continue;
 
@@ -339,6 +357,8 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
   }
 
   protected static function get_current_setting_list_columns() {
+
+    $class = get_called_class();
 
     $available_list_columns = static::get_available_list_columns();
 
@@ -464,8 +484,6 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
     }
 
-    $class = get_called_class();
-
     $current_setting_list_columns = apply_filters( "mywp_setting_{$class::$id}_get_current_setting_list_columns_{$class::$list_column_id}"  , $current_setting_list_columns );
     $current_setting_list_columns = apply_filters( "mywp_setting_{$class::$id}_get_current_setting_list_columns" , $current_setting_list_columns , static::$list_column_id );
 
@@ -475,21 +493,49 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   protected static function print_item( $column = false , $column_id = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s )' , get_called_class() , __FUNCTION__ , '$column' , '$column_id' );
+    $class = get_called_class();
 
-    if( empty( $column['type'] ) ) {
+    $called_text = sprintf( '%s::%s( $column , $column_id )' , $class , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$column' , $called_text );
+    if( empty( $column ) ) {
+
+      MywpHelper::error_require_message( '$column' , $called_text );
 
       return false;
 
     }
 
-    $class = get_called_class();
+    $column_type = false;
+
+    if( ! empty( $column['type'] ) ) {
+
+      $column_type = $column['type'];
+
+    }
+
+    $column_type = MywpHelper::sanitize_text( $column_type );
+
+    if( empty( $column_type ) ) {
+
+      MywpHelper::error_not_found_message( '$column_type' , $called_text );
+
+      return false;
+
+    }
+
+    $column_id = MywpHelper::sanitize_text( $column_id );
+
+    if( empty( $column_id ) ) {
+
+      MywpHelper::error_require_message( '$column_id' , $called_text );
+
+      return false;
+
+    }
 
     ?>
 
-    <div class="list-columns-item list-columns-sortable-item list-column-type-<?php echo esc_attr( $column['type'] ); ?>">
+    <div class="list-columns-item list-columns-sortable-item list-column-type-<?php echo esc_attr( $column_type ); ?>">
 
       <?php static::print_item_header( $column , $column_id ); ?>
 
@@ -506,11 +552,23 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   protected static function print_item_header( $column = false , $column_id = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s )' , get_called_class() , __FUNCTION__ , '$column' , '$column_id' );
+    $class = get_called_class();
 
-    if( empty( $column['type'] ) ) {
+    $called_text = sprintf( '%s::%s( $column , $column_id )' , $class , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$column' , $called_text );
+    if( empty( $column ) ) {
+
+      MywpHelper::error_require_message( '$column' , $called_text );
+
+      return false;
+
+    }
+
+    $column_id = MywpHelper::sanitize_text( $column_id );
+
+    if( empty( $column_id ) ) {
+
+      MywpHelper::error_require_message( '$column_id' , $called_text );
 
       return false;
 
@@ -556,7 +614,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
           <p class="mywp-desc-caution">
             <span class="dashicons dashicons-warning"></span>
-            <?php _e( 'Deprecated' , 'my-wp' ); ?>
+            <?php echo esc_html( __( 'Deprecated' , 'my-wp' ) ); ?>
           </p>
 
         <?php endif; ?>
@@ -577,11 +635,23 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   protected static function print_item_content( $column = false , $column_id = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s )' , get_called_class() , __FUNCTION__ , '$column' , '$column_id' );
+    $class = get_called_class();
 
-    if( empty( $column['type'] ) ) {
+    $called_text = sprintf( '%s::%s( $column , $column_id )' , $class , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$column' , $called_text );
+    if( empty( $column ) ) {
+
+      MywpHelper::error_require_message( '$column' , $called_text );
+
+      return false;
+
+    }
+
+    $column_id = MywpHelper::sanitize_text( $column_id );
+
+    if( empty( $column_id ) ) {
+
+      MywpHelper::error_require_message( '$column_id' , $called_text );
 
       return false;
 
@@ -598,8 +668,6 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
       $disable_sortable_class = '';
 
     }
-
-    $class = get_called_class();
 
     ?>
 
@@ -625,7 +693,10 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
         <?php if( ! empty( $column['is_need_automatic_output'] ) ) : ?>
 
-          <p class="mywp-description"><span class="dashicons dashicons-lightbulb"></span> <?php _e( 'This column value output is need Automatic output of column contents enabled.' , 'my-wp' ); ?></p>
+          <p class="mywp-description">
+            <span class="dashicons dashicons-lightbulb"></span>
+            <?php echo esc_html( __( 'This column value output is need Automatic output of column contents enabled.' , 'my-wp' ) ); ?>
+          </p>
 
         <?php endif; ?>
 
@@ -634,33 +705,33 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
           <table class="form-table">
             <tbody>
               <tr>
-                <th><?php _e( 'Column ID' ); ?></th>
+                <th><?php echo esc_html( __( 'Column ID' , 'default' ) ); ?></th>
                 <td>
                   <?php echo esc_html( $column['id'] ); ?>
                 </td>
               </tr>
               <tr>
-                <th><?php _e( 'Title' ); ?></th>
+                <th><?php echo esc_html( __( 'Title' , 'default' ) ); ?></th>
                 <td>
                   <input type="text" name="mywp[data][list_columns][<?php echo esc_attr( $column['id'] ); ?>][title]" class="list-column-item-change-title large-text" value="<?php echo esc_attr( $column['title'] ); ?>" placeholder="<?php echo esc_attr( $column['default_title'] ); ?>" />
                 </td>
               </tr>
               <tr class="<?php echo esc_attr( $disable_sortable_class ); ?>">
                 <th>
-                  <?php _e( 'Sorting' , 'my-wp' ); ?>
+                  <?php echo esc_html( __( 'Sorting' , 'my-wp' ) ); ?>
                 </th>
                 <td>
                   <label>
                     <input type="checkbox" name="mywp[data][list_columns][<?php echo esc_attr( $column['id'] ); ?>][sort]" class="list-column-item-sort" value="1" <?php checked( $column['sort'] , true ); ?> <?php disabled( $is_sortable , false ); ?> />
-                    <?php _e( 'Active' , 'my-wp' ); ?>
+                    <?php echo esc_html( __( 'Active' , 'my-wp' ) ); ?>
                   </label>
                 </td>
               </tr>
               <tr>
-                <th><?php _e( 'Width' ); ?></th>
+                <th><?php echo esc_html( __( 'Width' , 'default' ) ); ?></th>
                 <td>
                   <input type="text" name="mywp[data][list_columns][<?php echo esc_attr( $column['id'] ); ?>][width]" class="list-column-item-width regular-text" value="<?php echo esc_attr( $column['width'] ); ?>" placeholder="<?php echo esc_attr( '1em / 10% / auto' ); ?>" />
-                  <span class="description"><?php _e( 'Default' ); ?>: <code><?php echo esc_html( $column['default_width'] ); ?></code></span>
+                  <span class="description"><?php echo esc_html( __( 'Default' , 'default' ) ); ?>: <code><?php echo esc_html( $column['default_width'] ); ?></code></span>
                 </td>
               </tr>
             </tbody>
@@ -671,7 +742,10 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
           <div class="clear"></div>
 
-          <a href="javascript:void(0);" class="column-remove button button-secondary button-caution"><span class="dashicons dashicons-no-alt"></span> <?php _e( 'Remove' ); ?></a>
+          <a href="javascript:void(0);" class="column-remove button button-secondary button-caution">
+            <span class="dashicons dashicons-no-alt"></span>
+            <?php echo esc_html( __( 'Remove' , 'default' ) ); ?>
+          </a>
 
         </div>
 
@@ -685,11 +759,13 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
   protected static function delete_current_list_columns() {
 
-    $called_text = sprintf( '%s::%s()' , get_called_class() , __FUNCTION__ , '$validated_data' );
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
 
     if( empty( static::$list_column_id ) ) {
 
-      MywpHelper::error_require_message( 'static::$list_column_id' , $called_text );
+      MywpHelper::error_not_found_message( 'static::$list_column_id' , $called_text );
 
       return false;
 
@@ -699,7 +775,7 @@ abstract class MywpAbstractSettingColumnsModule extends MywpAbstractSettingModul
 
     if( empty( $list_columns_model ) ) {
 
-      MywpHelper::error_require_message( '$list_columns_model' , $called_text );
+      MywpHelper::error_not_found_message( '$list_columns_model' , $called_text );
 
       return false;
 
