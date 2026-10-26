@@ -378,6 +378,8 @@ body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-s
   background: #F7E0C5;
   margin: 18px 0;
   height: 38px;
+  border-radius: 0;
+  border: 1px dashed #d9b78f;
 }
 body.mywp-setting #setting-screen #setting-screen-section-wrap #setting-screen-section #setting-screen-setting-list-columns #setting-list-columns #setting-list-columns-setting-columns #setting-list-columns-setting-columns-items .list-columns-item .list-column-item-header {
   cursor: grab;

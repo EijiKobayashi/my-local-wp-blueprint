@@ -20,9 +20,11 @@ final class MywpThirdparty {
 
   public static function set_plugin( $plugin_id = false , $plugin_setting = array() ) {
 
-    if( empty( $plugin_id ) ) {
+    $called_text = sprintf( '%s::%s( $plugin_id , $plugin_setting )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s , %s )' , __CLASS__ , __FUNCTION__ , '$plugin_id' , '$plugin_name' );
+    $plugin_id = MywpHelper::sanitize_text( $plugin_id );
+
+    if( empty( $plugin_id ) ) {
 
       MywpHelper::error_require_message( '$plugin_id' , $called_text );
 
@@ -30,31 +32,33 @@ final class MywpThirdparty {
 
     }
 
-    $plugin_id = strip_tags( $plugin_id );
+    $plugin_base_name = MywpHelper::sanitize_text( $plugin_setting['base_name'] );
 
     if( empty( $plugin_setting['base_name'] ) ) {
 
-      $called_text = sprintf( '%s::%s( %s , %s )' , __CLASS__ , __FUNCTION__ , '$plugin_setting' , '$plugin_name' );
-
-      MywpHelper::error_require_message( 'base_name' , $called_text );
+      MywpHelper::error_not_found_message( 'base_name' , $called_text );
 
       return false;
 
     }
 
-    $plugin_base_name = strip_tags( $plugin_setting['base_name'] );
-
     $plugin_name = false;
 
     if( ! empty( $plugin_setting['name'] ) ) {
 
-      $plugin_name = strip_tags( $plugin_setting['name'] );
+      $plugin_name = MywpHelper::sanitize_text( $plugin_setting['name'] );
 
     }
 
     $is_activate = self::is_plugin_activate( $plugin_base_name );
 
-    $plugin = array( 'plugin_id' => $plugin_id , 'plugin_name' => $plugin_name , 'plugin_base_name' => $plugin_base_name , 'activate' => $is_activate , 'plugin_data' => array() );
+    $plugin = array(
+      'plugin_id' => $plugin_id,
+      'plugin_name' => $plugin_name,
+      'plugin_base_name' => $plugin_base_name,
+      'activate' => $is_activate,
+      'plugin_data' => array()
+    );
 
     self::$plugins[ $plugin_base_name ] = $plugin;
 
@@ -82,17 +86,17 @@ final class MywpThirdparty {
 
   public static function is_plugin_activate( $plugin_base_name = false ) {
 
-    if( empty( $plugin_base_name ) ) {
+    $called_text = sprintf( '%s::%s( $plugin_base_name )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$plugin_base_name' );
+    $plugin_base_name = MywpHelper::sanitize_text( $plugin_base_name );
+
+    if( empty( $plugin_base_name ) ) {
 
       MywpHelper::error_require_message( '$plugin_base_name' , $called_text );
 
       return false;
 
     }
-
-    $plugin_base_name = strip_tags( $plugin_base_name );
 
     if( isset( self::$is_plugin_activates[ $plugin_base_name ] ) ) {
 
@@ -122,17 +126,17 @@ final class MywpThirdparty {
 
   public static function get_plugin_data_by_basename( $plugin_base_name = false ) {
 
-    if( empty( $plugin_base_name ) ) {
+    $called_text = sprintf( '%s::%s( $plugin_base_name )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$plugin_base_name' );
+    $plugin_base_name = MywpHelper::sanitize_text( $plugin_base_name );
+
+    if( empty( $plugin_base_name ) ) {
 
       MywpHelper::error_require_message( '$plugin_base_name' , $called_text );
 
       return false;
 
     }
-
-    $plugin_base_name = strip_tags( $plugin_base_name );
 
     if( ! isset( self::$plugins[ $plugin_base_name ] ) ) {
 

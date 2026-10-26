@@ -32,16 +32,21 @@ final class MywpSettingScreenDebugPostStatuses extends MywpAbstractSettingModule
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $all_post_statuses = MywpApi::get_all_post_statuses();
 
     if( empty( $all_post_statuses ) ) {
+
+      MywpHelper::error_not_found_message( '$all_post_statuses' , $called_text );
 
       return false;
 
     }
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $all_post_statuses ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $all_post_statuses ); ?></p>
+
     <table class="form-table">
       <tbody>
 
@@ -49,7 +54,8 @@ final class MywpSettingScreenDebugPostStatuses extends MywpAbstractSettingModule
 
           <tr>
             <th>
-              [<?php echo esc_html( $post_status->name ); ?>] <?php echo esc_html( $post_status->label ); ?><br />
+              [<?php echo esc_html( $post_status->name ); ?>]
+              <?php echo esc_html( $post_status->label ); ?>
             </th>
             <td>
               <textarea readonly="readonly" class="large-text" style="height: 400px;"><?php echo esc_textarea( print_r( $post_status , true ) ); ?></textarea>

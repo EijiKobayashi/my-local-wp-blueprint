@@ -69,6 +69,8 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     $current_setting_taxonomy_id = MywpSettingTaxonomy::get_current_taxonomy_id();
@@ -76,28 +78,31 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
 
     if( empty( $current_setting_taxonomy ) ) {
 
-      printf( __( '%1$s: %2$s is not found.' , 'my-wp' ) , __( 'Invalid Taxonomy' , 'my-wp' ) , esc_html( $current_setting_taxonomy_id ) );
+      MywpHelper::error_not_found_message( '$current_setting_taxonomy' , $called_text );
 
       return false;
 
     }
 
     $one_term = MywpSettingTaxonomy::get_one_term( $current_setting_taxonomy_id );
+
     $term_archive_link = MywpSettingTaxonomy::get_one_term_archive_link( $current_setting_taxonomy_id );
 
     ?>
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php printf( __( 'Taxonomy archive of %s' , 'my-wp' ) , esc_html( $current_setting_taxonomy->label ) ); ?></th>
+          <th><?php echo esc_html( sprintf( __( 'Taxonomy archive of %s' , 'my-wp' ) , $current_setting_taxonomy->label ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][disable_archive]" class="disable_archive" value="1" <?php checked( $setting_data['disable_archive'] , true ); ?> />
-              <?php _e( 'Disable' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Disable' , 'my-wp' ) ); ?>
             </label>
             &nbsp;
             <?php if( ! empty( $one_term ) ) : ?>
-              <a target="_blank" href="<?php echo esc_url( $term_archive_link ); ?>"><?php printf( __( '%1$s: %2$s' ) , esc_html( $current_setting_taxonomy->label ) , esc_html( $one_term->name ) ); ?></a>
+
+              <a target="_blank" href="<?php echo esc_url( $term_archive_link ); ?>"><?php echo esc_html( sprintf( __( '%1$s: %2$s' , 'default' ) , $current_setting_taxonomy->label , $one_term->name ) ); ?></a>
+
             <?php endif; ?>
           </td>
         </tr>
@@ -142,7 +147,7 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
 
     if( ! empty( $formatted_data['taxonomy'] ) ) {
 
-      $new_formatted_data['taxonomy'] = strip_tags( $formatted_data['taxonomy'] );
+      $new_formatted_data['taxonomy'] = MywpHelper::sanitize_text( $formatted_data['taxonomy'] );
 
     }
 
@@ -160,7 +165,7 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
 
     if( ! empty( $formatted_data['taxonomy'] ) ) {
 
-      $formatted_data['taxonomy'] = strip_tags( $formatted_data['taxonomy'] );
+      $formatted_data['taxonomy'] = MywpHelper::sanitize_text( $formatted_data['taxonomy'] );
 
     }
 
@@ -170,9 +175,13 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
 
   public static function mywp_current_setting_post_data_validate_update( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['taxonomy'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["taxonomy"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'taxonomy' ) );
 
@@ -184,9 +193,13 @@ final class MywpSettingScreenFrontendTermArchive extends MywpAbstractSettingModu
 
   public static function mywp_current_setting_post_data_validate_remove( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['taxonomy'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["taxonomy"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'taxonomy' ) );
 

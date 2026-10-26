@@ -32,26 +32,40 @@ final class MywpSettingScreenDebugRestApi extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $rest_server = rest_get_server();
 
     $rest_routes = $rest_server->get_routes();
+
+    if( empty( $rest_routes ) ) {
+
+      MywpHelper::error_not_found_message( '$rest_routes' , $called_text );
+
+      return false;
+
+    }
 
     ?>
 
     <table class="form-table">
       <thead>
         <tr>
-          <td><?php _e( 'Endpoint' , 'my-wp' ); ?></td>
+          <td><?php echo esc_html( __( 'Endpoint' , 'my-wp' ) ); ?></td>
         </tr>
       </thead>
       <tbody>
+
         <?php foreach( $rest_routes as $rest_route_key => $rest_route_handlers ) : ?>
+
           <tr>
             <td>
               [<?php echo esc_html( $rest_route_key ); ?>]
             </td>
           </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
 

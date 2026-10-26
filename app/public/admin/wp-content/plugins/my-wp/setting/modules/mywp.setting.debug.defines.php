@@ -50,15 +50,19 @@ final class MywpSettingScreenDebugDefines extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $defined_constants = get_defined_constants( true );
 
     if( empty( $defined_constants['user'] ) ) {
+
+      MywpHelper::error_not_found_message( '$defined_constants["user"]' , $called_text );
 
       return false;
 
     }
 
-    $removes = array(
+    $hidens = array(
       'DB_NAME',
       'DB_USER',
       'DB_PASSWORD',
@@ -80,7 +84,7 @@ final class MywpSettingScreenDebugDefines extends MywpAbstractSettingModule {
       'FTP_PASS',
     );
 
-    foreach( $removes as $define_name ) {
+    foreach( $hidens as $define_name ) {
 
       if( isset( $defined_constants['user'][ $define_name ] ) ) {
 
@@ -95,7 +99,8 @@ final class MywpSettingScreenDebugDefines extends MywpAbstractSettingModule {
     ksort( $all_defines );
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $all_defines ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $all_defines ); ?></p>
+
     <table class="form-table">
       <thead>
         <tr>

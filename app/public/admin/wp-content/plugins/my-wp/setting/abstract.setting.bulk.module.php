@@ -14,25 +14,53 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
   private static function get_filter_fields() {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     $filter_fields = array();
 
-    if( empty( $_POST['filter_fields'] ) ) {
+    if( ! isset( $_POST['filter_fields'] ) ) {
 
       return $filter_fields;
 
     }
 
-    foreach( $_POST['filter_fields'] as $filter_key => $filter_value ) {
+    $request_filter_fields = wp_unslash( $_POST['filter_fields'] );
+
+    if( ! is_array( $request_filter_fields ) ) {
+
+      MywpHelper::error_invalid_message( '$request_filter_fields' , 'is_array()' , $called_text );
+
+      return $filter_fields;
+
+    }
+
+    foreach( $request_filter_fields as $filter_key => $filter_value ) {
 
       $filter_key = MywpHelper::sanitize_text( $filter_key );
+
+      if( empty( $filter_key ) ) {
+
+        MywpHelper::error_not_found_message( '$filter_key' , $called_text );
+
+        continue;
+
+      }
 
       if( in_array( $filter_key , array( 'select_site_id' ) , true ) ) {
 
         $filter_fields[ $filter_key ] = MywpHelper::sanitize_number( $filter_value );
 
-      } elseif( in_array( $filter_key , array( 'select_post_type' , 'select_post_status' ) , true ) ) {
+        continue;
+
+      }
+
+      if( in_array( $filter_key , array( 'select_post_type' , 'select_post_status' ) , true ) ) {
 
         $filter_fields[ $filter_key ] = MywpHelper::sanitize_text( $filter_value );
+
+        continue;
 
       }
 
@@ -52,17 +80,37 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
   private static function get_bulk_fields() {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     $bulk_fields = array();
 
-    if( empty( $_POST['bulk_fields'] ) ) {
+    if( ! isset( $_POST['bulk_fields'] ) ) {
 
       return $bulk_fields;
 
     }
 
-    foreach( $_POST['bulk_fields'] as $bulk_key => $bulk_value ) {
+    $request_bulk_fields = wp_unslash( $_POST['bulk_fields'] );
+
+    if( ! is_array( $request_bulk_fields ) ) {
+
+      return $bulk_fields;
+
+    }
+
+    foreach( $request_bulk_fields as $bulk_key => $bulk_value ) {
 
       $bulk_key = MywpHelper::sanitize_text( $bulk_key );
+
+      if( empty( $bulk_key ) ) {
+
+        MywpHelper::error_not_found_message( '$bulk_key' , $called_text );
+
+        continue;
+
+      }
 
       if( in_array( $bulk_key , array( 'is_custom_field' , 'is_featured_image' , 'is_terms' ) , true ) ) {
 
@@ -80,11 +128,19 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
       } elseif( in_array( $bulk_key , array( 'meta_value' ) , true ) ) {
 
-        $bulk_fields[ $bulk_key ] = maybe_unserialize( stripslashes_deep( $bulk_value ) );
+        if( is_serialized( $bulk_value ) ) {
+
+          $bulk_fields[ $bulk_key ] = MywpHelper::sanitize_serialize( $bulk_value );
+
+        } else {
+
+          $bulk_fields[ $bulk_key ] = $bulk_value;
+
+        }
 
       } else {
 
-        $bulk_fields[ $bulk_key ] = $bulk_value;
+        $bulk_fields[ $bulk_key ] = MywpHelper::sanitize_text( $bulk_value );
 
       }
 
@@ -138,9 +194,13 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
   public static function ajax_search_items() {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( static::$id , 'search_items' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -154,11 +214,18 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
     if( empty( $search_items ) ) {
 
+      MywpHelper::error_not_found_message( '$search_items' , $called_text );
+
       return false;
 
     }
 
-    wp_send_json_success( array( 'search_items_html' => $search_items['items'] , 'search_items_count_html' => $search_items['count'] ) );
+    $results = array(
+      'search_items_html' => $search_items['items'],
+      'search_items_count_html' => $search_items['count']
+    );
+
+    wp_send_json_success( $results );
 
   }
 
@@ -166,9 +233,13 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
   public static function ajax_prepare_bulk_items() {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( static::$id , 'prepare_bulk_items' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -186,13 +257,23 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
     $item_ids = array();
 
-    if( ! empty( $_POST['item_ids'] ) ) {
+    if( isset( $_POST['item_ids'] ) ) {
 
-      if( is_array( $_POST['item_ids'] ) ) {
+      $request_item_ids = wp_unslash( $_POST['item_ids'] );
 
-        foreach( $_POST['item_ids'] as $item_id ) {
+      if( is_array( $request_item_ids ) ) {
 
-          $item_ids[] = (int) $item_id;
+        foreach( $request_item_ids as $item_id ) {
+
+          $item_id = MywpHelper::sanitize_number( $item_id );
+
+          if( empty( $item_id ) ) {
+
+            continue;
+
+          }
+
+          $item_ids[] = $item_id;
 
         }
 
@@ -206,7 +287,12 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
     $prepare_bulk_items = static::get_prepare_bulk_items( $do_run , $item_ids , $filter_fields , $bulk_fields );
 
-    wp_send_json_success( array( 'bulk_items_html' => $prepare_bulk_items['bulk_items'] , 'bulk_items_count_html' => $prepare_bulk_items['count'] ) );
+    $results = array(
+      'bulk_items_html' => $prepare_bulk_items['bulk_items'],
+      'bulk_items_count_html' => $prepare_bulk_items['count']
+    );
+
+    wp_send_json_success( $results );
 
   }
 
@@ -214,9 +300,13 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
   public static function ajax_do_bulk_item() {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( static::$id , 'do_bulk_item' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -234,9 +324,15 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
     $item_id = false;
 
-    if( ! empty( $_POST['item_id'] ) ) {
+    if( isset( $_POST['item_id'] ) ) {
 
-      $item_id = (int) $_POST['item_id'];
+      $item_id = MywpHelper::sanitize_number( wp_unslash( $_POST['item_id'] ) );
+
+    }
+
+    if( empty( $item_id ) ) {
+
+      return false;
 
     }
 
@@ -260,7 +356,12 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
     }
 
-    wp_send_json_success( array( 'is_success' => $is_success , 'details' => $details ) );
+    $results = array(
+      'is_success' => $is_success,
+      'details' => $details
+    );
+
+    wp_send_json_success( $results );
 
   }
 
@@ -826,7 +927,7 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
       <?php static::print_setting_screen_header_filter_item_fields(); ?>
 
       <button type="button" id="bulk-filter-search" class="button button-secondary">
-        <?php _e( 'Filter and Search' , 'my-wp' ); ?>
+        <?php echo esc_html( __( 'Filter and Search' , 'my-wp' ) ); ?>
       </button>
 
       <span class="spinner"></span>
@@ -871,7 +972,11 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
 
     <select class="item-filter" data-select_key="select_post_status">
       <option value="">-----</option>
-      <option value="any">[any] <?php _e( 'All' ); ?></option>
+      <option value="any">
+        [any]
+        <?php echo esc_html( __( 'All' , 'default' ) ); ?>
+      </option>
+
       <?php foreach( $all_post_statuses as $key => $post_status ) : ?>
 
         <option value="<?php echo esc_attr( $post_status->name ); ?>">
@@ -934,7 +1039,9 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
     if( ! empty( $filter_fields['select_post_type'] ) ) {
 
       $taxonomies_args = array(
-        'object_type' => array( $filter_fields['select_post_type'] ),
+        'object_type' => array(
+          $filter_fields['select_post_type'],
+        ),
       );
 
       $taxonomies = get_taxonomies( $taxonomies_args , 'objects' );
@@ -946,14 +1053,14 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
     <?php if( empty( $posts ) ) : ?>
 
       <tr>
-        <td colspan="8"><?php _e( 'Post not found.' , 'my-wp' ); ?></td>
+        <td colspan="8"><?php echo esc_html( __( 'Post not found.' , 'my-wp' ) ); ?></td>
       </tr>
 
     <?php else : ?>
 
       <?php foreach( $posts as $post ) : ?>
 
-        <?php $post_id = (int) $post->ID; ?>
+        <?php $post_id = $post->ID; ?>
 
         <tr class="item item-<?php echo esc_attr( $post_id ); ?>">
           <th class="check">
@@ -1067,7 +1174,7 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
       <div class="active-content">
 
         <p>
-          <?php echo _e( 'Search results' ); ?>:
+          <?php echo esc_html( __( 'Search results' , 'default' ) ); ?>:
           <span class="items-count"></span>
         </p>
 
@@ -1101,13 +1208,13 @@ abstract class MywpAbstractSettingBulkModule extends MywpAbstractSettingModule {
         <input type="checkbox" id="all-items-check" value="1" />
       </label>
     </th>
-    <th class="id"><?php _e( 'ID' , 'my-wp' ); ?></th>
-    <th class="type"><?php _e( 'Post Type' , 'my-wp' ); ?></th>
-    <th class="status"><?php _e( 'Post Status' , 'my-wp' ); ?></th>
-    <th class="title"><?php _e( 'Post Title' , 'my-wp' ); ?></th>
+    <th class="id"><?php echo esc_html( __( 'ID' , 'my-wp' ) ); ?></th>
+    <th class="type"><?php echo esc_html( __( 'Post Type' , 'my-wp' ) ); ?></th>
+    <th class="status"><?php echo esc_html( __( 'Post Status' , 'my-wp' ) ); ?></th>
+    <th class="title"><?php echo esc_html( __( 'Post Title' , 'my-wp' ) ); ?></th>
     <th class="thumbnail"><?php echo esc_html( $post_post_type_object->labels->featured_image ); ?></th>
-    <th class="metas"><?php _e( 'All Post Metas' , 'my-wp' ); ?></th>
-    <th class="terms"><?php _e( 'Terms' , 'my-wp' ); ?></th>
+    <th class="metas"><?php echo esc_html( __( 'All Post Metas' , 'my-wp' ) ); ?></th>
+    <th class="terms"><?php echo esc_html( __( 'Terms' , 'my-wp' ) ); ?></th>
     <?php
 
   }

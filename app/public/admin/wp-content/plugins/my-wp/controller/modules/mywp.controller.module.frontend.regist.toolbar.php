@@ -101,6 +101,7 @@ final class MywpControllerModuleFrontendRegistToolbar extends MywpControllerAbst
     self::$raw_toolbar_menus = $toolbar_menus;
 
     self::set_parent_toolbar_menus( 'top-secondary' , 'right' );
+
     self::set_parent_toolbar_menus( '' , 'left' );
 
     if( isset( self::$toolbar_left_menus['top-secondary'] ) ) {
@@ -138,7 +139,13 @@ final class MywpControllerModuleFrontendRegistToolbar extends MywpControllerAbst
 
   private static function set_parent_toolbar_menus( $find_parent_id = false , $menu_location = false ) {
 
-    if( $find_parent_id === false or empty( $menu_location ) ) {
+    if( $find_parent_id === false ) {
+
+      return false;
+
+    }
+
+    if( empty( $menu_location ) ) {
 
       return false;
 

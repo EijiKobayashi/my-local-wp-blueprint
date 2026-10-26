@@ -29,19 +29,23 @@ $current_block_editor_panels_setting_data = MywpSettingBlockEditor::get_current_
 <div id="setting-screen-management-block-editor-panels">
 
   <ul id="block-editor-panel-bulk-actions">
-    <li><a href="javascript:void(0);" class="button button-secondary" id="block-editor-panel-bulk-action-show">
-      <?php _e( 'All Show' , 'my-wp' ); ?>
-    </a></li>
-    <li><a href="javascript:void(0);" class="button button-secondary" id="block-editor-panel-bulk-action-hide">
-      <?php _e( 'All Hide' , 'my-wp' ); ?>
-    </a></li>
+    <li>
+      <a href="javascript:void(0);" class="button button-secondary" id="block-editor-panel-bulk-action-show">
+        <?php echo esc_html( __( 'All Show' , 'my-wp' ) ); ?>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0);" class="button button-secondary" id="block-editor-panel-bulk-action-hide">
+        <?php echo esc_html( __( 'All Hide' , 'my-wp' ) ); ?>
+      </a>
+    </li>
   </ul>
 
   <table class="form-table" id="block-editor-panels-table">
     <thead>
       <tr>
         <th></th>
-        <th><?php _e( 'Hide' ); ?></th>
+        <th><?php echo esc_html( __( 'Hide' , 'default' ) ); ?></th>
       </tr>
     </thead>
     <tbody>
@@ -61,7 +65,9 @@ $current_block_editor_panels_setting_data = MywpSettingBlockEditor::get_current_
           <td>
             <select name="mywp[data][block_editor_panels][<?php echo esc_attr( $block_editor_panel_id ); ?>][action]" class="block-editor-panel-action-select">
               <option value="" <?php selected( $action , '' ); ?>></option>
-              <option value="hide" <?php selected( $action , 'hide' ); ?>><?php _e( 'Hide' ); ?></option>
+              <option value="hide" <?php selected( $action , 'hide' ); ?>>
+                <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
+              </option>
             </select>
           </td>
         </tr>

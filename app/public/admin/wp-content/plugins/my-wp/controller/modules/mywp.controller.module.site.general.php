@@ -116,7 +116,7 @@ final class MywpControllerModuleSiteGeneral extends MywpControllerAbstractModule
 
     }
 
-    $current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $current_url = urldecode( do_shortcode( '[mywp_url current="1"]' ) );
 
     if( $current_url === user_admin_url() ) {
 

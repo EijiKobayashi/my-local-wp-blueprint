@@ -20,9 +20,9 @@ final class MywpSettingPost {
 
   public static function mywp_set_current_setting() {
 
-    if( ! empty( $_GET['setting_post_id'] ) ) {
+    if( isset( $_GET['setting_post_id'] ) ) {
 
-      self::set_current_post_id( $_GET['setting_post_id'] );
+      self::set_current_post_id( wp_unslash( $_GET['setting_post_id'] ) );
 
     } else {
 
@@ -56,9 +56,13 @@ final class MywpSettingPost {
 
   public static function set_current_post_id( $post_id = false ) {
 
-    $post_id = (int) $post_id;
+    $called_text = sprintf( '%s::%s( $post_id )' , get_called_class() , __FUNCTION__ );
+
+    $post_id = MywpHelper::sanitize_number( $post_id );
 
     if( empty( $post_id ) ) {
+
+      MywpHelper::error_require_message( '$post_id' , $called_text );
 
       return false;
 
@@ -78,9 +82,11 @@ final class MywpSettingPost {
 
   private static function set_current_post( $post_id = false ) {
 
-    if( empty( $post_id ) ) {
+    $called_text = sprintf( '%s::%s( $post_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$post_id' );
+    $post_id = MywpHelper::sanitize_number( $post_id );
+
+    if( empty( $post_id ) ) {
 
       MywpHelper::error_require_message( '$post_id' , $called_text );
 
@@ -91,6 +97,8 @@ final class MywpSettingPost {
     $post = get_post( $post_id );
 
     if( empty( $post ) ) {
+
+      MywpHelper::error_not_found_message( '$post' , $called_text );
 
       return false;
 
@@ -108,13 +116,11 @@ final class MywpSettingPost {
 
   public static function set_current_post_to_default() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $post = self::get_setting_post();
 
     if( empty( $post->ID ) ) {
-
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ , '$post' );
-
-      MywpHelper::error_require_message( '$post' , $called_text );
 
       return false;
 

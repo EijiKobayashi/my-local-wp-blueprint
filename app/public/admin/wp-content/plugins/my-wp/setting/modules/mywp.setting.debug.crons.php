@@ -40,24 +40,32 @@ final class MywpSettingScreenDebugCrons extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $all_crons = self::get_crons();
 
     if( empty( $all_crons ) ) {
+
+      MywpHelper::error_not_found_message( '$all_crons' , $called_text );
 
       return false;
 
     }
 
     $timezone_format = _x( 'Y-m-d H:i:s' , 'timezone date format' );
+
     $timezone = get_option( 'timezone_string' );
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $all_crons ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $all_crons ); ?></p>
+
     <table class="form-table">
       <thead>
-        <th><?php _e( 'Name' ); ?></th>
-        <th><?php printf( __( 'Run %s' ) , 'Cron' ); ?></th>
-        <th><?php _e( 'Data' ); ?></th>
+        <tr>
+          <th><?php echo esc_html( __( 'Name' , 'default' ) ); ?></th>
+          <th><?php echo esc_html( sprintf( __( 'Run %s' , 'default' ) , 'Cron' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Data' , 'default' ) ); ?></th>
+        </tr>
       </thead>
       <tbody>
 
@@ -70,7 +78,7 @@ final class MywpSettingScreenDebugCrons extends MywpAbstractSettingModule {
             <td>
               <p><?php echo esc_html( date( $timezone_format , $timestamp + MywpHelper::get_gmt_offset_seconds() ) ); ?> (<?php echo esc_html( $timezone ); ?>)</p>
               <input type="text" readonly="readonly" class="large-text" value="<?php echo esc_attr( $timestamp ); ?>" /><br />
-              <?php _e( 'RAW' ); ?>: <?php echo esc_html( date( $timezone_format , $timestamp ) ); ?> (<?php _e( 'UTC' ); ?>)
+              <?php echo esc_html( __( 'RAW' , 'default' ) ); ?>: <?php echo esc_html( date( $timezone_format , $timestamp ) ); ?> (<?php echo esc_html( __( 'UTC' , 'default' ) ); ?>)
             </td>
             <td>
               <textarea readonly="readonly" class="large-text" style="height: 160px;"><?php echo esc_textarea( print_r( $cron , true ) ); ?></textarea>

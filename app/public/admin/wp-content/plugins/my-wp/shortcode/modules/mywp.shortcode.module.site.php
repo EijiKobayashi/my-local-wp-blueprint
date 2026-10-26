@@ -16,33 +16,45 @@ final class MywpShortcodeModuleSite extends MywpShortcodeAbstractModule {
 
   public static function do_shortcode( $atts = false , $content = false , $tag = false ) {
 
-    if( empty( $atts['field'] ) ) {
+    $called_text = sprintf( '%s::%s( $atts , $content , $tag )' , __CLASS__ , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+    $field = false;
+
+    if( ! empty( $atts['field'] ) ) {
+
+      $field = MywpHelper::sanitize_text( $atts['field'] );
+
+    }
+
+    if( empty( $field ) ) {
+
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 
     }
 
-    $field = strip_tags( $atts['field'] );
-
     $current_site_id = get_current_blog_id();
 
-    if( empty( $atts['site_id'] ) && empty( $atts['blog_id']) ) {
+    $site_id = get_current_blog_id();
 
-      $site_id = get_current_blog_id();
+    if( ! empty( $atts['site_id'] ) ) {
 
-    } else {
+      $site_id = $atts['site_id'];
 
-      if( ! empty( $atts['site_id'] ) ) {
+    } elseif( ! empty( $atts['blog_id'] ) ) {
 
-        $site_id = (int) $atts['site_id'];
+      $site_id = $atts['blog_id'];
 
-      } elseif( ! empty( $atts['blog_id'] ) ) {
+    }
 
-        $site_id = (int) $atts['blog_id'];
+    $site_id = MywpHelper::sanitize_number( $site_id );
 
-      }
+    if( empty( $site_id ) ) {
+
+      MywpHelper::error_not_found_message( '$site_id' , $called_text );
+
+      return $content;
 
     }
 
@@ -62,9 +74,7 @@ final class MywpShortcodeModuleSite extends MywpShortcodeAbstractModule {
 
     } else {
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
-
-      return $content;
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
     }
 

@@ -16,7 +16,9 @@ final class MywpSetting {
 
   public static function get_model( $setting_screen_id = false ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , $setting_screen_id );
+    $called_text = sprintf( '%s::%s( $setting_screen_id )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
 
     if( empty( $setting_screen_id ) ) {
 
@@ -38,7 +40,7 @@ final class MywpSetting {
 
     if( empty( $controller['id'] ) ) {
 
-      MywpHelper::error_require_message( '$controller["id"]' , $called_text );
+      MywpHelper::error_not_found_message( '$controller["id"]' , $called_text );
 
       return false;
 
@@ -70,13 +72,23 @@ final class MywpSetting {
 
   public static function get_setting_data( $setting_screen_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $setting_screen_id )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
+
+    if( empty( $setting_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
+
+      return false;
+
+    }
+
     $model = self::get_model( $setting_screen_id );
 
     if( empty( $model ) ) {
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , $setting_screen_id );
-
-      MywpHelper::error_require_message( '$model' , $called_text );
+      MywpHelper::error_not_found_message( '$model' , $called_text );
 
       return false;
 
@@ -89,6 +101,18 @@ final class MywpSetting {
   }
 
   public static function get_posts( $args = array() , $setting_screen_id = false ) {
+
+    $called_text = sprintf( '%s::%s( $args , $setting_screen_id )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
+
+    if( empty( $setting_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
+
+      return false;
+
+    }
 
     do_action( 'mywp_setting_before_get_posts' , $args , $setting_screen_id );
 
@@ -117,7 +141,9 @@ final class MywpSetting {
 
   public static function print_form_item_must( $setting_screen_id = false , $action = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' , ' $action' );
+    $called_text = sprintf( '%s::%s( $setting_screen_id , $action )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
 
     if( empty( $setting_screen_id ) ) {
 
@@ -127,7 +153,7 @@ final class MywpSetting {
 
     }
 
-    $setting_screen_id = strip_tags( $setting_screen_id );
+    $action = MywpHelper::sanitize_text( $action );
 
     if( empty( $action ) ) {
 
@@ -136,8 +162,6 @@ final class MywpSetting {
       return false;
 
     }
-
-    $action = strip_tags( $action );
 
     printf( '<input type="hidden" name="mywp[setting_screen]" value="%s" />' , esc_attr( $setting_screen_id ) );
     printf( '<input type="hidden" name="mywp[action]" value="%s" />' , esc_attr( $action ) );
@@ -153,7 +177,9 @@ final class MywpSetting {
 
   public static function get_nonce_key( $setting_screen_id = false , $action = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' , ' $action' );
+    $called_text = sprintf( '%s::%s( $setting_screen_id , $action )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
 
     if( empty( $setting_screen_id ) ) {
 
@@ -163,7 +189,7 @@ final class MywpSetting {
 
     }
 
-    $setting_screen_id = strip_tags( $setting_screen_id );
+    $action = MywpHelper::sanitize_text( $action );
 
     if( empty( $action ) ) {
 
@@ -172,8 +198,6 @@ final class MywpSetting {
       return false;
 
     }
-
-    $action = strip_tags( $action );
 
     return sprintf( 'mywp_setting_nonce_%s_%s' , $setting_screen_id , $action );
 
@@ -181,7 +205,9 @@ final class MywpSetting {
 
   public static function get_ajax_action_name( $setting_screen_id = false , $action = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' , ' $action' );
+    $called_text = sprintf( '%s::%s( $setting_screen_id , $action )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
 
     if( empty( $setting_screen_id ) ) {
 
@@ -191,7 +217,7 @@ final class MywpSetting {
 
     }
 
-    $setting_screen_id = strip_tags( $setting_screen_id );
+    $action = MywpHelper::sanitize_text( $action );
 
     if( empty( $action ) ) {
 
@@ -201,15 +227,13 @@ final class MywpSetting {
 
     }
 
-    $action = strip_tags( $action );
-
     return sprintf( 'mywp_setting_%s_%s' , $setting_screen_id , $action );
 
   }
 
   public static function is_mywp_form_action( $post_data = array() ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$post_data' );
+    $called_text = sprintf( '%s::%s( $post_data )' , __CLASS__ , __FUNCTION__ );
 
     if( empty( $post_data ) ) {
 
@@ -227,7 +251,7 @@ final class MywpSetting {
 
     if( empty( $post_data['mywp']['setting_screen'] ) ) {
 
-      MywpHelper::error_require_message( 'mywp[setting_screen]' , $called_text );
+      MywpHelper::error_not_found_message( 'mywp[setting_screen]' , $called_text );
 
       return false;
 
@@ -235,7 +259,7 @@ final class MywpSetting {
 
     if( empty( $post_data['mywp']['action'] ) ) {
 
-      MywpHelper::error_require_message( 'mywp[action]' , $called_text );
+      MywpHelper::error_not_found_message( 'mywp[action]' , $called_text );
 
       return false;
 
@@ -248,6 +272,7 @@ final class MywpSetting {
       if( strpos( $key , 'mywp_setting_nonce_' ) !== false ) {
 
         $found_nonce = true;
+
         break;
 
       }
@@ -256,7 +281,7 @@ final class MywpSetting {
 
     if( $found_nonce === false ) {
 
-      MywpHelper::error_require_message( '$found_nonce' , $called_text );
+      MywpHelper::error_not_found_message( '$found_nonce' , $called_text );
 
       return false;
 
@@ -268,11 +293,15 @@ final class MywpSetting {
 
   public static function post_data_format( $setting_screen_id = false , $action = false , $form_data = false ) {
 
+    $called_text = sprintf( '%s::%s( $setting_screen_id , $action , $form_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
-    $called_text = sprintf( '%s::%s( %s , %s , %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' , '$action' , '$form_data' );
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
 
     if( empty( $setting_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$setting_screen_id' ) );
 
@@ -280,9 +309,11 @@ final class MywpSetting {
 
     }
 
-    $setting_screen_id = strip_tags( $setting_screen_id );
+    $action = MywpHelper::sanitize_text( $action );
 
     if( empty( $action ) ) {
+
+      MywpHelper::error_require_message( '$action' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$action' ) );
 
@@ -298,7 +329,7 @@ final class MywpSetting {
 
     }
 
-    $action = strip_tags( $action );
+    $action = MywpHelper::sanitize_text( $action );
 
     if( empty( $form_data['data']['advance'] ) ) {
 
@@ -321,11 +352,15 @@ final class MywpSetting {
 
   public static function post_data_validate( $setting_screen_id = false , $action = false , $formatted_data = false ) {
 
+    $called_text = sprintf( '%s::%s( $setting_screen_id , $action , $formatted_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
-    $called_text = sprintf( '%s::%s( %s , %s , %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' , '$action' , '$formatted_data' );
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
 
     if( empty( $setting_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$setting_screen_id' ) );
 
@@ -333,9 +368,11 @@ final class MywpSetting {
 
     }
 
-    $setting_screen_id = strip_tags( $setting_screen_id );
+    $action = MywpHelper::sanitize_text( $action );
 
     if( empty( $action ) ) {
+
+      MywpHelper::error_require_message( '$action' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$action' ) );
 
@@ -343,9 +380,9 @@ final class MywpSetting {
 
     }
 
-    $action = strip_tags( $action );
-
     if( empty( $formatted_data ) ) {
+
+      MywpHelper::error_require_message( '$formatted_data' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$formatted_data' ) );
 
@@ -354,6 +391,8 @@ final class MywpSetting {
     }
 
     if( ! isset( $formatted_data['advance'] ) ) {
+
+      MywpHelper::error_not_found_message( '$formatted_data["advance"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$formatted_data["advance"]' ) );
 
@@ -372,11 +411,15 @@ final class MywpSetting {
 
   public static function post_data_action( $setting_screen_id = false , $action = false , $validated_data = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s , %s )' , __CLASS__ , __FUNCTION__ , '$setting_screen_id' , '$action' , '$validated_data' );
+    $called_text = sprintf( '%s::%s( $setting_screen_id , $action , $validated_data )' , __CLASS__ , __FUNCTION__ );
 
     $mywp_notice = new MywpNotice();
 
+    $setting_screen_id = MywpHelper::sanitize_text( $setting_screen_id );
+
     if( empty( $setting_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$setting_screen_id' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$setting_screen_id' ) );
 
@@ -384,9 +427,11 @@ final class MywpSetting {
 
     }
 
-    $setting_screen_id = strip_tags( $setting_screen_id );
+    $action = MywpHelper::sanitize_text( $action );
 
     if( empty( $action ) ) {
+
+      MywpHelper::error_require_message( '$action' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$action' ) );
 
@@ -394,9 +439,9 @@ final class MywpSetting {
 
     }
 
-    $action = strip_tags( $action );
-
     if( empty( $validated_data ) ) {
+
+      MywpHelper::error_require_message( '$validated_data' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %1$s is required for %2$s.' , 'my-wp' ) , $called_text , '$validated_data' ) );
 
@@ -415,13 +460,13 @@ final class MywpSetting {
 
         $mywp_model->update_data( $validated_data );
 
-        $mywp_notice->add_notice( __( 'Settings saved.' ) );
+        $mywp_notice->add_notice( __( 'Settings saved.' , 'default' ) );
 
       } elseif( $action === 'remove' ) {
 
         $mywp_model->remove_data();
 
-        $mywp_notice->add_notice( __( 'Settings saved.' ) );
+        $mywp_notice->add_notice( __( 'Settings saved.' , 'default' ) );
 
       } else {
 

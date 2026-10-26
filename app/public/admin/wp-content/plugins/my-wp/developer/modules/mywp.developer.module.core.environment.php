@@ -57,24 +57,50 @@ final class MywpDeveloperModuleCoreEnvironment extends MywpDeveloperAbstractModu
     }
 
     $debug_lists['wp_version'] = MywpHelper::get_wp_version();
+
     $debug_lists['is_multisite()'] = is_multisite();
+
     $debug_lists['PHP_VERSION'] = PHP_VERSION;
 
     if( function_exists( 'ini_get' ) ) {
 
       $debug_lists['max_input_vars'] = ini_get( 'max_input_vars' );
+
       $debug_lists['max_input_time'] = ini_get( 'max_input_time' );
+
       $debug_lists['max_execution_time'] = ini_get( 'max_execution_time' );
 
     } else {
 
       $debug_lists['max_input_vars'] = '';
+
       $debug_lists['max_input_time'] = '';
+
       $debug_lists['max_execution_time'] = '';
 
     }
 
     $debug_lists['$_SERVER'] = $_SERVER;
+
+    $unslash_items = array(
+      'HTTP_IF_NONE_MATCH',
+      'HTTP_USER_AGENT',
+      'PHP_AUTH_USER',
+      'PHP_AUTH_PW',
+      'REMOTE_ADDR',
+      'REQUEST_URI',
+      'SERVER_SOFTWARE',
+    );
+
+    foreach( $unslash_items as $unslash_item ) {
+
+      if( isset( $debug_lists['$_SERVER'][ $unslash_item ] ) ) {
+
+        $debug_lists['$_SERVER'][ $unslash_item ] = wp_unslash( $debug_lists['$_SERVER'][ $unslash_item ] );
+
+      }
+
+    }
 
     return $debug_lists;
 

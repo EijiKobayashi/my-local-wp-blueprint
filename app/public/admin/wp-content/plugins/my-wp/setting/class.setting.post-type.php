@@ -20,9 +20,9 @@ final class MywpSettingPostType {
 
   public static function mywp_set_current_setting() {
 
-    if( ! empty( $_GET['setting_post_type'] ) ) {
+    if( isset( $_GET['setting_post_type'] ) ) {
 
-      self::set_current_post_type_id( $_GET['setting_post_type'] );
+      self::set_current_post_type_id( wp_unslash( $_GET['setting_post_type'] ) );
 
     } else {
 
@@ -34,7 +34,11 @@ final class MywpSettingPostType {
 
   public static function get_setting_post_types() {
 
-    $post_types = get_post_types( array( 'show_ui' => true ) , 'objects' );
+    $args = array(
+      'show_ui' => true,
+    );
+
+    $post_types = get_post_types( $args , 'objects' );
 
     if( ! empty( $post_types['attachment'] ) ) {
 
@@ -48,9 +52,11 @@ final class MywpSettingPostType {
 
   public static function get_setting_post_type( $post_type = false ) {
 
-    if( empty( $post_type ) ) {
+    $called_text = sprintf( '%s::%s( $post_type )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$post_type' );
+    $post_type = MywpHelper::sanitize_text( $post_type );
+
+    if( empty( $post_type ) ) {
 
       MywpHelper::error_require_message( '$post_type' , $called_text );
 
@@ -60,7 +66,17 @@ final class MywpSettingPostType {
 
     $post_types = self::get_setting_post_types();
 
-    if( empty( $post_types ) or empty( $post_types[ $post_type ] ) ) {
+    if( empty( $post_types ) ) {
+
+      MywpHelper::error_not_found_message( '$post_types' , $called_text );
+
+      return false;
+
+    }
+
+    if( empty( $post_types[ $post_type ] ) ) {
+
+      MywpHelper::error_not_found_message( '$post_types[ $post_type ]' , $called_text );
 
       return false;
 
@@ -72,7 +88,17 @@ final class MywpSettingPostType {
 
   public static function set_current_post_type_id( $post_type = false ) {
 
-    $post_type = esc_attr( strip_tags( $post_type ) );
+    $called_text = sprintf( '%s::%s( $post_type )' , __CLASS__ , __FUNCTION__ );
+
+    $post_type = MywpHelper::sanitize_text( $post_type );
+
+    if( empty( $post_type ) ) {
+
+      MywpHelper::error_require_message( '$post_type' , $called_text );
+
+      return false;
+
+    }
 
     self::$current_post_type_id = $post_type;
 
@@ -88,9 +114,11 @@ final class MywpSettingPostType {
 
   private static function set_current_post_type( $post_type = false ) {
 
-    if( empty( $post_type ) ) {
+    $called_text = sprintf( '%s::%s( $post_type )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$post_type' );
+    $post_type = MywpHelper::sanitize_text( $post_type );
+
+    if( empty( $post_type ) ) {
 
       MywpHelper::error_require_message( '$post_type' , $called_text );
 
@@ -101,6 +129,8 @@ final class MywpSettingPostType {
     $post_type_object = self::get_setting_post_type( $post_type );
 
     if( empty( $post_type_object ) ) {
+
+      MywpHelper::error_not_found_message( '$post_type_object' , $called_text );
 
       return false;
 
@@ -118,13 +148,13 @@ final class MywpSettingPostType {
 
   public static function set_current_post_type_to_default() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $post_types = self::get_setting_post_types();
 
     if( empty( $post_types ) ) {
 
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ , '$post_types' );
-
-      MywpHelper::error_require_message( '$post_types' , $called_text );
+      MywpHelper::error_not_found_message( '$post_types' , $called_text );
 
       return false;
 
@@ -142,6 +172,8 @@ final class MywpSettingPostType {
 
     if( empty( $current_post_type_id ) ) {
 
+      MywpHelper::error_not_found_message( '$current_post_type_id' , $called_text );
+
       return false;
 
     }
@@ -152,9 +184,11 @@ final class MywpSettingPostType {
 
   public static function get_latest_post( $post_type = false ) {
 
-    if( empty( $post_type ) ) {
+    $called_text = sprintf( '%s::%s( $post_type )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$post_type' );
+    $post_type = MywpHelper::sanitize_text( $post_type );
+
+    if( empty( $post_type ) ) {
 
       MywpHelper::error_require_message( '$post_type' , $called_text );
 
@@ -162,11 +196,11 @@ final class MywpSettingPostType {
 
     }
 
-    $post_type = strip_tags( $post_type );
-
     $post_type_object = self::get_setting_post_type( $post_type );
 
     if( empty( $post_type_object ) ) {
+
+      MywpHelper::error_not_found_message( '$post_type_object' , $called_text );
 
       return false;
 
@@ -178,17 +212,15 @@ final class MywpSettingPostType {
 
     $posts = get_posts( $args );
 
-    if( ! empty( $posts ) ) {
-
-      $key = key( $posts );
-
-      return $posts[ $key ];
-
-    } else {
+    if( empty( $posts ) ) {
 
       return false;
 
     }
+
+    $key = key( $posts );
+
+    return $posts[ $key ];
 
   }
 
@@ -210,7 +242,17 @@ final class MywpSettingPostType {
 
   public static function get_list_link( $post_type = false ) {
 
-    $post_type = strip_tags( $post_type );
+    $called_text = sprintf( '%s::%s( $post_type )' , __CLASS__ , __FUNCTION__ );
+
+    $post_type = MywpHelper::sanitize_text( $post_type );
+
+    if( empty( $post_type ) ) {
+
+      MywpHelper::error_require_message( '$post_type' , $called_text );
+
+      return false;
+
+    }
 
     return add_query_arg( array( 'post_type' => $post_type ) , admin_url( 'edit.php' ) );
 

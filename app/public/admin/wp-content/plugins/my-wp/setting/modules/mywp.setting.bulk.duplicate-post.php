@@ -18,25 +18,59 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
 
   protected static function get_setting_screen_title() {
 
-    return __( 'Bulk duplicate posts from site in Network' , 'my-wp' );
+    if( is_multisite() ) {
+
+      return __( 'Bulk duplicate posts from site in Network' , 'my-wp' );
+
+    } else {
+
+      return __( 'Bulk duplicate posts' , 'my-wp' );
+
+    }
 
   }
 
   protected static function get_search_items( $filter_fields ) {
 
-    if( empty( $filter_fields['select_site_id'] ) ) {
+    $called_text = sprintf( '%s::%s( $filter_fields )' , __CLASS__ , __FUNCTION__ );
+
+    $select_site_id = false;
+
+    if( ! empty( $filter_fields['select_site_id'] ) ) {
+
+      $select_site_id = MywpHelper::sanitize_number( $filter_fields['select_site_id'] );
+
+    }
+
+    if( empty( $select_site_id ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please select Site.' , 'my-wp' ) ) );
 
     }
 
-    if( empty( $filter_fields['select_post_type'] ) ) {
+    $select_post_type = false;
+
+    if( ! empty( $filter_fields['select_post_type'] ) ) {
+
+      $select_post_type = MywpHelper::sanitize_text( $filter_fields['select_post_type'] );
+
+    }
+
+    if( empty( $select_post_type ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please select an Post Type.' , 'my-wp' ) ) );
 
     }
 
-    if( empty( $filter_fields['select_post_status'] ) ) {
+    $select_post_status = false;
+
+    if( ! empty( $filter_fields['select_post_status'] ) ) {
+
+      $select_post_status = MywpHelper::sanitize_text( $filter_fields['select_post_status'] );
+
+    }
+
+    if( empty( $select_post_status ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please select an Post Status.' , 'my-wp' ) ) );
 
@@ -48,19 +82,19 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
         'menu_order' => 'ASC',
         'ID' => 'DESC',
       ),
-      'post_type' => $filter_fields['select_post_type'],
-      'post_status' => $filter_fields['select_post_status'],
+      'post_type' => $select_post_type,
+      'post_status' => $select_post_status,
     );
 
     $is_switch_blog = false;
 
     if( is_multisite() ) {
 
-      if( $filter_fields['select_site_id'] !== (int) get_current_blog_id() ) {
+      if( $select_site_id !== (int) get_current_blog_id() ) {
 
         $is_switch_blog = true;
 
-        switch_to_blog( $filter_fields['select_site_id'] );
+        switch_to_blog( $select_site_id );
 
       }
 
@@ -99,13 +133,31 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
 
   protected static function get_prepare_bulk_items( $do_run , $post_ids , $filter_fields , $bulk_fields ) {
 
+    $called_text = sprintf( '%s::%s( $do_run , $post_ids , $filter_fields , $bulk_fields )' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $post_ids ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please select an Post.' , 'my-wp' ) ) );
 
     }
 
-    if( empty( $filter_fields['select_site_id'] ) ) {
+    if( ! is_array( $post_ids ) ) {
+
+      MywpHelper::error_invalid_message( '$post_ids' , 'is_array()' , $called_text );
+
+      wp_send_json_error( array( 'error' => __( 'Please select an Post.' , 'my-wp' ) ) );
+
+    }
+
+    $select_site_id = false;
+
+    if( ! empty( $filter_fields['select_site_id'] ) ) {
+
+      $select_site_id = MywpHelper::sanitize_number( $filter_fields['select_site_id'] );
+
+    }
+
+    if( empty( $select_site_id ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please select Site.' , 'my-wp' ) ) );
 
@@ -115,11 +167,11 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
 
     if( is_multisite() ) {
 
-      if( $filter_fields['select_site_id'] !== (int) get_current_blog_id() ) {
+      if( $select_site_id !== (int) get_current_blog_id() ) {
 
         $is_switch_blog = true;
 
-        switch_to_blog( $filter_fields['select_site_id'] );
+        switch_to_blog( $select_site_id );
 
       }
 
@@ -149,6 +201,8 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
   }
 
   protected static function do_bulk_item( $post_id , $filter_fields , $bulk_fields ) {
+
+    $called_text = sprintf( '%s::%s( $post_id , $filter_fields , $bulk_fields )' , __CLASS__ , __FUNCTION__ );
 
     $results = array(
       'is_success' => false,
@@ -245,7 +299,7 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
 
         <p><span class="dashicons dashicons-arrow-up-alt"></span></p>
 
-        <p><?php _e( 'Please select the posts.' , 'my-wp' ); ?></p>
+        <p><?php echo esc_html( __( 'Please select the posts.' , 'my-wp' ) ); ?></p>
 
       </div>
 
@@ -254,15 +308,15 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
         <table class="form-table">
           <tbody>
             <tr class="selected-items">
-              <th><?php _e( 'Selected Post IDs' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Selected Post IDs' , 'my-wp' ) ); ?></th>
               <td>&nbsp;</td>
             </tr>
             <tr class="other-fields">
-              <th><?php _e( 'Other' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Other' , 'my-wp' ) ); ?></th>
               <td>
                 <label>
                   <input type="checkbox" class="bulk-filter" value="1" data-bulk_filter="is_custom_field" />
-                  <?php _e( 'Custom Fields' , 'my-wp' ); ?>
+                  <?php echo esc_html( __( 'Custom Fields' , 'my-wp' ) ); ?>
                 </label><br />
                 <label>
                   <input type="checkbox" class="bulk-filter" value="1" data-bulk_filter="is_featured_image" />
@@ -270,7 +324,7 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
                 </label><br/>
                 <label>
                   <input type="checkbox" class="bulk-filter" value="1" data-bulk_filter="is_terms" />
-                  <?php _e( 'All Terms' , 'my-wp' ); ?>
+                  <?php echo esc_html( __( 'All Terms' , 'my-wp' ) ); ?>
                 </label><br/>
               </td>
             </tr>
@@ -281,7 +335,7 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
 
           <p>
             <button type="button" class="button button-large button-primary do-bulk" data-do_run="1" data-confirm_run="0">
-              <?php _e( 'Duplicate Posts' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Duplicate Posts' , 'my-wp' ) ); ?>
             </button>
           </p>
 
@@ -308,22 +362,23 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
       <div class="disabled-content">
 
         <p><span class="dashicons dashicons-arrow-up-alt"></span></p>
-        <p><?php _e( 'Please duplicate posts.' , 'my-wp' ); ?></p>
+
+        <p><?php echo esc_html( __( 'Please duplicate posts.' , 'my-wp' ) ); ?></p>
 
       </div>
 
       <div class="active-content">
 
         <p>
-          <?php echo _e( 'Bulk items' ); ?>:
+          <?php echo esc_html( __( 'Bulk items' , 'default' ) ); ?>:
           <span class="items-count"></span>
         </p>
 
         <table class="wp-list-table widefat fixed striped table-view-list posts">
           <thead>
-            <th class="id"><?php _e( 'Post ID' , 'my-wp' ); ?></th>
-            <th class="is-process"><?php _e( 'Bulk process' , 'my-wp' ); ?></th>
-            <th class="details"><?php _e( 'Details' , 'my-wp' ); ?></th>
+            <th class="id"><?php echo esc_html( __( 'Post ID' , 'my-wp' ) ); ?></th>
+            <th class="is-process"><?php echo esc_html( __( 'Bulk process' , 'my-wp' ) ); ?></th>
+            <th class="details"><?php echo esc_html( __( 'Details' , 'my-wp' ) ); ?></th>
           </thead>
           <tbody>
           </tbody>
@@ -339,16 +394,68 @@ final class MywpSettingScreenBulkDuplicatePostFromSite extends MywpAbstractSetti
 
   private static function print_prepare_bulk_items( $do_run , $post_ids , $filter_fields , $bulk_fields ) {
 
+    $called_text = sprintf( '%s::%s( $do_run , $post_ids , $filter_fields , $bulk_fields )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $post_ids ) ) {
+
+      MywpHelper::error_require_message( '$post_ids' , $called_text );
+
+      return false;
+
+    }
+
+    if( ! is_array( $post_ids ) ) {
+
+      MywpHelper::error_invalid_message( '$post_ids' , 'is_array()' , $called_text );
+
+      return false;
+
+    }
+
+    $posts = array();
+
+    foreach( $post_ids as $key => $post_id ) {
+
+      $post_id = MywpHelper::sanitize_number( $post_id );
+
+      if( empty( $post_id ) ) {
+
+        MywpHelper::error_not_found_message( '$post_id' , $called_text );
+
+        continue;
+
+      }
+
+      $post = MywpPostType::get_post( $post_id );
+
+      if( empty( $post ) ) {
+
+        MywpHelper::error_not_found_message( '$post' , $called_text );
+
+        continue;
+
+      }
+
+      $posts[] = $post;
+
+    }
+
+    if( empty( $posts ) ) {
+
+      MywpHelper::error_not_found_message( '$posts' , $called_text );
+
+      return false;
+
+    }
+
     ?>
 
-    <?php foreach( $post_ids as $post_id ) : ?>
+    <?php foreach( $posts as $post ) : ?>
 
-      <?php $post = get_post( $post_id ); ?>
-
-      <tr class="result-item item item-<?php echo esc_attr( $post_id ); ?> wait">
+      <tr class="result-item item item-<?php echo esc_attr( $post->ID ); ?> wait">
         <th class="id">
-          <?php echo esc_html( $post_id ); ?>
-          <input type="hidden" class="item-id" value="<?php echo esc_attr( $post_id ); ?>" />
+          <?php echo esc_html( $post->ID ); ?>
+          <input type="hidden" class="item-id" value="<?php echo esc_attr( $post->ID ); ?>" />
         </th>
         <td class="is-process">
           <div class="processing">

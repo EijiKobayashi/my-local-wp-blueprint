@@ -24,13 +24,31 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
 
   protected static function get_search_items( $filter_fields ) {
 
-    if( empty( $filter_fields['select_post_type'] ) ) {
+    $called_text = sprintf( '%s::%s( $filter_fields )' , __CLASS__ , __FUNCTION__ );
+
+    $select_post_type = false;
+
+    if( ! empty( $filter_fields['select_post_type'] ) ) {
+
+      $select_post_type = MywpHelper::sanitize_text( $filter_fields['select_post_type'] );
+
+    }
+
+    if( empty( $select_post_type ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please select an Post Type.' , 'my-wp' ) ) );
 
     }
 
-    if( empty( $filter_fields['select_post_status'] ) ) {
+    $select_post_status = false;
+
+    if( ! empty( $filter_fields['select_post_status'] ) ) {
+
+      $select_post_status = MywpHelper::sanitize_text( $filter_fields['select_post_status'] );
+
+    }
+
+    if( empty( $select_post_status ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please select an Post Status.' , 'my-wp' ) ) );
 
@@ -42,8 +60,8 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
         'menu_order' => 'ASC',
         'ID' => 'DESC',
       ),
-      'post_type' => $filter_fields['select_post_type'],
-      'post_status' => $filter_fields['select_post_status'],
+      'post_type' => $select_post_type,
+      'post_status' => $select_post_status,
     );
 
     $posts = get_posts( $post_args );
@@ -73,6 +91,22 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
 
   protected static function get_prepare_bulk_items( $do_run , $post_ids , $filter_fields , $bulk_fields ) {
 
+    $called_text = sprintf( '%s::%s( $do_run , $post_ids , $filter_fields , $bulk_fields )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $post_ids ) ) {
+
+      wp_send_json_error( array( 'error' => __( 'Please select an Post.' , 'my-wp' ) ) );
+
+    }
+
+    if( ! is_array( $post_ids ) ) {
+
+      MywpHelper::error_invalid_message( '$post_ids' , 'is_array()' , $called_text );
+
+      wp_send_json_error( array( 'error' => __( 'Please select an Post.' , 'my-wp' ) ) );
+
+    }
+
     if( empty( $bulk_fields['meta_key'] ) ) {
 
       wp_send_json_error( array( 'error' => __( 'Please input meta_key.' , 'my-wp' ) ) );
@@ -97,6 +131,8 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
   }
 
   protected static function do_bulk_item( $post_id , $filter_fields , $bulk_fields ) {
+
+    $called_text = sprintf( '%s::%s( $post_id , $filter_fields , $bulk_fields )' , __CLASS__ , __FUNCTION__ );
 
     $results = array(
       'is_success' => false,
@@ -179,7 +215,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
 
         <p><span class="dashicons dashicons-arrow-up-alt"></span></p>
 
-        <p><?php _e( 'Please select the posts.' , 'my-wp' ); ?></p>
+        <p><?php echo esc_html( __( 'Please select the posts.' , 'my-wp' ) ); ?></p>
 
       </div>
 
@@ -188,17 +224,17 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
         <table class="form-table">
           <tbody>
             <tr class="selected-items">
-              <th><?php _e( 'Selected Post IDs' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Selected Post IDs' , 'my-wp' ) ); ?></th>
               <td>&nbsp;</td>
             </tr>
             <tr class="other-fields">
-              <th><?php _e( 'Meta key' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Meta key' , 'my-wp' ) ); ?></th>
               <td>
                 <input type="text" class="large-text bulk-filter" data-bulk_filter="meta_key" placeholder="<?php echo esc_attr( '_wp_page_template' ); ?>" />
               </td>
             </tr>
             <tr class="other-fields">
-              <th><?php _e( 'Meta value' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Meta value' , 'my-wp' ) ); ?></th>
               <td>
                 <textarea class="large-text bulk-filter" data-bulk_filter="meta_value" placeholder="<?php echo esc_attr( 'default' ); ?>"></textarea>
               </td>
@@ -209,18 +245,19 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
         <div style="text-align: center;">
 
           <p class="mywp-description">
-            <span class="dashicons dashicons-lightbulb"></span> <?php _e( 'It is recommend that you backup your database and do a dry run.' , 'my-wp' ); ?>
+            <span class="dashicons dashicons-lightbulb"></span>
+            <?php echo esc_html( __( 'It is recommend that you backup your database and do a dry run.' , 'my-wp' ) ); ?>
           </p>
 
           <p>
             <button type="button" class="button button-large button-primary do-bulk" data-do_run="0" data-confirm_run="0">
-              <?php _e( 'Bulk update (Dry run)' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Bulk update (Dry run)' , 'my-wp' ) ); ?>
             </button>
           </p>
 
           <p>
             <button type="button" class="button button-caution button-primary do-bulk" data-do_run="1" data-confirm_run="1">
-              <?php _e( 'Bulk update' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Bulk update' , 'my-wp' ) ); ?>
             </button>
           </p>
 
@@ -247,7 +284,7 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
       <div class="disabled-content">
 
         <p><span class="dashicons dashicons-arrow-up-alt"></span></p>
-        <p><?php _e( 'Please bulk update.' , 'my-wp' ); ?></p>
+        <p><?php echo esc_html( __( 'Please bulk update.' , 'my-wp' ) ); ?></p>
 
       </div>
 
@@ -255,12 +292,12 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
 
         <table class="wp-list-table widefat fixed striped table-view-list posts">
           <thead>
-            <th class="id"><?php _e( 'ID' , 'my-wp' ); ?></th>
-            <th class="is-process"><?php _e( 'Bulk process' , 'my-wp' ); ?></th>
-            <th class="from-meta"><?php _e( 'From meta value' , 'my-wp' ); ?></th>
+            <th class="id"><?php echo esc_html( __( 'ID' , 'my-wp' ) ); ?></th>
+            <th class="is-process"><?php echo esc_html( __( 'Bulk process' , 'my-wp' ) ); ?></th>
+            <th class="from-meta"><?php echo esc_html( __( 'From meta value' , 'my-wp' ) ); ?></th>
             <th class="update-arrow">&nbsp;</th>
-            <th class="to-meta"><?php _e( 'To meta value' , 'my-wp' ); ?></th>
-            <th class="details"><?php _e( 'Details' , 'my-wp' ); ?></th>
+            <th class="to-meta"><?php echo esc_html( __( 'To meta value' , 'my-wp' ) ); ?></th>
+            <th class="details"><?php echo esc_html( __( 'Details' , 'my-wp' ) ); ?></th>
           </thead>
           <tbody>
           </tbody>
@@ -276,20 +313,68 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
 
   private static function print_prepare_bulk_items( $do_run , $post_ids , $filter_fields , $bulk_fields ) {
 
-    $bulk_meta_value_unserialize = maybe_unserialize( stripslashes_deep( $bulk_fields['meta_value'] ) );
+    $called_text = sprintf( '%s::%s( $do_run , $post_ids , $filter_fields , $bulk_fields )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $post_ids ) ) {
+
+      MywpHelper::error_not_found_message( '$post_ids' , $called_text );
+
+      return false;
+
+    }
+
+    if( ! is_array( $post_ids ) ) {
+
+      MywpHelper::error_invalid_message( '$post_ids' , 'is_array()' , $called_text );
+
+      return false;
+
+    }
+
+    $posts = array();
+
+    foreach( $post_ids as $key => $post_id ) {
+
+      $post_id = MywpHelper::sanitize_number( $post_id );
+
+      if( empty( $post_id ) ) {
+
+        MywpHelper::error_not_found_message( '$post_id' , $called_text );
+
+        continue;
+
+      }
+
+      $post = MywpPostType::get_post( $post_id );
+
+      if( empty( $post ) ) {
+
+        MywpHelper::error_not_found_message( '$post' , $called_text );
+
+        continue;
+
+      }
+
+      $posts[] = $post;
+
+    }
+
+    if( empty( $posts ) ) {
+
+      MywpHelper::error_not_found_message( '$posts' , $called_text );
+
+      return false;
+
+    }
 
     ?>
 
-    <?php foreach( $post_ids as $post_id ) : ?>
+    <?php foreach( $posts as $post ) : ?>
 
-      <?php $post = get_post( $post_id ); ?>
-
-      <?php $from_meta_value = get_post_meta( $post_id , $bulk_fields['meta_key'] , true ); ?>
-
-      <tr class="result-item item item-<?php echo esc_attr( $post_id ); ?> wait">
+      <tr class="result-item item item-<?php echo esc_attr( $post->ID ); ?> wait">
         <th class="id">
-          <?php echo esc_html( $post_id ); ?>
-          <input type="hidden" class="item-id" value="<?php echo esc_attr( $post_id ); ?>" />
+          <?php echo esc_html( $post->ID ); ?>
+          <input type="hidden" class="item-id" value="<?php echo esc_attr( $post->ID ); ?>" />
         </th>
         <td class="is-process">
           <div class="processing">
@@ -303,20 +388,34 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
           </div>
         </td>
         <td class="from-meta">
+
+          <?php $from_meta_value = get_post_meta( $post->ID , $bulk_fields['meta_key'] , true ); ?>
+
           <?php if( is_array( $from_meta_value ) or is_object( $from_meta_value ) ) : ?>
+
             <textarea class="large-text" readonly="readonly"><?php echo esc_textarea( print_r( $from_meta_value , true ) ); ?></textarea>
+
           <?php else : ?>
+
             <code><?php echo esc_html( $from_meta_value ); ?></code>
+
           <?php endif; ?>
         </td>
         <td class="update-arrow">
           <span class="dashicons dashicons-arrow-right-alt2"></span>
         </td>
         <td class="to-meta">
+
+          <?php $bulk_meta_value_unserialize = MywpHelper::maybe_unserialize( $bulk_fields['meta_value'] ); ?>
+
           <?php if( is_array( $bulk_meta_value_unserialize ) or is_object( $bulk_meta_value_unserialize ) ) : ?>
+
             <textarea class="large-text" readonly="readonly"><?php echo esc_textarea( print_r( $bulk_meta_value_unserialize , true ) ); ?></textarea>
+
           <?php else : ?>
+
             <code><?php echo esc_html( $bulk_fields['meta_value'] ); ?></code>
+
           <?php endif; ?>
         </td>
         <td class="details"></td>
@@ -327,7 +426,6 @@ final class MywpSettingScreenUpdateBulkPostMeta extends MywpAbstractSettingBulkM
     <?php
 
   }
-
 
 }
 

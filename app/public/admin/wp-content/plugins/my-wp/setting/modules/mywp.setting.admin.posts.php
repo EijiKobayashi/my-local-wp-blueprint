@@ -25,7 +25,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'All Posts' ),
+      'title' => __( 'All Posts' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'admin_posts',
       'use_advance' => true,
@@ -66,9 +66,11 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
   public static function ajax_add_column() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'add_column' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -76,29 +78,47 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['add_column_id'] ) ) {
+    if( ! isset( $_POST['add_column_id'] ) ) {
 
       return false;
 
     }
 
-    $add_column_id = strip_tags( $_POST['add_column_id'] );
+    $add_column_id = MywpHelper::sanitize_text( wp_unslash( $_POST['add_column_id'] ) );
 
-    if( empty( $_POST['setting_post_type'] ) ) {
+    if( empty( $add_column_id ) ) {
+
+      MywpHelper::error_not_found_message( '$add_column_id' , $called_text );
 
       return false;
 
     }
 
-    MywpSettingPostType::set_current_post_type_id( $_POST['setting_post_type'] );
+    if( ! isset( $_POST['setting_post_type'] ) ) {
+
+      return false;
+
+    }
+
+    MywpSettingPostType::set_current_post_type_id( wp_unslash( $_POST['setting_post_type'] ) );
 
     $current_setting_post_type_name = MywpSettingPostType::get_current_post_type_id();
+
+    if( empty( $current_setting_post_type_name ) ) {
+
+      MywpHelper::error_not_found_message( '$current_setting_post_type_name' , $called_text );
+
+      return false;
+
+    }
 
     static::set_list_column_id();
 
     $available_list_columns = self::get_available_list_columns();
 
     if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_not_found_message( '$available_list_columns' , $called_text );
 
       return false;
 
@@ -107,6 +127,12 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
     $found_column = false;
 
     foreach( $available_list_columns as $group => $list_columns ) {
+
+      if( $found_column ) {
+
+        break;
+
+      }
 
       if( empty( $list_columns['columns'] ) ) {
 
@@ -129,6 +155,8 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
     }
 
     if( empty( $found_column ) ) {
+
+      MywpHelper::error_not_found_message( '$found_column' , $called_text );
 
       return false;
 
@@ -351,14 +379,23 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
     $bulk_update_messages_default = MywpControllerModuleAdminPosts::get_bulk_update_messages_default();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Bulk Updated Messages' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Bulk Updated Messages' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
+
         <?php foreach( $bulk_update_messages_default as $bulk_update_message_key => $bulk_update_message ) : ?>
+
           <?php $val = ''; ?>
+
           <?php if( ! empty( $setting_data['bulk_post_updated_messages'][ $bulk_update_message_key ] ) ) : ?>
+
             <?php $val = $setting_data['bulk_post_updated_messages'][ $bulk_update_message_key ]; ?>
+
           <?php endif; ?>
+
           <tr>
             <th><?php echo esc_html( $bulk_update_message_key ); ?></th>
             <td>
@@ -367,17 +404,22 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
               </label>
             </td>
           </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
 
     <p>&nbsp;<p>
 
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Other' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Other' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Number of items per page:' ); ?></th>
+          <th><?php echo esc_html( __( 'Number of items per page:' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="number" name="mywp[data][per_page_num]" class="per_page_num small-text" value="<?php echo esc_attr( $setting_data['per_page_num'] ); ?>" placeholder="20" />
@@ -389,7 +431,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -398,42 +440,50 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_search_box]" class="hide_search_box" value="1" <?php checked( $setting_data['hide_search_box'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php echo _e( 'Bulk actions' ); ?></th>
+          <th><?php echo esc_html( __( 'Bulk actions' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_bulk_actions]" class="hide_bulk_actions" value="1" <?php checked( $setting_data['hide_bulk_actions'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
           <th>
-            <?php _e( 'Automatic output of column contents' , 'my-wp' ); ?>
+            <?php echo esc_html( __( 'Automatic output of column contents' , 'my-wp' ) ); ?>
             <span class="mywp-desc-caution">
               <span class="dashicons dashicons-warning"></span>
-              <?php _e( 'Deprecated' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Deprecated' , 'my-wp' ) ); ?>
             </span>
           </th>
           <td>
             <select name="mywp[data][auto_output_column_body]" class="auto_output_column_body">
-              <option value="" <?php selected( false , $setting_data['auto_output_column_body'] ); ?>><?php echo esc_attr( __( 'Not automatic output' , 'my-wp' ) ); ?></option>
-              <option value="1" <?php selected( true , $setting_data['auto_output_column_body'] ); ?>><?php echo esc_attr( __( 'Automatic output' , 'my-wp' ) ); ?></option>
+              <option value="" <?php selected( false , $setting_data['auto_output_column_body'] ); ?>>
+                <?php echo esc_html( __( 'Not automatic output' , 'my-wp' ) ); ?>
+              </option>
+              <option value="1" <?php selected( true , $setting_data['auto_output_column_body'] ); ?>>
+                <?php echo esc_html( __( 'Automatic output' , 'my-wp' ) ); ?>
+              </option>
             </select>
           </td>
         </tr>
         <tr>
           <th>
-            <?php _e( 'Custom search filter' , 'my-wp' ); ?>
+            <?php echo esc_html( __( 'Custom search filter' , 'my-wp' ) ); ?>
           </th>
           <td>
             <select name="mywp[data][custom_search_filter]" class="custom_search_filter">
-              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Hide' , 'my-wp' ) ); ?></option>
-              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Show' , 'my-wp' ) ); ?></option>
+              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>>
+                <?php echo esc_html( __( 'Hide' , 'my-wp' ) ); ?>
+              </option>
+              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>>
+                <?php echo esc_html( __( 'Show' , 'my-wp' ) ); ?>
+              </option>
             </select>
           </td>
         </tr>
@@ -458,7 +508,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     if( empty( $current_setting_post_type_id ) ) {
 
-      MywpHelper::error_require_message( '$current_setting_post_type_id' , $called_text );
+      MywpHelper::error_not_found_message( '$current_setting_post_type_id' , $called_text );
 
       return false;
 
@@ -484,13 +534,13 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
         'type' => 'core',
         'sort' => true,
         'orderby' => 'title',
-        'title' => __( 'Title' ),
+        'title' => __( 'Title' , 'default' ),
       ),
       'author' => array(
         'id' => 'author',
         'type' => 'core',
         'orderby' => 'author',
-        'title' => __( 'Author' ),
+        'title' => __( 'Author' , 'default' ),
         'width' => '10%',
       ),
       'comments' => array(
@@ -498,7 +548,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
         'type' => 'core',
         'sort' => true,
         'orderby' => 'comment_count',
-        'title' => '<span class="vers comment-grey-bubble" title="' . esc_attr__( 'Comments' ) . '"><span class="screen-reader-text">' . esc_attr__( 'Comments' ) . '</span></span>',
+        'title' => '<span class="vers comment-grey-bubble" title="' . esc_attr( __( 'Comments' , 'default' ) ) . '"><span class="screen-reader-text">' . esc_html( __( 'Comments' , 'default' ) ) . '</span></span>',
         'width' => '5.5em',
       ),
       'date' => array(
@@ -506,7 +556,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
         'type' => 'core',
         'sort' => true,
         'orderby' => 'date',
-        'title' => __( 'Date' ),
+        'title' => __( 'Date' , 'default' ),
         'width' => '10%',
       ),
     );
@@ -528,11 +578,19 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
   public static function current_available_list_columns( $available_list_columns ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$available_list_columns' );
+    $called_text = sprintf( '%s::%s( $available_list_columns )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_require_message( '$available_list_columns' , $called_text );
+
+      return false;
+
+    }
 
     if( empty( $available_list_columns['core']['columns'] ) ) {
 
-      MywpHelper::error_require_message( '$available_list_columns["core"]["columns"]' , $called_text );
+      MywpHelper::error_not_found_message( '$available_list_columns["core"]["columns"]' , $called_text );
 
       return false;
 
@@ -542,7 +600,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     if( empty( $current_setting_post_type_id ) ) {
 
-      MywpHelper::error_require_message( '$current_setting_post_type_id' , $called_text );
+      MywpHelper::error_not_found_message( '$current_setting_post_type_id' , $called_text );
 
       return false;
 
@@ -585,7 +643,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           'id' => 'mywp_column_parent',
           'type' => 'other',
           'orderby' => 'parent',
-          'title' => __( 'Parent' ),
+          'title' => __( 'Parent' , 'default' ),
           'width' => '10%',
         ),
         'mywp_column_menu_order' => array(
@@ -593,13 +651,13 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           'type' => 'other',
           'sort' => true,
           'orderby' => 'menu_order',
-          'title' => __( 'Order' ),
+          'title' => __( 'Order' , 'default' ),
         ),
         'mywp_column_status' => array(
           'id' => 'mywp_column_status',
           'type' => 'other',
           'orderby' => 'post_status',
-          'title' => __( 'Status' ),
+          'title' => __( 'Status' , 'default' ),
           'width' => '',
         ),
         'mywp_column_date' => array(
@@ -607,7 +665,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           'type' => 'other',
           'sort' => true,
           'orderby' => 'post_date',
-          'title' => __( 'Date' ),
+          'title' => __( 'Date' , 'default' ),
           'width' => '10%',
         ),
         'mywp_column_modified' => array(
@@ -622,14 +680,14 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           'id' => 'mywp_column_slug',
           'type' => 'other',
           'orderby' => 'name',
-          'title' => __( 'Slug' ),
+          'title' => __( 'Slug' , 'default' ),
           'width' => '25%',
         ),
         'mywp_column_excerpt' => array(
           'id' => 'mywp_column_excerpt',
           'type' => 'other',
           'orderby' => 'post_excerpt',
-          'title' => __( 'Excerpt' ),
+          'title' => __( 'Excerpt' , 'default' ),
           'width' => '100%',
         ),
       ),
@@ -675,7 +733,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
     }
 
     $available_list_columns['custom_fields'] = array(
-      'title' => __( 'Custom Fields' ),
+      'title' => __( 'Custom Fields' , 'default' ),
       'columns' => array(),
     );
 
@@ -713,7 +771,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           'id' => 'parent',
           'type' => 'deprecated',
           'orderby' => 'parent',
-          'title' => __( 'Parent' ),
+          'title' => __( 'Parent' , 'default' ),
           'width' => '10%',
           'is_need_automatic_output' => true,
         ),
@@ -722,14 +780,14 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           'type' => 'deprecated',
           'sort' => true,
           'orderby' => 'menu_order',
-          'title' => __( 'Order' ),
+          'title' => __( 'Order' , 'default' ),
           'is_need_automatic_output' => true,
         ),
         'slug' => array(
           'id' => 'slug',
           'type' => 'deprecated',
           'orderby' => 'name',
-          'title' => __( 'Slug' ),
+          'title' => __( 'Slug' , 'default' ),
           'width' => '25%',
           'is_need_automatic_output' => true,
         ),
@@ -737,7 +795,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
           'id' => 'excerpt',
           'type' => 'deprecated',
           'orderby' => 'post_excerpt',
-          'title' => __( 'Excerpt' ),
+          'title' => __( 'Excerpt' , 'default' ),
           'width' => '100%',
           'is_need_automatic_output' => true,
         ),
@@ -829,6 +887,8 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
 
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_model = self::get_model();
 
     if( empty( $mywp_model ) ) {
@@ -843,7 +903,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     if( ! empty( $formatted_data['post_type'] ) ) {
 
-      $new_formatted_data['post_type'] = strip_tags( $formatted_data['post_type'] );
+      $new_formatted_data['post_type'] = MywpHelper::sanitize_text( $formatted_data['post_type'] );
 
     }
 
@@ -861,7 +921,15 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
       foreach( $formatted_data['list_columns'] as $list_column_id => $list_column_setting ) {
 
-        $list_column_id = strip_tags( $list_column_id );
+        $list_column_id = MywpHelper::sanitize_text( $list_column_id );
+
+        if( empty( $list_column_id ) ) {
+
+          MywpHelper::error_not_found_message( '$list_column_id' , $called_text );
+
+          continue;
+
+        }
 
         $new_list_column_setting = wp_parse_args( array( 'id' => $list_column_id ) , $list_column_default );
 
@@ -873,19 +941,19 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
         if( ! empty( $list_column_setting['title'] ) ) {
 
-          $new_list_column_setting['title'] = wp_unslash( wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html ) );
+          $new_list_column_setting['title'] = wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html );
 
         }
 
         if( ! empty( $list_column_setting['orderby'] ) ) {
 
-          $new_list_column_setting['orderby'] = wp_unslash( $list_column_setting['orderby'] );
+          $new_list_column_setting['orderby'] = MywpHelper::sanitize_text( $list_column_setting['orderby'] );
 
         }
 
         if( ! empty( $list_column_setting['width'] ) ) {
 
-          $new_list_column_setting['width'] = strip_tags( $list_column_setting['width'] );
+          $new_list_column_setting['width'] = MywpHelper::sanitize_text( $list_column_setting['width'] );
 
         }
 
@@ -901,7 +969,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
       if( ! empty( $formatted_data['bulk_post_updated_messages'][ $key ] ) ) {
 
-        $new_formatted_data['bulk_post_updated_messages'][ $key ] = wp_unslash( strip_tags( $formatted_data['bulk_post_updated_messages'][ $key ] ) );
+        $new_formatted_data['bulk_post_updated_messages'][ $key ] = MywpHelper::sanitize_text( $formatted_data['bulk_post_updated_messages'][ $key ] );
 
       }
 
@@ -909,7 +977,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     if( ! empty( $formatted_data['per_page_num'] ) ) {
 
-      $new_formatted_data['per_page_num'] = (int) $formatted_data['per_page_num'];
+      $new_formatted_data['per_page_num'] = MywpHelper::sanitize_number( $formatted_data['per_page_num'] );
 
     }
 
@@ -951,7 +1019,7 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
     if( ! empty( $formatted_data['post_type'] ) ) {
 
-      $formatted_data['post_type'] = strip_tags( $formatted_data['post_type'] );
+      $formatted_data['post_type'] = MywpHelper::sanitize_text( $formatted_data['post_type'] );
 
     }
 
@@ -961,9 +1029,13 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_setting_post_data_validate_update( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['post_type'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["post_type"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'post_type' ) );
 
@@ -975,9 +1047,13 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
 
   public static function mywp_current_setting_post_data_validate_remove( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_notice = new MywpNotice();
 
     if( empty( $validated_data['post_type'] ) ) {
+
+      MywpHelper::error_not_found_message( '$validated_data["post_type"]' , $called_text );
 
       $mywp_notice->add_notice_error( sprintf( __( 'The %s is not found data.' ) , 'post_type' ) );
 
@@ -1000,8 +1076,6 @@ final class MywpSettingScreenAdminPosts extends MywpAbstractSettingColumnsModule
   }
 
   public static function mywp_current_setting_before_post_data_action_remove( $validated_data ) {
-
-    $called_text = sprintf( '%s::%s( %s )' , get_called_class() , __FUNCTION__ , '$validated_data' );
 
     if( ! empty( $validated_data['post_type'] ) ) {
 

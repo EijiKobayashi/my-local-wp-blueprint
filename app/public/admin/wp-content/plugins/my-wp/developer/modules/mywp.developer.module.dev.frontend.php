@@ -180,7 +180,9 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
         }
 
         $current_theme_template = MywpApi::get_theme_path() . '/' . $find_template;
+
         $parent_theme_template = MywpApi::get_theme_path( true ) . '/' . $find_template;
+
         $wp_compat_template = ABSPATH . WPINC . '/theme-compat/' . $find_template;
 
         $all_templates[ $current_theme_template ] = array( 'found' => 0 );
@@ -241,7 +243,7 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
     }
 
-    $debug_lists['current_template'] = sprintf( '<strong>%s</strong> (%s)' , $file_name , $current_template );
+    $debug_lists['current_template'] = sprintf( '<strong>%s</strong> (%s)' , esc_html( $file_name ) , esc_html( $current_template ) );
 
     $debug_lists['find_locate_templates'] = array();
 
@@ -266,7 +268,9 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
         }
 
         $current_theme_header_template = MywpApi::get_theme_path() . '/' . $find_header_template;
+
         $parent_theme_header_template = MywpApi::get_theme_path( true ) . '/' . $find_header_template;
+
         $wp_compat_header_template = ABSPATH . WPINC . '/theme-compat/' . $find_header_template;
 
         $all_header_templates[ $current_theme_header_template ] = array( 'found' => 0 );
@@ -319,7 +323,7 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
     }
 
-    $debug_lists['current_header_template'] = sprintf( '<strong>%s</strong> (%s)' , basename( $current_header_template ) , $current_header_template );
+    $debug_lists['current_header_template'] = sprintf( '<strong>%s</strong> (%s)' , esc_html( basename( $current_header_template ) ) , esc_html( $current_header_template ) );
 
     $debug_lists['find_locate_header_templates'] = array();
 
@@ -344,7 +348,9 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
         }
 
         $current_theme_sidebar_template = MywpApi::get_theme_path() . '/' . $find_sidebar_template;
+
         $parent_theme_sidebar_template = MywpApi::get_theme_path( true ) . '/' . $find_sidebar_template;
+
         $wp_compat_sidebar_template = ABSPATH . WPINC . '/theme-compat/' . $find_sidebar_template;
 
         $all_sidebar_templates[ $current_theme_sidebar_template ] = array( 'found' => 0 );
@@ -397,7 +403,7 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
     }
 
-    $debug_lists['current_sidebar_template'] = sprintf( '<strong>%s</strong> (%s)' , basename( $current_sidebar_template ) , $current_sidebar_template );
+    $debug_lists['current_sidebar_template'] = sprintf( '<strong>%s</strong> (%s)' , esc_html( basename( $current_sidebar_template ) ) , esc_html( $current_sidebar_template ) );
 
     $debug_lists['find_locate_sidebar_templates'] = array();
 
@@ -422,7 +428,9 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
         }
 
         $current_theme_footer_template = MywpApi::get_theme_path() . '/' . $find_footer_template;
+
         $parent_theme_footer_template = MywpApi::get_theme_path( true ) . '/' . $find_footer_template;
+
         $wp_compat_footer_template = ABSPATH . WPINC . '/theme-compat/' . $find_footer_template;
 
         $all_footer_templates[ $current_theme_footer_template ] = array( 'found' => 0 );
@@ -475,7 +483,7 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
 
     }
 
-    $debug_lists['current_footer_template'] = sprintf( '<strong>%s</strong> (%s)' , basename( $current_footer_template ) , $current_footer_template );
+    $debug_lists['current_footer_template'] = sprintf( '<strong>%s</strong> (%s)' , esc_html( basename( $current_footer_template ) ) , esc_html( $current_footer_template ) );
 
     $debug_lists['find_locate_footer_templates'] = array();
 
@@ -534,9 +542,11 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
         $post_id = (int) $post->ID;
 
         $debug_lists['post_id'] = $post_id;
+
         $debug_lists['custom_fields'] = get_post_meta( $post_id );
 
         $debug_lists['taxonomies'] = array();
+
         $debug_lists['terms'] = array();
 
         $post_taxonomies = get_post_taxonomies( $post_id );
@@ -546,6 +556,7 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
           foreach( $post_taxonomies as $taxonomy_name ) {
 
             $debug_lists['taxonomies'][ $taxonomy_name ] = false;
+
             $debug_lists['terms'][ $taxonomy_name ] = false;
 
             $taxonomy = get_taxonomy( $taxonomy_name );
@@ -571,12 +582,15 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
         }
 
         $debug_lists['get_post( ' . $post_id . ' )'] = get_post( $post_id );
+
         $debug_lists['MywpPostType::get_post( ' . $post_id . ' )'] = MywpPostType::get_post( $post_id );
+
         $debug_lists['SELECT * FROM $wpdb->posts WHERE ID = ' . $post_id] = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post_id ) );
 
       }
 
       $debug_lists['get_permalink'] = esc_url( get_permalink( $post_id ) );
+
       $debug_lists['get_page_link'] = esc_url( get_page_link( $post_id ) );
 
     } elseif( is_archive() ) {
@@ -590,7 +604,9 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
         if( ! empty( $term ) && is_object( $term ) ) {
 
           $debug_lists['taxonomy'] = $term->taxonomy;
+
           $debug_lists['term_id'] = $term->term_id;
+
           $debug_lists['custom_meta'] = get_term_meta( $term->term_id );
 
         }
@@ -598,8 +614,11 @@ final class MywpDeveloperModuleDevFrontend extends MywpDeveloperAbstractModule {
       } elseif( is_date() ) {
 
         $debug_lists['get_query_var("year")'] = get_query_var("year");
+
         $debug_lists['get_query_var("m")'] = get_query_var("m");
+
         $debug_lists['get_query_var("monthnum")'] = get_query_var("monthnum");
+
         $debug_lists['get_query_var("day")'] = get_query_var("day");
 
       }

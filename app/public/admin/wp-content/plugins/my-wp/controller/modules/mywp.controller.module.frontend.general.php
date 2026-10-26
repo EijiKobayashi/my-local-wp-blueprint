@@ -106,6 +106,17 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
   }
 
+  public static function get_x_frame_options() {
+
+    $x_frame_options = array(
+      'SAMEORIGIN',
+      'DENY',
+    );
+
+    return $x_frame_options;
+
+  }
+
   public static function send_headers() {
 
     if( ! self::is_do_function( __FUNCTION__ ) ) {
@@ -113,6 +124,8 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
       return false;
 
     }
+
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -122,7 +135,17 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     }
 
-    header( sprintf( 'X-Frame-Options: %s' , $setting_data['x_frame_option']) );
+    $x_frame_option = MywpHelper::sanitize_text( $setting_data['x_frame_option'] );
+
+    if( ! in_array( $x_frame_option , self::get_x_frame_options() , true ) ) {
+
+      MywpHelper::error_invalid_message( '$setting_data["x_frame_option"]' , 'in_array()' , $called_text );
+
+      return false;
+
+    }
+
+    header( sprintf( 'X-Frame-Options: %s' , $x_frame_option ) );
 
     self::after_do_function( __FUNCTION__ );
 
@@ -135,6 +158,8 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
       return $show_admin_bar;
 
     }
+
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -151,6 +176,10 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
     } elseif( $setting_data['admin_bar'] === 'show' ) {
 
       $show_admin_bar = true;
+
+    } else {
+
+      MywpHelper::error_not_found_message( '$setting_data["admin_bar"]' , $called_text );
 
     }
 
@@ -404,7 +433,45 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     $custom_header_meta = do_shortcode( $setting_data['custom_header_meta'] );
 
-    echo $custom_header_meta;
+    $wp_kses_allowed_tags = array(
+      'meta' => array(
+        'name' => true,
+        'content' => true,
+        'charset' => true,
+        'http-equiv' => true,
+        'property' => true,
+      ),
+      'link' => array(
+        'rel' => true,
+        'id' => true,
+        'href' => true,
+        'type' => true,
+        'media' => true,
+        'fetchpriority' => true,
+        'sizes' => true,
+        'as' => true,
+        'crossorigin' => true,
+        'referrerpolicy' => true,
+      ),
+      'style' => array(
+        'id' => true,
+        'type' => true,
+      ),
+      'script' => array(
+        'id' => true,
+        'src' => true,
+        'async' => true,
+        'defer' => true,
+        'type'  => true,
+        'fetchpriority' => true,
+        'crossorigin' => true,
+        'referrerpolicy' => true,
+      ),
+    );
+
+    $wp_kses_allowed_tags = apply_filters( 'mywp_frontend_general_wp_head_allowd_tags' , $wp_kses_allowed_tags );
+
+    echo wp_kses( $custom_header_meta , $wp_kses_allowed_tags );
 
     self::after_do_function( __FUNCTION__ );
 
@@ -420,14 +487,17 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     $setting_data = self::get_setting_data();
 
-    if( empty( $setting_data['include_js_file'] ) && empty( $setting_data['include_css_file'] ) ) {
+    if( empty( $setting_data['include_js_file'] ) ) {
 
-      return false;
+      if( empty( $setting_data['include_css_file'] ) ) {
+
+        return false;
+
+      }
 
     }
 
-    $include_js_file = do_shortcode( $setting_data['include_js_file'] );
-    $include_css_file = do_shortcode( $setting_data['include_css_file'] );
+    $include_js_file = MywpHelper::sanitize_url( do_shortcode( $setting_data['include_js_file'] ) );
 
     if( ! empty( $include_js_file ) ) {
 
@@ -435,12 +505,13 @@ final class MywpControllerModuleFrontendGeneral extends MywpControllerAbstractMo
 
     }
 
+    $include_css_file = MywpHelper::sanitize_url( do_shortcode( $setting_data['include_css_file'] ) );
+
     if( ! empty( $include_css_file ) ) {
 
       wp_enqueue_style( 'mywp_frontend_include' , $include_css_file , array() , MYWP_VERSION );
 
     }
-
 
     self::after_do_function( __FUNCTION__ );
 

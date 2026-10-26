@@ -36,15 +36,15 @@ final class MywpSettingScreenDebugBlogs extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
-    if( is_multisite() ) {
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
-      if( ! is_network_admin() ) {
+    if( ! is_multisite() ) {
 
-        return false;
+      return false;
 
-      }
+    }
 
-    } else {
+    if( ! is_network_admin() ) {
 
       return false;
 
@@ -56,21 +56,24 @@ final class MywpSettingScreenDebugBlogs extends MywpAbstractSettingModule {
 
     if( empty( $all_blogs ) ) {
 
+      MywpHelper::error_not_found_message( '$all_blogs' , $called_text );
+
       return false;
 
     }
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $all_blogs ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $all_blogs ); ?></p>
+
     <table class="form-table">
       <thead>
         <tr>
-          <th><?php _e( 'Site ID' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Site ID' , 'my-wp' ) ); ?></th>
           <th>[blog_id] URL</th>
-          <th><?php _e( 'Last Updated' ); ?></th>
-          <th><?php _e( 'Public' ); ?></th>
-          <th><?php _e( 'Deleated' , 'my-wp' ); ?></th>
-          <th><?php _e( 'Data' ); ?></th>
+          <th><?php echo esc_html( __( 'Last Updated' , 'default' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Public' , 'default' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Deleated' , 'my-wp' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Data' , 'default' ) ); ?></th>
         </tr>
       </thead>
       <tbody>

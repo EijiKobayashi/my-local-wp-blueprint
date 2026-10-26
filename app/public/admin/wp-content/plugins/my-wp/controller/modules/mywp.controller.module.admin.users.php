@@ -149,6 +149,8 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['list_columns'] ) ) {
@@ -161,13 +163,31 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
-      if( empty( $column_setting['width'] ) ) {
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
 
         continue;
 
       }
 
-      $columns[ $column_id ] = $column_setting['width'];
+      $width = false;
+
+      if( ! empty( $column_setting['width'] ) ) {
+
+        $width = MywpHelper::sanitize_text( $column_setting['width'] );
+
+      }
+
+      if( empty( $width ) ) {
+
+        continue;
+
+      }
+
+      $columns[ $column_id ] = $width;
 
     }
 
@@ -211,7 +231,15 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
     }
 
-    $per_page = $setting_data['per_page_num'];
+    $per_page_num = MywpHelper::sanitize_number( $setting_data['per_page_num'] );
+
+    if( empty( $per_page_num ) ) {
+
+      return $per_page;
+
+    }
+
+    $per_page = $per_page_num;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -226,6 +254,8 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
       return $columns;
 
     }
+
+    $called_text = sprintf( '%s::%s( $columns )' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -247,6 +277,24 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $column_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$column_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
+
       $columns[ $column_id ] = wp_kses( $column_setting['title'] , $wp_kses_allowed_html );
 
     }
@@ -264,6 +312,8 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
       return $content;
 
     }
+
+    $called_text = sprintf( '%s::%s( $content , $column_id , $user_id )' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -292,8 +342,6 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
       $content = $user_data->user_registered;
 
     }
-
-    $called_text = sprintf( '%s::%s( $content , $column_id , $user_id )' , __CLASS__ , __FUNCTION__ );
 
     if( $column_id === 'id' ) {
 
@@ -345,6 +393,8 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
     }
 
+    $called_text = sprintf( '%s::%s( $sortables )' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['list_columns'] ) ) {
@@ -357,9 +407,25 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
       if( ! empty( $column_setting['sort'] ) ) {
 
-        $sortables[ $column_id ] = $column_setting['orderby'];
+        $orderby = MywpHelper::sanitize_text( $column_setting['orderby'] );
+
+        if( ! empty( $orderby ) ) {
+
+          $sortables[ $column_id ] = $orderby;
+
+        }
 
       }
 
@@ -380,7 +446,6 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
     add_action( 'pre_get_users' , array( __CLASS__ , 'custom_search_filter_query' ) , 9 );
 
   }
-
 
   public static function users_list_table_query_args( $args ) {
 
@@ -406,17 +471,29 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
     if( ! empty( $query->query_vars['user_login_like'] ) ) {
 
-      $like_string = '%' . $wpdb->esc_like( $query->query_vars['user_login_like'] ) . '%';
+      $user_login_like = MywpHelper::sanitize_text( $query->query_vars['user_login_like'] );
 
-      $query->query_where .= $wpdb->prepare( " AND $wpdb->users.user_login LIKE %s" , $like_string );
+      if( ! empty( $user_login_like ) ) {
+
+        $like_string = '%' . $wpdb->esc_like( $user_login_like ) . '%';
+
+        $query->query_where .= $wpdb->prepare( " AND $wpdb->users.user_login LIKE %s" , $like_string );
+
+      }
 
     }
 
     if( ! empty( $query->query_vars['user_email_like'] ) ) {
 
-      $like_string = '%' . $wpdb->esc_like( $query->query_vars['user_email_like'] ) . '%';
+      $user_email_like = MywpHelper::sanitize_text( $query->query_vars['user_email_like'] );
 
-      $query->query_where .= $wpdb->prepare( " AND $wpdb->users.user_email LIKE %s" , $like_string );
+      if( ! empty( $user_email_like ) ) {
+
+        $like_string = '%' . $wpdb->esc_like( $user_email_like ) . '%';
+
+        $query->query_where .= $wpdb->prepare( " AND $wpdb->users.user_email LIKE %s" , $like_string );
+
+      }
 
     }
 
@@ -441,6 +518,8 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
   }
 
   protected static function custom_search_filter_query_do( $query , $custom_search_filter_requests ) {
+
+    $called_text = sprintf( '%s::%s( $query , $custom_search_filter_requests )' , __CLASS__ , __FUNCTION__ );
 
     if( empty( $query->query_vars['mywp_controller_admin_users_custom_search_filter_args'] ) ) {
 
@@ -510,9 +589,11 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
 
         }
 
-        $date = MywpHelper::sanitize_date( $custom_search_filter_requests['mywp_custom_search_user_registered'][ $date_key ] );
+        $date = MywpHelper::sanitize_date_ymd( $custom_search_filter_requests['mywp_custom_search_user_registered'][ $date_key ] );
 
         if( empty( $date ) ) {
+
+          MywpHelper::error_not_found_message( '$date' , $called_text );
 
           continue;
 
@@ -559,17 +640,17 @@ final class MywpControllerModuleAdminUsers extends MywpAbstractControllerListMod
       ),
       'mywp_custom_search_user_login' => array(
         'id' => 'mywp_custom_search_user_login',
-        'title' => __( 'Username' ),
+        'title' => __( 'Username' , 'default' ),
         'type' => 'text',
       ),
       'mywp_custom_search_user_email' => array(
         'id' => 'mywp_custom_search_user_email',
-        'title' => __( 'User Email' ),
+        'title' => __( 'User Email' , 'default' ),
         'type' => 'text',
       ),
       'mywp_custom_search_user_role' => array(
         'id' => 'mywp_custom_search_user_role',
-        'title' => __( 'User Roles' ),
+        'title' => __( 'User Roles' , 'default' ),
         'type' => 'select',
         'multiple' => false,
       ),

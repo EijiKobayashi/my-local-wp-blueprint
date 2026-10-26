@@ -51,22 +51,32 @@ final class MywpSettingScreenFrontendDateArchive extends MywpAbstractSettingModu
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Date Archive' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Date Archive' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][disable_archive]" class="disable_archive" value="1" <?php checked( $setting_data['disable_archive'] , true ); ?> />
-              <?php _e( 'Disable' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Disable' , 'my-wp' ) ); ?>
             </label>
             &nbsp;
             <?php if( ! empty( $date_post ) ) : ?>
+
               <?php $year = date( 'Y' , $date_post_timestamp ); ?>
+
               <?php $month = date( 'm' , $date_post_timestamp ); ?>
+
               <?php $day = date( 'd' , $date_post_timestamp ); ?>
-              <a target="_blank" href="<?php echo esc_url( get_year_link( $year ) ); ?>"><?php printf( __( 'Year: %s' , 'my-wp' ) , esc_html( get_the_date( _x( 'Y' , 'yearly archives date format' ) , $date_post->ID ) ) ); ?></a>
+
+              <a target="_blank" href="<?php echo esc_url( get_year_link( $year ) ); ?>">
+                <?php echo esc_html( sprintf( __( 'Year: %s' , 'my-wp' ) , get_the_date( _x( 'Y' , 'yearly archives date format' ) , $date_post->ID ) ) ); ?>
+              </a>
               &nbsp;
-              <a target="_blank" href="<?php echo esc_url( get_month_link( $year , $month ) ); ?>"><?php printf( __( 'Month: %s' , 'my-wp' ) , esc_html( get_the_date( _x( 'F Y' , 'monthly archives date format' ) , $date_post->ID ) ) ); ?></a>
+              <a target="_blank" href="<?php echo esc_url( get_month_link( $year , $month ) ); ?>">
+                <?php echo esc_html( sprintf( __( 'Month: %s' , 'my-wp' ) , get_the_date( _x( 'F Y' , 'monthly archives date format' ) , $date_post->ID ) ) ); ?>
+              </a>
               &nbsp;
-              <a target="_blank" href="<?php echo esc_url( get_day_link( $year , $month , $day ) ); ?>"><?php printf( __( 'Day: %s' , 'my-wp' ) , esc_html( get_the_date( _x( 'F j, Y' , 'daily archives date format' ) , $date_post->ID ) ) ); ?></a>
+              <a target="_blank" href="<?php echo esc_url( get_day_link( $year , $month , $day ) ); ?>">
+                <?php echo esc_html( sprintf( __( 'Day: %s' , 'my-wp' ) , get_the_date( _x( 'F j, Y' , 'daily archives date format' ) , $date_post->ID ) ) ); ?>
+              </a>
             <?php endif; ?>
           </td>
         </tr>

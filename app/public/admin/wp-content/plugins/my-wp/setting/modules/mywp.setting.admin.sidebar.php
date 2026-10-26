@@ -106,21 +106,21 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function mywp_setting_admin_sidebar_print_item_class( $item_class , $item ) {
 
+    $called_text = sprintf( '%s::%s( $item_class , $item )' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $item ) ) {
 
-      return $item_class;
-
-    }
-
-    if( empty( $item->item_default_id ) ) {
+      MywpHelper::error_require_message( '$item' , $called_text );
 
       return $item_class;
 
     }
 
-    if( in_array( $item->item_default_id , array( 'mywp' ) ) ) {
+    if( in_array( $item->item_default_id , array( 'mywp' ) , true ) ) {
 
       $item_class = 'dynamic-submenu';
+
+      return $item_class;
 
     }
 
@@ -130,15 +130,19 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function mywp_setting_admin_sidebar_print_item_content_show_child_items_content( $show_child_items_content , $item , $item_type ) {
 
-    if( in_array( $item_type , array( 'separator' ) ) ) {
+    if( in_array( $item_type , array( 'separator' ) , true ) ) {
 
       $show_child_items_content = false;
+
+      return $show_child_items_content;
 
     }
 
     if( $item->item_default_id === 'mywp' ) {
 
       $show_child_items_content = false;
+
+      return $show_child_items_content;
 
     }
 
@@ -176,9 +180,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function ajax_add_items() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'add_items' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -186,7 +192,15 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['add_items'] ) or ! is_array( $_POST['add_items'] ) ) {
+    if( ! isset( $_POST['add_items'] ) ) {
+
+      return false;
+
+    }
+
+    $request_add_items = wp_unslash( $_POST['add_items'] );
+
+    if( ! is_array( $request_add_items ) ) {
 
       return false;
 
@@ -194,9 +208,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     $add_items = array();
 
-    foreach( $_POST['add_items'] as $key => $post_item ) {
+    foreach( $request_add_items as $key => $request_add_item ) {
 
-      if( empty( $post_item['item_type'] ) ) {
+      if( empty( $request_add_item['item_type'] ) ) {
+
+        MywpHelper::error_not_found_message( '$request_add_item["item_type"]' , $called_text );
 
         continue;
 
@@ -204,69 +220,69 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       $add_item = array();
 
-      $add_item['item_type'] = strip_tags( $post_item['item_type'] );
+      $add_item['item_type'] = MywpHelper::sanitize_text( $request_add_item['item_type'] );
 
       $add_item['item_custom_html'] = false;
 
-      if( ! empty( $post_item['item_custom_html'] ) ) {
+      if( ! empty( $request_add_item['item_custom_html'] ) ) {
 
-        $add_item['item_custom_html'] = wp_unslash( $post_item['item_custom_html'] );
+        $add_item['item_custom_html'] = wp_kses_post( $request_add_item['item_custom_html'] );
 
       }
 
       $add_item['item_default_type'] = false;
 
-      if( ! empty( $post_item['item_default_type'] ) ) {
+      if( ! empty( $request_add_item['item_default_type'] ) ) {
 
-        $add_item['item_default_type'] = strip_tags( $post_item['item_default_type'] );
+        $add_item['item_default_type'] = MywpHelper::sanitize_text( $request_add_item['item_default_type'] );
 
       }
 
       $add_item['item_default_id'] = false;
 
-      if( ! empty( $post_item['item_default_id'] ) ) {
+      if( ! empty( $request_add_item['item_default_id'] ) ) {
 
-        $add_item['item_default_id'] = strip_tags( $post_item['item_default_id'] );
+        $add_item['item_default_id'] = MywpHelper::sanitize_text( $request_add_item['item_default_id'] );
 
       }
 
       $add_item['item_default_parent_id'] = false;
 
-      if( ! empty( $post_item['item_default_parent_id'] ) ) {
+      if( ! empty( $request_add_item['item_default_parent_id'] ) ) {
 
-        $add_item['item_default_parent_id'] = strip_tags( $post_item['item_default_parent_id'] );
+        $add_item['item_default_parent_id'] = MywpHelper::sanitize_text( $request_add_item['item_default_parent_id'] );
 
       }
 
       $add_item['item_link_title'] = false;
 
-      if( ! empty( $post_item['item_link_title'] ) ) {
+      if( ! empty( $request_add_item['item_link_title'] ) ) {
 
-        $add_item['item_link_title'] = wp_unslash( $post_item['item_link_title'] );
+        $add_item['item_link_title'] = wp_kses_post( $request_add_item['item_link_title'] );
 
       }
 
       $add_item['item_link_url'] = false;
 
-      if( ! empty( $post_item['item_link_url'] ) ) {
+      if( ! empty( $request_add_item['item_link_url'] ) ) {
 
-        $add_item['item_link_url'] = strip_tags( $post_item['item_link_url'] );
+        $add_item['item_link_url'] = MywpHelper::sanitize_url( $request_add_item['item_link_url'] );
 
       }
 
       $add_item['item_capability'] = false;
 
-      if( ! empty( $post_item['item_capability'] ) ) {
+      if( ! empty( $request_add_item['item_capability'] ) ) {
 
-        $add_item['item_capability'] = strip_tags( $post_item['item_capability'] );
+        $add_item['item_capability'] = MywpHelper::sanitize_text( $request_add_item['item_capability'] );
 
       }
 
       $add_item['item_icon_class'] = false;
 
-      if( ! empty( $post_item['item_icon_class'] ) ) {
+      if( ! empty( $request_add_item['item_icon_class'] ) ) {
 
-        $add_item['item_icon_class'] = strip_tags( $post_item['item_icon_class'] );
+        $add_item['item_icon_class'] = MywpHelper::sanitize_text( $request_add_item['item_icon_class'] );
 
       }
 
@@ -276,6 +292,8 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     if( empty( $add_items ) ) {
 
+      MywpHelper::error_not_found_message( '$add_items' , $called_text );
+
       return false;
 
     }
@@ -283,7 +301,10 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
     $result_html = '';
 
     $post_terms = array(
-      array( 'taxonomy' => 'mywp_term' , 'term' => 'default' ),
+      array(
+        'taxonomy' => 'mywp_term',
+        'term' => 'default',
+      ),
     );
 
     foreach( $add_items as $key => $add_item ) {
@@ -302,13 +323,31 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       $post_id = self::add_post( array( 'menu_order' => 1000 ) , $add_meta_data , $post_terms );
 
-      if ( empty( $post_id ) or is_wp_error( $post_id ) ) {
+      if( empty( $post_id ) ) {
+
+        MywpHelper::error_not_found_message( '$post_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( is_wp_error( $post_id ) ) {
+
+        MywpHelper::error_returned_message( '$post_id' , $post_id->get_error_message() , $called_text );
 
         continue;
 
       }
 
       $post = MywpPostType::get_post( $post_id );
+
+      if( empty( $post ) ) {
+
+        MywpHelper::error_not_found_message( '$post' , $called_text );
+
+        continue;
+
+      }
 
       do_action( 'mywp_setting_admin_sidebar_ajax_add_item' , $post_id , $add_item );
 
@@ -330,9 +369,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function ajax_remove_items() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'remove_items' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -340,19 +381,47 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['remove_items'] ) ) {
+    if( ! isset( $_POST['remove_items'] ) ) {
 
       return false;
 
     }
 
-    $remove_items = array_map( 'intval' , $_POST['remove_items'] );
+    $request_remove_items = wp_unslash( $_POST['remove_items'] );
 
-    foreach( $remove_items as $key => $post_id ) {
+    if( ! is_array( $request_remove_items ) ) {
+
+      return false;
+
+    }
+
+    $is_delete = false;
+
+    foreach( $request_remove_items as $key => $post_id ) {
+
+      $post_id = MywpHelper::sanitize_number( $post_id );
+
+      if( empty( $post_id ) ) {
+
+        MywpHelper::error_not_found_message( '$post_id' , $called_text );
+
+        continue;
+
+      }
 
       $post = MywpPostType::get_post( $post_id );
 
-      if( empty( $post )  or ! is_object( $post ) or $post->post_type !== self::$post_type ) {
+      if( empty( $post )  ) {
+
+        MywpHelper::error_not_found_message( '$post' , $called_text );
+
+        continue;
+
+      }
+
+      if( $post->post_type !== self::$post_type ) {
+
+        MywpHelper::error_invalid_message( '$post->post_type' , 'self::$post_type' , $called_text );
 
         continue;
 
@@ -360,7 +429,15 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       wp_delete_post( $post_id , true );
 
+      $is_delete = true;
+
       do_action( 'mywp_setting_admin_sidebar_ajax_remove_item' , $post_id );
+
+    }
+
+    if( ! $is_delete ) {
+
+      return false;
 
     }
 
@@ -372,9 +449,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function ajax_update_item() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'update_item' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -382,13 +461,19 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['update_item'] ) or ! is_array( $_POST['update_item'] ) ) {
+    if( ! isset( $_POST['update_item'] ) ) {
 
       return false;
 
     }
 
-    $update_item = $_POST['update_item'];
+    $update_item = wp_unslash( $_POST['update_item'] );
+
+    if( ! is_array( $update_item ) ) {
+
+      return false;
+
+    }
 
     if( empty( $update_item['item_id'] ) ) {
 
@@ -396,31 +481,53 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     }
 
-    $post_id = (int) $update_item['item_id'];
+    $post_id = MywpHelper::sanitize_number( $update_item['item_id'] );
 
     unset( $update_item['item_id'] );
 
-    $post = MywpPostType::get_post( $post_id );
+    if( empty( $post_id ) ) {
 
-    if( empty( $post )  or ! is_object( $post ) or $post->post_type !== self::$post_type ) {
+      MywpHelper::error_not_found_message( '$post_id' , $called_text );
 
       return false;
 
     }
 
+    $post = MywpPostType::get_post( $post_id );
+
+    if( empty( $post ) ) {
+
+      MywpHelper::error_not_found_message( '$post' , $called_text );
+
+      return false;
+
+    }
+
+    if( $post->post_type !== self::$post_type ) {
+
+      MywpHelper::error_invalid_message( '$post->post_type' , 'self::$post_type' , $called_text );
+
+      return false;
+
+    }
+
+    $is_update = false;
+
     foreach( $update_item as $meta_key => $meta_value ) {
 
-      $meta_key = wp_unslash( strip_tags( $meta_key ) );
+      $meta_key = MywpHelper::sanitize_text( $meta_key );
 
-      if( in_array( $meta_key , array( 'item_li_class' , 'item_li_id' , 'item_capability' , 'item_link_class' , 'item_link_id' , 'item_link_url' , 'item_link_attr' , 'item_icon_class' , 'item_icon_id' , 'item_icon_img' , 'item_icon_style' ) ) ) {
+      if( in_array( $meta_key , array( 'item_li_class' , 'item_li_id' , 'item_capability' , 'item_link_class' , 'item_link_id' , 'item_link_url' , 'item_link_attr' , 'item_icon_class' , 'item_icon_id' , 'item_icon_img' , 'item_icon_style' ) , true ) ) {
 
-        $meta_value = strip_tags( $meta_value );
+        $meta_value = MywpHelper::sanitize_text( $meta_value );
+
         $meta_value = str_replace( '  ' , ' ' , $meta_value );
+
         $meta_value = trim( $meta_value );
 
-      } elseif( in_array( $meta_key , array( 'item_link_title' , 'item_custom_html' , 'item_icon_title' ) ) ) {
+      } elseif( in_array( $meta_key , array( 'item_link_title' , 'item_custom_html' , 'item_icon_title' ) , true ) ) {
 
-        $meta_value = wp_unslash( wp_kses_post( $meta_value ) );
+        $meta_value = wp_kses_post( $meta_value );
 
       } else {
 
@@ -429,6 +536,14 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
       }
 
       update_post_meta( $post_id , $meta_key , $meta_value );
+
+      $is_update = true;
+
+    }
+
+    if( ! $is_update ) {
+
+      return false;
 
     }
 
@@ -442,9 +557,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function ajax_update_item_order_and_parents() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'update_item_order_and_parents' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -452,35 +569,119 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['item_order_parents'] ) or ! is_array( $_POST['item_order_parents'] ) ) {
+    if( ! isset( $_POST['item_order_parents'] ) ) {
 
       return false;
 
     }
 
-    $saved = false;
+    $item_order_parents = wp_unslash( $_POST['item_order_parents'] );
 
-    foreach( $_POST['item_order_parents'] as $key => $post_item ) {
+    if( ! is_array( $item_order_parents ) ) {
 
-      if( ! isset( $post_item['order'] ) or ! isset( $post_item['parent_id'] ) or empty( $post_item['item_id'] ) ) {
+      return false;
+
+    }
+
+    $is_update = false;
+
+    foreach( $item_order_parents as $key => $item_order_parent ) {
+
+      if( empty( $item_order_parent ) ) {
+
+        MywpHelper::error_not_found_message( '$item_order_parent' , $called_text );
 
         continue;
 
       }
 
-      $post_id = (int) $post_item['item_id'];
+      if( ! is_array( $item_order_parent ) ) {
+
+        MywpHelper::error_invalid_message( '$item_order_parent' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! isset( $item_order_parent['item_id'] ) ) {
+
+        MywpHelper::error_not_found_message( '$item_order_parent["item_id"]' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_numeric( $item_order_parent['item_id'] ) ) {
+
+        MywpHelper::error_invalid_message( '$item_order_parent["item_id"]' , 'is_numeric()' , $called_text );
+
+        continue;
+
+      }
+
+      $post_id = MywpHelper::sanitize_number( $item_order_parent['item_id'] );
+
+      if( empty( $post_id ) ) {
+
+        MywpHelper::error_not_found_message( '$post_id' , $called_text );
+
+        continue;
+
+      }
 
       $post = MywpPostType::get_post( $post_id );
 
-      if( empty( $post )  or ! is_object( $post ) or $post->post_type !== self::$post_type ) {
+      if( empty( $post ) ) {
+
+        MywpHelper::error_not_found_message( '$post' , $called_text );
 
         continue;
 
       }
 
-      $menu_order = (int) $post_item['order'];
+      if( $post->post_type !== self::$post_type ) {
 
-      $post_parent = (int) $post_item['parent_id'];
+        MywpHelper::error_invalid_message( '$post->post_type' , 'self::$post_type' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! isset( $item_order_parent['order'] ) ) {
+
+        MywpHelper::error_not_found_message( '$item_order_parent["order"]' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_numeric( $item_order_parent['order'] ) ) {
+
+        MywpHelper::error_invalid_message( '$item_order_parent["order"]' , 'is_numeric()' , $called_text );
+
+        continue;
+
+      }
+
+      $menu_order = MywpHelper::sanitize_number( $item_order_parent['order'] );
+
+      if( ! isset( $item_order_parent['parent_id'] ) ) {
+
+        MywpHelper::error_not_found_message( '$item_order_parent["parent_id"]' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_numeric( $item_order_parent['parent_id'] ) ) {
+
+        MywpHelper::error_invalid_message( '$item_order_parent["parent_id"]' , 'is_numeric()' , $called_text );
+
+        continue;
+
+      }
+
+      $post_parent = MywpHelper::sanitize_number( $item_order_parent['parent_id'] );
 
       $post_data = array(
         'ID' => $post_id,
@@ -491,17 +692,19 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       wp_update_post( $post_data );
 
-      $saved = true;
+      $is_update = true;
+
+    }
+
+    if( ! $is_update ) {
+
+      return false;
 
     }
 
     self::delete_transient_controller_get_sidebar();
 
-    if( $saved ) {
-
-      wp_send_json_success();
-
-    }
+    wp_send_json_success();
 
   }
 
@@ -509,7 +712,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'remove_cache' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -575,8 +778,10 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
       height: 38px;
     }
     #setting-screen-sidebar-items .sortable-placeholder {
-      margin: 0;
-      background: #ccc;
+      margin: 18px 0;
+      background: #F7E0C5;
+      border-radius: 0;
+      border: 1px dashed #d9b78f;
     }
     #setting-screen-sidebar-items .setting-screen-sidebar-item .item-header {
       cursor: move;
@@ -1288,9 +1493,13 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_header() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $available_sidebar_items = self::get_available_sidebar_items();
 
     if( empty( $available_sidebar_items ) ) {
+
+      MywpHelper::error_not_found_message( '$available_sidebar_items' , $called_text );
 
       return false;
 
@@ -1298,7 +1507,9 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     ?>
 
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Available Items' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Available Items' , 'my-wp' ) ); ?>
+    </h3>
 
     <div id="setting-screen-sidebar-available-item">
 
@@ -1306,13 +1517,18 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         <?php foreach( $available_sidebar_items as $key => $available_item ) : ?>
 
-          <option value="<?php echo esc_attr( $key ); ?>" class="available-item"><?php echo esc_attr( strip_shortcodes( $available_item['title'] ) ); ?></option>
+          <option value="<?php echo esc_attr( $key ); ?>" class="available-item">
+            <?php echo esc_html( strip_shortcodes( $available_item['title'] ) ); ?>
+          </option>
 
         <?php endforeach; ?>
 
       </select>
 
-      <a href="javascript:void(0);" id="sidebar-available-item-add-button" class="button button-secondary"><span class="dashicons dashicons-plus"></span> <?php _e( 'Add Item' , 'my-wp' ); ?></a>
+      <a href="javascript:void(0);" id="sidebar-available-item-add-button" class="button button-secondary">
+        <span class="dashicons dashicons-plus"></span>
+        <?php echo esc_html( __( 'Add Item' , 'my-wp' ) ); ?>
+      </a>
 
       <span class="spinner"></span>
 
@@ -1406,18 +1622,24 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_screen_content() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $parent_sidebar_items = self::find_items_to_parent_id();
 
     if( empty( $parent_sidebar_items ) ) {
+
+      MywpHelper::error_not_found_message( '$parent_sidebar_items' , $called_text );
 
       return false;
 
     }
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Current Sidebar' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Current Sidebar' , 'my-wp' ) ); ?>
+    </h3>
 
-    <p><?php _e( 'Drag menu items to edit and reorder menus.' , 'my-wp' ); ?></p>
+    <p><?php echo esc_html( __( 'Drag menu items to edit and reorder menus.' , 'my-wp' ) ); ?></p>
 
     <div id="setting-screen-sidebar">
 
@@ -1450,24 +1672,27 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
       <tbody>
         <tr>
           <th>
-            <?php _e( 'Custom Menu UI' , 'my-wp' ); ?>
+            <?php echo esc_html( __( 'Custom Menu UI' , 'my-wp' ) ); ?>
             <span class="mywp-help"><a href="<?php echo esc_url( self::get_document_url( 'document/admin-sidebar/' ) . '#custom-menu-ui' ); ?>" target="_blank"><span class="dashicons dashicons-editor-help"></span></a></span>
           </th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][custom_menu_ui]" class="custom_menu_ui" value="1" <?php checked( $setting_data['custom_menu_ui'] , true ); ?> />
-              <?php _e( 'Enable' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Enable' , 'my-wp' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Cache Timeout' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Cache Timeout' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="number" name="mywp[data][cache_timeout]" class="cache_timeout small-text" value="<?php echo esc_attr( $setting_data['cache_timeout'] ); ?>" />
-              <?php _e( 'Minute' ); ?>
+              <?php echo esc_html( __( 'Minute' , 'default' ) ); ?>
             </label>
-            <button type="button" class="button button-secondary" id="remove-cache"><span class="dashicons dashicons-trash"></span> <?php _e( 'Remove Cache' , 'my-wp' ); ?></button>
+            <button type="button" class="button button-secondary" id="remove-cache">
+              <span class="dashicons dashicons-trash"></span>
+              <?php echo esc_html( __( 'Remove Cache' , 'my-wp' ) ); ?>
+            </button>
             <span class="spinner"></span>
           </td>
         </tr>
@@ -1492,22 +1717,34 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         <div class="icons-wp">
 
-          <?php foreach( $icons['categories'] as $icon_category ) : ?>
+          <?php if( ! empty( $icons['categories'] ) ) : ?>
 
-            <p id="available-icon-title-<?php echo esc_attr( $icon_category['id'] ); ?>" class="available-icon-title"><?php echo esc_html( $icon_category['title'] ); ?></p>
+            <?php foreach( $icons['categories'] as $icon_category ) : ?>
 
-            <ul>
-              <?php foreach( $icons['all'] as $icon ) : ?>
-                <?php if( $icon['cat'] !== $icon_category['id'] ) : ?>
-                  <?php continue; ?>
-                <?php endif; ?>
-                <li class="icon-<?php echo esc_attr( $icon['class'] ); ?>">
-                  <button type="button" class="button button-secondary change-icon" title="<?php echo esc_attr( $icon['class'] ); ?>"><span class="dashicons-before <?php echo esc_attr( $icon['class'] ); ?>"></span></button>
-                </li>
-              <?php endforeach; ?>
-            </ul>
+              <p id="available-icon-title-<?php echo esc_attr( $icon_category['id'] ); ?>" class="available-icon-title"><?php echo esc_html( $icon_category['title'] ); ?></p>
 
-          <?php endforeach; ?>
+              <ul>
+                <?php foreach( $icons['all'] as $icon ) : ?>
+
+                  <?php if( $icon['cat'] !== $icon_category['id'] ) : ?>
+
+                    <?php continue; ?>
+
+                  <?php endif; ?>
+
+                  <li class="icon-<?php echo esc_attr( $icon['class'] ); ?>">
+                    <button type="button" class="button button-secondary change-icon" title="<?php echo esc_attr( $icon['class'] ); ?>">
+                      <span class="dashicons-before <?php echo esc_attr( $icon['class'] ); ?>"></span>
+                    </button>
+                  </li>
+
+                <?php endforeach; ?>
+
+              </ul>
+
+            <?php endforeach; ?>
+
+          <?php endif; ?>
 
         </div>
 
@@ -1541,15 +1778,15 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       if( $menu_id === 'edit-comments.php' ) {
 
-        $default_sidebar['menu'][ $key ][0] = sprintf( '%s %s' , __( 'Comments' ) , '[mywp_comment_count tag="1"]' );
+        $default_sidebar['menu'][ $key ][0] = sprintf( '%s %s' , __( 'Comments' , 'default' ) , '[mywp_comment_count tag="1"]' );
 
       } elseif( $menu_id === 'themes.php' ) {
 
-        $default_sidebar['menu'][ $key ][0] = sprintf( '%s %s' , __( 'Appearance' ) , '[mywp_update_count type="themes" tag="1"]' );
+        $default_sidebar['menu'][ $key ][0] = sprintf( '%s %s' , __( 'Appearance' , 'default' ) , '[mywp_update_count type="themes" tag="1"]' );
 
       } elseif( $menu_id === 'plugins.php' ) {
 
-        $default_sidebar['menu'][ $key ][0] = sprintf( '%s %s' , __( 'Plugins' ) , '[mywp_update_count type="plugins" tag="1"]' );
+        $default_sidebar['menu'][ $key ][0] = sprintf( '%s %s' , __( 'Plugins' , 'default' ) , '[mywp_update_count type="plugins" tag="1"]' );
 
       }
 
@@ -1565,7 +1802,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           if( $parent_id === 'index.php' && $menu_id === 'update-core.php' ) {
 
-            $default_sidebar['submenu'][ $parent_id ][ $key ][0] = sprintf( '%s %s' , __( 'Update' ) , '[mywp_update_count type="total" tag="1"]' );
+            $default_sidebar['submenu'][ $parent_id ][ $key ][0] = sprintf( '%s %s' , __( 'Update' , 'default' ) , '[mywp_update_count type="total" tag="1"]' );
 
           }
 
@@ -1615,11 +1852,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
         'item_type' => 'separator',
       ),
       array(
-        'title' => __( 'Custom HTML' ),
+        'title' => __( 'Custom HTML' , 'default' ),
         'item_type' => 'custom',
       ),
       array(
-        'title' => __( 'Custom Link' ),
+        'title' => __( 'Custom Link' , 'default' ),
         'item_type' => 'link',
       ),
       array(
@@ -1642,7 +1879,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       if( ! empty( $parent_menu_title ) ) {
 
-        $parent_menu_title = strip_tags( strip_shortcodes( $parent_menu_title ) );
+        $parent_menu_title = MywpHelper::sanitize_text( strip_shortcodes( $parent_menu_title ) );
 
       }
 
@@ -1672,7 +1909,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           if( ! empty( $child_menu_title ) ) {
 
-            $child_menu_title = strip_tags( strip_shortcodes( $child_menu_title ) );
+            $child_menu_title = MywpHelper::sanitize_text( strip_shortcodes( $child_menu_title ) );
 
           }
 
@@ -1716,7 +1953,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     $args = apply_filters( 'mywp_setting_admin_sidebar_get_current_setting_sidebar_item_posts_args' , $args );
 
-    $current_setting_sidebar_item_posts = MywpSetting::get_posts( $args );
+    $current_setting_sidebar_item_posts = MywpSetting::get_posts( $args , self::$id );
 
     return $current_setting_sidebar_item_posts;
 
@@ -1727,6 +1964,12 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
     if( ! empty( self::$current_setting_sidebar_items ) ) {
 
       return self::$current_setting_sidebar_items;
+
+    }
+
+    if( MywpHelper::is_doing( 'ajax' ) ) {
+
+      return false;
 
     }
 
@@ -1774,6 +2017,8 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   private static function find_items_to_parent_id( $parent_id = 0 ) {
 
+    $called_text = sprintf( '%s::%s( $parent_id )' , __CLASS__ , __FUNCTION__ );
+
     $current_setting_sidebar_items = self::get_current_setting_sidebar_items();
 
     if( empty( $current_setting_sidebar_items ) ) {
@@ -1782,7 +2027,15 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     }
 
-    $parent_id = (int) $parent_id;
+    $parent_id = MywpHelper::sanitize_number( $parent_id );
+
+    if( $parent_id === false ) {
+
+      MywpHelper::error_not_found_message( '$parent_id' , $called_text );
+
+      return false;
+
+    }
 
     if( ! empty( self::$find_parent_id[ $parent_id ] ) ) {
 
@@ -1794,7 +2047,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     foreach( $current_setting_sidebar_items as $item ) {
 
-      if( $item->item_parent !== $parent_id ) {
+      $item_parent = MywpHelper::sanitize_number( $item->item_parent );
+
+      if( $item_parent === false ) {
+
+        MywpHelper::error_not_found_message( '$item_parent' , $called_text );
+
+        continue;
+
+      }
+
+      if( $item_parent !== $parent_id ) {
 
         continue;
 
@@ -1818,6 +2081,8 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   private static function regist_default_sidebar_items() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $default_sidebar_item = self::get_default_sidebar_items();
 
     if( empty( $default_sidebar_item['menu'] ) ) {
@@ -1830,10 +2095,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     $menu_order = 0;
 
-    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
-
     $post_terms = array(
-      array( 'taxonomy' => 'mywp_term' , 'term' => 'default' ),
+      array(
+        'taxonomy' => 'mywp_term',
+        'term' => 'default'
+      ),
     );
 
     foreach( $default_sidebar_item['menu'] as $parent_menu ) {
@@ -1879,15 +2145,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       ++$menu_order;
 
-      if ( empty( $parent_post_id ) ) {
+      if( empty( $parent_post_id ) ) {
 
         MywpHelper::error_not_found_message( '$parent_post_id' , $called_text );
 
         continue;
 
-      } elseif( is_wp_error( $parent_post_id ) ) {
+      }
 
-        MywpHelper::error_message( $parent_post_id->get_error_message() , $called_text );
+      if( is_wp_error( $parent_post_id ) ) {
+
+        MywpHelper::error_returned_message( '$parent_post_id' , $parent_post_id->get_error_message() , $called_text );
 
         continue;
 
@@ -1923,15 +2191,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           ++$menu_order;
 
-          if ( empty( $child_post_id ) ) {
+          if( empty( $child_post_id ) ) {
 
             MywpHelper::error_not_found_message( '$child_post_id' , $called_text );
 
             continue;
 
-          } elseif( is_wp_error( $child_post_id ) ) {
+          }
 
-            MywpHelper::error_message( $child_post_id->get_error_message() , $called_text );
+          if( is_wp_error( $child_post_id ) ) {
+
+            MywpHelper::error_returned_message( '$child_post_id' , $child_post_id->get_error_message() , $called_text );
 
             continue;
 
@@ -1950,38 +2220,55 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   private static function get_item_icon( $item ) {
 
-    $item_icon = array( 'class' => '' , 'style' => '' , 'img' => '' );
+    $called_text = sprintf( '%s::%s( $item )' , __CLASS__ , __FUNCTION__ );
 
-    if( ! empty( $item[6] ) ) {
+    if( empty( $item ) ) {
 
-      if( strpos( $item[6] , 'data:image/svg+xml;base64,' ) ) {
+      MywpHelper::error_require_message( '$item' , $called_text );
 
-        $item_icon['class'] = ' svg';
-        $item_icon['style'] = sprintf( ' background-image: url( "%s" );' , esc_attr( $item[6] ) );
+      return false;
 
-      } elseif( strpos( $item[6] , 'dashicons-' ) !== false ) {
+    }
 
-        $item_icon['class'] = sprintf( ' dashicons-before %s ' , $item[6] );
+    $item_icon = array(
+      'class' => '',
+      'style' => '',
+      'img' => ''
+    );
 
-      } elseif( $item[6] === 'none' or $item[6] === 'div' ) {
+    if( empty( $item[6] ) ) {
 
-        $item_icon['class'] = ' dashicons-before ';
+      return $item_icon;
 
-      /*
-      } elseif( function_exists( 'exif_imagetype' ) && exif_imagetype( $item[6] ) ) {
+    }
 
-        $item_icon['img'] = $item[6];
-      */
+    if( strpos( $item[6] , 'data:image/svg+xml;base64,' ) ) {
 
-      } elseif( strpos( $item[6] , 'http' ) !== false ) {
+      $item_icon['class'] = ' svg';
 
-        $item_icon['img'] = $item[6];
+      $item_icon['style'] = sprintf( ' background-image: url( "%s" );' , esc_attr( $item[6] ) );
 
-      } else {
+    } elseif( strpos( $item[6] , 'dashicons-' ) !== false ) {
 
-        $item_icon['class'] = $item[6];
+      $item_icon['class'] = sprintf( ' dashicons-before %s ' , $item[6] );
 
-      }
+    } elseif( $item[6] === 'none' or $item[6] === 'div' ) {
+
+      $item_icon['class'] = ' dashicons-before ';
+
+    /*
+    } elseif( function_exists( 'exif_imagetype' ) && exif_imagetype( $item[6] ) ) {
+
+      $item_icon['img'] = $item[6];
+    */
+
+    } elseif( strpos( $item[6] , 'http' ) !== false ) {
+
+      $item_icon['img'] = $item[6];
+
+    } else {
+
+      $item_icon['class'] = $item[6];
 
     }
 
@@ -1991,15 +2278,29 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   private static function print_item( $item = false , $find_parent = 0 ) {
 
-    if( empty( $item ) or ! is_object( $item ) ) {
+    $called_text = sprintf( '%s::%s( $item , $find_parent )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
 
       return false;
 
     }
 
-    $find_parent = (int) $find_parent;
+    if( ! is_object( $item ) ) {
 
-    if( $find_parent !== $item->item_parent ) {
+      MywpHelper::error_invalid_message( '$item' , 'is_object()' , $called_text );
+
+      return false;
+
+    }
+
+    $find_parent = MywpHelper::sanitize_number( $find_parent );
+
+    $item_parent = MywpHelper::sanitize_number( $item->item_parent );
+
+    if( $find_parent !== $item_parent ) {
 
       return false;
 
@@ -2025,6 +2326,16 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   private static function print_item_header( $item ) {
 
+    $called_text = sprintf( '%s::%s( $item )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
+
+      return false;
+
+    }
+
     $pre_title = apply_filters( 'mywp_setting_admin_sidebar_print_item_header_pre_title' , '' , $item );
 
     ?>
@@ -2041,7 +2352,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         <?php if( ! empty( $pre_title ) ) : ?>
 
-          <?php echo $pre_title; ?>
+          <?php echo wp_kses_post( $pre_title ); ?>
 
         <?php else : ?>
 
@@ -2061,24 +2372,25 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
           <?php endif; ?>
 
-          <?php if( in_array( $item->item_type , array( 'default' , 'link' ) ) ) : ?>
+          <?php if( in_array( $item->item_type , array( 'default' , 'link' ) , true ) ) : ?>
 
-            <span class="item-title"><?php echo esc_html( strip_tags( strip_shortcodes( $item->item_link_title ) ) ); ?></span>
+            <span class="item-title"><?php echo esc_html( $item->item_link_title ); ?></span>
 
           <?php endif; ?>
 
           <?php if( $item->item_type === 'separator' ) : ?>
 
-            <span class="item-default-title"><?php _e( 'Separator' , 'my-wp' ); ?></span>
+            <span class="item-default-title"><?php echo esc_html( __( 'Separator' , 'my-wp' ) ); ?></span>
 
           <?php elseif( $item->item_type === 'custom' ) : ?>
 
             <span class="item-title"><?php echo esc_html( wp_html_excerpt( $item->item_custom_html , 20 ) ); ?></span>
-            <span class="item-default-title"><?php _e( 'Custom HTML' ); ?></span>
+
+            <span class="item-default-title"><?php echo esc_html( __( 'Custom HTML' , 'default' ) ); ?></span>
 
           <?php elseif( $item->item_type === 'link' ) : ?>
 
-            <span class="item-default-title"><?php _e( 'Custom Link' ); ?></span>
+            <span class="item-default-title"><?php echo esc_html( __( 'Custom Link' , 'default' ) ); ?></span>
 
           <?php elseif( ! empty( $item->item_default_title ) ) : ?>
 
@@ -2099,6 +2411,16 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
   }
 
   private static function print_item_content( $item ) {
+
+    $called_text = sprintf( '%s::%s( $item )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
+
+      return false;
+
+    }
 
     $item_type = $item->item_type;
 
@@ -2143,13 +2465,13 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
           <table class="form-table">
             <tbody>
               <tr>
-                <th><?php _e( 'Menu Title' ); ?></th>
+                <th><?php echo esc_html( __( 'Menu Title' , 'default' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_link_title' , $item->item_link_title , $item ); ?>
                 </td>
               </tr>
               <tr>
-                <th><?php _e( 'Icon class' , 'my-wp' ); ?></th>
+                <th><?php echo esc_html( __( 'Icon class' , 'my-wp' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_icon_class' , $item->item_icon_class , $item ); ?>
                 </td>
@@ -2157,14 +2479,16 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
             </tbody>
           </table>
 
-          <p class="item-content-show-details"><a href="javascript:void(0);" class="button-item-content-show-details"><?php _e( 'More Details' ); ?></a></p>
+          <p class="item-content-show-details">
+            <a href="javascript:void(0);" class="button-item-content-show-details"><?php echo esc_html( __( 'More Details' , 'default' ) ); ?></a>
+          </p>
 
           <div class="item-content-details">
 
             <table class="form-table">
               <tbody>
                 <tr>
-                  <th><?php _e( 'Capability' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Capability' , 'my-wp' ) ); ?></th>
                   <td>
                     <code>
                       <?php if( ! empty( $item->item_capability ) ) : ?>
@@ -2177,49 +2501,50 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Link URL' , 'my-wp' ) ); ?></th>
                   <td>
                     <a href="<?php echo esc_url( $item->item_link_url ); ?>"><?php echo esc_html( $item->item_link_url ); ?></a>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'LI class' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'LI class' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php echo esc_html( $item->item_li_class ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'LI id' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'LI id' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php echo esc_html( $item->item_li_id ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Link class' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Link class' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php echo esc_html( $item->item_link_class ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Link id' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Link id' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php echo esc_html( $item->item_link_id ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Icon style' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Icon style' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php echo esc_html( $item->item_icon_style ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Icon img' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Icon img' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php echo esc_html( $item->item_icon_img ); ?>
                   </td>
                 </tr>
               </tbody>
             </table>
+
           </div>
 
         <?php elseif( $item_type === 'separator' ) : ?>
@@ -2239,31 +2564,31 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
           <table class="form-table">
             <tbody>
               <tr>
-                <th><?php _e( 'Menu Title' ); ?></th>
+                <th><?php echo esc_html( __( 'Menu Title' , 'default' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_link_title' , $item->item_link_title , $item ); ?>
                 </td>
               </tr>
               <tr>
-                <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
+                <th><?php echo esc_html( __( 'Link URL' , 'my-wp' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_link_url' , $item->item_link_url , $item ); ?>
                 </td>
               </tr>
               <tr>
-                <th><?php _e( 'Link Attributes' , 'my-wp' ); ?></th>
+                <th><?php echo esc_html( __( 'Link Attributes' , 'my-wp' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_link_attr' , $item->item_link_attr , $item ); ?>
                 </td>
               </tr>
               <tr>
-                <th><?php _e( 'Icon class' , 'my-wp' ); ?></th>
+                <th><?php echo esc_html( __( 'Icon class' , 'my-wp' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_icon_class' , $item->item_icon_class , $item ); ?>
                 </td>
               </tr>
               <tr>
-                <th><?php _e( 'Capability' , 'my-wp' ); ?></th>
+                <th><?php echo esc_html( __( 'Capability' , 'my-wp' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_capability' , $item->item_capability , $item ); ?>
                 </td>
@@ -2271,61 +2596,65 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
             </tbody>
           </table>
 
-          <p class="item-content-show-details"><a href="javascript:void(0);" class="button-item-content-show-details"><?php _e( 'More Details' ); ?></a></p>
+          <p class="item-content-show-details">
+            <a href="javascript:void(0);" class="button-item-content-show-details"><?php echo esc_html( __('More Details' , 'default' ) ); ?></a>
+          </p>
 
           <div class="item-content-details">
+
             <table class="form-table">
               <tbody>
                 <tr>
-                  <th><?php _e( 'LI class' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'LI class' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_li_class' , $item->item_li_class , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'LI id' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'LI id' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_li_id' , $item->item_li_id , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Link class' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Link class' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_link_class' , $item->item_link_class , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Link id' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Link id' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_link_id' , $item->item_link_id , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Icon id' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Icon id' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_icon_id' , $item->item_icon_id , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Icon img' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Icon img' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_icon_img' , $item->item_icon_img , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Icon style' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Icon style' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_icon_style' , $item->item_icon_style , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'Icon html' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Icon html' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_icon_title' , $item->item_icon_title , $item ); ?>
                   </td>
                 </tr>
               </tbody>
             </table>
+
           </div>
 
         <?php elseif( $item_type === 'custom' ) : ?>
@@ -2349,7 +2678,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
           <table class="form-table">
             <tbody>
               <tr>
-                <th><?php _e( 'Custom HTML' ); ?></th>
+                <th><?php echo esc_html( __( 'Custom HTML' , 'default' ) ); ?></th>
                 <td>
                   <?php self::print_item_content_field( 'item_custom_html' , $item->item_custom_html , $item ); ?>
                 </td>
@@ -2357,31 +2686,35 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
             </tbody>
           </table>
 
-          <p class="item-content-show-details"><a href="javascript:void(0);" class="button-item-content-show-details"><?php _e( 'More Details' ); ?></a></p>
+          <p class="item-content-show-details">
+            <a href="javascript:void(0);" class="button-item-content-show-details"><?php echo esc_html( __( 'More Details' , 'default' ) ); ?></a>
+          </p>
 
           <div class="item-content-details">
+
             <table class="form-table">
               <tbody>
                 <tr>
-                  <th><?php _e( 'Capability' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'Capability' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_capability' , $item->item_capability , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'LI class' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'LI class' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_li_class' , $item->item_li_class , $item ); ?>
                   </td>
                 </tr>
                 <tr>
-                  <th><?php _e( 'LI id' , 'my-wp' ); ?></th>
+                  <th><?php echo esc_html( __( 'LI id' , 'my-wp' ) ); ?></th>
                   <td>
                     <?php self::print_item_content_field( 'item_li_id' , $item->item_li_id , $item ); ?>
                   </td>
                 </tr>
               </tbody>
             </table>
+
           </div>
 
         <?php else : ?>
@@ -2394,15 +2727,18 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         <div class="clear"></div>
 
-        <a href="javascript:void(0);" class="item-update button button-primary"><?php _e( 'Update' ); ?></a>
+        <a href="javascript:void(0);" class="item-update button button-primary"><?php echo esc_html( __( 'Update' , 'default' ) ); ?></a>
 
-        <a href="javascript:void(0);" class="item-remove button button-secondary button-caution"><span class="dashicons dashicons-no-alt"></span> <?php _e( 'Remove' ); ?></a>
+        <a href="javascript:void(0);" class="item-remove button button-secondary button-caution">
+          <span class="dashicons dashicons-no-alt"></span>
+          <?php echo esc_html( __( 'Remove' , 'default' ) ); ?>
+        </a>
 
         <span class="spinner"></span>
 
       </div>
 
-      <p class="item-content-notice-dynamic-submenu"><?php _e( 'This menu item is dynamic submenus content and can not have a submenu.' , 'my-wp' ); ?></p>
+      <p class="item-content-notice-dynamic-submenu"><?php echo esc_html( __( 'This menu item is dynamic submenus content and can not have a submenu.' , 'my-wp' ) ); ?></p>
 
       <?php $show_child_items_content = apply_filters( 'mywp_setting_admin_sidebar_print_item_content_show_child_items_content' , true , $item , $item_type ); ?>
 
@@ -2410,7 +2746,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
         <div class="child-items-content ">
 
-          <p class="child-menu-title"><?php _e( 'Child Menus' , 'my-wp' ); ?></p>
+          <p class="child-menu-title"><?php echo esc_html( __( 'Child Menus' , 'my-wp' ) ); ?></p>
 
           <div class="child-menus sortable-items">
 
@@ -2438,29 +2774,27 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   }
 
-  private static function get_user_roles() {
-
-    if( ! empty( self::$user_roles ) ) {
-
-      return self::$user_roles;
-
-    }
-
-    self::$user_roles = MywpApi::get_all_user_roles();
-
-    return self::$user_roles;
-
-  }
-
   private static function print_item_content_field( $field_name = false , $value = '' , $item = false , $args = false ) {
 
-    if( empty( $field_name ) or ! is_object( $item ) ) {
+    $called_text = sprintf( '%s::%s( $field_name , $value , $item , $args )' , __CLASS__ , __FUNCTION__ );
+
+    $field_name = MywpHelper::sanitize_text( $field_name );
+
+    if( empty( $field_name ) ) {
+
+      MywpHelper::error_require_message( '$field_name' , $called_text );
 
       return false;
 
     }
 
-    $field_name = strip_tags( $field_name );
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
+
+      return false;
+
+    }
 
     if( $field_name === 'id' ) {
 
@@ -2498,7 +2832,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     } elseif( $field_name === 'item_custom_html' ) {
 
-      printf( '<textarea class="item_custom_html large-text" placeholder="%s">%s</textarea>' , esc_attr( '<div class="" style="">Custom HTML</div>...' ) , esc_textarea( wp_kses_post( $value ) ) );
+      printf( '<textarea class="item_custom_html large-text" placeholder="%s">%s</textarea>' , esc_attr( '<div class="" style="">Custom HTML</div>...' ) , esc_textarea( $value ) );
 
     } elseif( $field_name === 'item_li_class' ) {
 
@@ -2547,7 +2881,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     } elseif( $field_name === 'item_icon_img' ) {
 
-      printf( '<input type="text" class="item_icon_img large-text" value="%s" placeholder="%s" />' , esc_attr( $value ) , esc_attr( esc_url( do_shortcode( '[mywp_url]' ) . '/icon.png' ) ) );
+      printf( '<input type="text" class="item_icon_img large-text" value="%s" placeholder="%s" />' , esc_attr( $value ) , esc_url( do_shortcode( '[mywp_url]' ) . '/icon.png' ) );
 
     } elseif( $field_name === 'item_icon_style' ) {
 
@@ -2555,7 +2889,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     } elseif( $field_name === 'item_icon_title' ) {
 
-      printf( '<input type="text" class="item_icon_title large-text" value="%s" placeholder="%s" />' , esc_attr( wp_kses_post( $value ) ) , esc_attr( 'Icon Html' ) );
+      printf( '<input type="text" class="item_icon_title large-text" value="%s" placeholder="%s" />' , esc_attr( $value ) , esc_attr( 'Icon Html' ) );
 
     } else {
 
@@ -2581,7 +2915,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       }
 
-      printf( '<li class="%s %s">%s</li>' , esc_attr( $role_group_name ) , esc_attr( $role_has_class ) , esc_attr( $role['label'] ) );
+      printf( '<li class="%s %s">%s</li>' , esc_attr( $role_group_name ) , esc_attr( $role_has_class ) , esc_html( $role['label'] ) );
 
     }
 
@@ -2589,9 +2923,25 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   }
 
+  private static function get_user_roles() {
+
+    if( ! empty( self::$user_roles ) ) {
+
+      return self::$user_roles;
+
+    }
+
+    self::$user_roles = MywpApi::get_all_user_roles();
+
+    return self::$user_roles;
+
+  }
+
   private static function add_post( $args = array() , $post_metas = array() , $post_terms = array() ) {
 
     global $wpdb;
+
+    $called_text = sprintf( '%s::%s( $args , $post_metas , $post_terms )' , __CLASS__ , __FUNCTION__ );
 
     $default_args = array(
       'post_type' => self::$post_type,
@@ -2603,13 +2953,23 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     $post_id = wp_insert_post( $post );
 
-    if ( empty( $post_id ) or is_wp_error( $post_id ) ) {
+    if( empty( $post_id ) ) {
+
+      MywpHelper::error_not_found_message( '$post_id' , $called_text );
 
       return $post_id;
 
     }
 
-    $post_id = (int) $post_id;
+    if( is_wp_error( $post_id ) ) {
+
+      MywpHelper::error_returned_message( '$post_id' , $post_id->get_error_message() , $called_text );
+
+      return $post_id;
+
+    }
+
+    $post_id = MywpHelper::sanitize_number( $post_id );
 
     $post_terms = apply_filters( 'mywp_setting_admin_sidebar_add_post_terms' , $post_terms , $args );
 
@@ -2617,15 +2977,37 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       foreach( $post_terms as $post_term ) {
 
-        if( empty( $post_term['taxonomy'] ) or empty( $post_term['term'] ) ) {
+        $taxonomy = false;
+
+        if( ! empty( $post_term['taxonomy'] ) ) {
+
+          $taxonomy = MywpHelper::sanitize_text( $post_term['taxonomy'] );
+
+        }
+
+        if( empty( $taxonomy ) ) {
+
+          MywpHelper::error_not_found_message( '$taxonomy' , $called_text );
 
           continue;
 
         }
 
-        $taxonomy = strip_tags( $post_term['taxonomy'] );
+        $term = false;
 
-        $term = strip_tags( $post_term['term'] );
+        if( ! empty( $post_term['term'] ) ) {
+
+          $term = MywpHelper::sanitize_text( $post_term['term'] );
+
+        }
+
+        if( empty( $term ) ) {
+
+          MywpHelper::error_not_found_message( '$term' , $called_text );
+
+          continue;
+
+        }
 
         $term_exists = term_exists( $term , $taxonomy );
 
@@ -2649,9 +3031,11 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       foreach( $post_metas as $meta_key => $meta_value ) {
 
-        $meta_key = strip_tags( $meta_key );
+        $meta_key = MywpHelper::sanitize_text( $meta_key );
 
-        $add_meta_data[] = $wpdb->prepare( "(NULL, %d, %s, %s)" , $post_id , wp_unslash( $meta_key ) , maybe_serialize( wp_unslash( $meta_value ) ) );
+        $meta_value = maybe_serialize( $meta_value );
+
+        $add_meta_data[] = $wpdb->prepare( "(NULL, %d, %s, %s)" , $post_id , $meta_key , $meta_value );
 
       }
 
@@ -2681,6 +3065,8 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
 
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
+
     $mywp_model = self::get_model();
 
     if( empty( $mywp_model ) ) {
@@ -2701,7 +3087,7 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     if( isset( $formatted_data['cache_timeout'] ) ) {
 
-      $new_formatted_data['cache_timeout'] = (int) $formatted_data['cache_timeout'];
+      $new_formatted_data['cache_timeout'] = MywpHelper::sanitize_number( $formatted_data['cache_timeout'] );
 
     }
 
@@ -2710,6 +3096,8 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
     $current_setting_sidebar_items = self::get_current_setting_sidebar_item_posts();
 
     if( empty( $current_setting_sidebar_items ) ) {
+
+      MywpHelper::error_not_found_message( '$current_setting_sidebar_items' , $called_text );
 
       return false;
 
@@ -2721,7 +3109,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       $post = MywpPostType::get_post( $post_id );
 
-      if( empty( $post )  or ! is_object( $post ) or $post->post_type !== self::$post_type ) {
+      if( empty( $post ) ) {
+
+        MywpHelper::error_not_found_message( '$post' , $called_text );
+
+        continue;
+
+      }
+
+      if( $post->post_type !== self::$post_type ) {
+
+        MywpHelper::error_invalid_message( '$post->post_type' , 'self::$post_type' , $called_text );
 
         continue;
 
@@ -2742,6 +3140,8 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_before_post_data_action_remove( $validated_data ) {
 
+    $called_text = sprintf( '%s::%s( $validated_data )' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $validated_data['remove'] ) ) {
 
       return false;
@@ -2754,6 +3154,8 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
     if( empty( $current_setting_sidebar_items ) ) {
 
+      MywpHelper::error_not_found_message( '$current_setting_sidebar_items' , $called_text );
+
       return false;
 
     }
@@ -2764,7 +3166,17 @@ final class MywpSettingScreenAdminSidebar extends MywpAbstractSettingModule {
 
       $post = MywpPostType::get_post( $post_id );
 
-      if( empty( $post )  or ! is_object( $post ) or $post->post_type !== self::$post_type ) {
+      if( empty( $post ) ) {
+
+        MywpHelper::error_not_found_message( '$post' , $called_text );
+
+        continue;
+
+      }
+
+      if( $post->post_type !== self::$post_type ) {
+
+        MywpHelper::error_invalid_message( '$post->post_type' , 'self::$post_type' , $called_text );
 
         continue;
 

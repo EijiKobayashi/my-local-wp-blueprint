@@ -19,7 +19,7 @@ final class MywpSettingScreenLoginGeneral extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'General' ),
+      'title' => __( 'General' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'login_general',
       'use_advance' => true,
@@ -37,57 +37,69 @@ final class MywpSettingScreenLoginGeneral extends MywpAbstractSettingModule {
     $plugin_info = MywpApi::plugin_info();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Login Form' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html(  __( 'Login Form' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Logo Link URL' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Logo Link URL' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][logo_link_url]" class="logo_link_url large-text" value="<?php echo esc_attr( $setting_data['logo_link_url'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
-              <code>[mywp_url]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_url]' ); ?></code>
+              <code>[mywp_url]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo esc_html( do_shortcode( '[mywp_url]' ) ); ?></code>
             </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Logo Image URL' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Logo Image URL' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][logo_image_path]" class="logo_image_path large-text" value="<?php echo esc_attr( $setting_data['logo_image_path'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com/logo.png' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
-              <code>[mywp_url]/logo.png</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_url]' ); ?>/logo.png</code>
+              <code>[mywp_url]/logo.png</code> <?php echo esc_html( '=>' ); ?> <code><?php echo esc_html( do_shortcode( '[mywp_url]' ) ); ?>/logo.png</code>
             </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Title' ); ?></th>
+          <th><?php echo esc_html( __( 'Title' , 'default' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][logo_title]" class="logo_title large-text" value="<?php echo esc_attr( $setting_data['logo_title'] ); ?>" placeholder="<?php echo esc_attr( 'Example site title' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
-              <code>[mywp_site field="name"]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_site field="name"]' ); ?></code>
+              <code>[mywp_site field="name"]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo esc_html( do_shortcode( '[mywp_site field="name"]' ) ); ?></code>
             </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Select language' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Select language' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hidden_select_language]" class="hidden_select_language" value="1" <?php checked( $setting_data['hidden_select_language'] , true ); ?> />
-              <?php _e( 'Hide Select language' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Hide Select language' , 'my-wp' ) ); ?>
             </label>
           </td>
         </tr>
@@ -105,31 +117,37 @@ final class MywpSettingScreenLoginGeneral extends MywpAbstractSettingModule {
     $plugin_info = MywpApi::plugin_info();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Custom' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Custom' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Input CSS' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Input CSS' , 'my-wp' ) ); ?></th>
           <td>
-            <textarea type="text" name="mywp[data][input_css]" class="input_css large-text" placeholder="<?php echo esc_attr( 'body.login{ background-color: #fff; }' ); ?>"><?php echo esc_attr( $setting_data['input_css'] ); ?></textarea>
+            <textarea type="text" name="mywp[data][input_css]" class="input_css large-text" placeholder="<?php echo esc_attr( 'body.login{ background-color: #fff; }' ); ?>"><?php echo esc_textarea( $setting_data['input_css'] ); ?></textarea>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Include your CSS file' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Include your CSS file' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][include_css_file]" class="include_css_file large-text" value="<?php echo esc_attr( $setting_data['include_css_file'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com/login.css' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
-              <code>[mywp_theme field="url"]/login.css</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_theme field="url"]' ); ?>/login.css</code>
+              <code>[mywp_theme field="url"]/login.css</code> <?php echo esc_html( '=>' ); ?> <code><?php echo esc_html( do_shortcode( '[mywp_theme field="url"]' ) ); ?>/login.css</code>
             </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Custom Footer Text' , 'my-wp' ); ?></th>
+          <th><?php esc_html( __( 'Custom Footer Text' , 'my-wp' ) ); ?></th>
           <td>
             <?php wp_editor( $setting_data['custom_footer_text'] , 'custom_footer_text' , array( 'textarea_name' => 'mywp[data][custom_footer_text]' , 'textarea_rows' => 5 ) ); ?>
           </td>
@@ -169,19 +187,19 @@ final class MywpSettingScreenLoginGeneral extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['logo_link_url'] ) ) {
 
-      $new_formatted_data['logo_link_url'] = wp_unslash( $formatted_data['logo_link_url'] );
+      $new_formatted_data['logo_link_url'] = MywpHelper::sanitize_text( $formatted_data['logo_link_url'] );
 
     }
 
     if( ! empty( $formatted_data['logo_image_path'] ) ) {
 
-      $new_formatted_data['logo_image_path'] = wp_unslash( $formatted_data['logo_image_path'] );
+      $new_formatted_data['logo_image_path'] = MywpHelper::sanitize_text( $formatted_data['logo_image_path'] );
 
     }
 
     if( ! empty( $formatted_data['logo_title'] ) ) {
 
-      $new_formatted_data['logo_title'] = wp_unslash( strip_tags( $formatted_data['logo_title'] ) );
+      $new_formatted_data['logo_title'] = MywpHelper::sanitize_text( $formatted_data['logo_title'] );
 
     }
 
@@ -193,19 +211,19 @@ final class MywpSettingScreenLoginGeneral extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['input_css'] ) ) {
 
-      $new_formatted_data['input_css'] = wp_unslash( strip_tags( $formatted_data['input_css'] ) );
+      $new_formatted_data['input_css'] = wp_kses_post( $formatted_data['input_css'] );
 
     }
 
     if( ! empty( $formatted_data['include_css_file'] ) ) {
 
-      $new_formatted_data['include_css_file'] = wp_unslash( $formatted_data['include_css_file'] );
+      $new_formatted_data['include_css_file'] = MywpHelper::sanitize_text( $formatted_data['include_css_file'] );
 
     }
 
     if( ! empty( $formatted_data['custom_footer_text'] ) ) {
 
-      $new_formatted_data['custom_footer_text'] = wp_unslash( wp_kses_post( $formatted_data['custom_footer_text'] ) );
+      $new_formatted_data['custom_footer_text'] = wp_kses_post( $formatted_data['custom_footer_text'] );
 
     }
 

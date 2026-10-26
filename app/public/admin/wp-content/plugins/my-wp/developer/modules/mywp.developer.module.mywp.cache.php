@@ -52,7 +52,9 @@ final class MywpDeveloperModuleMywpCache extends MywpDeveloperAbstractModule {
     foreach( $caches as $cache_key => $cache ) {
 
       echo esc_html( $cache_key . ' = ' );
+
       echo esc_html( print_r( $cache , true ) );
+
       echo "\n";
 
     }

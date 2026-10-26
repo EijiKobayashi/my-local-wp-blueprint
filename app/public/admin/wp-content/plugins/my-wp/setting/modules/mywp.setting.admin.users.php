@@ -23,7 +23,7 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'All Users' ),
+      'title' => __( 'All Users' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'admin_users',
       'use_advance' => true,
@@ -36,9 +36,11 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
   public static function ajax_add_column() {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $action_name = MywpSetting::get_ajax_action_name( self::$id , 'add_column' );
 
-    if( empty( $_POST[ $action_name ] ) ) {
+    if( ! isset( $_POST[ $action_name ] ) ) {
 
       return false;
 
@@ -46,19 +48,29 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
     check_ajax_referer( $action_name , $action_name );
 
-    if( empty( $_POST['add_column_id'] ) ) {
+    if( ! isset( $_POST['add_column_id'] ) ) {
 
       return false;
 
     }
 
-    $add_column_id = strip_tags( $_POST['add_column_id'] );
+    $add_column_id = MywpHelper::sanitize_text( wp_unslash( $_POST['add_column_id'] ) );
+
+    if( empty( $add_column_id ) ) {
+
+      MywpHelper::error_not_found_message( '$add_column_id' , $called_text );
+
+      return false;
+
+    }
 
     static::set_list_column_id();
 
     $available_list_columns = self::get_available_list_columns();
 
     if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_not_found_message( '$available_list_columns' , $called_text );
 
       return false;
 
@@ -67,6 +79,12 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
     $found_column = false;
 
     foreach( $available_list_columns as $group => $list_columns ) {
+
+      if( $found_column ) {
+
+        break;
+
+      }
 
       if( empty( $list_columns['columns'] ) ) {
 
@@ -89,6 +107,8 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
     }
 
     if( empty( $found_column ) ) {
+
+      MywpHelper::error_not_found_message( '$found_column' , $called_text );
 
       return false;
 
@@ -274,11 +294,14 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
     $setting_data = self::get_setting_data();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Other' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Other' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Number of items per page:' ); ?></th>
+          <th><?php echo esc_html( __( 'Number of items per page:' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="number" name="mywp[data][per_page_num]" class="per_page_num small-text" value="<?php echo esc_attr( $setting_data['per_page_num'] ); ?>" placeholder="20" />
@@ -286,31 +309,35 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
           </td>
         </tr>
         <tr>
-          <th><?php echo esc_html( __( 'Add User' ) ); ?></th>
+          <th><?php echo esc_html( __( 'Add User' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_add_new]" class="hide_add_new" value="1" <?php checked( $setting_data['hide_add_new'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Search Users' ); ?></th>
+          <th><?php echo esc_html( __( 'Search Users' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_search_box]" class="hide_search_box" value="1" <?php checked( $setting_data['hide_search_box'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
           <th>
-            <?php _e( 'Custom search filter' , 'my-wp' ); ?>
+            <?php echo esc_html( __( 'Custom search filter' , 'my-wp' ) ); ?>
           </th>
           <td>
             <select name="mywp[data][custom_search_filter]" class="custom_search_filter">
-              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Hide' , 'my-wp' ) ); ?></option>
-              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>><?php echo esc_attr( __( 'Show' , 'my-wp' ) ); ?></option>
+              <option value="" <?php selected( false , $setting_data['custom_search_filter'] ); ?>>
+                <?php echo esc_html( __( 'Hide' , 'my-wp' ) ); ?>
+              </option>
+              <option value="1" <?php selected( true , $setting_data['custom_search_filter'] ); ?>>
+                <?php echo esc_html( __( 'Show' , 'my-wp' ) ); ?>
+              </option>
             </select>
           </td>
         </tr>
@@ -349,32 +376,32 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
         'type' => 'core',
         'sort' => true,
         'orderby' => 'login',
-        'title' => __( 'Username' ),
+        'title' => __( 'Username' , 'default' ),
       ),
       'name' => array(
         'id' => 'name',
         'type' => 'core',
         'orderby' => 'name',
-        'title' => __( 'Name' ),
+        'title' => __( 'Name' , 'default' ),
       ),
       'email' => array(
         'id' => 'email',
         'type' => 'core',
         'sort' => true,
         'orderby' => 'email',
-        'title' => __( 'Email' ),
+        'title' => __( 'Email' , 'default' ),
       ),
       'role' => array(
         'id' => 'role',
         'type' => 'core',
-        'title' => __( 'Role' ),
+        'title' => __( 'Role' , 'default' ),
         'width' => '15%',
       ),
       'posts' => array(
         'id' => 'posts',
         'type' => 'core',
         'orderby' => 'post_count',
-        'title' => __( 'Posts' ),
+        'title' => __( 'Posts' , 'default' ),
         'width' => '74px',
       ),
     );
@@ -385,11 +412,19 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
   public static function current_available_list_columns( $available_list_columns ) {
 
-    $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$available_list_columns' );
+    $called_text = sprintf( '%s::%s( $available_list_columns )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $available_list_columns ) ) {
+
+      MywpHelper::error_require_message( '$available_list_columns' , $called_text );
+
+      return false;
+
+    }
 
     if( empty( $available_list_columns['core']['columns'] ) ) {
 
-      MywpHelper::error_require_message( '$available_list_columns["core"]["columns"]' , $called_text );
+      MywpHelper::error_not_found_message( '$available_list_columns["core"]["columns"]' , $called_text );
 
       return false;
 
@@ -408,19 +443,19 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
           'id' => 'mywp_column_user_nicename',
           'type' => 'other',
           'orderby' => 'user_nicename',
-          'title' => __( 'Nickname' ),
+          'title' => __( 'Nickname' , 'default' ),
         ),
         'mywp_column_display_name' => array(
           'id' => 'mywp_column_display_name',
           'type' => 'other',
           'orderby' => 'display_name',
-          'title' => __( 'Display name publicly as' ),
+          'title' => __( 'Display name publicly as' , 'default' ),
         ),
         'mywp_column_user_registered' => array(
           'id' => 'mywp_column_user_registered',
           'type' => 'other',
           'orderby' => 'user_registered',
-          'title' => __( 'Registered Date' ),
+          'title' => __( 'Registered Date' , 'default' ),
         ),
       ),
     );
@@ -495,12 +530,12 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
         'user_nicename' => array(
           'id' => 'user_nicename',
           'type' => 'deprecated',
-          'title' => __( 'Nickname' ),
+          'title' => __( 'Nickname' , 'default' ),
         ),
         'display_name' => array(
           'id' => 'display_name',
           'type' => 'deprecated',
-          'title' => __( 'Display name publicly as' ),
+          'title' => __( 'Display name publicly as' , 'default' ),
         ),
       ),
     );
@@ -510,6 +545,8 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
   }
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
+
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
 
     $mywp_model = self::get_model();
 
@@ -537,7 +574,15 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
       foreach( $formatted_data['list_columns'] as $list_column_id => $list_column_setting ) {
 
-        $list_column_id = strip_tags( $list_column_id );
+        $list_column_id = MywpHelper::sanitize_text( $list_column_id );
+
+        if( empty( $list_column_id ) ) {
+
+          MywpHelper::error_not_found_message( '$list_column_id' , $called_text );
+
+          continue;
+
+        }
 
         $new_list_column_setting = wp_parse_args( array( 'id' => $list_column_id ) , $list_column_default );
 
@@ -549,19 +594,19 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
         if( ! empty( $list_column_setting['title'] ) ) {
 
-          $new_list_column_setting['title'] = wp_unslash( wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html ) );
+          $new_list_column_setting['title'] = wp_kses( $list_column_setting['title'] , $wp_kses_allowed_html );
 
         }
 
         if( ! empty( $list_column_setting['orderby'] ) ) {
 
-          $new_list_column_setting['orderby'] = wp_unslash( $list_column_setting['orderby'] );
+          $new_list_column_setting['orderby'] = MywpHelper::sanitize_text( $list_column_setting['orderby'] );
 
         }
 
         if( ! empty( $list_column_setting['width'] ) ) {
 
-          $new_list_column_setting['width'] = strip_tags( $list_column_setting['width'] );
+          $new_list_column_setting['width'] = MywpHelper::sanitize_text( $list_column_setting['width'] );
 
         }
 
@@ -573,7 +618,7 @@ final class MywpSettingScreenAdminUsers extends MywpAbstractSettingColumnsModule
 
     if( ! empty( $formatted_data['per_page_num'] ) ) {
 
-      $new_formatted_data['per_page_num'] = (int) $formatted_data['per_page_num'];
+      $new_formatted_data['per_page_num'] = MywpHelper::sanitize_number( $formatted_data['per_page_num'] );
 
     }
 

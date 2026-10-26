@@ -107,9 +107,11 @@ final class MywpSettingMenu {
 
   public static function get_setting_menu( $setting_menu_id = false ) {
 
-    if( empty( $setting_menu_id ) ) {
+    $called_text = sprintf( '%s::%s( $setting_menu_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$setting_menu_id' );
+    $setting_menu_id = MywpHelper::sanitize_text( $setting_menu_id );
+
+    if( empty( $setting_menu_id ) ) {
 
       MywpHelper::error_require_message( '$setting_menu_id' , $called_text );
 
@@ -121,6 +123,8 @@ final class MywpSettingMenu {
 
     if( empty( $setting_menus[ $setting_menu_id ] ) ) {
 
+      MywpHelper::error_not_found_message( '$setting_menus[ $setting_menu_id ]' , $called_text );
+
       return false;
 
     }
@@ -131,7 +135,17 @@ final class MywpSettingMenu {
 
   public static function set_current_menu_id( $setting_menu_id = false ) {
 
-    $setting_menu_id = esc_attr( strip_tags( $setting_menu_id ) );
+    $called_text = sprintf( '%s::%s( $setting_menu_id )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_menu_id = MywpHelper::sanitize_text( $setting_menu_id );
+
+    if( empty( $setting_menu_id ) ) {
+
+      MywpHelper::error_require_message( '$setting_menu_id' , $called_text );
+
+      return false;
+
+    }
 
     self::$current_menu_id = $setting_menu_id;
 
@@ -147,9 +161,11 @@ final class MywpSettingMenu {
 
   private static function set_current_menu( $setting_menu_id = false ) {
 
-    if( empty( $setting_menu_id ) ) {
+    $called_text = sprintf( '%s::%s( $setting_menu_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$setting_menu_id' );
+    $setting_menu_id = MywpHelper::sanitize_text( $setting_menu_id );
+
+    if( empty( $setting_menu_id ) ) {
 
       MywpHelper::error_require_message( '$setting_menu_id' , $called_text );
 
@@ -160,6 +176,8 @@ final class MywpSettingMenu {
     $setting_menu = self::get_setting_menu( $setting_menu_id );
 
     if( empty( $setting_menu ) ) {
+
+      MywpHelper::error_not_found_message( '$setting_menu' , $called_text );
 
       return false;
 
@@ -177,7 +195,9 @@ final class MywpSettingMenu {
 
   public static function add_menu( $setting_menu_id = false , $setting_menu = false ) {
 
-    $called_text = sprintf( '%s::%s( %s , %s )' , __CLASS__ , __FUNCTION__ , '$setting_menu_id' , '$setting_menu' );
+    $called_text = sprintf( '%s::%s( $setting_menu_id , $setting_menu )' , __CLASS__ , __FUNCTION__ );
+
+    $setting_menu_id = MywpHelper::sanitize_text( $setting_menu_id );
 
     if( empty( $setting_menu_id ) ) {
 
@@ -189,7 +209,7 @@ final class MywpSettingMenu {
 
     if( empty( $setting_menu ) ) {
 
-      MywpHelper::error_not_found_message( '$setting_menu' , $called_text );
+      MywpHelper::error_require_message( '$setting_menu' , $called_text );
 
       return false;
 
@@ -237,6 +257,8 @@ final class MywpSettingMenu {
 
     if( empty( $setting_menu_id ) ) {
 
+      MywpHelper::error_not_found_message( '$setting_menu_id' , $called_text );
+
       return false;
 
     }
@@ -247,7 +269,13 @@ final class MywpSettingMenu {
 
   public static function get_setting_menu_id_by_page_hook( $find_page_hook = false ) {
 
+    $called_text = sprintf( '%s::%s( $find_page_hook )' , __CLASS__ , __FUNCTION__ );
+
+    $find_page_hook = MywpHelper::sanitize_text( $find_page_hook );
+
     if( empty( $find_page_hook ) ) {
+
+      MywpHelper::error_require_message( '$find_page_hook' , $called_text );
 
       return false;
 
@@ -257,6 +285,8 @@ final class MywpSettingMenu {
 
     if( empty( $menu_hook_names ) ) {
 
+      MywpHelper::error_not_found_message( '$menu_hook_names' , $called_text );
+
       return false;
 
     }
@@ -264,6 +294,8 @@ final class MywpSettingMenu {
     $current_setting_menu_id = array_search( $find_page_hook , $menu_hook_names );
 
     if( empty( $current_setting_menu_id ) ) {
+
+      MywpHelper::error_not_found_message( '$current_setting_menu_id' , $called_text );
 
       return false;
 

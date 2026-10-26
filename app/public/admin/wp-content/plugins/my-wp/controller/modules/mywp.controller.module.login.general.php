@@ -100,7 +100,7 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
 
     }
 
-    $include_css_file = do_shortcode( $setting_data['include_css_file'] );
+    $include_css_file = MywpHelper::sanitize_url( do_shortcode( $setting_data['include_css_file'] ) );
 
     if( ! empty( $include_css_file ) ) {
 
@@ -128,10 +128,12 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
 
     }
 
-    $input_css = do_shortcode( strip_tags( $setting_data['input_css'] ) );
+    $input_css = do_shortcode( $setting_data['input_css'] );
 
     echo '<style>';
-    echo $input_css;
+
+    echo wp_kses_post( $input_css );
+
     echo '</style>';
 
     self::after_do_function( __FUNCTION__ );
@@ -154,7 +156,13 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
 
     }
 
-    $logo_image_path = do_shortcode( $setting_data['logo_image_path'] );
+    $logo_image_path = MywpHelper::sanitize_url( do_shortcode( $setting_data['logo_image_path'] ) );
+
+    if( empty( $logo_image_path ) ) {
+
+      return false;
+
+    }
 
     echo '<style>';
 
@@ -186,7 +194,15 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
 
     }
 
-    $login_title = do_shortcode( strip_tags( $setting_data['logo_title'] ) );
+    $logo_title = MywpHelper::sanitize_text( do_shortcode( $setting_data['logo_title'] ) );
+
+    if( empty( $logo_title ) ) {
+
+      return $login_title;
+
+    }
+
+    $login_title = $logo_title;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -210,7 +226,15 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
 
     }
 
-    $login_header_url = do_shortcode( $setting_data['logo_link_url'] );
+    $logo_link_url = MywpHelper::sanitize_url( do_shortcode( $setting_data['logo_link_url'] ) );
+
+    if( empty( $logo_link_url ) ) {
+
+      return $login_header_url;
+
+    }
+
+    $login_header_url = $logo_link_url;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -234,7 +258,15 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
 
     }
 
-    $login_header_title = do_shortcode( strip_tags( $setting_data['logo_title'] ) );
+    $logo_title = MywpHelper::sanitize_text( do_shortcode( $setting_data['logo_title'] ) );
+
+    if( empty( $logo_title ) ) {
+
+      return $login_header_title;
+
+    }
+
+    $login_header_title = $logo_title;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -313,7 +345,9 @@ final class MywpControllerModuleLoginGeneral extends MywpControllerAbstractModul
     ?>
 
     <div id="mywp-custom-footer-text">
+
       <?php echo wp_kses_post( $custom_footer_text ); ?>
+
     </div>
 
     <?php

@@ -127,13 +127,9 @@ final class MywpAction {
 
   public static function mywp_ajax() {
 
-    if( is_multisite() ) {
+    if( MywpApi::is_network_manager() ) {
 
-      if( MywpApi::is_network_manager() ) {
-
-        do_action( 'mywp_ajax_network_manager' );
-
-      }
+      do_action( 'mywp_ajax_network_manager' );
 
     }
 

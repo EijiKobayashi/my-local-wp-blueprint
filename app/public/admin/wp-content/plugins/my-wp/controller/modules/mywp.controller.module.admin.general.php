@@ -130,7 +130,25 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     }
 
-    if( MywpHelper::is_doing( 'cron' ) or MywpHelper::is_doing( 'xmlrpc' ) or MywpHelper::is_doing( 'ajax' ) or MywpHelper::is_doing( 'rest' ) ) {
+    if( MywpHelper::is_doing( 'cron' ) ) {
+
+      return false;
+
+    }
+
+    if( MywpHelper::is_doing( 'xmlrpc' ) ) {
+
+      return false;
+
+    }
+
+    if( MywpHelper::is_doing( 'ajax' ) ) {
+
+      return false;
+
+    }
+
+    if( MywpHelper::is_doing( 'rest' ) ) {
 
       return false;
 
@@ -160,7 +178,13 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     }
 
-    if( empty( $site_transient ) or empty( $site_transient->response ) ) {
+    if( empty( $site_transient ) ) {
+
+      return $site_transient;
+
+    }
+
+    if( empty( $site_transient->response ) ) {
 
       return $site_transient;
 
@@ -198,7 +222,13 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     }
 
-    if( empty( $site_transient ) or empty( $site_transient->response ) ) {
+    if( empty( $site_transient ) ) {
+
+      return $site_transient;
+
+    }
+
+    if( empty( $site_transient->response ) ) {
 
       return $site_transient;
 
@@ -236,7 +266,19 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     }
 
-    if( empty( $site_transient ) or empty( $site_transient->updates[0] ) or empty( $site_transient->updates[0]->response ) ) {
+    if( empty( $site_transient ) ) {
+
+      return $site_transient;
+
+    }
+
+    if( empty( $site_transient->updates[0] ) ) {
+
+      return $site_transient;
+
+    }
+
+    if( empty( $site_transient->updates[0]->response ) ) {
 
       return $site_transient;
 
@@ -282,13 +324,15 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     }
 
-    if( $setting_data['max_post_revision'] === '' ) {
+    $max_post_revision = MywpHelper::sanitize_number( $setting_data['max_post_revision'] );
+
+    if( ! is_numeric( $max_post_revision ) ) {
 
       return $revision_num;
 
     }
 
-    $revision_num = (int) $setting_data['max_post_revision'];
+    $revision_num = $max_post_revision;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -338,20 +382,25 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     $setting_data = self::get_setting_data();
 
-    if( empty( $setting_data['include_js_file'] ) && empty( $setting_data['include_css_file'] ) ) {
+    if( empty( $setting_data['include_js_file'] ) ) {
 
-      return false;
+      if( empty( $setting_data['include_css_file'] ) ) {
+
+        return false;
+
+      }
 
     }
 
-    $include_js_file = do_shortcode( $setting_data['include_js_file'] );
-    $include_css_file = do_shortcode( $setting_data['include_css_file'] );
+    $include_js_file = MywpHelper::sanitize_url( do_shortcode( $setting_data['include_js_file'] ) );
 
     if( ! empty( $include_js_file ) ) {
 
       wp_enqueue_script( 'mywp_admin_include' , $include_js_file , array() , MYWP_VERSION , true );
 
     }
+
+    $include_css_file = MywpHelper::sanitize_url( do_shortcode( $setting_data['include_css_file'] ) );
 
     if( ! empty( $include_css_file ) ) {
 
@@ -373,9 +422,13 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     $setting_data = self::get_setting_data();
 
-    if( empty( $setting_data['hide_screen_tabs']['options'] ) && empty( $setting_data['hide_screen_tabs']['help'] ) ) {
+    if( empty( $setting_data['hide_screen_tabs']['options'] )  ) {
 
-      return false;
+      if( empty( $setting_data['hide_screen_tabs']['help'] ) ) {
+
+        return false;
+
+      }
 
     }
 
@@ -409,9 +462,13 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     $setting_data = self::get_setting_data();
 
-    if( empty( $setting_data['hide_footer_text']['left'] ) && empty( $setting_data['hide_footer_text']['right'] ) ) {
+    if( empty( $setting_data['hide_footer_text']['left'] ) ) {
 
-      return false;
+      if( empty( $setting_data['hide_footer_text']['right'] ) ) {
+
+        return false;
+
+      }
 
     }
 
@@ -459,10 +516,12 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
 
     }
 
-    $input_css = do_shortcode( strip_tags( $setting_data['input_css'] ) );
+    $input_css = do_shortcode( $setting_data['input_css'] );
 
     echo '<style>';
-    echo $input_css;
+
+    echo wp_kses_post( $input_css );
+
     echo '</style>';
 
     self::after_do_function( __FUNCTION__ );
@@ -522,7 +581,9 @@ final class MywpControllerModuleAdminGeneral extends MywpControllerAbstractModul
     <div class="clear"></div>
 
     <div id="mywp-custom-footer-text">
+
       <?php echo wp_kses_post( $custom_footer_text ); ?>
+
     </div>
 
     <?php

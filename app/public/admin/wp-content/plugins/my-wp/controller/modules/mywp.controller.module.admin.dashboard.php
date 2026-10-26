@@ -126,6 +126,8 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['meta_boxes'] ) ) {
@@ -137,6 +139,24 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
     $hide_meta_boxes = array();
 
     foreach( $setting_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
+
+      $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+      if( empty( $meta_box_id ) ) {
+
+        MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $meta_box_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$meta_box_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
 
       if( $meta_box_setting['action'] !== 'hide' ) {
 
@@ -188,6 +208,8 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['meta_boxes'] ) ) {
@@ -199,6 +221,24 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
     $remove_meta_boxes = array();
 
     foreach( $setting_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
+
+      $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+      if( empty( $meta_box_id ) ) {
+
+        MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $meta_box_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$meta_box_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
 
       if( $meta_box_setting['action'] !== 'remove' ) {
 
@@ -226,7 +266,13 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
     foreach( $current_meta_boxes as $context => $priority_meta_boxes ) {
 
-      if( empty( $priority_meta_boxes ) or ! is_array( $priority_meta_boxes ) ) {
+      if( empty( $priority_meta_boxes ) ) {
+
+        continue;
+
+      }
+
+      if( ! is_array( $priority_meta_boxes ) ) {
 
         continue;
 
@@ -234,7 +280,13 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
       foreach( $priority_meta_boxes as $priority => $meta_boxes ) {
 
-        if( empty( $meta_boxes ) or ! is_array( $meta_boxes ) ) {
+        if( empty( $meta_boxes ) ) {
+
+          continue;
+
+        }
+
+        if( ! is_array( $meta_boxes ) ) {
 
           continue;
 
@@ -242,13 +294,19 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
         foreach( $meta_boxes as $meta_box_id => $meta_box ) {
 
-          if( empty( $meta_box ) or ! is_array( $meta_box ) ) {
+          if( empty( $meta_box ) ) {
 
             continue;
 
           }
 
-          if( ! in_array( $meta_box_id , $remove_meta_boxes ) ) {
+          if( ! is_array( $meta_box ) ) {
+
+            continue;
+
+          }
+
+          if( ! in_array( $meta_box_id , $remove_meta_boxes , true ) ) {
 
             continue;
 
@@ -276,6 +334,8 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['meta_boxes'] ) ) {
@@ -287,6 +347,24 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
     $change_title_meta_boxes = array();
 
     foreach( $setting_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
+
+      $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+      if( empty( $meta_box_id ) ) {
+
+        MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $meta_box_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$meta_box_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
 
       if( ! empty( $meta_box_setting['action'] ) ) {
 
@@ -320,7 +398,13 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
     foreach( $current_meta_boxes as $context => $priority_meta_boxes ) {
 
-      if( empty( $priority_meta_boxes ) or ! is_array( $priority_meta_boxes ) ) {
+      if( empty( $priority_meta_boxes ) ) {
+
+        continue;
+
+      }
+
+      if( ! is_array( $priority_meta_boxes ) ) {
 
         continue;
 
@@ -328,7 +412,13 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
       foreach( $priority_meta_boxes as $priority => $meta_boxes ) {
 
-        if( empty( $meta_boxes ) or ! is_array( $meta_boxes ) ) {
+        if( empty( $meta_boxes ) ) {
+
+          continue;
+
+        }
+
+        if( ! is_array( $meta_boxes ) ) {
 
           continue;
 
@@ -336,7 +426,13 @@ final class MywpControllerModuleAdminDashboard extends MywpControllerAbstractMod
 
         foreach( $meta_boxes as $meta_box_id => $meta_box ) {
 
-          if( empty( $meta_box ) or ! is_array( $meta_box ) ) {
+          if( empty( $meta_box ) ) {
+
+            continue;
+
+          }
+
+          if( ! is_array( $meta_box ) ) {
 
             continue;
 

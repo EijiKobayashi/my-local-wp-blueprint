@@ -46,9 +46,11 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
 
   public static function admin_print_item_content_show_child_items_content( $show_child_items_content , $item , $item_type ) {
 
-    if( in_array( $item->item_type , array( 'view_post' ) ) ) {
+    if( in_array( $item->item_type , array( 'view_post' ) , true ) ) {
 
       $show_child_items_content = false;
+
+      return $show_child_items_content;
 
     }
 
@@ -58,15 +60,19 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
 
   public static function admin_print_item_content( $item ) {
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
 
       return false;
 
     }
 
-    if( in_array( $item->item_type , array( 'view_post' ) ) ) {
+    if( in_array( $item->item_type , array( 'view_post' ) , true ) ) {
 
-      printf( '<p class="item-content-notice">%s</p>' , __( 'This menu item is only display for edit post.' , 'my-wp' ) );
+      printf( '<p class="item-content-notice">%s</p>' , esc_html( __( 'This menu item is only display for edit post.' , 'my-wp' ) ) );
 
     }
 
@@ -81,7 +87,7 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
     }
 
     $toolbar_item_edit_post = array(
-      'title' => __( 'View Post' ),
+      'title' => __( 'View Post' , 'default' ),
       'item_type' => 'view_post',
       'item_capability' => 'read_post',
     );
@@ -109,8 +115,10 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
     if( $item->item_type === 'view_post' ) {
 
       $pre_title = sprintf( '<span class="%s" style=""></span>' , esc_attr( $item->item_icon_class ) );
-      $pre_title .= sprintf( '<span class="item-title">%s</span>' , __( 'View Post' ) );
-      $pre_title .= sprintf( '<span class="item-default-title">(%s)</span>' , __( 'View Post' ) );
+
+      $pre_title .= sprintf( '<span class="item-title">%s</span>' , esc_html( __( 'View Post' , 'default' ) ) );
+
+      $pre_title .= sprintf( '<span class="item-default-title">(%s)</span>' , esc_html( __( 'View Post' , 'default' ) ) );
 
     }
 
@@ -120,6 +128,16 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
 
   public static function admin_print_item_content_item_type( $item , $item_type ) {
 
+    $called_text = sprintf( '%s::%s( $item , $item_type )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
+
+      return false;
+
+    }
+
     if( $item_type === 'view_post' ) {
 
       ?>
@@ -128,26 +146,28 @@ final class MywpSettingScreenAdminToolbar extends MywpAbstractSettingToolbarModu
 
       </div>
 
-      <p class="item-content-show-details"><a href="javascript:void(0);" class="button-item-content-show-details"><?php _e( 'More Details' ); ?></a></p>
+      <p class="item-content-show-details">
+        <a href="javascript:void(0);" class="button-item-content-show-details"><?php echo esc_html( __( 'More Details' , 'default' ) ); ?></a>
+      </p>
 
       <div class="item-content-details">
         <table class="form-table">
           <tbody>
             <tr>
-              <th><?php _e( 'Menu Title' ); ?></th>
+              <th><?php echo esc_html( __( 'Menu Title' , 'default' ) ); ?></th>
               <td>
-                <?php _e( 'View Post' ); ?>
+                <?php echo esc_html( __( 'View Post' , 'default' ) ); ?>
               </td>
             </tr>
             <tr>
-              <th><?php _e( 'Link URL' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Link URL' , 'my-wp' ) ); ?></th>
               <td>
-                <?php $link_url = add_query_arg( array( 'p' => '###' ) , home_url() ); ?>
-                <?php echo esc_html( str_replace( '###' , '<code>current_post_id</code>' , $link_url ) ); ?>
+                <?php $link_url = add_query_arg( array( 'p' => '*current post id*' ) , home_url() ); ?>
+                <?php echo esc_html( $link_url ); ?>
               </td>
             </tr>
             <tr>
-              <th><?php _e( 'Capability' , 'my-wp' ); ?></th>
+              <th><?php echo esc_html( __( 'Capability' , 'my-wp' ) ); ?></th>
               <td>
                 <code>
                   <?php if( ! empty( $item->item_capability ) ) : ?>

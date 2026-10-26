@@ -21,7 +21,7 @@ final class MywpSettingScreenAdminDashboard extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'Dashboard' ),
+      'title' => __( 'Dashboard' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'admin_dashboard',
       'use_advance' => true,
@@ -49,7 +49,9 @@ final class MywpSettingScreenAdminDashboard extends MywpAbstractSettingModule {
     MywpSettingMetaBox::set_current_meta_box_setting_data( $meta_boxes_setting );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Management of meta boxes' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Management of meta boxes' , 'my-wp' ) ); ?>
+    </h3>
 
     <?php MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-management-meta-boxes.php' ); ?>
 
@@ -63,24 +65,27 @@ final class MywpSettingScreenAdminDashboard extends MywpAbstractSettingModule {
     $setting_data = self::get_setting_data();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'General' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'General' , 'default' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Welcome to WordPress!' ); ?></th>
+          <th><?php echo esc_html( __( 'Welcome to WordPress!' , 'default' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][hide_welcome_panel]" class="hide_welcome_panel" value="1" <?php checked( $setting_data['hide_welcome_panel'] , true ); ?> />
-              <?php _e( 'Hide' ); ?>
+              <?php echo esc_html( __( 'Hide' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Re-arrange meta boxes' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Re-arrange meta boxes' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][prevent_meta_box]" class="prevent_meta_box" value="1" <?php checked( $setting_data['prevent_meta_box'] , true ); ?> />
-              <?php _e( 'Prevent' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Prevent' , 'my-wp' ) ); ?>
             </label>
           </td>
         </tr>
@@ -92,6 +97,8 @@ final class MywpSettingScreenAdminDashboard extends MywpAbstractSettingModule {
   }
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
+
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
 
     $mywp_model = self::get_model();
 
@@ -111,15 +118,23 @@ final class MywpSettingScreenAdminDashboard extends MywpAbstractSettingModule {
 
       foreach( $formatted_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
 
-        $meta_box_id = strip_tags( $meta_box_id );
+        $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+        if( empty( $meta_box_id ) ) {
+
+          MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+          continue;
+
+        }
 
         $new_meta_box_setting = $meta_box_default;
 
-        $new_meta_box_setting['action'] = strip_tags( $meta_box_setting['action'] );
+        $new_meta_box_setting['action'] = MywpHelper::sanitize_text( $meta_box_setting['action'] );
 
         if( ! empty( $meta_box_setting['title'] ) ) {
 
-          $new_meta_box_setting['title'] = wp_unslash( wp_kses_post( $meta_box_setting['title'] ) );
+          $new_meta_box_setting['title'] = MywpHelper::sanitize_text( $meta_box_setting['title'] );
 
         }
 

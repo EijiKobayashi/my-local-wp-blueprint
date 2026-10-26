@@ -21,7 +21,7 @@ final class MywpSettingScreenLoginUser extends MywpAbstractSettingModule {
   public static function mywp_setting_screens( $setting_screens ) {
 
     $setting_screens[ self::$id ] = array(
-      'title' => __( 'User' ),
+      'title' => __( 'User' , 'default' ),
       'menu' => self::$menu,
       'controller' => 'login_user',
       'document_url' => self::get_document_url( 'document/login-user/' ),
@@ -38,34 +38,43 @@ final class MywpSettingScreenLoginUser extends MywpAbstractSettingModule {
     $plugin_info = MywpApi::plugin_info();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Forced Redirect' , 'my-wp' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Forced Redirect' , 'my-wp' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Logged in redirect URL' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Logged in redirect URL' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][login_redirect_url]" class="login_redirect_url large-text" value="<?php echo esc_attr( $setting_data['login_redirect_url'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
-              <code>[mywp_url admin="1"]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_url admin="1"]' ); ?></code>
+              <code>[mywp_url admin="1"]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo esc_html( do_shortcode( '[mywp_url admin="1"]' ) ); ?></code>
             </p>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Logged out redirect URL' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Logged out redirect URL' , 'my-wp' ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][logout_redirect_url]" class="logout_redirect_url large-text" value="<?php echo esc_attr( $setting_data['logout_redirect_url'] ); ?>" placeholder="<?php echo esc_attr( 'https://example.com' ); ?>" />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'You can use a shortcode.' , 'my-wp' ); ?>
-              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank"><span class="dashicons dashicons-external"></span> <?php _e( 'More shortcodes' , 'my-wp' ); ?></a>
+              <?php echo esc_html( __( 'You can use a shortcode.' , 'my-wp' ) ); ?>
+              <a href="<?php echo esc_url( $plugin_info['document_category_url'] . 'shortcode/' ); ?>" class="button" target="_blank">
+                <span class="dashicons dashicons-external"></span>
+                <?php echo esc_html( __( 'More shortcodes' , 'my-wp' ) ); ?>
+              </a>
             </p>
             <p>
-              <code>[mywp_url login="1"]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo do_shortcode( '[mywp_url login="1"]' ); ?></code>
+              <code>[mywp_url login="1"]</code> <?php echo esc_html( '=>' ); ?> <code><?php echo esc_html( do_shortcode( '[mywp_url login="1"]' ) ); ?></code>
             </p>
           </td>
         </tr>
@@ -92,13 +101,13 @@ final class MywpSettingScreenLoginUser extends MywpAbstractSettingModule {
 
     if( ! empty( $formatted_data['login_redirect_url'] ) ) {
 
-      $new_formatted_data['login_redirect_url'] = wp_unslash( $formatted_data['login_redirect_url'] );
+      $new_formatted_data['login_redirect_url'] = MywpHelper::sanitize_text( $formatted_data['login_redirect_url'] );
 
     }
 
     if( ! empty( $formatted_data['logout_redirect_url'] ) ) {
 
-      $new_formatted_data['logout_redirect_url'] = wp_unslash( $formatted_data['logout_redirect_url'] );
+      $new_formatted_data['logout_redirect_url'] = MywpHelper::sanitize_text( $formatted_data['logout_redirect_url'] );
 
     }
 

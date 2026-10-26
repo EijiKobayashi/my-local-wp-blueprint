@@ -14,9 +14,9 @@ abstract class MywpPostTypeAbstractModule {
 
     $class = get_called_class();
 
-    if( empty( static::$id ) ) {
+    $called_text = sprintf( 'class %s' , $class );
 
-      $called_text = sprintf( 'class %s' , $class );
+    if( empty( static::$id ) ) {
 
       MywpHelper::error_require_message( '"static protected $id"' , $called_text );
 

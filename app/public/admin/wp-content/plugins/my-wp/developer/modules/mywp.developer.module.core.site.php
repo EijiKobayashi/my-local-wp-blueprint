@@ -67,7 +67,7 @@ final class MywpDeveloperModuleCoreSite extends MywpDeveloperAbstractModule {
 
       echo '<td>';
 
-      if( in_array( $key , array( 'site_url()' , 'home_url()' ) ) ) {
+      if( in_array( $key , array( 'site_url()' , 'home_url()' ) , true ) ) {
 
         echo esc_url( $val );
 

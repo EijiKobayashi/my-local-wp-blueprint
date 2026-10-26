@@ -75,6 +75,7 @@ final class MywpControllerModuleAdminUserEdit extends MywpControllerAbstractModu
     }
 
     add_action( 'load-profile.php' , array( __CLASS__ , 'load_user_edit' ) , 1000 );
+
     add_action( 'load-user-edit.php' , array( __CLASS__ , 'load_user_edit' ) , 1000 );
 
   }
@@ -433,7 +434,7 @@ final class MywpControllerModuleAdminUserEdit extends MywpControllerAbstractModu
 
     foreach( $setting_data['hide_contact_fields'] as $field_name => $v ) {
 
-      $field_name = strip_tags( $field_name );
+      $field_name = MywpHelper::sanitize_text( $field_name );
 
       printf( 'body.wp-admin .user-%s-wrap { display: none; }' , esc_attr( $field_name ) );
 

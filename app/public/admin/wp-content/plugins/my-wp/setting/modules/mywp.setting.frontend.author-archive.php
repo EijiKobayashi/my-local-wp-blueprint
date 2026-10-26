@@ -39,8 +39,6 @@ final class MywpSettingScreenFrontendAuthorArchive extends MywpAbstractSettingMo
 
     $author_name = $mywp_user->get_name();
 
-    $args = array( 'post_status' => 'publish' , 'post_type' => 'any' , 'order' => 'DESC' , 'orderby' => 'post_date' , 'numberposts' => 1 );
-
     $posts = $mywp_user->get_posts();
 
     $author_post = false;
@@ -57,24 +55,28 @@ final class MywpSettingScreenFrontendAuthorArchive extends MywpAbstractSettingMo
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Author Archive' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Author Archive' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][disable_archive]" class="disable_archive" value="1" <?php checked( $setting_data['disable_archive'] , true ); ?> />
-              <?php _e( 'Disable' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Disable' , 'my-wp' ) ); ?>
             </label>
             &nbsp;
             <?php if( ! empty( $author_post ) ) : ?>
-              <a target="_blank" href="<?php echo esc_url( get_author_posts_url( $author_post->post_author ) ); ?>"><?php printf( __( 'Author: %s' ) , esc_html( $author_name ) ); ?></a>
+
+              <a target="_blank" href="<?php echo esc_url( get_author_posts_url( $author_post->post_author ) ); ?>">
+                <?php echo esc_html( sprintf( __( 'Author: %s' , 'default' ) , $author_name ) ); ?>
+              </a>
+
             <?php endif; ?>
           </td>
         </tr>
         <tr>
-          <th><?php _e( 'Add "Disallow" to robots.txt' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Add "Disallow" to robots.txt' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][disable_archive_add_robots_txt]" class="disable_archive_add_robots_txt" value="1" <?php checked( $setting_data['disable_archive_add_robots_txt'] , true ); ?> />
-              <?php _e( 'Add Disallow' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Add Disallow' , 'my-wp' ) ); ?>
             </label>
             &nbsp;
             <a target="_blank" href="<?php echo esc_url( $home_url . '/robots.txt' ); ?>">robots.txt</a>

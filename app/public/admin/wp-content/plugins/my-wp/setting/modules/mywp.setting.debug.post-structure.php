@@ -32,7 +32,7 @@ final class MywpSettingScreenDebugPostStructure extends MywpAbstractSettingModul
 
   public static function mywp_current_setting_screen_header() {
 
-    printf( '<p>%s</p>' , __( 'The structure in the post.' , 'my-wp' ) );
+    printf( '<p>%s</p>' , esc_html( __( 'The structure in the post.' , 'my-wp' ) ) );
 
     MywpApi::include_file( MYWP_PLUGIN_PATH . 'views/elements/setting-screen-input-post.php' );
 
@@ -45,7 +45,9 @@ final class MywpSettingScreenDebugPostStructure extends MywpAbstractSettingModul
 
     if( empty( $current_setting_post ) ) {
 
-      printf( __( '%1$s: %3$s %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post' , 'my-wp' ) , esc_html( $current_setting_post_id ) , __( 'Post' ) );
+      MywpHelper::error_not_found_message( '$current_setting_post' , $called_text );
+
+      echo esc_html( sprintf( __( '%1$s: %3$s %2$s is not found.' , 'my-wp' ) , __( 'Invalid Post' , 'my-wp' ) , $current_setting_post_id , __( 'Post' , 'default' ) ) );
 
       return false;
 
@@ -78,41 +80,66 @@ final class MywpSettingScreenDebugPostStructure extends MywpAbstractSettingModul
     ksort( $post_structure['custom_fields'] );
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Post' ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Post' , 'default' ) ); ?>
+    </h3>
+
     <table class="form-table">
       <tbody>
+
         <?php foreach( $post_structure['post'] as $field_name => $field_value ) : ?>
+
           <tr>
             <th><?php echo esc_html( $field_name ); ?></th>
             <td><textarea readonly class="large-text" style="height: 80px;"><?php echo esc_textarea( $field_value ); ?></textarea></td>
           </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
+
     <p>&nbsp;</p>
-    <h3 class="mywp-setting-screen-subtitle"><?php _e( 'Custom Fields' ); ?></h3>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $post_structure['custom_fields'] ); ?></p>
+
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Custom Fields' , 'default' ) ); ?>
+    </h3>
+
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $post_structure['custom_fields'] ); ?></p>
+
     <table class="form-table">
       <tbody>
         <?php if( ! empty( $post_structure['custom_fields'] ) ) : ?>
 
           <?php foreach( $post_structure['custom_fields'] as $custom_field_key => $structure ) : ?>
+
             <tr>
               <th><?php echo esc_html( $custom_field_key ); ?></th>
               <td>
                 <?php foreach( $structure as $custom_field_value ) : ?>
+
                   <?php $custom_field_value_unserializez = maybe_unserialize( $custom_field_value ); ?>
+
                   <?php $custom_field_value_json = json_decode( $custom_field_value ); ?>
+
                   <?php if( is_array( $custom_field_value_unserializez ) or is_object( $custom_field_value_unserializez ) ) : ?>
+
                     <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $custom_field_value_unserializez , true ) ); ?></textarea>
+
                   <?php elseif( ! empty( $custom_field_value_json ) && is_object( $custom_field_value_json ) ) : ?>
+
                     <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php esc_textarea( print_r( $custom_field_value_json , true ) ); ?></textarea>
+
                   <?php else : ?>
+
                     <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( $custom_field_value_unserializez ); ?></textarea>
+
                   <?php endif; ?>
+
                 <?php endforeach; ?>
               </td>
             </tr>
+
           <?php endforeach; ?>
 
         <?php endif; ?>

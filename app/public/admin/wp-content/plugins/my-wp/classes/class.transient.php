@@ -24,9 +24,11 @@ final class MywpTransient {
 
   public function __construct( $transient_id = false , $type = false , $network = false ) {
 
-    if( empty( $transient_id ) ) {
+    $called_text = sprintf( 'new %s( $transient_id , $type , $network )' , __CLASS__ );
 
-      $called_text = sprintf( 'new %s( %s , %s , %s )' , __CLASS__ , '$transient_id' , '$type' , '$network' );
+    $transient_id = MywpHelper::sanitize_text( $transient_id );
+
+    if( empty( $transient_id ) ) {
 
       MywpHelper::error_require_message( '$transient_id' , $called_text );
 
@@ -34,11 +36,11 @@ final class MywpTransient {
 
     }
 
-    $this->transient_id = strip_tags( $transient_id );
+    $this->transient_id = $transient_id;
+
+    $type = MywpHelper::sanitize_text( $type );
 
     if( empty( $type ) ) {
-
-      $called_text = sprintf( 'new %s( %s , %s , %s )' , __CLASS__ , '$transient_id' , '$type' , '$network' );
 
       MywpHelper::error_require_message( '$type' , $called_text );
 
@@ -46,25 +48,21 @@ final class MywpTransient {
 
     }
 
-    $this->type = strip_tags( $type );
+    $this->type = $type;
 
     $this->id = "mywp_{$this->transient_id}";
+
+    $this->option_key = "_transient_{$this->id}";
+
+    $this->option_timeout_key = "_transient_timeout_{$this->id}";
 
     if( ! empty( $network ) ) {
 
       $this->network = true;
 
-    }
-
-    if( $this->network ) {
-
       $this->option_key = "_site_transient_{$this->id}";
+
       $this->option_timeout_key = "_site_transient_timeout_{$this->id}";
-
-    } else {
-
-      $this->option_key = "_transient_{$this->id}";
-      $this->option_timeout_key = "_transient_timeout_{$this->id}";
 
     }
 
@@ -144,11 +142,11 @@ final class MywpTransient {
 
   public function get_data() {
 
+    $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
+
     $transient_key = $this->get_transient_key();
 
     if( empty( $transient_key ) ) {
-
-      $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$transient_key' , $called_text );
 
@@ -194,11 +192,13 @@ final class MywpTransient {
 
   public function update_data( $update_data , $timeout = HOUR_IN_SECONDS ) {
 
+    $called_text = sprintf( '(object) %s->%s( $update_data , $timeout )' , __CLASS__ , __FUNCTION__ );
+
+    $timeout = MywpHelper::sanitize_number( $timeout );
+
     $transient_key = $this->get_transient_key();
 
     if( empty( $transient_key ) ) {
-
-      $called_text = sprintf( '(object) %s->%s( %s , %s )' , __CLASS__ , __FUNCTION__ , '$update_data' , '$timeout' );
 
       MywpHelper::error_not_found_message( '$transient_key' , $called_text );
 
@@ -226,11 +226,11 @@ final class MywpTransient {
 
   public function remove_data() {
 
+    $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
+
     $transient_key = $this->get_transient_key();
 
     if( empty( $transient_key ) ) {
-
-      $called_text = sprintf( '(object) %s->%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$transient_key' , $called_text );
 

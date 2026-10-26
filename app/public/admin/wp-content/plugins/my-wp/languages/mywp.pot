@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: My WP\n"
-"POT-Creation-Date: 2025-09-26 14:42+0900\n"
+"POT-Creation-Date: 2026-10-21 17:06+0900\n"
 "PO-Revision-Date: 2016-11-01 15:58+0900\n"
 "Last-Translator: \n"
 "Language-Team: gqevu6bsiz <gqevu6bsiz@gmail.com>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: mywp.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -19,103 +19,103 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: controller/abstract.controller.list.module.php:688
+#: controller/abstract.controller.list.module.php:690
 msgid "Search Filter"
 msgstr ""
 
-#: controller/abstract.controller.list.module.php:830
+#: controller/abstract.controller.list.module.php:849
 msgid "Clear"
 msgstr ""
 
-#: controller/abstract.controller.list.module.php:873
+#: controller/abstract.controller.list.module.php:899
 msgid "From"
 msgstr ""
 
-#: controller/abstract.controller.list.module.php:878
+#: controller/abstract.controller.list.module.php:904
 msgid "To"
 msgstr ""
 
-#: controller/abstract.controller.list.module.php:925
+#: controller/abstract.controller.list.module.php:950
 #: setting/modules/mywp.setting.debug.find-option.php:119
-#: shortcode/modules/mywp.shortcode.module.toolbar_item.php:29
-#: shortcode/modules/mywp.shortcode.module.toolbar_item.php:30
+#: shortcode/modules/mywp.shortcode.module.toolbar_item.php:45
+#: shortcode/modules/mywp.shortcode.module.toolbar_item.php:47
 msgid "Search"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:108
-#: controller/abstract.controller.toolbar.module.php:109
-#: controller/abstract.controller.toolbar.module.php:217
-#: controller/abstract.controller.toolbar.module.php:218
+#: controller/abstract.controller.toolbar.module.php:140
+#: controller/abstract.controller.toolbar.module.php:141
+#: controller/abstract.controller.toolbar.module.php:256
+#: controller/abstract.controller.toolbar.module.php:257
 #: setting/modules/mywp.setting.admin.dashboard.php:24
 msgid "Dashboard"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:129
-#: controller/abstract.controller.toolbar.module.php:287
-#: controller/abstract.controller.toolbar.module.php:288
-#: controller/abstract.controller.toolbar.module.php:301
-#: controller/abstract.controller.toolbar.module.php:302
-#: controller/modules/mywp.controller.module.debug.general.php:170
+#: controller/abstract.controller.toolbar.module.php:161
+#: controller/abstract.controller.toolbar.module.php:326
+#: controller/abstract.controller.toolbar.module.php:327
+#: controller/abstract.controller.toolbar.module.php:340
+#: controller/abstract.controller.toolbar.module.php:341
+#: controller/modules/mywp.controller.module.debug.general.php:181
 #: controller/modules/mywp.controller.module.main.general.php:127
 msgid "Settings"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:166
-#: controller/abstract.controller.toolbar.module.php:167
+#: controller/abstract.controller.toolbar.module.php:198
+#: controller/abstract.controller.toolbar.module.php:199
 msgid "Visit Site"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:206
+#: controller/abstract.controller.toolbar.module.php:243
 msgid "Network Admin"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:231
-#: controller/abstract.controller.toolbar.module.php:232
+#: controller/abstract.controller.toolbar.module.php:270
+#: controller/abstract.controller.toolbar.module.php:271
 msgid "Sites"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:245
-#: controller/abstract.controller.toolbar.module.php:246
-#: setting/modules/mywp.setting.debug.general.php:50
+#: controller/abstract.controller.toolbar.module.php:284
+#: controller/abstract.controller.toolbar.module.php:285
+#: setting/modules/mywp.setting.debug.general.php:54
 msgid "Users"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:259
-#: controller/abstract.controller.toolbar.module.php:260
+#: controller/abstract.controller.toolbar.module.php:298
+#: controller/abstract.controller.toolbar.module.php:299
 msgid "Themes"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:273
-#: controller/abstract.controller.toolbar.module.php:274
-#: setting/modules/mywp.setting.admin.sidebar.php:1574
+#: controller/abstract.controller.toolbar.module.php:312
+#: controller/abstract.controller.toolbar.module.php:313
+#: setting/modules/mywp.setting.admin.sidebar.php:1789
 msgid "Plugins"
 msgstr ""
 
-#: controller/abstract.controller.toolbar.module.php:317
-#: controller/abstract.controller.toolbar.module.php:318
+#: controller/abstract.controller.toolbar.module.php:356
+#: controller/abstract.controller.toolbar.module.php:357
 #: developer/developer.init.php:90
 #: setting/modules/mywp.setting.main.general.php:24
 #: setting/setting.init.php:109 setting/setting.init.php:164
 msgid "My WP"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.comments.php:545
+#: controller/modules/mywp.controller.module.admin.comments.php:606
 msgid "Comment Post ID"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.comments.php:550
+#: controller/modules/mywp.controller.module.admin.comments.php:611
 msgid "Comment Status"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.comments.php:556
+#: controller/modules/mywp.controller.module.admin.comments.php:617
 msgid "Comment Author Email"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.comments.php:561
+#: controller/modules/mywp.controller.module.admin.comments.php:622
 msgid "Comment Date"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.comments.php:566
+#: controller/modules/mywp.controller.module.admin.comments.php:627
 msgid "Comment Parent"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgid "Post restored to revision from %s."
 msgstr ""
 
 #: controller/modules/mywp.controller.module.admin.post.edit.php:112
-#: setting/abstract.setting.bulk.module.php:1107
+#: setting/abstract.setting.bulk.module.php:1214
 msgid "Post Title"
 msgstr ""
 
@@ -210,15 +210,15 @@ msgstr ""
 msgid "Preview Post Link"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:1069
+#: controller/modules/mywp.controller.module.admin.post.edit.php:1204
 msgid "Status:"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.post.edit.php:1236
-#: setting/abstract.setting.toolbar.module.php:2679
-#: setting/modules/mywp.setting.admin.sidebar.php:1590
-#: setting/modules/mywp.setting.admin.sidebar.php:2419
-#: views/elements/setting-screen-input-post.php:35
+#: controller/modules/mywp.controller.module.admin.post.edit.php:1387
+#: setting/abstract.setting.toolbar.module.php:3064
+#: setting/modules/mywp.setting.admin.sidebar.php:1805
+#: setting/modules/mywp.setting.admin.sidebar.php:2730
+#: views/elements/setting-screen-input-post.php:36
 msgid "Update"
 msgstr ""
 
@@ -257,119 +257,119 @@ msgid_plural "%s posts restored from the Trash."
 msgstr[0] ""
 msgstr[1] ""
 
-#: controller/modules/mywp.controller.module.admin.posts.php:569
-#: controller/modules/mywp.controller.module.admin.posts.php:575
+#: controller/modules/mywp.controller.module.admin.posts.php:633
+#: controller/modules/mywp.controller.module.admin.posts.php:639
 #, php-format
 msgid "%1$s at %2$s"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.posts.php:569
-#: controller/modules/mywp.controller.module.admin.posts.php:575
+#: controller/modules/mywp.controller.module.admin.posts.php:633
+#: controller/modules/mywp.controller.module.admin.posts.php:639
 msgid "Y/m/d"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.posts.php:569
-#: controller/modules/mywp.controller.module.admin.posts.php:575
+#: controller/modules/mywp.controller.module.admin.posts.php:633
+#: controller/modules/mywp.controller.module.admin.posts.php:639
 msgid "g:i a"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1207
-#: controller/modules/mywp.controller.module.admin.uploads.php:800
-#: setting/abstract.setting.bulk.module.php:1106
+#: controller/modules/mywp.controller.module.admin.posts.php:1295
+#: controller/modules/mywp.controller.module.admin.uploads.php:873
+#: setting/abstract.setting.bulk.module.php:1213
 msgid "Post Status"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1213
-#: controller/modules/mywp.controller.module.admin.uploads.php:806
-#: setting/abstract.setting.columns.module.php:643
-#: setting/modules/mywp.setting.admin.post-edit.php:319
-#: setting/modules/mywp.setting.admin.posts.php:487
-#: setting/modules/mywp.setting.admin.uploads.php:426
-#: setting/modules/mywp.setting.admin.uploads.php:497
-#: setting/modules/mywp.setting.login.general.php:72
+#: controller/modules/mywp.controller.module.admin.posts.php:1301
+#: controller/modules/mywp.controller.module.admin.uploads.php:879
+#: setting/abstract.setting.columns.module.php:714
+#: setting/modules/mywp.setting.admin.post-edit.php:371
+#: setting/modules/mywp.setting.admin.posts.php:537
+#: setting/modules/mywp.setting.admin.uploads.php:465
+#: setting/modules/mywp.setting.admin.uploads.php:536
+#: setting/modules/mywp.setting.login.general.php:81
 msgid "Title"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1218
+#: controller/modules/mywp.controller.module.admin.posts.php:1306
 #: post-type/modules/mywp.post-type.module.logger.php:102
-#: setting/modules/mywp.setting.admin.posts.php:509
-#: setting/modules/mywp.setting.admin.posts.php:610
+#: setting/modules/mywp.setting.admin.posts.php:559
+#: setting/modules/mywp.setting.admin.posts.php:668
 msgid "Date"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.posts.php:1223
-#: controller/modules/mywp.controller.module.admin.uploads.php:816
+#: controller/modules/mywp.controller.module.admin.posts.php:1311
+#: controller/modules/mywp.controller.module.admin.uploads.php:889
 msgid "Post Parent"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.sidebar.php:939
+#: controller/modules/mywp.controller.module.admin.sidebar.php:1088
 msgid "Collapse menu"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.uploads.php:811
+#: controller/modules/mywp.controller.module.admin.uploads.php:884
 msgid "Post Date"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.uploads.php:821
+#: controller/modules/mywp.controller.module.admin.uploads.php:894
 msgid "Mime Type"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.users.php:557
+#: controller/modules/mywp.controller.module.admin.users.php:638
 msgid "User ID"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.users.php:562
-#: setting/modules/mywp.setting.admin.users.php:352
+#: controller/modules/mywp.controller.module.admin.users.php:643
+#: setting/modules/mywp.setting.admin.users.php:379
 msgid "Username"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.users.php:567
+#: controller/modules/mywp.controller.module.admin.users.php:648
 msgid "User Email"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.users.php:572
-#: setting/modules/mywp.setting.debug.capabilities.php:48
+#: controller/modules/mywp.controller.module.admin.users.php:653
+#: setting/modules/mywp.setting.debug.capabilities.php:53
 msgid "User Roles"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.admin.users.php:578
-#: setting/modules/mywp.setting.admin.users.php:423
+#: controller/modules/mywp.controller.module.admin.users.php:659
+#: setting/modules/mywp.setting.admin.users.php:458
 msgid "Registered Date"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:150
+#: controller/modules/mywp.controller.module.debug.general.php:161
 msgid "My WP Shortcode"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:155
+#: controller/modules/mywp.controller.module.debug.general.php:166
 msgid "My WP Post_Type"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:160
+#: controller/modules/mywp.controller.module.debug.general.php:171
 msgid "My WP Taxonomy"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:165
+#: controller/modules/mywp.controller.module.debug.general.php:176
 msgid "Current Setting"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:175
+#: controller/modules/mywp.controller.module.debug.general.php:186
 msgid "Controller"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:180
+#: controller/modules/mywp.controller.module.debug.general.php:191
 msgid "Thirdparty"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:413
+#: controller/modules/mywp.controller.module.debug.general.php:428
 msgid "Activated"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:417
+#: controller/modules/mywp.controller.module.debug.general.php:432
 msgid "Not Activated"
 msgstr ""
 
-#: controller/modules/mywp.controller.module.debug.general.php:423
+#: controller/modules/mywp.controller.module.debug.general.php:438
 #, php-format
 msgid "plugin base name: %s"
 msgstr ""
@@ -379,7 +379,7 @@ msgid "Documents"
 msgstr ""
 
 #: controller/modules/mywp.controller.module.main.general.php:99
-#: setting/modules/mywp.setting.main.general.php:124
+#: setting/modules/mywp.setting.main.general.php:126
 msgid "Support Forums"
 msgstr ""
 
@@ -387,119 +387,104 @@ msgstr ""
 msgid "Review"
 msgstr ""
 
-#: core/class.api.php:140 core/class.api.php:182
+#: core/class.api.php:150 core/class.api.php:194
 #, php-format
 msgid "There doesn't seem to be a %s file."
 msgstr ""
 
-#: core/class.api.php:291
+#: core/class.api.php:312
 msgid "Admin Menu"
 msgstr ""
 
-#: core/class.api.php:292
+#: core/class.api.php:316
 msgid "Welcome Screen"
 msgstr ""
 
-#: core/class.api.php:293
+#: core/class.api.php:320
 msgid "Post Formats"
 msgstr ""
 
-#: core/class.api.php:294
+#: core/class.api.php:324
 msgid "Media"
 msgstr ""
 
-#: core/class.api.php:295
+#: core/class.api.php:328
 msgid "Image Editing"
 msgstr ""
 
-#: core/class.api.php:296
+#: core/class.api.php:332
 msgid "TinyMCE"
 msgstr ""
 
-#: core/class.api.php:297
+#: core/class.api.php:336
 msgid "Posts Screen"
 msgstr ""
 
-#: core/class.api.php:298 setting/abstract.setting.columns.module.php:650
+#: core/class.api.php:340 setting/abstract.setting.columns.module.php:721
 msgid "Sorting"
 msgstr ""
 
-#: core/class.api.php:299
+#: core/class.api.php:344
 msgid "Social"
 msgstr ""
 
-#: core/class.api.php:300
+#: core/class.api.php:348
 msgid "WordPress.org Specific: Jobs, Profiles, WordCamps"
 msgstr ""
 
-#: core/class.api.php:301
+#: core/class.api.php:352
 msgid "Products"
 msgstr ""
 
-#: core/class.api.php:302 setting/modules/mywp.setting.admin.posts.php:552
+#: core/class.api.php:356 setting/modules/mywp.setting.admin.posts.php:610
 msgid "Taxonomies"
 msgstr ""
 
-#: core/class.api.php:303
+#: core/class.api.php:360
 msgid "Widgets"
 msgstr ""
 
-#: core/class.api.php:304 setting/modules/mywp.setting.admin.general.php:54
+#: core/class.api.php:364 setting/modules/mywp.setting.admin.general.php:55
 msgid "Notifications"
 msgstr ""
 
-#: core/class.api.php:305
+#: core/class.api.php:368
 msgid "Misc"
 msgstr ""
 
-#: core/class.helper.php:23
+#: core/class.helper.php:35
 #, php-format
 msgid "This function can be called after \"%s\" action."
 msgstr ""
 
-#: core/class.helper.php:39
+#: core/class.helper.php:47 core/class.helper.php:57 core/class.helper.php:63
 #, php-format
 msgid "The %s is required."
 msgstr ""
 
-#: core/class.helper.php:55 setting/modules/mywp.setting.debug.general.php:62
-#: views/elements/setting-screen-management-meta-boxes.php:72
+#: core/class.helper.php:91 setting/modules/mywp.setting.debug.general.php:74
+#: views/elements/setting-screen-management-meta-boxes.php:76
 #, php-format
 msgid "%s is not found."
 msgstr ""
 
-#: core/class.helper.php:73
+#: core/class.helper.php:129
 #, php-format
-msgid "%s is error %s."
+msgid "%s is return error %s."
 msgstr ""
 
-#: core/class.helper.php:135
-#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:100
+#: core/class.helper.php:168
+#, php-format
+msgid "%s is invalid %s."
+msgstr ""
+
+#: core/class.helper.php:270
+#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:104
 #, php-format
 msgid "%1$s: %2$s"
 msgstr ""
 
-#: core/class.helper.php:217
-msgid "TB"
-msgstr ""
-
-#: core/class.helper.php:223
-msgid "GB"
-msgstr ""
-
-#: core/class.helper.php:229
-msgid "MB"
-msgstr ""
-
-#: core/class.helper.php:235
-msgid "KB"
-msgstr ""
-
-#: core/class.helper.php:241
-msgid "Bytes"
-msgstr ""
-
-#: core/class.imcompatible.php:43
+#: core/class.imcompatible.php:39
 #, php-format
 msgid ""
 "Sorry, My WP is <strong>Incompatible</strong> with your version of "
@@ -507,7 +492,7 @@ msgid ""
 msgstr ""
 
 #: developer/developer.init.php:82
-#: setting/abstract.setting.columns.module.php:287
+#: setting/abstract.setting.columns.module.php:301
 msgid "Core"
 msgstr ""
 
@@ -516,7 +501,7 @@ msgid "Dev"
 msgstr ""
 
 #: developer/developer.init.php:106
-#: setting/modules/mywp.setting.login.general.php:108
+#: setting/modules/mywp.setting.login.general.php:121
 msgid "Custom"
 msgstr ""
 
@@ -553,14 +538,14 @@ msgid "Action Fooks"
 msgstr ""
 
 #: developer/modules/mywp.developer.module.dev.actions.php:60
-#: developer/modules/mywp.developer.module.dev.actions.php:98
+#: developer/modules/mywp.developer.module.dev.actions.php:100
 #: developer/modules/mywp.developer.module.dev.debugtrace.php:34
 #: developer/modules/mywp.developer.module.dev.debugtrace.php:50
 #: developer/modules/mywp.developer.module.dev.request.php:78
-#: developer/modules/mywp.developer.module.dev.times.php:270
-#: developer/modules/mywp.developer.module.dev.times.php:366
+#: developer/modules/mywp.developer.module.dev.times.php:276
+#: developer/modules/mywp.developer.module.dev.times.php:372
 #: developer/modules/mywp.developer.module.mywp.cache.php:42
-#: developer/modules/mywp.developer.module.mywp.cache.php:66
+#: developer/modules/mywp.developer.module.mywp.cache.php:68
 msgid "Not activated."
 msgstr ""
 
@@ -577,7 +562,7 @@ msgid "Current Frontend Information"
 msgstr ""
 
 #: developer/modules/mywp.developer.module.dev.request.php:23
-#: setting/modules/mywp.setting.debug.general.php:98
+#: setting/modules/mywp.setting.debug.general.php:120
 msgid "Request"
 msgstr ""
 
@@ -585,28 +570,28 @@ msgstr ""
 msgid "Require the define( \"SAVEQUERIES\" , true )."
 msgstr ""
 
-#: developer/modules/mywp.developer.module.dev.times.php:259
+#: developer/modules/mywp.developer.module.dev.times.php:265
 msgid "Action Times"
 msgstr ""
 
-#: developer/modules/mywp.developer.module.dev.times.php:292
-#: developer/modules/mywp.developer.module.dev.times.php:392
-#: setting/abstract.setting.bulk.module.php:874
+#: developer/modules/mywp.developer.module.dev.times.php:298
+#: developer/modules/mywp.developer.module.dev.times.php:398
+#: setting/abstract.setting.bulk.module.php:977
 msgid "All"
 msgstr ""
 
-#: developer/modules/mywp.developer.module.dev.times.php:306
-#: developer/modules/mywp.developer.module.dev.times.php:414
+#: developer/modules/mywp.developer.module.dev.times.php:312
+#: developer/modules/mywp.developer.module.dev.times.php:422
 msgid "Before Screen"
 msgstr ""
 
-#: developer/modules/mywp.developer.module.dev.times.php:318
-#: developer/modules/mywp.developer.module.dev.times.php:430
+#: developer/modules/mywp.developer.module.dev.times.php:324
+#: developer/modules/mywp.developer.module.dev.times.php:438
 msgid "Screen"
 msgstr ""
 
-#: developer/modules/mywp.developer.module.dev.times.php:331
-#: developer/modules/mywp.developer.module.dev.times.php:451
+#: developer/modules/mywp.developer.module.dev.times.php:337
+#: developer/modules/mywp.developer.module.dev.times.php:459
 msgid "Total"
 msgstr ""
 
@@ -618,345 +603,345 @@ msgstr ""
 msgid "No errors."
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:829
+#: setting/abstract.setting.bulk.module.php:930
 msgid "Filter and Search"
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:949
+#: setting/abstract.setting.bulk.module.php:1056
 msgid "Post not found."
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:1063
+#: setting/abstract.setting.bulk.module.php:1170
 msgid "Please filter and search."
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:1070
+#: setting/abstract.setting.bulk.module.php:1177
 msgid "Search results"
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:1104
-#: setting/modules/mywp.setting.admin.comments.php:390
-#: setting/modules/mywp.setting.admin.comments.php:451
-#: setting/modules/mywp.setting.admin.posts.php:582
-#: setting/modules/mywp.setting.admin.posts.php:709
-#: setting/modules/mywp.setting.admin.terms.php:486
-#: setting/modules/mywp.setting.admin.terms.php:567
-#: setting/modules/mywp.setting.admin.uploads.php:419
-#: setting/modules/mywp.setting.admin.uploads.php:490
-#: setting/modules/mywp.setting.admin.users.php:405
-#: setting/modules/mywp.setting.admin.users.php:493
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:258
+#: setting/abstract.setting.bulk.module.php:1211
+#: setting/modules/mywp.setting.admin.comments.php:425
+#: setting/modules/mywp.setting.admin.comments.php:486
+#: setting/modules/mywp.setting.admin.posts.php:640
+#: setting/modules/mywp.setting.admin.posts.php:767
+#: setting/modules/mywp.setting.admin.terms.php:525
+#: setting/modules/mywp.setting.admin.terms.php:606
+#: setting/modules/mywp.setting.admin.uploads.php:458
+#: setting/modules/mywp.setting.admin.uploads.php:529
+#: setting/modules/mywp.setting.admin.users.php:440
+#: setting/modules/mywp.setting.admin.users.php:528
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:295
 msgid "ID"
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:1105
+#: setting/abstract.setting.bulk.module.php:1212
 #: setting/modules/mywp.setting.site.post-type.php:24
 #: views/elements/setting-screen-select-post-type.php:29
 msgid "Post Type"
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:1109
+#: setting/abstract.setting.bulk.module.php:1216
 msgid "All Post Metas"
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:1110
+#: setting/abstract.setting.bulk.module.php:1217
 msgid "Terms"
 msgstr ""
 
-#: setting/abstract.setting.bulk.module.php:1135
+#: setting/abstract.setting.bulk.module.php:1242
 msgid "Bulk processing results"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:97
-#: setting/abstract.setting.columns.module.php:114
+#: setting/abstract.setting.columns.module.php:101
+#: setting/abstract.setting.columns.module.php:118
 msgid "Columns"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:101
+#: setting/abstract.setting.columns.module.php:105
 msgid "Refresh Columns"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:114
-#: setting/modules/mywp.setting.frontend.toolbar.php:268
+#: setting/abstract.setting.columns.module.php:118
+#: setting/modules/mywp.setting.frontend.toolbar.php:288
 #, php-format
 msgid "%1$s: %2$s is not found. Please refresh the %2$s."
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:114
-#: setting/modules/mywp.setting.frontend.toolbar.php:268
+#: setting/abstract.setting.columns.module.php:118
+#: setting/modules/mywp.setting.frontend.toolbar.php:288
 msgid "Error"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:150
+#: setting/abstract.setting.columns.module.php:159
 msgid "Add Column"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:184
+#: setting/abstract.setting.columns.module.php:194
 msgid ""
 "All columns place behind \"title or name\" and \"checkbox\" when show on "
 "mobile device."
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:559
-#: setting/modules/mywp.setting.admin.comments.php:445
-#: setting/modules/mywp.setting.admin.posts.php:419
-#: setting/modules/mywp.setting.admin.posts.php:703
-#: setting/modules/mywp.setting.admin.terms.php:561
-#: setting/modules/mywp.setting.admin.uploads.php:484
-#: setting/modules/mywp.setting.admin.users.php:487
+#: setting/abstract.setting.columns.module.php:617
+#: setting/modules/mywp.setting.admin.comments.php:480
+#: setting/modules/mywp.setting.admin.posts.php:461
+#: setting/modules/mywp.setting.admin.posts.php:761
+#: setting/modules/mywp.setting.admin.terms.php:600
+#: setting/modules/mywp.setting.admin.uploads.php:523
+#: setting/modules/mywp.setting.admin.users.php:522
 msgid "Deprecated"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:628
+#: setting/abstract.setting.columns.module.php:698
 msgid ""
 "This column value output is need Automatic output of column contents "
 "enabled."
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:637
+#: setting/abstract.setting.columns.module.php:708
 msgid "Column ID"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:655
+#: setting/abstract.setting.columns.module.php:726
 msgid "Active"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:660
+#: setting/abstract.setting.columns.module.php:731
 msgid "Width"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:663
+#: setting/abstract.setting.columns.module.php:734
 msgid "Default"
 msgstr ""
 
-#: setting/abstract.setting.columns.module.php:674
-#: setting/abstract.setting.toolbar.module.php:2681
-#: setting/modules/mywp.setting.admin.general.php:164
-#: setting/modules/mywp.setting.admin.sidebar.php:2421
-#: views/elements/setting-screen-management-meta-boxes.php:111
-#: views/elements/setting-screen-management-meta-boxes.php:140
+#: setting/abstract.setting.columns.module.php:747
+#: setting/abstract.setting.toolbar.module.php:3068
+#: setting/modules/mywp.setting.admin.general.php:173
+#: setting/modules/mywp.setting.admin.sidebar.php:2734
+#: views/elements/setting-screen-management-meta-boxes.php:121
+#: views/elements/setting-screen-management-meta-boxes.php:151
 msgid "Remove"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:156
+#: setting/abstract.setting.toolbar.module.php:171
 msgid "Submenus cannot be create for this menu."
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1415
-#: setting/modules/mywp.setting.admin.sidebar.php:1323
+#: setting/abstract.setting.toolbar.module.php:1634
+#: setting/modules/mywp.setting.admin.sidebar.php:1511
 msgid "Available Items"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1428
-#: setting/abstract.setting.toolbar.module.php:1902
-#: setting/abstract.setting.toolbar.module.php:2322
+#: setting/abstract.setting.toolbar.module.php:1651
+#: setting/abstract.setting.toolbar.module.php:2192
+#: setting/abstract.setting.toolbar.module.php:2676
 msgid "Group"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1446
-#: setting/modules/mywp.setting.admin.sidebar.php:1337
+#: setting/abstract.setting.toolbar.module.php:1681
+#: setting/modules/mywp.setting.admin.sidebar.php:1530
 msgid "Add Item"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1547
+#: setting/abstract.setting.toolbar.module.php:1790
 msgid "Current Toolbar"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1549
-#: setting/modules/mywp.setting.admin.sidebar.php:1442
+#: setting/abstract.setting.toolbar.module.php:1794
+#: setting/modules/mywp.setting.admin.sidebar.php:1642
 msgid "Drag menu items to edit and reorder menus."
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1555
-#: setting/modules/mywp.setting.admin.general.php:112
+#: setting/abstract.setting.toolbar.module.php:1801
+#: setting/modules/mywp.setting.admin.general.php:118
 msgid "Left"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1575
-#: setting/modules/mywp.setting.admin.general.php:116
+#: setting/abstract.setting.toolbar.module.php:1821
+#: setting/modules/mywp.setting.admin.general.php:122
 msgid "Right"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1611
-#: setting/modules/mywp.setting.admin.sidebar.php:1475
+#: setting/abstract.setting.toolbar.module.php:1857
+#: setting/modules/mywp.setting.admin.sidebar.php:1675
 msgid "Custom Menu UI"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1615
-#: setting/modules/mywp.setting.admin.sidebar.php:1481
+#: setting/abstract.setting.toolbar.module.php:1861
+#: setting/modules/mywp.setting.admin.sidebar.php:1681
 msgid "Enable"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1620
-#: setting/modules/mywp.setting.admin.sidebar.php:1486
+#: setting/abstract.setting.toolbar.module.php:1866
+#: setting/modules/mywp.setting.admin.sidebar.php:1686
 msgid "Cache Timeout"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1624
-#: setting/modules/mywp.setting.admin.sidebar.php:1490
+#: setting/abstract.setting.toolbar.module.php:1870
+#: setting/modules/mywp.setting.admin.sidebar.php:1690
 msgid "Minute"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1626
-#: setting/modules/mywp.setting.admin.sidebar.php:1492
+#: setting/abstract.setting.toolbar.module.php:1874
+#: setting/modules/mywp.setting.admin.sidebar.php:1694
 msgid "Remove Cache"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1715
+#: setting/abstract.setting.toolbar.module.php:1982
 #, php-format
 msgid "Howdy, %s"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1894
-#: setting/abstract.setting.toolbar.module.php:2329
-#: setting/abstract.setting.toolbar.module.php:2628
-#: setting/modules/mywp.setting.admin.sidebar.php:1640
-#: setting/modules/mywp.setting.admin.sidebar.php:2099
-#: setting/modules/mywp.setting.admin.sidebar.php:2374
+#: setting/abstract.setting.toolbar.module.php:2184
+#: setting/abstract.setting.toolbar.module.php:2687
+#: setting/abstract.setting.toolbar.module.php:3011
+#: setting/modules/mywp.setting.admin.sidebar.php:1855
+#: setting/modules/mywp.setting.admin.sidebar.php:2389
+#: setting/modules/mywp.setting.admin.sidebar.php:2681
 msgid "Custom HTML"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:1898
-#: setting/abstract.setting.toolbar.module.php:2334
-#: setting/modules/mywp.setting.admin.sidebar.php:1644
-#: setting/modules/mywp.setting.admin.sidebar.php:2103
+#: setting/abstract.setting.toolbar.module.php:2188
+#: setting/abstract.setting.toolbar.module.php:2696
+#: setting/modules/mywp.setting.admin.sidebar.php:1859
+#: setting/modules/mywp.setting.admin.sidebar.php:2393
 msgid "Custom Link"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2399
-#: setting/abstract.setting.toolbar.module.php:2526
-#: setting/modules/mywp.setting.admin.sidebar.php:2168
-#: setting/modules/mywp.setting.admin.sidebar.php:2264
-#: setting/modules/mywp.setting.admin.toolbar.php:137
-#: setting/modules/mywp.setting.frontend.toolbar.php:144
+#: setting/abstract.setting.toolbar.module.php:2776
+#: setting/abstract.setting.toolbar.module.php:2907
+#: setting/modules/mywp.setting.admin.sidebar.php:2468
+#: setting/modules/mywp.setting.admin.sidebar.php:2567
+#: setting/modules/mywp.setting.admin.toolbar.php:157
+#: setting/modules/mywp.setting.frontend.toolbar.php:164
 msgid "Menu Title"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2405
-#: setting/abstract.setting.toolbar.module.php:2544
-#: setting/modules/mywp.setting.admin.sidebar.php:2174
-#: setting/modules/mywp.setting.admin.sidebar.php:2282
-#: setting/modules/mywp.setting.frontend.toolbar.php:157
+#: setting/abstract.setting.toolbar.module.php:2782
+#: setting/abstract.setting.toolbar.module.php:2925
+#: setting/modules/mywp.setting.admin.sidebar.php:2474
+#: setting/modules/mywp.setting.admin.sidebar.php:2585
+#: setting/modules/mywp.setting.frontend.toolbar.php:177
 msgid "Icon class"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2413
-#: setting/abstract.setting.toolbar.module.php:2470
-#: setting/abstract.setting.toolbar.module.php:2558
-#: setting/abstract.setting.toolbar.module.php:2636
-#: setting/modules/mywp.setting.admin.sidebar.php:2182
-#: setting/modules/mywp.setting.admin.sidebar.php:2296
-#: setting/modules/mywp.setting.admin.sidebar.php:2382
-#: setting/modules/mywp.setting.admin.toolbar.php:131
-#: setting/modules/mywp.setting.frontend.toolbar.php:138
+#: setting/abstract.setting.toolbar.module.php:2791
+#: setting/abstract.setting.toolbar.module.php:2850
+#: setting/abstract.setting.toolbar.module.php:2940
+#: setting/abstract.setting.toolbar.module.php:3020
+#: setting/modules/mywp.setting.admin.sidebar.php:2483
+#: setting/modules/mywp.setting.admin.sidebar.php:2600
+#: setting/modules/mywp.setting.admin.sidebar.php:2690
+#: setting/modules/mywp.setting.admin.toolbar.php:150
+#: setting/modules/mywp.setting.frontend.toolbar.php:157
 msgid "More Details"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2420
-#: setting/abstract.setting.toolbar.module.php:2477
-#: setting/abstract.setting.toolbar.module.php:2550
-#: setting/abstract.setting.toolbar.module.php:2642
-#: setting/modules/mywp.setting.admin.sidebar.php:2189
-#: setting/modules/mywp.setting.admin.sidebar.php:2288
-#: setting/modules/mywp.setting.admin.sidebar.php:2388
-#: setting/modules/mywp.setting.admin.toolbar.php:150
-#: setting/modules/mywp.setting.frontend.toolbar.php:166
+#: setting/abstract.setting.toolbar.module.php:2799
+#: setting/abstract.setting.toolbar.module.php:2858
+#: setting/abstract.setting.toolbar.module.php:2931
+#: setting/abstract.setting.toolbar.module.php:3027
+#: setting/modules/mywp.setting.admin.sidebar.php:2491
+#: setting/modules/mywp.setting.admin.sidebar.php:2591
+#: setting/modules/mywp.setting.admin.sidebar.php:2698
+#: setting/modules/mywp.setting.admin.toolbar.php:170
+#: setting/modules/mywp.setting.frontend.toolbar.php:186
 msgid "Capability"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2433
-#: setting/abstract.setting.toolbar.module.php:2532
-#: setting/modules/mywp.setting.admin.sidebar.php:2202
-#: setting/modules/mywp.setting.admin.sidebar.php:2270
-#: setting/modules/mywp.setting.admin.toolbar.php:143
-#: setting/modules/mywp.setting.frontend.toolbar.php:150
+#: setting/abstract.setting.toolbar.module.php:2812
+#: setting/abstract.setting.toolbar.module.php:2913
+#: setting/modules/mywp.setting.admin.sidebar.php:2504
+#: setting/modules/mywp.setting.admin.sidebar.php:2573
+#: setting/modules/mywp.setting.admin.toolbar.php:163
+#: setting/modules/mywp.setting.frontend.toolbar.php:170
 msgid "Link URL"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2439
-#: setting/abstract.setting.toolbar.module.php:2490
-#: setting/abstract.setting.toolbar.module.php:2570
-#: setting/abstract.setting.toolbar.module.php:2654
-#: setting/modules/mywp.setting.admin.sidebar.php:2214
-#: setting/modules/mywp.setting.admin.sidebar.php:2308
-#: setting/modules/mywp.setting.admin.sidebar.php:2400
+#: setting/abstract.setting.toolbar.module.php:2818
+#: setting/abstract.setting.toolbar.module.php:2871
+#: setting/abstract.setting.toolbar.module.php:2953
+#: setting/abstract.setting.toolbar.module.php:3039
+#: setting/modules/mywp.setting.admin.sidebar.php:2516
+#: setting/modules/mywp.setting.admin.sidebar.php:2614
+#: setting/modules/mywp.setting.admin.sidebar.php:2710
 msgid "LI id"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2445
-#: setting/abstract.setting.toolbar.module.php:2496
-#: setting/abstract.setting.toolbar.module.php:2600
-#: setting/abstract.setting.toolbar.module.php:2660
+#: setting/abstract.setting.toolbar.module.php:2824
+#: setting/abstract.setting.toolbar.module.php:2877
+#: setting/abstract.setting.toolbar.module.php:2983
+#: setting/abstract.setting.toolbar.module.php:3045
 msgid "Meta Fields"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2538
-#: setting/modules/mywp.setting.admin.sidebar.php:2276
+#: setting/abstract.setting.toolbar.module.php:2919
+#: setting/modules/mywp.setting.admin.sidebar.php:2579
 msgid "Link Attributes"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2564
-#: setting/abstract.setting.toolbar.module.php:2648
-#: setting/modules/mywp.setting.admin.sidebar.php:2208
-#: setting/modules/mywp.setting.admin.sidebar.php:2302
-#: setting/modules/mywp.setting.admin.sidebar.php:2394
+#: setting/abstract.setting.toolbar.module.php:2947
+#: setting/abstract.setting.toolbar.module.php:3033
+#: setting/modules/mywp.setting.admin.sidebar.php:2510
+#: setting/modules/mywp.setting.admin.sidebar.php:2608
+#: setting/modules/mywp.setting.admin.sidebar.php:2704
 msgid "LI class"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2576
-#: setting/modules/mywp.setting.admin.sidebar.php:2326
+#: setting/abstract.setting.toolbar.module.php:2959
+#: setting/modules/mywp.setting.admin.sidebar.php:2632
 msgid "Icon id"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2582
-#: setting/modules/mywp.setting.admin.sidebar.php:2238
-#: setting/modules/mywp.setting.admin.sidebar.php:2332
+#: setting/abstract.setting.toolbar.module.php:2965
+#: setting/modules/mywp.setting.admin.sidebar.php:2540
+#: setting/modules/mywp.setting.admin.sidebar.php:2638
 msgid "Icon img"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2588
-#: setting/modules/mywp.setting.admin.sidebar.php:2232
-#: setting/modules/mywp.setting.admin.sidebar.php:2338
+#: setting/abstract.setting.toolbar.module.php:2971
+#: setting/modules/mywp.setting.admin.sidebar.php:2534
+#: setting/modules/mywp.setting.admin.sidebar.php:2644
 msgid "Icon style"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2594
-#: setting/modules/mywp.setting.admin.sidebar.php:2344
+#: setting/abstract.setting.toolbar.module.php:2977
+#: setting/modules/mywp.setting.admin.sidebar.php:2650
 msgid "Icon html"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2687
-#: setting/modules/mywp.setting.admin.sidebar.php:2427
+#: setting/abstract.setting.toolbar.module.php:3075
+#: setting/modules/mywp.setting.admin.sidebar.php:2741
 msgid ""
 "This menu item is dynamic submenus content and can not have a submenu."
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2695
-#: setting/modules/mywp.setting.admin.sidebar.php:2435
+#: setting/abstract.setting.toolbar.module.php:3083
+#: setting/modules/mywp.setting.admin.sidebar.php:2749
 msgid "Child Menus"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2787
-#: setting/modules/mywp.setting.admin.sidebar.php:2551
+#: setting/abstract.setting.toolbar.module.php:3189
+#: setting/modules/mywp.setting.admin.sidebar.php:2863
 msgid "Example menu title"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2799
-#: setting/modules/mywp.setting.admin.sidebar.php:2563
+#: setting/abstract.setting.toolbar.module.php:3201
+#: setting/modules/mywp.setting.admin.sidebar.php:2875
 msgid "Change Icon"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2824
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:195
+#: setting/abstract.setting.toolbar.module.php:3226
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:231
 msgid "Meta key"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2824
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:201
+#: setting/abstract.setting.toolbar.module.php:3226
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:237
 msgid "Meta value"
 msgstr ""
 
-#: setting/abstract.setting.toolbar.module.php:2856
+#: setting/abstract.setting.toolbar.module.php:3258
 msgid "Add"
 msgstr ""
 
@@ -965,7 +950,7 @@ msgid "Overview"
 msgstr ""
 
 #: setting/class.setting.block-editor.php:45
-#: setting/modules/mywp.setting.admin.post-edit.php:351
+#: setting/modules/mywp.setting.admin.post-edit.php:403
 msgid "Permalinks"
 msgstr ""
 
@@ -974,8 +959,8 @@ msgid "Featured Images"
 msgstr ""
 
 #: setting/class.setting.block-editor.php:88
-#: setting/modules/mywp.setting.admin.posts.php:632
-#: setting/modules/mywp.setting.admin.posts.php:740
+#: setting/modules/mywp.setting.admin.posts.php:690
+#: setting/modules/mywp.setting.admin.posts.php:798
 msgid "Excerpt"
 msgstr ""
 
@@ -991,187 +976,187 @@ msgstr ""
 msgid "Post Attributes"
 msgstr ""
 
-#: setting/class.setting.php:277 setting/class.setting.php:287
-#: setting/class.setting.php:295 setting/class.setting.php:330
-#: setting/class.setting.php:340 setting/class.setting.php:350
-#: setting/class.setting.php:358 setting/class.setting.php:381
-#: setting/class.setting.php:391 setting/class.setting.php:401
+#: setting/class.setting.php:306 setting/class.setting.php:318
+#: setting/class.setting.php:326 setting/class.setting.php:365
+#: setting/class.setting.php:377 setting/class.setting.php:387
+#: setting/class.setting.php:397 setting/class.setting.php:424
+#: setting/class.setting.php:436 setting/class.setting.php:446
 #, php-format
 msgid "The %1$s is required for %2$s."
 msgstr ""
 
-#: setting/class.setting.php:418 setting/class.setting.php:424
+#: setting/class.setting.php:463 setting/class.setting.php:469
 msgid "Settings saved."
 msgstr ""
 
 #: setting/modules/mywp.setting.admin.comments.php:26
-#: setting/modules/mywp.setting.admin.comments.php:347
-#: setting/modules/mywp.setting.admin.posts.php:501
-#: setting/modules/mywp.setting.admin.sidebar.php:1566
-#: setting/modules/mywp.setting.admin.uploads.php:383
+#: setting/modules/mywp.setting.admin.comments.php:374
+#: setting/modules/mywp.setting.admin.posts.php:551
+#: setting/modules/mywp.setting.admin.sidebar.php:1781
+#: setting/modules/mywp.setting.admin.uploads.php:414
 msgid "Comments"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:275
-#: setting/modules/mywp.setting.admin.comments.php:384
-#: setting/modules/mywp.setting.admin.posts.php:376
-#: setting/modules/mywp.setting.admin.posts.php:576
-#: setting/modules/mywp.setting.admin.terms.php:352
-#: setting/modules/mywp.setting.admin.terms.php:480
-#: setting/modules/mywp.setting.admin.uploads.php:275
-#: setting/modules/mywp.setting.admin.uploads.php:413
-#: setting/modules/mywp.setting.admin.user-edit.php:86
-#: setting/modules/mywp.setting.admin.users.php:277
-#: setting/modules/mywp.setting.admin.users.php:399
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:261
+#: setting/modules/mywp.setting.admin.comments.php:296
+#: setting/modules/mywp.setting.admin.comments.php:419
+#: setting/modules/mywp.setting.admin.posts.php:416
+#: setting/modules/mywp.setting.admin.posts.php:634
+#: setting/modules/mywp.setting.admin.terms.php:381
+#: setting/modules/mywp.setting.admin.terms.php:519
+#: setting/modules/mywp.setting.admin.uploads.php:296
+#: setting/modules/mywp.setting.admin.uploads.php:452
+#: setting/modules/mywp.setting.admin.user-edit.php:90
+#: setting/modules/mywp.setting.admin.users.php:298
+#: setting/modules/mywp.setting.admin.users.php:434
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:315
 msgid "Other"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:279
-#: setting/modules/mywp.setting.admin.posts.php:380
-#: setting/modules/mywp.setting.admin.terms.php:356
-#: setting/modules/mywp.setting.admin.uploads.php:289
-#: setting/modules/mywp.setting.admin.users.php:281
+#: setting/modules/mywp.setting.admin.comments.php:302
+#: setting/modules/mywp.setting.admin.posts.php:422
+#: setting/modules/mywp.setting.admin.terms.php:387
+#: setting/modules/mywp.setting.admin.uploads.php:316
+#: setting/modules/mywp.setting.admin.users.php:304
 msgid "Number of items per page:"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:287
+#: setting/modules/mywp.setting.admin.comments.php:310
 msgid "Search Comments"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:291
-#: setting/modules/mywp.setting.admin.comments.php:301
-#: setting/modules/mywp.setting.admin.dashboard.php:74
-#: setting/modules/mywp.setting.admin.general.php:94
-#: setting/modules/mywp.setting.admin.general.php:131
-#: setting/modules/mywp.setting.admin.nav-menu.php:70
-#: setting/modules/mywp.setting.admin.nav-menu.php:104
-#: setting/modules/mywp.setting.admin.nav-menu.php:138
-#: setting/modules/mywp.setting.admin.post-edit.php:314
-#: setting/modules/mywp.setting.admin.post-edit.php:323
-#: setting/modules/mywp.setting.admin.post-edit.php:355
-#: setting/modules/mywp.setting.admin.post-edit.php:364
-#: setting/modules/mywp.setting.admin.post-edit.php:373
-#: setting/modules/mywp.setting.admin.post-edit.php:476
-#: setting/modules/mywp.setting.admin.post-edit.php:485
-#: setting/modules/mywp.setting.admin.post-edit.php:494
-#: setting/modules/mywp.setting.admin.post-edit.php:503
-#: setting/modules/mywp.setting.admin.post-edit.php:512
-#: setting/modules/mywp.setting.admin.post-edit.php:521
-#: setting/modules/mywp.setting.admin.posts.php:392
-#: setting/modules/mywp.setting.admin.posts.php:401
-#: setting/modules/mywp.setting.admin.posts.php:410
-#: setting/modules/mywp.setting.admin.posts.php:435
-#: setting/modules/mywp.setting.admin.terms.php:368
-#: setting/modules/mywp.setting.admin.terms.php:377
-#: setting/modules/mywp.setting.admin.uploads.php:301
-#: setting/modules/mywp.setting.admin.uploads.php:310
-#: setting/modules/mywp.setting.admin.uploads.php:320
-#: setting/modules/mywp.setting.admin.user-edit.php:63
-#: setting/modules/mywp.setting.admin.user-edit.php:100
-#: setting/modules/mywp.setting.admin.users.php:293
-#: setting/modules/mywp.setting.admin.users.php:302
-#: setting/modules/mywp.setting.admin.users.php:312
+#: setting/modules/mywp.setting.admin.comments.php:314
+#: setting/modules/mywp.setting.admin.comments.php:325
+#: setting/modules/mywp.setting.admin.dashboard.php:79
+#: setting/modules/mywp.setting.admin.general.php:100
+#: setting/modules/mywp.setting.admin.general.php:140
+#: setting/modules/mywp.setting.admin.nav-menu.php:80
+#: setting/modules/mywp.setting.admin.nav-menu.php:119
+#: setting/modules/mywp.setting.admin.nav-menu.php:156
+#: setting/modules/mywp.setting.admin.post-edit.php:366
+#: setting/modules/mywp.setting.admin.post-edit.php:375
+#: setting/modules/mywp.setting.admin.post-edit.php:407
+#: setting/modules/mywp.setting.admin.post-edit.php:416
+#: setting/modules/mywp.setting.admin.post-edit.php:425
+#: setting/modules/mywp.setting.admin.post-edit.php:535
+#: setting/modules/mywp.setting.admin.post-edit.php:544
+#: setting/modules/mywp.setting.admin.post-edit.php:553
+#: setting/modules/mywp.setting.admin.post-edit.php:562
+#: setting/modules/mywp.setting.admin.post-edit.php:571
+#: setting/modules/mywp.setting.admin.post-edit.php:580
+#: setting/modules/mywp.setting.admin.posts.php:434
+#: setting/modules/mywp.setting.admin.posts.php:443
+#: setting/modules/mywp.setting.admin.posts.php:452
+#: setting/modules/mywp.setting.admin.posts.php:482
+#: setting/modules/mywp.setting.admin.terms.php:399
+#: setting/modules/mywp.setting.admin.terms.php:408
+#: setting/modules/mywp.setting.admin.uploads.php:328
+#: setting/modules/mywp.setting.admin.uploads.php:337
+#: setting/modules/mywp.setting.admin.uploads.php:348
+#: setting/modules/mywp.setting.admin.user-edit.php:66
+#: setting/modules/mywp.setting.admin.user-edit.php:113
+#: setting/modules/mywp.setting.admin.users.php:316
+#: setting/modules/mywp.setting.admin.users.php:325
+#: setting/modules/mywp.setting.admin.users.php:336
 #: setting/modules/mywp.setting.frontend.general.php:46
-#: setting/modules/mywp.setting.frontend.general.php:89
-#: setting/modules/mywp.setting.frontend.general.php:103
-#: setting/modules/mywp.setting.frontend.general.php:117
-#: setting/modules/mywp.setting.frontend.general.php:163
-#: setting/modules/mywp.setting.frontend.general.php:175
-#: setting/modules/mywp.setting.frontend.general.php:187
-#: setting/modules/mywp.setting.frontend.general.php:199
-#: setting/modules/mywp.setting.frontend.general.php:211
-#: setting/modules/mywp.setting.frontend.general.php:223
-#: setting/modules/mywp.setting.frontend.general.php:237
+#: setting/modules/mywp.setting.frontend.general.php:98
+#: setting/modules/mywp.setting.frontend.general.php:114
+#: setting/modules/mywp.setting.frontend.general.php:130
+#: setting/modules/mywp.setting.frontend.general.php:177
+#: setting/modules/mywp.setting.frontend.general.php:191
+#: setting/modules/mywp.setting.frontend.general.php:205
+#: setting/modules/mywp.setting.frontend.general.php:219
+#: setting/modules/mywp.setting.frontend.general.php:233
+#: setting/modules/mywp.setting.frontend.general.php:247
+#: setting/modules/mywp.setting.frontend.general.php:263
 #: setting/modules/mywp.setting.site.general.php:66
-#: setting/modules/mywp.setting.site.sitemap.php:116
-#: views/elements/setting-screen-management-block-editor-panels.php:44
-#: views/elements/setting-screen-management-block-editor-panels.php:64
-#: views/elements/setting-screen-management-meta-boxes.php:111
-#: views/elements/setting-screen-management-meta-boxes.php:141
+#: setting/modules/mywp.setting.site.sitemap.php:123
+#: views/elements/setting-screen-management-block-editor-panels.php:48
+#: views/elements/setting-screen-management-block-editor-panels.php:69
+#: views/elements/setting-screen-management-meta-boxes.php:121
+#: views/elements/setting-screen-management-meta-boxes.php:154
 msgid "Hide"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:297
-#: setting/modules/mywp.setting.admin.posts.php:431
-#: setting/modules/mywp.setting.admin.uploads.php:316
-#: setting/modules/mywp.setting.admin.users.php:308
+#: setting/modules/mywp.setting.admin.comments.php:320
+#: setting/modules/mywp.setting.admin.posts.php:477
+#: setting/modules/mywp.setting.admin.uploads.php:343
+#: setting/modules/mywp.setting.admin.users.php:331
 msgid "Custom search filter"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:302
-#: setting/modules/mywp.setting.admin.post-edit.php:530
-#: setting/modules/mywp.setting.admin.posts.php:436
-#: setting/modules/mywp.setting.admin.uploads.php:321
-#: setting/modules/mywp.setting.admin.users.php:313
+#: setting/modules/mywp.setting.admin.comments.php:328
+#: setting/modules/mywp.setting.admin.post-edit.php:589
+#: setting/modules/mywp.setting.admin.posts.php:485
+#: setting/modules/mywp.setting.admin.uploads.php:351
+#: setting/modules/mywp.setting.admin.users.php:339
 msgid "Show"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:341
-#: setting/modules/mywp.setting.admin.posts.php:493
-#: setting/modules/mywp.setting.admin.uploads.php:367
+#: setting/modules/mywp.setting.admin.comments.php:368
+#: setting/modules/mywp.setting.admin.posts.php:543
+#: setting/modules/mywp.setting.admin.uploads.php:398
 msgid "Author"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:354
+#: setting/modules/mywp.setting.admin.comments.php:381
 msgid "In response to"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:362
-#: setting/modules/mywp.setting.admin.uploads.php:391
+#: setting/modules/mywp.setting.admin.comments.php:389
+#: setting/modules/mywp.setting.admin.uploads.php:422
 msgctxt "column name"
 msgid "Date"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:397
-#: setting/modules/mywp.setting.admin.comments.php:458
-#: setting/modules/mywp.setting.admin.users.php:358
-#: setting/modules/mywp.setting.debug.crons.php:58
-#: setting/modules/mywp.setting.debug.transients.php:210
+#: setting/modules/mywp.setting.admin.comments.php:432
+#: setting/modules/mywp.setting.admin.comments.php:493
+#: setting/modules/mywp.setting.admin.users.php:385
+#: setting/modules/mywp.setting.debug.crons.php:65
+#: setting/modules/mywp.setting.debug.transients.php:220
 msgid "Name"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:404
-#: setting/modules/mywp.setting.admin.comments.php:465
-#: setting/modules/mywp.setting.admin.users.php:365
+#: setting/modules/mywp.setting.admin.comments.php:439
+#: setting/modules/mywp.setting.admin.comments.php:500
+#: setting/modules/mywp.setting.admin.users.php:392
 msgid "Email"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.comments.php:411
-#: setting/modules/mywp.setting.admin.comments.php:472
+#: setting/modules/mywp.setting.admin.comments.php:446
+#: setting/modules/mywp.setting.admin.comments.php:507
 msgid "URL"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.dashboard.php:52
-#: setting/modules/mywp.setting.admin.nav-menu.php:56
-#: setting/modules/mywp.setting.admin.post-edit.php:226
+#: setting/modules/mywp.setting.admin.dashboard.php:53
+#: setting/modules/mywp.setting.admin.nav-menu.php:57
+#: setting/modules/mywp.setting.admin.post-edit.php:263
 msgid "Management of meta boxes"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.dashboard.php:66
+#: setting/modules/mywp.setting.admin.dashboard.php:69
 #: setting/modules/mywp.setting.admin.general.php:31
-#: setting/modules/mywp.setting.admin.nav-menu.php:129
-#: setting/modules/mywp.setting.admin.post-edit.php:279
-#: setting/modules/mywp.setting.admin.site-editor.php:39
-#: setting/modules/mywp.setting.admin.user-edit.php:54
+#: setting/modules/mywp.setting.admin.nav-menu.php:145
+#: setting/modules/mywp.setting.admin.post-edit.php:329
+#: setting/modules/mywp.setting.admin.site-editor.php:40
+#: setting/modules/mywp.setting.admin.user-edit.php:55
 #: setting/modules/mywp.setting.frontend.general.php:30
-#: setting/modules/mywp.setting.frontend.general.php:51
+#: setting/modules/mywp.setting.frontend.general.php:52
 #: setting/modules/mywp.setting.login.general.php:22
-#: setting/modules/mywp.setting.site.sitemap.php:98
+#: setting/modules/mywp.setting.site.sitemap.php:104
 msgid "General"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.dashboard.php:70
+#: setting/modules/mywp.setting.admin.dashboard.php:75
 msgid "Welcome to WordPress!"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.dashboard.php:79
-#: setting/modules/mywp.setting.admin.post-edit.php:381
+#: setting/modules/mywp.setting.admin.dashboard.php:84
+#: setting/modules/mywp.setting.admin.post-edit.php:433
 msgid "Re-arrange meta boxes"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.dashboard.php:83
-#: setting/modules/mywp.setting.admin.post-edit.php:385
+#: setting/modules/mywp.setting.admin.dashboard.php:88
+#: setting/modules/mywp.setting.admin.post-edit.php:437
 msgid "Prevent"
 msgstr ""
 
@@ -1191,104 +1176,104 @@ msgstr ""
 msgid "Translation updates"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:63
+#: setting/modules/mywp.setting.admin.general.php:66
 msgid "Hide notifications"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:80
+#: setting/modules/mywp.setting.admin.general.php:83
 msgid "Screen Options"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:81
+#: setting/modules/mywp.setting.admin.general.php:84
 msgid "Help"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:85
+#: setting/modules/mywp.setting.admin.general.php:89
 msgid "Screen Options and Help Tab"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:113
+#: setting/modules/mywp.setting.admin.general.php:119
 #, php-format
 msgid "Thank you for creating with <a href=\"%s\">WordPress</a>."
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:113
+#: setting/modules/mywp.setting.admin.general.php:119
 msgid "https://wordpress.org/"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:122
+#: setting/modules/mywp.setting.admin.general.php:129
 msgid "Footer Text"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:154
-#: setting/modules/mywp.setting.login.general.php:132
+#: setting/modules/mywp.setting.admin.general.php:163
+#: setting/modules/mywp.setting.login.general.php:150
 msgid "Custom Footer Text"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:160
+#: setting/modules/mywp.setting.admin.general.php:169
 msgid "Remove \"WordPress\" from title tag"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:169
-#: setting/modules/mywp.setting.frontend.general.php:263
-#: setting/modules/mywp.setting.login.general.php:118
+#: setting/modules/mywp.setting.admin.general.php:178
+#: setting/modules/mywp.setting.frontend.general.php:291
+#: setting/modules/mywp.setting.login.general.php:133
 msgid "Include your CSS file"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:174
-#: setting/modules/mywp.setting.admin.general.php:188
-#: setting/modules/mywp.setting.frontend.general.php:268
-#: setting/modules/mywp.setting.frontend.general.php:282
-#: setting/modules/mywp.setting.login.general.php:49
-#: setting/modules/mywp.setting.login.general.php:63
-#: setting/modules/mywp.setting.login.general.php:77
-#: setting/modules/mywp.setting.login.general.php:123
-#: setting/modules/mywp.setting.login.user.php:50
-#: setting/modules/mywp.setting.login.user.php:64
+#: setting/modules/mywp.setting.admin.general.php:183
+#: setting/modules/mywp.setting.admin.general.php:200
+#: setting/modules/mywp.setting.frontend.general.php:296
+#: setting/modules/mywp.setting.frontend.general.php:313
+#: setting/modules/mywp.setting.login.general.php:52
+#: setting/modules/mywp.setting.login.general.php:69
+#: setting/modules/mywp.setting.login.general.php:86
+#: setting/modules/mywp.setting.login.general.php:138
+#: setting/modules/mywp.setting.login.user.php:53
+#: setting/modules/mywp.setting.login.user.php:70
 msgid "You can use a shortcode."
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:175
-#: setting/modules/mywp.setting.admin.general.php:189
-#: setting/modules/mywp.setting.frontend.general.php:269
-#: setting/modules/mywp.setting.frontend.general.php:283
-#: setting/modules/mywp.setting.login.general.php:50
-#: setting/modules/mywp.setting.login.general.php:64
-#: setting/modules/mywp.setting.login.general.php:78
-#: setting/modules/mywp.setting.login.general.php:124
-#: setting/modules/mywp.setting.login.user.php:51
-#: setting/modules/mywp.setting.login.user.php:65
+#: setting/modules/mywp.setting.admin.general.php:186
+#: setting/modules/mywp.setting.admin.general.php:203
+#: setting/modules/mywp.setting.frontend.general.php:299
+#: setting/modules/mywp.setting.frontend.general.php:316
+#: setting/modules/mywp.setting.login.general.php:55
+#: setting/modules/mywp.setting.login.general.php:72
+#: setting/modules/mywp.setting.login.general.php:89
+#: setting/modules/mywp.setting.login.general.php:141
+#: setting/modules/mywp.setting.login.user.php:56
+#: setting/modules/mywp.setting.login.user.php:73
 msgid "More shortcodes"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:183
-#: setting/modules/mywp.setting.frontend.general.php:277
+#: setting/modules/mywp.setting.admin.general.php:195
+#: setting/modules/mywp.setting.frontend.general.php:308
 msgid "Include your JS file"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:197
-#: setting/modules/mywp.setting.login.general.php:112
+#: setting/modules/mywp.setting.admin.general.php:212
+#: setting/modules/mywp.setting.login.general.php:127
 msgid "Input CSS"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:203
+#: setting/modules/mywp.setting.admin.general.php:218
 msgid "Max Post Revision"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:210
+#: setting/modules/mywp.setting.admin.general.php:225
 #, php-format
 msgid "%s is infinite stored."
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:215
+#: setting/modules/mywp.setting.admin.general.php:230
 msgid "Not use Admin Screen"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:219
+#: setting/modules/mywp.setting.admin.general.php:234
 msgid "Not use"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.general.php:223
+#: setting/modules/mywp.setting.admin.general.php:238
 msgid "This feature is Locked out."
 msgstr ""
 
@@ -1296,60 +1281,60 @@ msgstr ""
 msgid "Nav Menus"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:87
+#: setting/modules/mywp.setting.admin.nav-menu.php:99
 msgid "Link Target"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:88
+#: setting/modules/mywp.setting.admin.nav-menu.php:100
 msgid "Title Attribute"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:89
+#: setting/modules/mywp.setting.admin.nav-menu.php:101
 msgid "CSS Classes"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:90
+#: setting/modules/mywp.setting.admin.nav-menu.php:102
 msgid "Link Relationship (XFN)"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:91
-#: setting/modules/mywp.setting.admin.terms.php:435
+#: setting/modules/mywp.setting.admin.nav-menu.php:103
+#: setting/modules/mywp.setting.admin.terms.php:466
 msgid "Description"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:95
+#: setting/modules/mywp.setting.admin.nav-menu.php:108
 msgid "Advanced menu properties"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:121
+#: setting/modules/mywp.setting.admin.nav-menu.php:136
 msgid "Create a new menu"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:122
+#: setting/modules/mywp.setting.admin.nav-menu.php:137
 msgid "Delete Menu"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:123
+#: setting/modules/mywp.setting.admin.nav-menu.php:138
 msgid "Manage Locations"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:124
+#: setting/modules/mywp.setting.admin.nav-menu.php:139
 msgid "Menu Settings"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:125
+#: setting/modules/mywp.setting.admin.nav-menu.php:140
 msgid "Manage with Live Preview"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.nav-menu.php:264
+#: setting/modules/mywp.setting.admin.nav-menu.php:299
 msgid "Custom Links"
 msgstr ""
 
 #: setting/modules/mywp.setting.admin.post-edit.php:36
-#: setting/modules/mywp.setting.frontend.toolbar.php:90
-#: setting/modules/mywp.setting.frontend.toolbar.php:119
-#: setting/modules/mywp.setting.frontend.toolbar.php:120
-#: setting/modules/mywp.setting.frontend.toolbar.php:146
+#: setting/modules/mywp.setting.frontend.toolbar.php:96
+#: setting/modules/mywp.setting.frontend.toolbar.php:126
+#: setting/modules/mywp.setting.frontend.toolbar.php:128
+#: setting/modules/mywp.setting.frontend.toolbar.php:166
 msgid "Edit Post"
 msgstr ""
 
@@ -1357,141 +1342,140 @@ msgstr ""
 msgid "Add Post"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:136
-#: setting/modules/mywp.setting.debug.post-type-structure.php:48
-#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:79
+#: setting/modules/mywp.setting.admin.post-edit.php:167
+#: setting/modules/mywp.setting.debug.post-type-structure.php:52
 #, php-format
 msgid "%1$s: %2$s is not found."
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:136
-#: setting/modules/mywp.setting.debug.post-type-structure.php:48
+#: setting/modules/mywp.setting.admin.post-edit.php:167
+#: setting/modules/mywp.setting.debug.post-type-structure.php:52
 msgid "Invalid Post Type"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:195
+#: setting/modules/mywp.setting.admin.post-edit.php:227
 msgid "For Block/Classic Editor"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:199
+#: setting/modules/mywp.setting.admin.post-edit.php:233
 msgid "Change the Editor"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:203
+#: setting/modules/mywp.setting.admin.post-edit.php:237
 msgid "Use Classic Editor"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:218
+#: setting/modules/mywp.setting.admin.post-edit.php:253
 msgid "Management of Document panels (block editor)"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:255
+#: setting/modules/mywp.setting.admin.post-edit.php:294
 msgid "Updated Messages"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:286
-#: setting/modules/mywp.setting.admin.site-editor.php:43
+#: setting/modules/mywp.setting.admin.post-edit.php:338
+#: setting/modules/mywp.setting.admin.site-editor.php:46
 msgid "Top left button"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:290
-#: setting/modules/mywp.setting.admin.site-editor.php:47
+#: setting/modules/mywp.setting.admin.post-edit.php:342
+#: setting/modules/mywp.setting.admin.site-editor.php:50
 msgid "Change to back icon"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:307
+#: setting/modules/mywp.setting.admin.post-edit.php:359
 msgctxt "post"
 msgid "Add New"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:331
+#: setting/modules/mywp.setting.admin.post-edit.php:383
 msgid "Change title placeholder"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:334
+#: setting/modules/mywp.setting.admin.post-edit.php:386
 msgid "Add title"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:342
+#: setting/modules/mywp.setting.admin.post-edit.php:394
 msgid "Change Post title to Post ID"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:346
+#: setting/modules/mywp.setting.admin.post-edit.php:398
 msgid "Auto Change"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:360
+#: setting/modules/mywp.setting.admin.post-edit.php:412
 msgid "Change Permalink Structure"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:369
+#: setting/modules/mywp.setting.admin.post-edit.php:421
 msgid "Content"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:393
+#: setting/modules/mywp.setting.admin.post-edit.php:445
 msgid "Forced Editor"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:397
-#: setting/modules/mywp.setting.admin.post-edit.php:398
+#: setting/modules/mywp.setting.admin.post-edit.php:450
+#: setting/modules/mywp.setting.admin.post-edit.php:453
 #, php-format
 msgid "Only use %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:397
+#: setting/modules/mywp.setting.admin.post-edit.php:450
 msgctxt "Name for the Visual editor tab"
 msgid "Visual"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:398
+#: setting/modules/mywp.setting.admin.post-edit.php:453
 msgctxt "Name for the Text editor tab (formerly HTML)"
 msgid "Text"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:468
+#: setting/modules/mywp.setting.admin.post-edit.php:525
 msgid "Publish metabox"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:472
+#: setting/modules/mywp.setting.admin.post-edit.php:531
 msgid "Save Draft"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:481
+#: setting/modules/mywp.setting.admin.post-edit.php:540
 msgid "Preview Changes"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:490
+#: setting/modules/mywp.setting.admin.post-edit.php:549
 msgid "Changes Post Status"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:499
+#: setting/modules/mywp.setting.admin.post-edit.php:558
 msgid "Changes Publish Status"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:508
+#: setting/modules/mywp.setting.admin.post-edit.php:567
 msgid "Changes Publish On"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:517
+#: setting/modules/mywp.setting.admin.post-edit.php:576
 msgid "Revisions"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:526
+#: setting/modules/mywp.setting.admin.post-edit.php:585
 msgid "Custom post statuses"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:535
+#: setting/modules/mywp.setting.admin.post-edit.php:594
 msgid "Selectable post statuses"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.post-edit.php:823
-#: setting/modules/mywp.setting.admin.post-edit.php:837
-#: setting/modules/mywp.setting.admin.posts.php:968
-#: setting/modules/mywp.setting.admin.posts.php:982
-#: setting/modules/mywp.setting.admin.terms.php:709
-#: setting/modules/mywp.setting.admin.terms.php:723
-#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:177
-#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:191
+#: setting/modules/mywp.setting.admin.post-edit.php:921
+#: setting/modules/mywp.setting.admin.post-edit.php:939
+#: setting/modules/mywp.setting.admin.posts.php:1040
+#: setting/modules/mywp.setting.admin.posts.php:1058
+#: setting/modules/mywp.setting.admin.terms.php:763
+#: setting/modules/mywp.setting.admin.terms.php:781
+#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:186
+#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:204
 #, php-format
 msgid "The %s is not found data."
 msgstr ""
@@ -1500,91 +1484,91 @@ msgstr ""
 msgid "All Posts"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:354
+#: setting/modules/mywp.setting.admin.posts.php:383
 msgid "Bulk Updated Messages"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:406
+#: setting/modules/mywp.setting.admin.posts.php:448
 #: setting/setting.init.php:177
 msgid "Bulk actions"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:416
+#: setting/modules/mywp.setting.admin.posts.php:458
 msgid "Automatic output of column contents"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:424
+#: setting/modules/mywp.setting.admin.posts.php:467
 msgid "Not automatic output"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:425
+#: setting/modules/mywp.setting.admin.posts.php:470
 msgid "Automatic output"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:520
-#: setting/modules/mywp.setting.admin.posts.php:644
-#: setting/modules/mywp.setting.admin.posts.php:753
+#: setting/modules/mywp.setting.admin.posts.php:570
+#: setting/modules/mywp.setting.admin.posts.php:702
+#: setting/modules/mywp.setting.admin.posts.php:811
 msgctxt "post"
 msgid "Featured image"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:588
-#: setting/modules/mywp.setting.admin.posts.php:716
-#: setting/modules/mywp.setting.admin.terms.php:492
-#: setting/modules/mywp.setting.admin.terms.php:573
+#: setting/modules/mywp.setting.admin.posts.php:646
+#: setting/modules/mywp.setting.admin.posts.php:774
+#: setting/modules/mywp.setting.admin.terms.php:531
+#: setting/modules/mywp.setting.admin.terms.php:612
 msgid "Parent"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:596
-#: setting/modules/mywp.setting.admin.posts.php:725
+#: setting/modules/mywp.setting.admin.posts.php:654
+#: setting/modules/mywp.setting.admin.posts.php:783
 msgid "Order"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:602
+#: setting/modules/mywp.setting.admin.posts.php:660
 msgid "Status"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:618
+#: setting/modules/mywp.setting.admin.posts.php:676
 msgid "Modified Date"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:625
-#: setting/modules/mywp.setting.admin.posts.php:732
-#: setting/modules/mywp.setting.admin.terms.php:441
+#: setting/modules/mywp.setting.admin.posts.php:683
+#: setting/modules/mywp.setting.admin.posts.php:790
+#: setting/modules/mywp.setting.admin.terms.php:472
 msgid "Slug"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.posts.php:678
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:265
-#: setting/modules/mywp.setting.debug.post-structure.php:93
-#: setting/modules/mywp.setting.debug.post-type-structure.php:115
+#: setting/modules/mywp.setting.admin.posts.php:736
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:319
+#: setting/modules/mywp.setting.debug.post-structure.php:105
+#: setting/modules/mywp.setting.debug.post-type-structure.php:128
 msgid "Custom Fields"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.sidebar.php:152
+#: setting/modules/mywp.setting.admin.sidebar.php:156
 msgid "Sidebar"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.sidebar.php:1440
+#: setting/modules/mywp.setting.admin.sidebar.php:1639
 msgid "Current Sidebar"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.sidebar.php:1570
+#: setting/modules/mywp.setting.admin.sidebar.php:1785
 msgid "Appearance"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.sidebar.php:1636
-#: setting/modules/mywp.setting.admin.sidebar.php:2094
+#: setting/modules/mywp.setting.admin.sidebar.php:1851
+#: setting/modules/mywp.setting.admin.sidebar.php:2383
 msgid "Separator"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.sidebar.php:2220
-#: setting/modules/mywp.setting.admin.sidebar.php:2314
+#: setting/modules/mywp.setting.admin.sidebar.php:2522
+#: setting/modules/mywp.setting.admin.sidebar.php:2620
 msgid "Link class"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.sidebar.php:2226
-#: setting/modules/mywp.setting.admin.sidebar.php:2320
+#: setting/modules/mywp.setting.admin.sidebar.php:2528
+#: setting/modules/mywp.setting.admin.sidebar.php:2626
 msgid "Link id"
 msgstr ""
 
@@ -1593,36 +1577,36 @@ msgid "Site Editor"
 msgstr ""
 
 #: setting/modules/mywp.setting.admin.terms.php:28
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:273
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:327
 #: setting/modules/mywp.setting.debug.terms.php:24
 msgid "All Terms"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.terms.php:428
+#: setting/modules/mywp.setting.admin.terms.php:459
 msgctxt "term name"
 msgid "Name"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.terms.php:448
+#: setting/modules/mywp.setting.admin.terms.php:479
 msgctxt "Number/count of items"
 msgid "Count"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.toolbar.php:69
+#: setting/modules/mywp.setting.admin.toolbar.php:75
 msgid "This menu item is only display for edit post."
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.toolbar.php:84
-#: setting/modules/mywp.setting.admin.toolbar.php:112
-#: setting/modules/mywp.setting.admin.toolbar.php:113
-#: setting/modules/mywp.setting.admin.toolbar.php:139
+#: setting/modules/mywp.setting.admin.toolbar.php:90
+#: setting/modules/mywp.setting.admin.toolbar.php:119
+#: setting/modules/mywp.setting.admin.toolbar.php:121
+#: setting/modules/mywp.setting.admin.toolbar.php:159
 msgid "View Post"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.toolbar.php:187
+#: setting/modules/mywp.setting.admin.toolbar.php:207
 #: setting/modules/mywp.setting.admin.user-edit.php:44
-#: setting/modules/mywp.setting.frontend.general.php:55
-#: setting/modules/mywp.setting.frontend.toolbar.php:300
+#: setting/modules/mywp.setting.frontend.general.php:58
+#: setting/modules/mywp.setting.frontend.toolbar.php:320
 msgid "Toolbar"
 msgstr ""
 
@@ -1630,55 +1614,55 @@ msgstr ""
 msgid "Media Library"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:279
+#: setting/modules/mywp.setting.admin.uploads.php:302
 msgid "Force show list"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:283
+#: setting/modules/mywp.setting.admin.uploads.php:307
 msgid "List view"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:284
+#: setting/modules/mywp.setting.admin.uploads.php:310
 msgid "Grid view"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:297
+#: setting/modules/mywp.setting.admin.uploads.php:324
 msgid "Add Media File"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:306
+#: setting/modules/mywp.setting.admin.uploads.php:333
 msgid "Search Media"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:360
+#: setting/modules/mywp.setting.admin.uploads.php:391
 msgctxt "column name"
 msgid "File"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:375
+#: setting/modules/mywp.setting.admin.uploads.php:406
 msgctxt "column name"
 msgid "Uploaded to"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:433
-#: setting/modules/mywp.setting.admin.uploads.php:504
+#: setting/modules/mywp.setting.admin.uploads.php:472
+#: setting/modules/mywp.setting.admin.uploads.php:543
 msgid "Alternative Text"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:440
-#: setting/modules/mywp.setting.admin.uploads.php:511
+#: setting/modules/mywp.setting.admin.uploads.php:479
+#: setting/modules/mywp.setting.admin.uploads.php:550
 msgid "Caption"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:445
-#: setting/modules/mywp.setting.admin.uploads.php:516
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:326
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:263
+#: setting/modules/mywp.setting.admin.uploads.php:484
+#: setting/modules/mywp.setting.admin.uploads.php:555
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:381
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:300
 msgid "Details"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.uploads.php:450
-#: setting/modules/mywp.setting.admin.uploads.php:521
+#: setting/modules/mywp.setting.admin.uploads.php:489
+#: setting/modules/mywp.setting.admin.uploads.php:560
 msgid "File URL"
 msgstr ""
 
@@ -1731,7 +1715,7 @@ msgstr ""
 msgid "Application Passwords"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.user-edit.php:108
+#: setting/modules/mywp.setting.admin.user-edit.php:124
 msgid "Not found contact methods."
 msgstr ""
 
@@ -1739,105 +1723,112 @@ msgstr ""
 msgid "All Users"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.users.php:289
+#: setting/modules/mywp.setting.admin.users.php:312
 msgid "Add User"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.users.php:298
+#: setting/modules/mywp.setting.admin.users.php:321
 msgid "Search Users"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.users.php:370
+#: setting/modules/mywp.setting.admin.users.php:397
 msgid "Role"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.users.php:377
+#: setting/modules/mywp.setting.admin.users.php:404
 msgid "Posts"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.users.php:411
-#: setting/modules/mywp.setting.admin.users.php:498
+#: setting/modules/mywp.setting.admin.users.php:446
+#: setting/modules/mywp.setting.admin.users.php:533
 msgid "Nickname"
 msgstr ""
 
-#: setting/modules/mywp.setting.admin.users.php:417
-#: setting/modules/mywp.setting.admin.users.php:503
+#: setting/modules/mywp.setting.admin.users.php:452
+#: setting/modules/mywp.setting.admin.users.php:538
 msgid "Display name publicly as"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:21
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:23
 msgid "Bulk duplicate posts from site in Network"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:29
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:110
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:27
+msgid "Bulk duplicate posts"
+msgstr ""
+
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:47
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:162
 msgid "Please select Site."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:35
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:29
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:61
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:39
 msgid "Please select an Post Type."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:41
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:35
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:75
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:53
 msgid "Please select an Post Status."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:93
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:144
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:67
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:92
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:127
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:196
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:85
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:126
 #, php-format
 msgid "%s Post"
 msgid_plural "%s Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:104
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:140
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:148
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:98
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:106
 msgid "Please select an Post."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:200
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:254
 msgid "Filter and search for posts to duplicate"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:216
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:270
 msgid "Select posts to duplicate"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:228
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:282
 msgid "Confirm duplication details"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:248
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:182
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:302
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:218
 msgid "Please select the posts."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:257
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:191
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:311
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:227
 msgid "Selected Post IDs"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:284
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:338
 msgid "Duplicate Posts"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:311
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:366
 msgid "Please duplicate posts."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:318
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:373
 msgid "Bulk items"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:324
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:379
 msgid "Post ID"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.duplicate-post.php:325
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:259
+#: setting/modules/mywp.setting.bulk.duplicate-post.php:380
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:296
 msgid "Bulk process"
 msgstr ""
 
@@ -1845,43 +1836,43 @@ msgstr ""
 msgid "Bulk update of Posts custom fields"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:78
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:112
 msgid "Please input meta_key."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:138
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:174
 msgid "Filter and search for posts to update"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:152
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:188
 msgid "Select posts to update"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:164
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:200
 msgid "Confirm update details"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:212
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:249
 msgid "It is recommend that you backup your database and do a dry run."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:217
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:254
 msgid "Bulk update (Dry run)"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:223
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:260
 msgid "Bulk update"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:250
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:287
 msgid "Please bulk update."
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:260
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:297
 msgid "From meta value"
 msgstr ""
 
-#: setting/modules/mywp.setting.bulk.update-post-meta.php:262
+#: setting/modules/mywp.setting.bulk.update-post-meta.php:299
 msgid "To meta value"
 msgstr ""
 
@@ -1889,49 +1880,49 @@ msgstr ""
 msgid "All Blogs"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.blogs.php:64
-#: setting/modules/mywp.setting.debug.capabilities.php:44
-#: setting/modules/mywp.setting.debug.crons.php:55
-#: setting/modules/mywp.setting.debug.defines.php:98
-#: setting/modules/mywp.setting.debug.find-option.php:154
+#: setting/modules/mywp.setting.debug.blogs.php:66
+#: setting/modules/mywp.setting.debug.capabilities.php:48
+#: setting/modules/mywp.setting.debug.crons.php:60
+#: setting/modules/mywp.setting.debug.defines.php:102
+#: setting/modules/mywp.setting.debug.find-option.php:155
 #: setting/modules/mywp.setting.debug.options.php:46
-#: setting/modules/mywp.setting.debug.post-statuses.php:44
-#: setting/modules/mywp.setting.debug.post-structure.php:94
-#: setting/modules/mywp.setting.debug.post-type-structure.php:116
-#: setting/modules/mywp.setting.debug.post-types.php:44
-#: setting/modules/mywp.setting.debug.site-options.php:64
-#: setting/modules/mywp.setting.debug.taxonomies.php:44
-#: setting/modules/mywp.setting.debug.terms.php:68
-#: setting/modules/mywp.setting.debug.transients.php:206
-#: setting/modules/mywp.setting.debug.translations.php:72
+#: setting/modules/mywp.setting.debug.post-statuses.php:48
+#: setting/modules/mywp.setting.debug.post-structure.php:108
+#: setting/modules/mywp.setting.debug.post-type-structure.php:131
+#: setting/modules/mywp.setting.debug.post-types.php:48
+#: setting/modules/mywp.setting.debug.site-options.php:62
+#: setting/modules/mywp.setting.debug.taxonomies.php:48
+#: setting/modules/mywp.setting.debug.terms.php:88
+#: setting/modules/mywp.setting.debug.transients.php:215
+#: setting/modules/mywp.setting.debug.translations.php:100
 msgid "Count"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.blogs.php:68
-#: setting/modules/mywp.setting.debug.site-options.php:68
+#: setting/modules/mywp.setting.debug.blogs.php:71
+#: setting/modules/mywp.setting.debug.site-options.php:67
 msgid "Site ID"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.blogs.php:70
+#: setting/modules/mywp.setting.debug.blogs.php:73
 msgid "Last Updated"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.blogs.php:71
+#: setting/modules/mywp.setting.debug.blogs.php:74
 msgid "Public"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.blogs.php:72
+#: setting/modules/mywp.setting.debug.blogs.php:75
 msgid "Deleated"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.blogs.php:73
-#: setting/modules/mywp.setting.debug.crons.php:60
-#: setting/modules/mywp.setting.debug.transients.php:212
+#: setting/modules/mywp.setting.debug.blogs.php:76
+#: setting/modules/mywp.setting.debug.crons.php:67
+#: setting/modules/mywp.setting.debug.transients.php:222
 msgid "Data"
 msgstr ""
 
 #: setting/modules/mywp.setting.debug.capabilities.php:24
-#: setting/modules/mywp.setting.debug.capabilities.php:49
+#: setting/modules/mywp.setting.debug.capabilities.php:54
 msgid "Capabilities"
 msgstr ""
 
@@ -1939,24 +1930,24 @@ msgstr ""
 msgid "All Crons"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.crons.php:51
-#: setting/modules/mywp.setting.debug.transients.php:201
+#: setting/modules/mywp.setting.debug.crons.php:55
+#: setting/modules/mywp.setting.debug.transients.php:209
 msgctxt "timezone date format"
 msgid "Y-m-d H:i:s"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.crons.php:59
+#: setting/modules/mywp.setting.debug.crons.php:66
 #, php-format
 msgid "Run %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.crons.php:73
-#: setting/modules/mywp.setting.debug.transients.php:241
+#: setting/modules/mywp.setting.debug.crons.php:81
+#: setting/modules/mywp.setting.debug.transients.php:262
 msgid "RAW"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.crons.php:73
-#: setting/modules/mywp.setting.debug.transients.php:241
+#: setting/modules/mywp.setting.debug.crons.php:81
+#: setting/modules/mywp.setting.debug.transients.php:262
 msgid "UTC"
 msgstr ""
 
@@ -1979,51 +1970,51 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:50
+#: setting/modules/mywp.setting.debug.general.php:54
 #, php-format
 msgid "Show debugging %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:55
+#: setting/modules/mywp.setting.debug.general.php:59
 msgid "Debugging for multiple users that enter the User ID with comma."
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:62
+#: setting/modules/mywp.setting.debug.general.php:74
 #: setting/modules/mywp.setting.login.user.php:24
 msgid "User"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:82
+#: setting/modules/mywp.setting.debug.general.php:103
 msgid "Heavy process debug items"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:84
+#: setting/modules/mywp.setting.debug.general.php:106
 msgid ""
 "Debugging these items may require significant time and memory, depending "
 "on the plugins and themes you are using. Please proceed with caution."
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:89
+#: setting/modules/mywp.setting.debug.general.php:111
 msgid "My WP Cache"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:93
-#: setting/modules/mywp.setting.debug.general.php:102
-#: setting/modules/mywp.setting.debug.general.php:111
-#: setting/modules/mywp.setting.debug.general.php:120
-#: setting/modules/mywp.setting.debug.general.php:129
+#: setting/modules/mywp.setting.debug.general.php:115
+#: setting/modules/mywp.setting.debug.general.php:124
+#: setting/modules/mywp.setting.debug.general.php:133
+#: setting/modules/mywp.setting.debug.general.php:142
+#: setting/modules/mywp.setting.debug.general.php:151
 msgid "Activate"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:107
+#: setting/modules/mywp.setting.debug.general.php:129
 msgid "Process times"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:116
+#: setting/modules/mywp.setting.debug.general.php:138
 msgid "Action hooks"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.general.php:125
+#: setting/modules/mywp.setting.debug.general.php:147
 msgid "debug_backtrace()"
 msgstr ""
 
@@ -2031,13 +2022,13 @@ msgstr ""
 msgid "All Options"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.options.php:51
-#: setting/modules/mywp.setting.debug.site-options.php:70
+#: setting/modules/mywp.setting.debug.options.php:52
+#: setting/modules/mywp.setting.debug.site-options.php:69
 msgid "Raw"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.options.php:52
-#: setting/modules/mywp.setting.debug.site-options.php:71
+#: setting/modules/mywp.setting.debug.options.php:53
+#: setting/modules/mywp.setting.debug.site-options.php:70
 msgid "Decode"
 msgstr ""
 
@@ -2053,17 +2044,17 @@ msgstr ""
 msgid "The structure in the post."
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.post-structure.php:48
+#: setting/modules/mywp.setting.debug.post-structure.php:50
 #, php-format
 msgid "%1$s: %3$s %2$s is not found."
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.post-structure.php:48
+#: setting/modules/mywp.setting.debug.post-structure.php:50
 msgid "Invalid Post"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.post-structure.php:48
-#: setting/modules/mywp.setting.debug.post-structure.php:81
+#: setting/modules/mywp.setting.debug.post-structure.php:50
+#: setting/modules/mywp.setting.debug.post-structure.php:84
 msgid "Post"
 msgstr ""
 
@@ -2083,7 +2074,7 @@ msgstr ""
 msgid "Rest API"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.rest-api.php:44
+#: setting/modules/mywp.setting.debug.rest-api.php:54
 msgid "Endpoint"
 msgstr ""
 
@@ -2095,7 +2086,7 @@ msgstr ""
 msgid "All Taxonomies"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.terms.php:75
+#: setting/modules/mywp.setting.debug.terms.php:98
 msgid "Edit"
 msgstr ""
 
@@ -2104,32 +2095,32 @@ msgstr ""
 msgid "All Transients"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.transients.php:211
+#: setting/modules/mywp.setting.debug.transients.php:221
 msgid "Expiration"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.transients.php:227
-#: setting/modules/mywp.setting.debug.transients.php:236
+#: setting/modules/mywp.setting.debug.transients.php:242
+#: setting/modules/mywp.setting.debug.transients.php:255
 msgid "Not found timeout date."
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.translations.php:32
-#: setting/modules/mywp.setting.debug.translations.php:40
+#: setting/modules/mywp.setting.debug.translations.php:50
+#: setting/modules/mywp.setting.debug.translations.php:58
 msgid "All Translations"
 msgstr ""
 
-#: setting/modules/mywp.setting.debug.translations.php:87
+#: setting/modules/mywp.setting.debug.translations.php:121
 msgid "Unknown translation file."
 msgstr ""
 
 #: setting/modules/mywp.setting.frontend.author-archive.php:24
-#: setting/modules/mywp.setting.frontend.author-archive.php:60
+#: setting/modules/mywp.setting.frontend.author-archive.php:58
 msgid "Author Archive"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.author-archive.php:64
+#: setting/modules/mywp.setting.frontend.author-archive.php:62
 #: setting/modules/mywp.setting.frontend.date-archive.php:58
-#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:96
+#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:99
 #: setting/modules/mywp.setting.site.general.php:57
 #: setting/modules/mywp.setting.site.general.php:79
 msgid "Disable"
@@ -2140,11 +2131,11 @@ msgstr ""
 msgid "Author: %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.author-archive.php:73
+#: setting/modules/mywp.setting.frontend.author-archive.php:75
 msgid "Add \"Disallow\" to robots.txt"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.author-archive.php:77
+#: setting/modules/mywp.setting.frontend.author-archive.php:79
 msgid "Add Disallow"
 msgstr ""
 
@@ -2153,32 +2144,32 @@ msgstr ""
 msgid "Date Archive"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.date-archive.php:65
+#: setting/modules/mywp.setting.frontend.date-archive.php:70
 #, php-format
 msgid "Year: %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.date-archive.php:65
+#: setting/modules/mywp.setting.frontend.date-archive.php:70
 msgctxt "yearly archives date format"
 msgid "Y"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.date-archive.php:67
+#: setting/modules/mywp.setting.frontend.date-archive.php:74
 #, php-format
 msgid "Month: %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.date-archive.php:67
+#: setting/modules/mywp.setting.frontend.date-archive.php:74
 msgctxt "monthly archives date format"
 msgid "F Y"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.date-archive.php:69
+#: setting/modules/mywp.setting.frontend.date-archive.php:78
 #, php-format
 msgid "Day: %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.date-archive.php:69
+#: setting/modules/mywp.setting.frontend.date-archive.php:78
 msgctxt "daily archives date format"
 msgid "F j, Y"
 msgstr ""
@@ -2187,53 +2178,53 @@ msgstr ""
 msgid "Always Show"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:81
+#: setting/modules/mywp.setting.frontend.general.php:88
 msgid "Response Header"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:85
-#: setting/modules/mywp.setting.frontend.general.php:219
+#: setting/modules/mywp.setting.frontend.general.php:94
+#: setting/modules/mywp.setting.frontend.general.php:243
 msgid "Hide Rest link"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:99
-#: setting/modules/mywp.setting.frontend.general.php:233
+#: setting/modules/mywp.setting.frontend.general.php:110
+#: setting/modules/mywp.setting.frontend.general.php:259
 msgid "Hide Shortlink"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:113
+#: setting/modules/mywp.setting.frontend.general.php:126
 msgid "Hide X-Pingback"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:125
+#: setting/modules/mywp.setting.frontend.general.php:140
 msgid "X-Frame-Options"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:155
+#: setting/modules/mywp.setting.frontend.general.php:167
 msgid "HTML Head"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:159
+#: setting/modules/mywp.setting.frontend.general.php:173
 msgid "Hide WP Generator Tag"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:171
+#: setting/modules/mywp.setting.frontend.general.php:187
 msgid "Hide Manifest Link Tag"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:183
+#: setting/modules/mywp.setting.frontend.general.php:201
 msgid "Hide RSD Link Tag"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:195
+#: setting/modules/mywp.setting.frontend.general.php:215
 msgid "Hide Feed Links Tag"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:207
+#: setting/modules/mywp.setting.frontend.general.php:229
 msgid "Hide Feed Links Extra Tag"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.general.php:291
+#: setting/modules/mywp.setting.frontend.general.php:325
 msgid "Custom Header Meta"
 msgstr ""
 
@@ -2241,56 +2232,52 @@ msgstr ""
 msgid "Taxonomy Archive"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:79
-msgid "Invalid Taxonomy"
-msgstr ""
-
-#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:92
+#: setting/modules/mywp.setting.frontend.taxonomy-archive.php:95
 #, php-format
 msgid "Taxonomy archive of %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.toolbar.php:75
+#: setting/modules/mywp.setting.frontend.toolbar.php:81
 msgid "This menu item is only display for single page."
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.toolbar.php:268
+#: setting/modules/mywp.setting.frontend.toolbar.php:288
 msgid "Toolbar items"
 msgstr ""
 
-#: setting/modules/mywp.setting.frontend.toolbar.php:277
+#: setting/modules/mywp.setting.frontend.toolbar.php:297
 msgid "Refresh Toolbar items"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.general.php:40
+#: setting/modules/mywp.setting.login.general.php:41
 msgid "Login Form"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.general.php:44
+#: setting/modules/mywp.setting.login.general.php:47
 msgid "Logo Link URL"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.general.php:58
+#: setting/modules/mywp.setting.login.general.php:64
 msgid "Logo Image URL"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.general.php:86
+#: setting/modules/mywp.setting.login.general.php:98
 msgid "Select language"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.general.php:90
+#: setting/modules/mywp.setting.login.general.php:102
 msgid "Hide Select language"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.user.php:41
+#: setting/modules/mywp.setting.login.user.php:42
 msgid "Forced Redirect"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.user.php:45
+#: setting/modules/mywp.setting.login.user.php:48
 msgid "Logged in redirect URL"
 msgstr ""
 
-#: setting/modules/mywp.setting.login.user.php:59
+#: setting/modules/mywp.setting.login.user.php:65
 msgid "Logged out redirect URL"
 msgstr ""
 
@@ -2343,37 +2330,37 @@ msgstr ""
 msgid "Add-ons"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:99
+#: setting/modules/mywp.setting.main.general.php:100
 #, php-format
 msgid "About %s"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:103
+#: setting/modules/mywp.setting.main.general.php:105
 msgid "Version"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:107
+#: setting/modules/mywp.setting.main.general.php:109
 msgid "Plugin Website"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:111
+#: setting/modules/mywp.setting.main.general.php:113
 msgid "Developer"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:118
-#: setting/modules/mywp.setting.main.general.php:119
+#: setting/modules/mywp.setting.main.general.php:120
+#: setting/modules/mywp.setting.main.general.php:121
 msgid "Reviews"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:122
+#: setting/modules/mywp.setting.main.general.php:124
 msgid "Contact"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:125
+#: setting/modules/mywp.setting.main.general.php:127
 msgid "Contact Form"
 msgstr ""
 
-#: setting/modules/mywp.setting.main.general.php:126
+#: setting/modules/mywp.setting.main.general.php:128
 msgid "If you find a bug, please contact me"
 msgstr ""
 
@@ -2412,39 +2399,39 @@ msgstr ""
 msgid "sitemap.xml"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:72
+#: setting/modules/mywp.setting.site.sitemap.php:75
 msgid "Sitemap status"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:80
+#: setting/modules/mywp.setting.site.sitemap.php:85
 msgid "Status of WordPress CORE sitemap.xml"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:84
+#: setting/modules/mywp.setting.site.sitemap.php:89
 msgid "Enabled"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:88
+#: setting/modules/mywp.setting.site.sitemap.php:93
 msgid "Disabled"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:103
+#: setting/modules/mywp.setting.site.sitemap.php:110
 msgid "Hide generate WordPress CORE sitemap.xml"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:107
+#: setting/modules/mywp.setting.site.sitemap.php:114
 msgid "Deactivate"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:112
+#: setting/modules/mywp.setting.site.sitemap.php:119
 msgid "Hide users sitemap"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:121
+#: setting/modules/mywp.setting.site.sitemap.php:128
 msgid "Hide post types sitemap"
 msgstr ""
 
-#: setting/modules/mywp.setting.site.sitemap.php:148
+#: setting/modules/mywp.setting.site.sitemap.php:155
 msgid "Hide taxonomies sitemap"
 msgstr ""
 
@@ -2464,35 +2451,35 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: setting/setting.init.php:483
+#: setting/setting.init.php:496
 msgid "Please try again."
 msgstr ""
 
-#: setting/setting.init.php:484
+#: setting/setting.init.php:497
 msgid "An error has occurred. Please reload the page and try again."
 msgstr ""
 
-#: setting/setting.init.php:485
+#: setting/setting.init.php:498
 msgid "Are you sure you want to do this?"
 msgstr ""
 
-#: setting/setting.init.php:486
+#: setting/setting.init.php:499
 msgid "Are you sure you want to update?"
 msgstr ""
 
-#: setting/setting.init.php:487
+#: setting/setting.init.php:500
 msgid "Are you sure you want to delete this?"
 msgstr ""
 
-#: setting/setting.init.php:488
+#: setting/setting.init.php:501
 msgid "Finished"
 msgstr ""
 
-#: setting/setting.init.php:489
+#: setting/setting.init.php:502
 msgid "Not found update URL."
 msgstr ""
 
-#: setting/setting.init.php:490
+#: setting/setting.init.php:503
 msgid "It column can not be added because it has already added."
 msgstr ""
 
@@ -2500,7 +2487,7 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: taxonomy/modules/mywp.taxonomy.module.mywp-term.php:51
+#: taxonomy/modules/mywp.taxonomy.module.mywp-term.php:52
 msgid "Draft"
 msgstr ""
 
@@ -2512,39 +2499,39 @@ msgstr ""
 msgid "Enter a post id"
 msgstr ""
 
-#: views/elements/setting-screen-management-block-editor-panels.php:33
-#: views/elements/setting-screen-management-meta-boxes.php:97
+#: views/elements/setting-screen-management-block-editor-panels.php:34
+#: views/elements/setting-screen-management-meta-boxes.php:102
 msgid "All Show"
 msgstr ""
 
-#: views/elements/setting-screen-management-block-editor-panels.php:36
-#: views/elements/setting-screen-management-meta-boxes.php:103
+#: views/elements/setting-screen-management-block-editor-panels.php:39
+#: views/elements/setting-screen-management-meta-boxes.php:112
 msgid "All Hide"
 msgstr ""
 
-#: views/elements/setting-screen-management-meta-boxes.php:63
+#: views/elements/setting-screen-management-meta-boxes.php:67
 msgid "Refresh meta boxes"
 msgstr ""
 
-#: views/elements/setting-screen-management-meta-boxes.php:72
+#: views/elements/setting-screen-management-meta-boxes.php:76
 msgid "Meta boxes"
 msgstr ""
 
-#: views/elements/setting-screen-management-meta-boxes.php:82
+#: views/elements/setting-screen-management-meta-boxes.php:86
 msgid "Please refresh the Columns."
 msgstr ""
 
-#: views/elements/setting-screen-management-meta-boxes.php:92
+#: views/elements/setting-screen-management-meta-boxes.php:96
 msgid ""
 "If you have problem after remove the meta box, please select the hide meta "
 "box."
 msgstr ""
 
-#: views/elements/setting-screen-management-meta-boxes.php:100
+#: views/elements/setting-screen-management-meta-boxes.php:107
 msgid "All Remove"
 msgstr ""
 
-#: views/elements/setting-screen-management-meta-boxes.php:112
+#: views/elements/setting-screen-management-meta-boxes.php:122
 msgid "Update meta box title"
 msgstr ""
 
@@ -2558,25 +2545,25 @@ msgstr ""
 msgid "Taxonomy"
 msgstr ""
 
-#: views/setting-screen.php:173 views/setting-screen.php:184
+#: views/setting-screen.php:177 views/setting-screen.php:191
 #, php-format
 msgid "%s Documentation"
 msgstr ""
 
-#: views/setting-screen.php:224
+#: views/setting-screen.php:236
 msgid "Advanced settings"
 msgstr ""
 
-#: views/setting-screen.php:248
+#: views/setting-screen.php:260
 msgid "Save"
 msgstr ""
 
-#: views/setting-screen.php:275
+#: views/setting-screen.php:287
 #, php-format
 msgid "Remove the %s settings data"
 msgstr ""
 
-#: views/setting-screen.php:312
+#: views/setting-screen.php:329
 msgid "Close"
 msgstr ""
 

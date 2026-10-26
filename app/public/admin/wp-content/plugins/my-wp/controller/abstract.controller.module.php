@@ -20,9 +20,9 @@ abstract class MywpControllerAbstractModule {
 
     $class = get_called_class();
 
-    if( empty( static::$id ) ) {
+    $called_text = sprintf( 'class %s' , $class );
 
-      $called_text = sprintf( 'class %s' , $class );
+    if( empty( static::$id ) ) {
 
       MywpHelper::error_require_message( '"static protected $id"' , $called_text );
 
@@ -68,11 +68,13 @@ abstract class MywpControllerAbstractModule {
 
   public static function get_model() {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     $controller = MywpController::get_controller( static::$id );
 
     if( empty( $controller['model'] ) ) {
-
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$controller["model"]' , $called_text );
 
@@ -86,11 +88,13 @@ abstract class MywpControllerAbstractModule {
 
   public static function get_setting_data() {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s()' , $class , __FUNCTION__ );
+
     $mywp_model = static::get_model();
 
     if( empty( $mywp_model ) ) {
-
-      $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
       MywpHelper::error_not_found_message( '$mywp_model' , $called_text );
 
@@ -121,15 +125,19 @@ abstract class MywpControllerAbstractModule {
 
   protected static function is_do_function( $function_name = false ) {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s( $function_name )' , $class , __FUNCTION__ );
+
+    $function_name = MywpHelper::sanitize_text( $function_name );
+
     if( empty( $function_name ) ) {
+
+      MywpHelper::error_require_message( '$function_name' , $called_text );
 
       return false;
 
     }
-
-    $class = get_called_class();
-
-    $function_name = strip_tags( $function_name );
 
     $is_do_function = apply_filters( "mywp_controller_is_do_function_{$class::$id}_{$function_name}" , true );
 
@@ -139,15 +147,19 @@ abstract class MywpControllerAbstractModule {
 
   protected static function after_do_function( $function_name = false ) {
 
+    $class = get_called_class();
+
+    $called_text = sprintf( '%s::%s( $function_name )' , $class , __FUNCTION__ );
+
+    $function_name = MywpHelper::sanitize_text( $function_name );
+
     if( empty( $function_name ) ) {
+
+      MywpHelper::error_require_message( '$function_name' , $called_text );
 
       return false;
 
     }
-
-    $class = get_called_class();
-
-    $function_name = strip_tags( $function_name );
 
     do_action( "mywp_controller_after_do_{$class::$id}_{$function_name}" );
 

@@ -106,7 +106,7 @@ final class MywpControllerModuleLoginUser extends MywpControllerAbstractModule {
 
         if( ! empty( $setting_data['login_redirect_url'] ) ) {
 
-          $login_redirect_url = do_shortcode( $setting_data['login_redirect_url'] );
+          $login_redirect_url = MywpHelper::sanitize_url( do_shortcode( $setting_data['login_redirect_url'] ) );
 
           if( ! empty( $login_redirect_url ) ) {
 
@@ -154,7 +154,7 @@ final class MywpControllerModuleLoginUser extends MywpControllerAbstractModule {
 
         if( ! empty( $setting_data['logout_redirect_url'] ) ) {
 
-          $login_redirect_url = do_shortcode( $setting_data['logout_redirect_url'] );
+          $login_redirect_url = MywpHelper::sanitize_url( do_shortcode( $setting_data['logout_redirect_url'] ) );
 
           if( ! empty( $login_redirect_url ) ) {
 

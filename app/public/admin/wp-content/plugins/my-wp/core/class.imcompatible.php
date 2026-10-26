@@ -36,11 +36,13 @@ final class MywpIncompatible {
 
     }
 
+    $message = sprintf( __( 'Sorry, My WP is <strong>Incompatible</strong> with your version of WordPress. Require version  %s.' , 'my-wp' ) , MYWP_REQUIRED_WP_VERSION );
+
     ?>
 
     <div class="error">
       <p>
-        <?php printf( __( 'Sorry, My WP is <strong>Incompatible</strong> with your version of WordPress. Require version  %s.' , 'my-wp' ) , esc_html( MYWP_REQUIRED_WP_VERSION ) ); ?>
+        <?php echo wp_kses_post( $message ); ?>
       </p>
     </div>
 

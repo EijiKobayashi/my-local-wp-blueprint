@@ -57,7 +57,9 @@ final class MywpControllerModuleFrontendToolbar extends MywpAbstractControllerTo
     add_filter( 'mywp_controller_' . self::$id . '_get_toolbar_item' , array( __CLASS__ , 'frontend_get_toolbar_item' ) );
 
     add_action( 'wp_before_admin_bar_render' , array( __CLASS__ , 'remove_detault_menus' ) , 1000 );
+
     add_action( 'wp_before_admin_bar_render' , array( __CLASS__ , 'customize_admin_bar' ) , 1000 );
+
     add_action( 'wp_after_admin_bar_render' , array( __CLASS__ , 'wp_after_admin_bar_render' ) );
 
   }
@@ -66,7 +68,11 @@ final class MywpControllerModuleFrontendToolbar extends MywpAbstractControllerTo
 
     global $wp_the_query;
 
+    $called_text = sprintf( '%s::%s( $toolbar_items )' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $toolbar_items ) ) {
+
+      MywpHelper::error_require_message( '$toolbar_items' , $called_text );
 
       return true;
 
@@ -122,9 +128,35 @@ final class MywpControllerModuleFrontendToolbar extends MywpAbstractControllerTo
 
   public static function frontend_get_toolbar_item( $toolbar_items ) {
 
+    $called_text = sprintf( '%s::%s( $toolbar_items )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $toolbar_items ) ) {
+
+      MywpHelper::error_require_message( '$toolbar_items' , $called_text );
+
+      return $toolbar_items;
+
+    }
+
     $is_edit_post_remove = self::is_edit_post_remove( $toolbar_items );
 
     foreach( $toolbar_items as $key => $toolbar_item ) {
+
+      if( empty( $toolbar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$toolbar_item' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_object( $toolbar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$toolbar_item' , 'is_object()' , $called_text );
+
+        continue;
+
+      }
 
       if( $toolbar_item->item_type !== 'edit_post' ) {
 
@@ -172,19 +204,25 @@ final class MywpControllerModuleFrontendToolbar extends MywpAbstractControllerTo
 
     }
 
-    $wp_styles = wp_styles();
+    $url = MywpApi::get_plugin_url( 'css' ) . sprintf( 'frontend-toolbar.css?ver=%s' , MYWP_VERSION );
 
-    printf( '<link rel="stylesheet" id="mywp_frontend_toolbar-css"  href="%sfrontend-toolbar.css?ver=%s" type="text/css" media="all" />' , esc_url( MywpApi::get_plugin_url( 'css' ) ) , esc_attr( $wp_styles->default_version ) );
+    printf( '<link rel="stylesheet" id="mywp_frontend_toolbar-css" href="%s" type="text/css" media="all" />' , esc_url( $url ) );
 
-    printf( '<script type="text/javascript" src="%sfrontend-toolbar.js?ver=%s"></script>' , esc_url( MywpApi::get_plugin_url( 'js' ) ) , esc_attr( $wp_styles->default_version ) );
+    $url = MywpApi::get_plugin_url( 'js' ) . sprintf( 'frontend-toolbar.js?ver=%s' , MYWP_VERSION );
+
+    printf( '<script type="text/javascript" src="%s"></script>' , esc_url( $url ) );
 
     $setting_data = self::get_setting_data();
 
     if( ! empty( $setting_data['custom_menu_ui'] ) ) {
 
-      printf( '<link rel="stylesheet" id="mywp_frontend_toolbar-custom-ui-css"  href="%sfrontend-toolbar-custom-ui.css?ver=%s" type="text/css" media="all" />' , esc_url( MywpApi::get_plugin_url( 'css' ) ) , esc_attr( MYWP_VERSION ) );
+      $url = MywpApi::get_plugin_url( 'css' ) . sprintf( 'frontend-toolbar-custom-ui.css?ver=%s' , MYWP_VERSION );
 
-      printf( '<script type="text/javascript" src="%sfrontend-toolbar-custom-ui.js?ver=%s"></script>' , esc_url( MywpApi::get_plugin_url( 'js' ) ) , esc_attr( MYWP_VERSION ) );
+      printf( '<link rel="stylesheet" id="mywp_frontend_toolbar-custom-ui-css"  href="%s" type="text/css" media="all" />' , esc_url( $url ) );
+
+      $url = MywpApi::get_plugin_url( 'js' ) . sprintf( 'frontend-toolbar-custom-ui.js?ver=%s' , MYWP_VERSION );
+
+      printf( '<script type="text/javascript" src="%s"></script>' , esc_url( $url ) );
 
     }
 

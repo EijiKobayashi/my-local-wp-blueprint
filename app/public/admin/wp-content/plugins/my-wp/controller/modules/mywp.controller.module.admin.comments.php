@@ -66,15 +66,15 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
   public static function mywp_ajax() {
 
-    if( empty( $_POST['action'] ) ) {
+    if( ! isset( $_POST['action'] ) ) {
 
       return false;
 
     }
 
-    $action = strip_tags( $_POST['action'] );
+    $action = MywpHelper::sanitize_text( wp_unslash( $_POST['action'] ) );
 
-    if( ! in_array( $action , array( 'edit-comment' , 'replyto-comment' ) ) ) {
+    if( ! in_array( $action , array( 'edit-comment' , 'replyto-comment' ) , true ) ) {
 
       return false;
 
@@ -152,13 +152,31 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
-      if( empty( $column_setting['width'] ) ) {
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
 
         continue;
 
       }
 
-      $columns[ $column_id ] = $column_setting['width'];
+      $width = false;
+
+      if( ! empty( $column_setting['width'] ) ) {
+
+        $width = MywpHelper::sanitize_text( $column_setting['width'] );
+
+      }
+
+      if( empty( $width ) ) {
+
+        continue;
+
+      }
+
+      $columns[ $column_id ] = $width;
 
     }
 
@@ -202,7 +220,15 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
     }
 
-    $per_page = $setting_data['per_page_num'];
+    $per_page_num = MywpHelper::sanitize_number( $setting_data['per_page_num'] );
+
+    if( empty( $per_page_num ) ) {
+
+      return $per_page;
+
+    }
+
+    $per_page = $per_page_num;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -217,6 +243,8 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
       return $columns;
 
     }
+
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -238,6 +266,16 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
       $columns[ $column_id ] = wp_kses( $column_setting['title'] , $wp_kses_allowed_html );
 
     }
@@ -255,6 +293,8 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
       return false;
 
     }
+
+    $called_text = sprintf( '%s::%s( $column_id , $comment_id )' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -283,8 +323,6 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
       echo esc_html( $comment->comment_author_url );
 
     }
-
-    $called_text = sprintf( '%s::%s( $content , $column_id , $user_id )' , __CLASS__ , __FUNCTION__ );
 
     if( $column_id === 'id' ) {
 
@@ -332,6 +370,8 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['list_columns'] ) ) {
@@ -344,9 +384,25 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
       if( ! empty( $column_setting['sort'] ) ) {
 
-        $sortables[ $column_id ] = $column_setting['orderby'];
+        $orderby = MywpHelper::sanitize_text( $column_setting['orderby'] );
+
+        if( ! empty( $orderby ) ) {
+
+          $sortables[ $column_id ] = $orderby;
+
+        }
 
       }
 
@@ -367,7 +423,6 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
     add_action( 'pre_get_comments' , array( __CLASS__ , 'custom_search_filter_query' ) , 9 );
 
   }
-
 
   public static function comments_list_table_query_args( $args ) {
 
@@ -393,9 +448,15 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
     if( ! empty( $query->query_vars['author_email_like'] ) ) {
 
-      $like_string = '%' . $wpdb->esc_like( $query->query_vars['author_email_like'] ) . '%';
+      $author_email_like = MywpHelper::sanitize_text( $query->query_vars['author_email_like'] );
 
-      $clauses['where'] .= $wpdb->prepare( " AND $wpdb->comments.comment_author_email LIKE %s" , $like_string );
+      if( ! empty( $author_email_like ) ) {
+
+        $like_string = '%' . $wpdb->esc_like( $author_email_like ) . '%';
+
+        $clauses['where'] .= $wpdb->prepare( " AND $wpdb->comments.comment_author_email LIKE %s" , $like_string );
+
+      }
 
     }
 
@@ -481,7 +542,7 @@ final class MywpControllerModuleAdminComments extends MywpAbstractControllerList
 
         }
 
-        $date = MywpHelper::sanitize_date( $custom_search_filter_requests['mywp_custom_search_comment_date'][ $date_key ] );
+        $date = MywpHelper::sanitize_date_ymd( $custom_search_filter_requests['mywp_custom_search_comment_date'][ $date_key ] );
 
         if( empty( $date ) ) {
 

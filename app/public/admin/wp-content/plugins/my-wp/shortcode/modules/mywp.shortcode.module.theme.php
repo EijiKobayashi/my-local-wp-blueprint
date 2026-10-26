@@ -16,15 +16,23 @@ final class MywpShortcodeModuleTheme extends MywpShortcodeAbstractModule {
 
   public static function do_shortcode( $atts = false , $content = false , $tag = false ) {
 
-    if( empty( $atts['field'] ) ) {
+    $called_text = sprintf( '%s::%s( $atts , $content , $tag )' , __CLASS__ , __FUNCTION__ );
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+    $field = false;
+
+    if( ! empty( $atts['field'] ) ) {
+
+      $field = MywpHelper::sanitize_text( $atts['field'] );
+
+    }
+
+    if( empty( $field ) ) {
+
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 
     }
-
-    $field = strip_tags( $atts['field'] );
 
     $theme_id = false;
 
@@ -48,7 +56,7 @@ final class MywpShortcodeModuleTheme extends MywpShortcodeAbstractModule {
 
     if( empty( $theme_id ) ) {
 
-      MywpHelper::error_not_found_message( '$atts["theme"]' , sprintf( '[%s] shortcode' , self::$id ) );
+      MywpHelper::error_not_found_message( '$theme_id' , $called_text );
 
       return $content;
 
@@ -70,7 +78,7 @@ final class MywpShortcodeModuleTheme extends MywpShortcodeAbstractModule {
 
     } else {
 
-      MywpHelper::error_not_found_message( '$atts["field"]' , sprintf( '[%s] shortcode' , self::$id ) );
+      MywpHelper::error_not_found_message( '$field' , $called_text );
 
       return $content;
 

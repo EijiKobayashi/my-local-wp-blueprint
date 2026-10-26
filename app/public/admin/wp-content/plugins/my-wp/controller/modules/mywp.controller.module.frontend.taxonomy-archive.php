@@ -34,6 +34,16 @@ final class MywpControllerModuleFrontendTaxonomyArchive extends MywpControllerAb
 
   public static function mywp_model_get_option_key( $option_key ) {
 
+    $called_text = sprintf( '%s::%s( $option_key )' , __CLASS__ , __FUNCTION__ );
+
+    $option_key = MywpHelper::sanitize_text( $option_key );
+
+    if( empty( $option_key ) ) {
+
+      MywpHelper::error_not_found_message( '$option_key' , $called_text );
+
+    }
+
     if( empty( self::$taxonomy ) ) {
 
       return $option_key;
@@ -84,9 +94,17 @@ final class MywpControllerModuleFrontendTaxonomyArchive extends MywpControllerAb
 
     }
 
-    if( ! $wp_query->is_category() && ! $wp_query->is_tag() && ! $wp_query->is_tax() ) {
+    if( ! $wp_query->is_category() ) {
 
-      return $wp_query;
+      if( ! $wp_query->is_tag() ) {
+
+        if( ! $wp_query->is_tax() ) {
+
+          return $wp_query;
+
+        }
+
+      }
 
     }
 

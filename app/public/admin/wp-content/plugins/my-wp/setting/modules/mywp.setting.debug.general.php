@@ -37,9 +37,13 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
 
     $user_id_text = false;
 
-    if( ! empty( $setting_data['users'] ) && is_array( $setting_data['users'] ) ) {
+    if( ! empty( $setting_data['users'] ) ) {
 
-      $user_id_text = implode( ',' , $setting_data['users'] );
+      if( is_array( $setting_data['users'] ) ) {
+
+        $user_id_text = implode( ',' , $setting_data['users'] );
+
+      }
 
     }
 
@@ -47,25 +51,41 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php echo esc_html( sprintf( __ ( 'Show debugging %s' , 'my-wp' ) , __( 'Users' ) ) ); ?></th>
+          <th><?php echo esc_html( sprintf( __ ( 'Show debugging %s' , 'my-wp' ) , __( 'Users' , 'default' ) ) ); ?></th>
           <td>
             <input type="text" name="mywp[data][user_ids_text]" class="regular-text" value="<?php echo esc_attr( $user_id_text ); ?>" placeholder="1,2,3..." />
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
               <?php echo esc_html( __( 'Debugging for multiple users that enter the User ID with comma.' , 'my-wp' ) ); ?>
             </p>
+
             <?php if( ! empty( $setting_data['users'] ) ) : ?>
+
               <ul>
                 <?php foreach( $setting_data['users'] as $user_id ) : ?>
+
                   <?php $user = get_userdata( $user_id ); ?>
-                  <?php if( empty( $user ) ) : ?>
-                    <li>[<?php echo esc_html( $user_id ); ?>] <strong style="color: red;"><?php echo esc_html( sprintf( __( '%s is not found.' ) ) , __( 'User' ) ); ?></strong></li>
-                  <?php else : ?>
-                    <li>[<?php echo esc_html( $user_id ); ?>] <?php echo esc_html( $user->display_name ); ?> <span class="description">( <?php echo esc_html( $user->user_login ); ?> )</span></li>
-                  <?php endif; ?>
+
+                  <li>
+                    [<?php echo esc_html( $user_id ); ?>]
+
+                    <?php if( empty( $user ) ) : ?>
+
+                      <strong style="color: red;"><?php echo esc_html( sprintf( __( '%s is not found.' ) ) , __( 'User' , 'default' ) ); ?></strong>
+
+                    <?php else : ?>
+
+                      <?php echo esc_html( $user->display_name ); ?>
+                      <span class="description">( <?php echo esc_html( $user->user_login ); ?> )</span>
+
+                    <?php endif; ?>
+                  </li>
+
                 <?php endforeach; ?>
               </ul>
+
             <?php endif; ?>
+
           </td>
         </tr>
       </tbody>
@@ -79,7 +99,9 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
     $setting_data = self::get_setting_data();
 
     ?>
-    <h3 class="mywp-setting-screen-subtitle"><?php echo esc_html( __( 'Heavy process debug items' , 'my-wp' ) ); ?></h3>
+    <h3 class="mywp-setting-screen-subtitle">
+      <?php echo esc_html( __( 'Heavy process debug items' , 'my-wp' ) ); ?>
+    </h3>
 
     <p><?php echo __( 'Debugging these items may require significant time and memory, depending on the plugins and themes you are using. Please proceed with caution.' , 'my-wp' ); ?></p>
 
@@ -90,7 +112,7 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
           <td>
             <label>
               <input type="checkbox" name="mywp[data][mywp_cache]" class="mywp_cache" value="1" <?php checked( $setting_data['mywp_cache'] , true ); ?> />
-              <?php echo esc_html( __( 'Activate' ) ); ?>
+              <?php echo esc_html( __( 'Activate' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -99,7 +121,7 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
           <td>
             <label>
               <input type="checkbox" name="mywp[data][debug_request]" class="debug_request" value="1" <?php checked( $setting_data['debug_request'] , true ); ?> />
-              <?php echo esc_html( __( 'Activate' ) ); ?>
+              <?php echo esc_html( __( 'Activate' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -108,7 +130,7 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
           <td>
             <label>
               <input type="checkbox" name="mywp[data][debug_time]" class="debug_time" value="1" <?php checked( $setting_data['debug_time'] , true ); ?> />
-              <?php echo esc_html( __( 'Activate' ) ); ?>
+              <?php echo esc_html( __( 'Activate' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -117,7 +139,7 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
           <td>
             <label>
               <input type="checkbox" name="mywp[data][debug_action]" class="debug_action" value="1" <?php checked( $setting_data['debug_action'] , true ); ?> />
-              <?php echo esc_html( __( 'Activate' ) ); ?>
+              <?php echo esc_html( __( 'Activate' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -126,7 +148,7 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
           <td>
             <label>
               <input type="checkbox" name="mywp[data][debug_debugtrace]" class="debug_debugtrace" value="1" <?php checked( $setting_data['debug_debugtrace'] , true ); ?> />
-              <?php echo esc_html( __( 'Activate' ) ); ?>
+              <?php echo esc_html( __( 'Activate' , 'default' ) ); ?>
             </label>
           </td>
         </tr>
@@ -139,31 +161,47 @@ final class MywpSettingScreenDebugGeneral extends MywpAbstractSettingModule {
 
   public static function mywp_current_setting_post_data_format_update( $formatted_data ) {
 
+    $called_text = sprintf( '%s::%s( $formatted_data )' , __CLASS__ , __FUNCTION__ );
+
     $formatted_data['users'] = array();
 
     if( ! empty( $formatted_data['user_ids_text'] ) ) {
 
+      $users = array();
+
       if( strpos( $formatted_data['user_ids_text'] , ',' ) === false ) {
 
-        $users[] = (int) $formatted_data['user_ids_text'];
+        $user_id = MywpHelper::sanitize_number( $formatted_data['user_ids_text'] );
 
-      } else {
+        if( ! empty( $user_id ) ) {
 
-        $users = array_map( 'intval' , explode( ',' , $formatted_data['user_ids_text'] ) );
+          $users[] = $user_id;
 
-        foreach( $users as $key => $user_id ) {
+        } else {
 
-          if( empty( $user_id ) ) {
-
-            unset( $users[ $key ] );
-
-          }
+          MywpHelper::error_not_found_message( '$user_id' , $called_text );
 
         }
 
-        $users = array_unique( $users );
+      } else {
 
-        asort( $users );
+        $use_ids = explode( ',' , $formatted_data['user_ids_text'] );
+
+        foreach( $use_ids as $key => $user_id ) {
+
+          $user_id = MywpHelper::sanitize_number( $user_id );
+
+          if( empty( $user_id ) ) {
+
+            MywpHelper::error_not_found_message( '$user_id' , $called_text );
+
+            continue;
+
+          }
+
+          $users[] = $user_id;
+
+        }
 
       }
 

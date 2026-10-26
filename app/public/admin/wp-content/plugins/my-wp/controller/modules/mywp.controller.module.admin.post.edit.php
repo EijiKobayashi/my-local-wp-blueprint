@@ -93,43 +93,43 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     $update_messages_default = array(
       1 => array(
         'title' => __( 'Post updated' , 'my-wp' ),
-        'message' => __( 'Post updated.' ),
+        'message' => __( 'Post updated.' , 'default' ),
       ),
       2 => array(
         'title' => __( 'Custom field updated' , 'my-wp' ),
-        'message' => __( 'Custom field updated.' ),
+        'message' => __( 'Custom field updated.' , 'default' ),
       ),
       3 => array(
         'title' => __( 'Custom field deleted' , 'my-wp' ),
-        'message' => __( 'Custom field updated.' ),
+        'message' => __( 'Custom field updated.' , 'default' ),
       ),
       4 => array(
         'title' => __( 'Post updated' , 'my-wp' ),
-        'message' => __( 'Post updated.' ),
+        'message' => __( 'Post updated.' , 'default' ),
       ),
       5 => array(
-        'title' => __( 'Revision' ),
-        'message' => sprintf( __( 'Post restored to revision from %s.' ), __( 'Post Title' , 'my-wp' ) ),
+        'title' => __( 'Revision' , 'default' ),
+        'message' => sprintf( __( 'Post restored to revision from %s.' , 'default' ), __( 'Post Title' , 'my-wp' ) ),
       ),
       6 => array(
         'title' => __( 'Post published' , 'my-wp' ),
-        'message' => __( 'Post published.' ),
+        'message' => __( 'Post published.' , 'default' ),
       ),
       7 => array(
         'title' => __( 'Post saved' , 'my-wp' ),
-        'message' => __( 'Post saved.' ),
+        'message' => __( 'Post saved.' , 'default' ),
       ),
       8 => array(
         'title' => __( 'Post submitted' , 'my-wp' ),
-        'message' => __( 'Post submitted.' ),
+        'message' => __( 'Post submitted.' , 'default' ),
       ),
       9 => array(
         'title' => __( 'Post Scheduled' , 'my-wp' ),
-        'message' => sprintf( __( 'Post scheduled for: %s.' ), '<strong>' . __( 'Schedule Date' , 'my-wp' ) . '</strong>' ) . __( 'Schedule Link' , 'my-wp' ),
+        'message' => sprintf( __( 'Post scheduled for: %s.' , 'default' ), '<strong>' . __( 'Schedule Date' , 'my-wp' ) . '</strong>' ) . __( 'Schedule Link' , 'my-wp' ),
       ),
       10 => array(
         'title' => __( 'Post draft updated' , 'my-wp' ),
-        'message' => __( 'Post draft updated.' ) . __( 'Preview Post Link' , 'my-wp' ),
+        'message' => __( 'Post draft updated.' , 'default' ) . __( 'Preview Post Link' , 'my-wp' ),
       ),
     );
 
@@ -158,11 +158,22 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     }
 
     add_action( 'load-post.php' , array( __CLASS__ , 'load_post' ) , 1000 );
+
     add_action( 'load-post-new.php' , array( __CLASS__ , 'load_post' ) , 1000 );
 
   }
 
   public static function mywp_model_get_option_key( $option_key ) {
+
+    $called_text = sprintf( '%s::%s( $option_key )' , __CLASS__ , __FUNCTION__ );
+
+    $option_key = MywpHelper::sanitize_text( $option_key );
+
+    if( empty( $option_key ) ) {
+
+      MywpHelper::error_not_found_message( '$option_key' , $called_text );
+
+    }
 
     if( empty( self::$post_type ) ) {
 
@@ -692,6 +703,8 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['meta_boxes'] ) ) {
@@ -703,6 +716,24 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     $hide_meta_boxes = array();
 
     foreach( $setting_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
+
+      $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+      if( empty( $meta_box_id ) ) {
+
+        MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $meta_box_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$meta_box_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
 
       if( $meta_box_setting['action'] !== 'hide' ) {
 
@@ -752,6 +783,8 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['block_editor_panels'] ) ) {
@@ -763,6 +796,24 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     $hide_block_editor_panels = array();
 
     foreach( $setting_data['block_editor_panels'] as $block_editor_panel_id => $block_editor_panel_setting ) {
+
+      $block_editor_panel_id = MywpHelper::sanitize_text( $block_editor_panel_id );
+
+      if( empty( $block_editor_panel_id ) ) {
+
+        MywpHelper::error_not_found_message( '$block_editor_panel_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $block_editor_panel_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$block_editor_panel_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
 
       if( $block_editor_panel_setting['action'] !== 'hide' ) {
 
@@ -798,7 +849,7 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     foreach( $hide_block_editor_panels as $block_editor_panel_id ) {
 
-      if( in_array( $block_editor_panel_id , array( 'last-revision' ) ) ) {
+      if( in_array( $block_editor_panel_id , array( 'last-revision' ) , true ) ) {
 
         continue;
 
@@ -824,6 +875,8 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['meta_boxes'] ) ) {
@@ -835,6 +888,24 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     $remove_meta_boxes = array();
 
     foreach( $setting_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
+
+      $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+      if( empty( $meta_box_id ) ) {
+
+        MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $meta_box_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$meta_box_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
 
       if( $meta_box_setting['action'] !== 'remove' ) {
 
@@ -862,7 +933,13 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     foreach( $current_meta_boxes as $context => $priority_meta_boxes ) {
 
-      if( empty( $priority_meta_boxes ) or ! is_array( $priority_meta_boxes ) ) {
+      if( empty( $priority_meta_boxes ) ) {
+
+        continue;
+
+      }
+
+      if( ! is_array( $priority_meta_boxes ) ) {
 
         continue;
 
@@ -870,7 +947,13 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
       foreach( $priority_meta_boxes as $priority => $meta_boxes ) {
 
-        if( empty( $meta_boxes ) or ! is_array( $meta_boxes ) ) {
+        if( empty( $meta_boxes ) ) {
+
+          continue;
+
+        }
+
+        if( ! is_array( $meta_boxes ) ) {
 
           continue;
 
@@ -878,13 +961,19 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
         foreach( $meta_boxes as $meta_box_id => $meta_box ) {
 
-          if( empty( $meta_box ) or ! is_array( $meta_box ) ) {
+          if( empty( $meta_box ) ) {
 
             continue;
 
           }
 
-          if( ! in_array( $meta_box_id , $remove_meta_boxes ) ) {
+          if( ! is_array( $meta_box ) ) {
+
+            continue;
+
+          }
+
+          if( ! in_array( $meta_box_id , $remove_meta_boxes , true ) ) {
 
             continue;
 
@@ -912,6 +1001,8 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     }
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['meta_boxes'] ) ) {
@@ -923,6 +1014,24 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     $change_title_meta_boxes = array();
 
     foreach( $setting_data['meta_boxes'] as $meta_box_id => $meta_box_setting ) {
+
+      $meta_box_id = MywpHelper::sanitize_text( $meta_box_id );
+
+      if( empty( $meta_box_id ) ) {
+
+        MywpHelper::error_not_found_message( '$meta_box_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $meta_box_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$meta_box_setting' , 'is_array()' , $called_text );
+
+        continue;
+
+      }
 
       if( ! empty( $meta_box_setting['action'] ) ) {
 
@@ -956,7 +1065,13 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     foreach( $current_meta_boxes as $context => $priority_meta_boxes ) {
 
-      if( empty( $priority_meta_boxes ) or ! is_array( $priority_meta_boxes ) ) {
+      if( empty( $priority_meta_boxes ) ) {
+
+        continue;
+
+      }
+
+      if( ! is_array( $priority_meta_boxes ) ) {
 
         continue;
 
@@ -964,7 +1079,13 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
       foreach( $priority_meta_boxes as $priority => $meta_boxes ) {
 
-        if( empty( $meta_boxes ) or ! is_array( $meta_boxes ) ) {
+        if( empty( $meta_boxes ) ) {
+
+          continue;
+
+        }
+
+        if( ! is_array( $meta_boxes ) ) {
 
           continue;
 
@@ -972,7 +1093,13 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
         foreach( $meta_boxes as $meta_box_id => $meta_box ) {
 
-          if( empty( $meta_box ) or ! is_array( $meta_box ) ) {
+          if( empty( $meta_box ) ) {
+
+            continue;
+
+          }
+
+          if( ! is_array( $meta_box ) ) {
 
             continue;
 
@@ -1006,9 +1133,17 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     $setting_data = self::get_setting_data();
 
-    if( ! empty( $setting_data['forced_editor'] ) or in_array( $setting_data['forced_editor'] , array( 'text' , 'tinymce' ) ) ) {
+    if( empty( $setting_data['forced_editor'] ) ) {
 
-      $wp_default_editor = $setting_data['forced_editor'];
+      return $wp_default_editor;
+
+    }
+
+    $forced_editor = MywpHelper::sanitize_text( $setting_data['forced_editor'] );
+
+    if( in_array( $forced_editor , array( 'text' , 'tinymce' ) , true ) ) {
+
+      $wp_default_editor = $forced_editor;
 
     }
 
@@ -1034,7 +1169,7 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     }
 
-    $title_placeholder = $setting_data['change_title_placeholder'];
+    $title_placeholder = MywpHelper::sanitize_text( $setting_data['change_title_placeholder'] );
 
     self::after_do_function( __FUNCTION__ );
 
@@ -1066,13 +1201,15 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     <div class="misc-pub-section ">
 
-      <?php _e( 'Status:' ); ?>
+      <?php echo esc_html( __( 'Status:' , 'default' ) ); ?>
 
       <select name="post_status">
 
         <?php if( ! empty( $selectable_custom_post_statuses ) ) : ?>
 
           <?php foreach( $selectable_custom_post_statuses as $selectable_custom_post_status ) : ?>
+
+            <?php $selectable_custom_post_status = MywpHelper::sanitize_text( $selectable_custom_post_status ); ?>
 
             <?php if( ! isset( $all_post_statuses[ $selectable_custom_post_status ] ) ) : ?>
 
@@ -1170,13 +1307,19 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     global $post;
 
-    if( empty( $post ) or empty( $post->ID ) ) {
+    if( ! self::is_do_function( __FUNCTION__ ) ) {
 
       return false;
 
     }
 
-    if( ! self::is_do_function( __FUNCTION__ ) ) {
+    if( empty( $post ) ) {
+
+      return false;
+
+    }
+
+    if( empty( $post->ID ) ) {
 
       return false;
 
@@ -1210,13 +1353,19 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
 
     global $post;
 
-    if( empty( $post ) or empty( $post->ID ) ) {
+    if( ! self::is_do_function( __FUNCTION__ ) ) {
 
       return false;
 
     }
 
-    if( ! self::is_do_function( __FUNCTION__ ) ) {
+    if( empty( $post ) ) {
+
+      return false;
+
+    }
+
+    if( empty( $post->ID ) ) {
 
       return false;
 
@@ -1235,7 +1384,7 @@ final class MywpControllerModuleAdminPostEdit extends MywpControllerAbstractModu
     <script>
     jQuery(function( $ ) {
 
-      $('#publish').prop( 'name' , 'save' ).prop( 'id' , 'save' ).val( '<?php echo esc_js( __( 'Update' ) ); ?>' );
+      $('#publish').prop( 'name' , 'save' ).prop( 'id' , 'save' ).val( '<?php echo esc_js( __( 'Update' , 'default' ) ); ?>' );
 
     });
     </script>

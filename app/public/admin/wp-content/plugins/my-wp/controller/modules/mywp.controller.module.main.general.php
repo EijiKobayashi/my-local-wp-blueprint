@@ -66,9 +66,9 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
     }
 
-    $plugin_file_name = strip_tags( $plugin_file_name );
+    $plugin_file_name = MywpHelper::sanitize_text( $plugin_file_name );
 
-    if ( strpos( MYWP_PLUGIN_BASENAME , $plugin_file_name ) === false ) {
+    if( strpos( MYWP_PLUGIN_BASENAME , $plugin_file_name ) === false ) {
 
       return false;
 
@@ -80,7 +80,7 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
   public static function plugin_row_meta( $plugin_meta , $plugin_file , $plugin_data , $status ) {
 
-    if ( ! self::is_mywp_file( $plugin_file ) ) {
+    if( ! self::is_mywp_file( $plugin_file ) ) {
 
       return $plugin_meta;
 
@@ -90,19 +90,19 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
     if( ! empty( $plugin_info['document_url'] ) ) {
 
-      $plugin_meta[] =  sprintf( '<a href="%1$s" target="_blank">%2$s</a>' , esc_url( $plugin_info['document_url'] ) , __( 'Documents' , 'my-wp' ) );
+      $plugin_meta[] =  sprintf( '<a href="%1$s" target="_blank">%2$s</a>' , esc_url( $plugin_info['document_url'] ) , esc_html( __( 'Documents' , 'my-wp' ) ) );
 
     }
 
     if( ! empty( $plugin_info['forum_url'] ) ) {
 
-      $plugin_meta[] =  sprintf( '<a href="%1$s" target="_blank">%2$s</a>' , esc_url( $plugin_info['forum_url'] ) , __( 'Support Forums' ) );
+      $plugin_meta[] =  sprintf( '<a href="%1$s" target="_blank">%2$s</a>' , esc_url( $plugin_info['forum_url'] ) , esc_html( __( 'Support Forums' , 'default' ) ) );
 
     }
 
     if( ! empty( $plugin_info['review_url'] ) ) {
 
-      $plugin_meta[] =  sprintf( '<a href="%1$s" target="_blank">%2$s</a>' , esc_url( $plugin_info['review_url'] ) , __( 'Review' , 'my-wp' ) );
+      $plugin_meta[] =  sprintf( '<a href="%1$s" target="_blank">%2$s</a>' , esc_url( $plugin_info['review_url'] ) , esc_html( __( 'Review' , 'my-wp' ) ) );
 
     }
 
@@ -114,7 +114,7 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
   public static function plugin_action_links( $actions , $plugin_file , $plugin_data , $context ) {
 
-    if ( ! self::is_mywp_file( $plugin_file ) ) {
+    if( ! self::is_mywp_file( $plugin_file ) ) {
 
       return $actions;
 
@@ -124,7 +124,7 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
     if( ! empty( $plugin_info['admin_url'] ) ) {
 
-      $action_link = array( 'setting' => sprintf( '<a href="%1$s">%2$s</a>' , esc_url( $plugin_info['admin_url'] ) , __( 'Settings' ) ) );
+      $action_link = array( 'setting' => sprintf( '<a href="%1$s">%2$s</a>' , esc_url( $plugin_info['admin_url'] ) , esc_html( __( 'Settings' , 'default' ) ) ) );
 
       $actions = wp_parse_args( $actions , $action_link );
 
@@ -188,7 +188,7 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
       foreach( $notices['update'] as $message ) {
 
-        printf( '<p class="update-notice">%s</p>' , $message );
+        printf( '<p class="update-notice">%s</p>' , wp_kses_post( $message ) );
 
       }
 
@@ -202,7 +202,7 @@ final class MywpControllerModuleMainGeneral extends MywpControllerAbstractModule
 
       foreach( $notices['error'] as $code => $message ) {
 
-        printf( '<p class="error-notice error_%s">%s</p>' , esc_attr( $code ) , $message );
+        printf( '<p class="error-notice error_%s">%s</p>' , esc_attr( $code ) , wp_kses_post( $message ) );
 
       }
 

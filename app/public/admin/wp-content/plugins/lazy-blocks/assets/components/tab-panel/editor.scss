@@ -36,6 +36,12 @@
 				display: none;
 			}
 
+			// WordPress 7.2 wraps the tab title in this span.
+			> .components-tab-panel__tabs-item-label {
+				display: flex;
+				align-items: center;
+			}
+
 			svg {
 				display: block;
 				width: auto;
@@ -68,5 +74,25 @@
 		&:first-child {
 			margin-top: -16px;
 		}
+	}
+}
+
+// placement and code file switchers, as wide as their labels.
+.lzb-block-builder .lazyblocks-control-tabs-toggle {
+	width: fit-content;
+	max-width: 100%;
+	margin-bottom: 12px;
+
+	.lazyblocks-control-tabs-tab > div {
+		display: flex;
+		align-items: center;
+		white-space: nowrap;
+	}
+
+	.lazyblocks-control-tabs-tab svg {
+		display: block;
+		width: auto;
+		height: 1.4em;
+		margin-right: 0.3em;
 	}
 }

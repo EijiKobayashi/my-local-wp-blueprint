@@ -77,19 +77,50 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
     }
 
     add_action( 'admin_enqueue_scripts' , array( __CLASS__ , 'admin_enqueue_scripts' ) );
+
     add_action( 'admin_head' , array( __CLASS__ , 'hidden_default_menus' ) , 1000 );
+
     add_action( 'adminmenu' , array( __CLASS__ , 'render_menus' ) );
+
     add_action( 'admin_body_class' , array( __CLASS__ , 'custom_ui_body_class' ) );
+
     add_action( 'in_admin_header' , array( __CLASS__ , 'custom_menu_ui_mask' ) );
+
     add_filter( 'mywp_controller_admin_sidebar_get_sidebar_item_added_classes_found_current_item_ids' , array( __CLASS__ , 'mywp_controller_admin_sidebar_get_sidebar_item_added_classes_found_current_item_ids' ) , 9 , 5 );
 
   }
 
   public static function mywp_controller_admin_sidebar_get_sidebar( $posts ) {
 
+    $called_text = sprintf( '%s::%s( $posts )' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $posts ) ) {
 
       return $posts;
+
+    }
+
+    foreach( $posts as $key => $sidebar_item ) {
+
+      if( empty( $sidebar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$sidebar_item' , $called_text );
+
+        unset( $posts[ $key ] );
+
+        continue;
+
+      }
+
+      if( ! is_object( $sidebar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$sidebar_item' , 'is_object()' , $called_text );
+
+        unset( $posts[ $key ] );
+
+        continue;
+
+      }
 
     }
 
@@ -109,6 +140,8 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
   public static function mywp_controller_admin_sidebar_get_sidebar_item( $sidebar_items ) {
 
+    $called_text = sprintf( '%s::%s( $sidebar_items )' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $sidebar_items ) ) {
 
       return $sidebar_items;
@@ -124,6 +157,22 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
     }
 
     foreach( $sidebar_items as $key => $sidebar_item ) {
+
+      if( empty( $sidebar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$sidebar_item' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_object( $sidebar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$sidebar_item' , 'is_object()' , $called_text );
+
+        continue;
+
+      }
 
       if( $sidebar_item->item_default_type !== 'menu' ) {
 
@@ -183,7 +232,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     if( ! empty( $setting_data['cache_timeout'] ) ) {
 
-      $timeout_min = (int) $setting_data['cache_timeout'];
+      $timeout_min = MywpHelper::sanitize_number( $setting_data['cache_timeout'] );
 
     }
 
@@ -226,13 +275,17 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     self::$sidebar = $sidebar;
 
-    if( ! empty( $timeout_min ) && ! empty( $sidebar ) ) {
+    if( ! empty( $timeout_min ) ) {
 
-      $sidebar_strlen = strlen( maybe_serialize( self::$sidebar ) );
+      if( ! empty( $sidebar ) ) {
 
-      if( $sidebar_strlen < MywpHelper::get_max_allowed_packet_size() ) {
+        $sidebar_strlen = strlen( maybe_serialize( self::$sidebar ) );
 
-        $mywp_transient->update_data( self::$sidebar , $timeout_min * MINUTE_IN_SECONDS );
+        if( $sidebar_strlen < MywpHelper::get_max_allowed_packet_size() ) {
+
+          $mywp_transient->update_data( self::$sidebar , $timeout_min * MINUTE_IN_SECONDS );
+
+        }
 
       }
 
@@ -243,6 +296,8 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
   }
 
   private static function get_sidebar_items() {
+
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
 
     if( ! empty( self::$sidebar_items ) ) {
 
@@ -261,6 +316,22 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
     $sidebar_items = array();
 
     foreach( $sidebar as $key => $sidebar_item ) {
+
+      if( empty( $sidebar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$sidebar_item' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_object( $sidebar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$sidebar_item' , 'is_object()' , $called_text );
+
+        continue;
+
+      }
 
       if( $sidebar_item->item_type === 'default') {
 
@@ -298,6 +369,8 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
   private static function get_sidebar_items_added_classes(){
 
+    $called_text = sprintf( '%s::%s()' , __CLASS__ , __FUNCTION__ );
+
     if( ! empty( self::$sidebar_items_added_classes ) ) {
 
       return self::$sidebar_items_added_classes;
@@ -314,7 +387,19 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     foreach( $sidebar_items as $key => $sidebar_item ) {
 
+      if( empty( $sidebar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$sidebar_item' , $called_text );
+
+        unset( $sidebar_items[ $key ] );
+
+        continue;
+
+      }
+
       if( ! is_object( $sidebar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$sidebar_item' , 'is_object()' , $called_text );
 
         unset( $sidebar_items[ $key ] );
 
@@ -427,7 +512,9 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
       if( $first ) {
 
         $sidebar_items[ $key ]->item_li_class .= ' wp-first-item';
+
         $sidebar_items[ $key ]->item_link_class .= ' wp-first-item';
+
         $first = false;
 
       }
@@ -441,6 +528,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
       if( empty( $sidebar_item->item_parent ) ) {
 
         $sidebar_items[ $key ]->item_li_class .= ' menu-top';
+
         $sidebar_items[ $key ]->item_link_class .= ' menu-top';
 
       }
@@ -448,6 +536,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
       if( ! empty( self::$child_items[ $sidebar_item->ID ] ) ) {
 
         $sidebar_items[ $key ]->item_li_class .= ' wp-has-submenu';
+
         $sidebar_items[ $key ]->item_link_class .= ' wp-has-submenu';
 
       }
@@ -457,6 +546,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
     $current_url = self::get_current_url();
 
     $current_url_parse = parse_url( $current_url );
+
     $current_url_query = array();
 
     if( isset( $current_url_parse['fragment'] ) ) {
@@ -481,7 +571,13 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     foreach( $sidebar_items as $key => $sidebar_item ) {
 
-      if( empty( $sidebar_item->item_link_url_parse['host'] ) or empty( $sidebar_item->item_link_url_parse['path'] ) ) {
+      if( empty( $sidebar_item->item_link_url_parse['host'] ) ) {
+
+        continue;
+
+      }
+
+      if( empty( $sidebar_item->item_link_url_parse['path'] ) ) {
 
         continue;
 
@@ -494,7 +590,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
         $current_url_query === $sidebar_item->item_link_url_parse_query
         ) {
 
-        $found_current_item_ids[] = $sidebar_item->ID;
+        $found_current_item_ids[] = (string) $sidebar_item->ID;
 
       }
 
@@ -528,7 +624,13 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
       foreach( $sidebar_items as $key => $sidebar_item ) {
 
-        if( empty( $sidebar_item->item_link_url_parse['host'] ) or empty( $sidebar_item->item_link_url_parse['path'] ) ) {
+        if( empty( $sidebar_item->item_link_url_parse['host'] ) ) {
+
+          continue;
+
+        }
+
+        if( empty( $sidebar_item->item_link_url_parse['path'] ) ) {
 
           continue;
 
@@ -541,7 +643,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
           http_build_query( $identification_query ) === $sidebar_item->item_link_url_parse['query']
         ) {
 
-          $found_current_item_ids[] = $sidebar_item->ID;
+          $found_current_item_ids[] = (string) $sidebar_item->ID;
 
         }
 
@@ -553,7 +655,11 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     if( ! empty( $found_current_item_ids ) ) {
 
-      $found_current_item_ids = array_map( 'strip_tags' , $found_current_item_ids );
+      foreach( $found_current_item_ids as $key => $found_current_item_id ) {
+
+        $found_current_item_ids[ $key ] = MywpHelper::sanitize_text( $found_current_item_id );
+
+      }
 
     }
 
@@ -561,9 +667,10 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
       foreach( $sidebar_items as $key => $sidebar_item ) {
 
-        if( in_array( $sidebar_item->ID , $found_current_item_ids ) ) {
+        if( in_array( (string) $sidebar_item->ID , $found_current_item_ids , true ) ) {
 
           $sidebar_items[ $key ]->item_li_class .= ' current';
+
           $sidebar_items[ $key ]->item_link_class .= ' current';
 
         }
@@ -578,13 +685,14 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
           foreach( $sidebar_items as $key => $sidebar_item ) {
 
-            if( ! in_array( $sidebar_item->ID , $find_item_parents_ids ) ) {
+            if( ! in_array( (string) $sidebar_item->ID , $find_item_parents_ids , true ) ) {
 
               continue;
 
             }
 
             $sidebar_items[ $key ]->item_li_class .= ' wp-has-current-submenu wp-menu-open';
+
             $sidebar_items[ $key ]->item_link_class .= ' wp-has-current-submenu wp-menu-open';
 
           }
@@ -605,6 +713,8 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
   public static function mywp_controller_admin_sidebar_get_sidebar_item_added_classes_found_current_item_ids( $found_current_item_ids , $sidebar_items , $current_url , $current_url_parse , $current_url_query ) {
 
+    $called_text = sprintf( '%s::%s( $found_current_item_ids , $sidebar_items , $current_url , $current_url_parse , $current_url_query )' , __CLASS__ , __FUNCTION__ );
+
     if( empty( $sidebar_items ) ) {
 
       return $sidebar_items;
@@ -619,7 +729,29 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     foreach( $sidebar_items as $key => $sidebar_item ) {
 
-      if( empty( $sidebar_item->item_link_url_parse['host'] ) or empty( $sidebar_item->item_link_url_parse['path'] ) ) {
+      if( empty( $sidebar_item ) ) {
+
+        MywpHelper::error_not_found_message( '$sidebar_item' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_object( $sidebar_item ) ) {
+
+        MywpHelper::error_invalid_message( '$sidebar_item' , 'is_object()' , $called_text );
+
+        continue;
+
+      }
+
+      if( empty( $sidebar_item->item_link_url_parse['host'] ) ) {
+
+        continue;
+
+      }
+
+      if( empty( $sidebar_item->item_link_url_parse['path'] ) ) {
 
         continue;
 
@@ -642,9 +774,11 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
         }
 
-        $post_type = get_post_type( (int) $current_url_query['post'] );
+        $post_type = get_post_type( MywpHelper::sanitize_number( $current_url_query['post'] ) );
 
         if( empty( $post_type ) ) {
+
+          MywpHelper::error_not_found_message( '$post_type' , $called_text );
 
           continue;
 
@@ -726,13 +860,17 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
   private static function get_find_item_to_parent_ids( $find_id = false ) {
 
+    $called_text = sprintf( '%s::%s( $find_id )' , __CLASS__ , __FUNCTION__ );
+
+    $find_id = MywpHelper::sanitize_text( $find_id );
+
     if( empty( $find_id ) ) {
+
+      MywpHelper::error_require_message( '$find_id' , $called_text );
 
       return false;
 
     }
-
-    $find_id = strip_tags( $find_id );
 
     self::set_find_item_parent_ids( $find_id );
 
@@ -742,7 +880,13 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
   private static function set_find_item_parent_ids( $find_id ) {
 
+    $called_text = sprintf( '%s::%s( $find_id )' , __CLASS__ , __FUNCTION__ );
+
+    $find_id = MywpHelper::sanitize_text( $find_id );
+
     if( empty( $find_id ) ) {
+
+      MywpHelper::error_require_message( '$find_id' , $called_text );
 
       return false;
 
@@ -758,7 +902,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     foreach( $parent_items as $parent_item ) {
 
-      self::$found_parent_item_ids[] = $parent_item->ID;
+      self::$found_parent_item_ids[] = (string) $parent_item->ID;
 
       if( ! empty( $parent_item->item_parent ) ) {
 
@@ -784,11 +928,11 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
       if( is_numeric( $parent_id ) ) {
 
-        $parent_id = (int) $parent_id;
+        $parent_id = MywpHelper::sanitize_number( $parent_id );
 
       } else {
 
-        $parent_id = strip_tags( $parent_id );
+        $parent_id = MywpHelper::sanitize_text( $parent_id );
 
       }
 
@@ -810,11 +954,11 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
         if( is_numeric( $item_parent ) ) {
 
-          $item_parent = (int) $item_parent;
+          $item_parent = MywpHelper::sanitize_number( $item_parent );
 
         } else {
 
-          $item_parent = strip_tags( $item_parent );
+          $item_parent = MywpHelper::sanitize_text( $item_parent );
 
         }
 
@@ -869,9 +1013,11 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
     }
 
     wp_register_style( 'mywp_admin_sidebar' , MywpApi::get_plugin_url( 'css' ) . 'admin-sidebar.css' , array() , MYWP_VERSION );
-    wp_register_script( 'mywp_admin_sidebar' , MywpApi::get_plugin_url( 'js' ) . 'admin-sidebar.js' , array( 'jquery' ) , MYWP_VERSION );
 
     wp_enqueue_style( 'mywp_admin_sidebar' );
+
+    wp_register_script( 'mywp_admin_sidebar' , MywpApi::get_plugin_url( 'js' ) . 'admin-sidebar.js' , array( 'jquery' ) , MYWP_VERSION );
+
     wp_enqueue_script( 'mywp_admin_sidebar' );
 
     $setting_data = self::get_setting_data();
@@ -879,9 +1025,11 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
     if( ! empty( $setting_data['custom_menu_ui'] ) ) {
 
       wp_register_style( 'mywp_admin_sidebar_custom_ui' , MywpApi::get_plugin_url( 'css' ) . 'admin-sidebar-custom-ui.css' , array( 'mywp_admin_sidebar' ) , MYWP_VERSION );
-      wp_register_script( 'mywp_admin_sidebar_custom_ui' , MywpApi::get_plugin_url( 'js' ) . 'admin-sidebar-custom-ui.js' , array( 'jquery' , 'mywp_admin_sidebar' ) , MYWP_VERSION );
 
       wp_enqueue_style( 'mywp_admin_sidebar_custom_ui' );
+
+      wp_register_script( 'mywp_admin_sidebar_custom_ui' , MywpApi::get_plugin_url( 'js' ) . 'admin-sidebar-custom-ui.js' , array( 'jquery' , 'mywp_admin_sidebar' ) , MYWP_VERSION );
+
       wp_enqueue_script( 'mywp_admin_sidebar_custom_ui' );
 
     }
@@ -908,6 +1056,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
     }
 
     $menu = array();
+
     $submenu = array();
 
     self::after_do_function( __FUNCTION__ );
@@ -936,9 +1085,11 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     }
 
-    $collapse_item_html = apply_filters( 'mywp_controller_admin_sidebar_collapse_item_html' , '<li id="sidebar-collapse"><span class="collapse-button-icon dashicons-before"></span><span class="collapse-button-label">' . __( 'Collapse menu' ) . '</span></li>' );
+    $collapse_item_html = '<li id="sidebar-collapse"><span class="collapse-button-icon dashicons-before"></span><span class="collapse-button-label">' . esc_html( __( 'Collapse menu' , 'default' ) ) . '</span></li>';
 
-    echo $collapse_item_html;
+    $collapse_item_html = apply_filters( 'mywp_controller_admin_sidebar_collapse_item_html' , $collapse_item_html );
+
+    echo wp_kses_post( $collapse_item_html );
 
     self::after_do_function( __FUNCTION__ );
 
@@ -946,7 +1097,35 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
   private static function print_sidebar_item( $item ) {
 
-    if( empty( $item ) or empty( $item->item_type ) or empty( $item->ID ) ) {
+    $called_text = sprintf( '%s::%s( $item )' , __CLASS__ , __FUNCTION__ );
+
+    if( empty( $item ) ) {
+
+      MywpHelper::error_require_message( '$item' , $called_text );
+
+      return false;
+
+    }
+
+    if( ! is_object( $item ) ) {
+
+      MywpHelper::error_invalid_message( '$item' , 'is_object()' , $called_text );
+
+      return false;
+
+    }
+
+    if( empty( $item->item_type ) ) {
+
+      MywpHelper::error_not_found_message( '$item->item_type' , $called_text );
+
+      return false;
+
+    }
+
+    if( empty( $item->ID ) ) {
+
+      MywpHelper::error_not_found_message( '$item->ID' , $called_text );
 
       return false;
 
@@ -968,16 +1147,16 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
     if( is_numeric( $item_id ) ) {
 
-      $item_id = (int) $item_id;
+      $item_id = MywpHelper::sanitize_number( $item_id );
 
     } else {
 
-      $item_id = strip_tags( $item_id );
+      $item_id = MywpHelper::sanitize_text( $item_id );
 
     }
 
-
     $item_type = $item->item_type;
+
     $item_parent = $item->item_parent;
 
     $item->item_link_title = do_shortcode( $item->item_link_title );
@@ -1008,7 +1187,7 @@ final class MywpControllerModuleAdminSidebar extends MywpControllerAbstractModul
 
       echo '<div class="separator"></div>';
 
-    } elseif( in_array( $item_type , array( 'default' , 'link' ) ) ) {
+    } elseif( in_array( $item_type , array( 'default' , 'link' ) , true ) ) {
 
       $link_class = '';
 

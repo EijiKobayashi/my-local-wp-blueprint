@@ -28,21 +28,21 @@ final class MywpSettingBlockEditor {
 
       $setting_block_editor_panels[ $post_type ]['post-status'] = array(
         'id' => 'post-status',
-        'title' => __( 'Overview' )
+        'title' => __( 'Overview' , 'default' )
       );
 
-      if ( post_type_supports( $post_type , 'revisions' ) ) {
+      if( post_type_supports( $post_type , 'revisions' ) ) {
 
         $setting_block_editor_panels[ $post_type ]['last-revision'] = array(
           'id' => 'last-revision',
-          'title' => __( 'Revision' ),
+          'title' => __( 'Revision' , 'default' ),
         );
 
       }
 
       $setting_block_editor_panels[ $post_type ]['post-link'] = array(
         'id' => 'post-link',
-        'title' => __( 'Permalinks' )
+        'title' => __( 'Permalinks' , 'default' )
       );
 
     }
@@ -72,41 +72,41 @@ final class MywpSettingBlockEditor {
 
     foreach( $selectable_post_types as $post_type => $post_type_obj ) {
 
-      if ( post_type_supports( $post_type , 'thumbnail' ) ) {
+      if( post_type_supports( $post_type , 'thumbnail' ) ) {
 
         $setting_block_editor_panels[ $post_type ]['featured-image'] = array(
           'id' => 'featured-image',
-          'title' => __( 'Featured Images' ),
+          'title' => __( 'Featured Images' , 'default' ),
         );
 
       }
 
-      if ( post_type_supports( $post_type , 'excerpt' ) ) {
+      if( post_type_supports( $post_type , 'excerpt' ) ) {
 
         $setting_block_editor_panels[ $post_type ]['post-excerpt'] = array(
           'id' => 'post-excerpt',
-          'title' => __( 'Excerpt' ),
+          'title' => __( 'Excerpt' , 'default' ),
         );
 
       }
 
       $setting_block_editor_panels[ $post_type ]['discussion-panel'] = array(
         'id' => 'discussion-panel',
-        'title' => __( 'Discussion' ),
+        'title' => __( 'Discussion' , 'default' ),
       );
 
       if( $post_type === 'page' ) {
 
         $setting_block_editor_panels[ $post_type ]['page-attributes'] = array(
           'id' => 'page-attributes',
-          'title' => __( 'Page Attributes' ),
+          'title' => __( 'Page Attributes' , 'default' ),
         );
 
       } else {
 
         $setting_block_editor_panels[ $post_type ]['page-attributes'] = array(
           'id' => 'page-attributes',
-          'title' => __( 'Post Attributes' ),
+          'title' => __( 'Post Attributes' , 'default' ),
         );
 
       }
@@ -119,9 +119,11 @@ final class MywpSettingBlockEditor {
 
   public static function get_setting_block_editor_panel( $block_editor_screen_id = false ) {
 
-    if( empty( $block_editor_screen_id ) ) {
+    $called_text = sprintf( '%s::%s( $block_editor_screen_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$block_editor_screen_id' );
+    $block_editor_screen_id = MywpHelper::sanitize_text( $block_editor_screen_id );
+
+    if( empty( $block_editor_screen_id ) ) {
 
       MywpHelper::error_require_message( '$block_editor_screen_id' , $called_text );
 
@@ -131,7 +133,17 @@ final class MywpSettingBlockEditor {
 
     $setting_block_editor_panels = self::get_setting_block_editor_panels();
 
-    if( empty( $setting_block_editor_panels ) or empty( $setting_block_editor_panels[ $block_editor_screen_id ] ) ) {
+    if( empty( $setting_block_editor_panels ) ) {
+
+      MywpHelper::error_not_found_message( '$setting_block_editor_panels' , $called_text );
+
+      return false;
+
+    }
+
+    if( empty( $setting_block_editor_panels[ $block_editor_screen_id ] ) ) {
+
+      MywpHelper::error_not_found_message( '$setting_block_editor_panels[ $block_editor_screen_id ]' , $called_text );
 
       return false;
 
@@ -143,7 +155,17 @@ final class MywpSettingBlockEditor {
 
   public static function set_current_block_editor_screen_id( $block_editor_screen_id = false ) {
 
-    $block_editor_screen_id = strip_tags( $block_editor_screen_id );
+    $called_text = sprintf( '%s::%s( $block_editor_screen_id )' , __CLASS__ , __FUNCTION__ );
+
+    $block_editor_screen_id = MywpHelper::sanitize_text( $block_editor_screen_id );
+
+    if( empty( $block_editor_screen_id ) ) {
+
+      MywpHelper::error_require_message( '$block_editor_screen_id' , $called_text );
+
+      return false;
+
+    }
 
     self::$current_block_editor_screen_id = $block_editor_screen_id;
 
@@ -159,9 +181,11 @@ final class MywpSettingBlockEditor {
 
   private static function set_current_block_editor_panels( $block_editor_screen_id = false ) {
 
-    if( empty( $block_editor_screen_id ) ) {
+    $called_text = sprintf( '%s::%s( $block_editor_screen_id )' , __CLASS__ , __FUNCTION__ );
 
-      $called_text = sprintf( '%s::%s( %s )' , __CLASS__ , __FUNCTION__ , '$block_editor_screen_id' );
+    $block_editor_screen_id = MywpHelper::sanitize_text( $block_editor_screen_id );
+
+    if( empty( $block_editor_screen_id ) ) {
 
       MywpHelper::error_require_message( '$block_editor_screen_id' , $called_text );
 
@@ -172,6 +196,8 @@ final class MywpSettingBlockEditor {
     $block_editor_panels = self::get_setting_block_editor_panel( $block_editor_screen_id );
 
     if( empty( $block_editor_panels ) ) {
+
+      MywpHelper::error_not_found_message( '$block_editor_panels' , $called_text );
 
       return false;
 

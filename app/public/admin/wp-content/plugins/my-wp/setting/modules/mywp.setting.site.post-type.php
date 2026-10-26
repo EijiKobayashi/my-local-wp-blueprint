@@ -38,15 +38,15 @@ final class MywpSettingScreenSitePostType extends MywpAbstractSettingModule {
     <table class="form-table">
       <tbody>
         <tr>
-          <th><?php _e( 'Change the capability for create_posts' , 'my-wp' ); ?></th>
+          <th><?php echo esc_html( __( 'Change the capability for create_posts' , 'my-wp' ) ); ?></th>
           <td>
             <label>
               <input type="checkbox" name="mywp[data][change_cap_create_posts]" class="change_cap_create_posts" value="1" <?php checked( $setting_data['change_cap_create_posts'] , true ); ?> />
-              <?php _e( 'Change' ); ?>
+              <?php echo esc_html( __( 'Change' , 'default' ) ); ?>
             </label>
             <p class="mywp-description">
               <span class="dashicons dashicons-lightbulb"></span>
-              <?php _e( 'Change the "create_posts" capability example to create_posts from edit_posts.' , 'my-wp' ); ?>
+              <?php echo esc_html( __( 'Change the "create_posts" capability example to create_posts from edit_posts.' , 'my-wp' ) ); ?>
             </p>
           </td>
         </tr>

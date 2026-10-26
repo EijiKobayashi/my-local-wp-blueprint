@@ -216,6 +216,8 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
     }
 
+    $called_text = sprintf( '%s::%s( $columns )' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['list_columns'] ) ) {
@@ -228,13 +230,31 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
-      if( empty( $column_setting['width'] ) ) {
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
 
         continue;
 
       }
 
-      $columns[ $column_id ] = $column_setting['width'];
+      $width = false;
+
+      if( ! empty( $column_setting['width'] ) ) {
+
+        $width = MywpHelper::sanitize_text( $column_setting['width'] );
+
+      }
+
+      if( empty( $width ) ) {
+
+        continue;
+
+      }
+
+      $columns[ $column_id ] = $width;
 
     }
 
@@ -279,6 +299,7 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
     if( $request['orderby'] === 'image_alt') {
 
       $request['meta_key'] = '_wp_attachment_image_alt';
+
       $request['orderby'] = 'meta_value';
 
     }
@@ -342,7 +363,15 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
     }
 
-    $per_page = $setting_data['per_page_num'];
+    $per_page_num = MywpHelper::sanitize_number( $setting_data['per_page_num'] );
+
+    if( empty( $per_page_num ) ) {
+
+      return $per_page;
+
+    }
+
+    $per_page = $per_page_num;
 
     self::after_do_function( __FUNCTION__ );
 
@@ -357,6 +386,8 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
       return $columns;
 
     }
+
+    $called_text = sprintf( '%s::%s( $columns )' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -378,6 +409,24 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
+      if( ! is_array( $column_setting ) ) {
+
+        MywpHelper::error_invalid_message( '$column_setting', 'is_array()' , $called_text );
+
+        continue;
+
+      }
+
       $columns[ $column_id ] = wp_kses( $column_setting['title'] , $wp_kses_allowed_html );
 
     }
@@ -395,6 +444,8 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
       return false;
 
     }
+
+    $called_text = sprintf( '%s::%s( $column_id , $post_id )' , __CLASS__ , __FUNCTION__ );
 
     $setting_data = self::get_setting_data();
 
@@ -418,11 +469,11 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
       $image_alt = get_post_meta( $post_id , '_wp_attachment_image_alt' , true );
 
-      echo wp_strip_all_tags( stripslashes( $image_alt ) );
+      echo esc_html( $image_alt );
 
     } elseif( $column_id === 'mywp_column_post_excerpt' ) {
 
-      $post_excerpt = strip_tags( $post->post_excerpt );
+      $post_excerpt = MywpHelper::sanitize_text( $post->post_excerpt );
 
       if( function_exists( 'mb_substr' ) ) {
 
@@ -442,7 +493,7 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
     } elseif( $column_id === 'mywp_column_post_content' ) {
 
-      $post_content = strip_tags( $post->post_content );
+      $post_content = MywpHelper::sanitize_text( $post->post_content );
 
       if( function_exists( 'mb_substr' ) ) {
 
@@ -465,8 +516,6 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
       printf( '<input type="text" readonly="readonly" value="%s" class="large-text" />' , esc_attr( wp_get_attachment_url( $post_id ) ) );
 
     }
-
-    $called_text = sprintf( '%s::%s( $content , $column_id , $user_id )' , __CLASS__ , __FUNCTION__ );
 
     if( $column_id === 'id' ) {
 
@@ -492,7 +541,7 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
       $image_alt = get_post_meta( $post_id , '_wp_attachment_image_alt' , true );
 
-      echo wp_strip_all_tags( stripslashes( $image_alt ) );
+      echo esc_html( $image_alt );
 
     } elseif( $column_id === 'post_excerpt' ) {
 
@@ -500,15 +549,17 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
       MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-      if( ! empty( $post->post_excerpt ) ) {
+      $post_excerpt = MywpHelper::sanitize_text( $post->post_excerpt );
+
+      if( ! empty( $post_excerpt ) ) {
 
         if( function_exists( 'mb_substr' ) ) {
 
-          echo esc_html( mb_substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
+          echo esc_html( mb_substr( $post_excerpt , 0 , 20 ) . '.' );
 
         } else {
 
-          echo esc_html( substr( strip_tags( $post->post_excerpt ) , 0 , 20 ) . '.' );
+          echo esc_html( substr( $post_excerpt , 0 , 20 ) . '.' );
 
         }
 
@@ -520,15 +571,17 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
       MywpHelper::error_deprecated_value( $deprecated_message , $called_text , '1.24' );
 
-      if( ! empty( $post->post_content ) ) {
+      $post_content = MywpHelper::sanitize_text( $post->post_content );
+
+      if( ! empty( $post_content ) ) {
 
         if( function_exists( 'mb_substr' ) ) {
 
-          echo esc_html( mb_substr( strip_tags( $post->post_content ) , 0 , 20 ) . '.' );
+          echo esc_html( mb_substr( $post_content , 0 , 20 ) . '.' );
 
         } else {
 
-          echo esc_html( substr( strip_tags( $post->post_content ) , 0 , 20 ) . '.' );
+          echo esc_html( substr( $post_content , 0 , 20 ) . '.' );
 
         }
 
@@ -556,6 +609,8 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
     }
 
+    $called_text = sprintf( '%s::%s( $sortables )' , __CLASS__ , __FUNCTION__ );
+
     $setting_data = self::get_setting_data();
 
     if( empty( $setting_data['list_columns'] ) ) {
@@ -568,9 +623,25 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
     foreach( $setting_data['list_columns'] as $column_id => $column_setting ) {
 
+      $column_id = MywpHelper::sanitize_text( $column_id );
+
+      if( empty( $column_id ) ) {
+
+        MywpHelper::error_not_found_message( '$column_id' , $called_text );
+
+        continue;
+
+      }
+
       if( ! empty( $column_setting['sort'] ) ) {
 
-        $sortables[ $column_id ] = $column_setting['orderby'];
+        $orderby = MywpHelper::sanitize_text( $column_setting['orderby'] );
+
+        if( ! empty( $orderby ) ) {
+
+          $sortables[ $column_id ] = $orderby;
+
+        }
 
       }
 
@@ -584,13 +655,11 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
   protected static function custom_search_filter_do() {
 
-    if( ! empty( $_GET['mode'] ) ) {
+    $media_library_mode = get_user_option( 'media_library_mode', get_current_user_id() ) ? get_user_option( 'media_library_mode', get_current_user_id() ) : 'grid';
 
-      $media_library_mode = MywpHelper::sanitize_text( $_GET['mode'] );
+    if( isset( $_GET['mode'] ) ) {
 
-    } else {
-
-      $media_library_mode = get_user_option( 'media_library_mode', get_current_user_id() ) ? get_user_option( 'media_library_mode', get_current_user_id() ) : 'grid';
+      $media_library_mode = MywpHelper::sanitize_text( wp_unslash( $_GET['mode'] ) );
 
     }
 
@@ -666,6 +735,8 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
   protected static function custom_search_filter_query_do( $query , $custom_search_filter_requests ) {
 
+    $called_text = sprintf( '%s::%s( $query , $custom_search_filter_requests )' , __CLASS__ , __FUNCTION__ );
+
     if( ! $query->is_main_query() ) {
 
       return false;
@@ -722,9 +793,11 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
 
         }
 
-        $date = MywpHelper::sanitize_date( $custom_search_filter_requests['mywp_custom_search_post_date'][ $date_key ] );
+        $date = MywpHelper::sanitize_date_ymd( $custom_search_filter_requests['mywp_custom_search_post_date'][ $date_key ] );
 
         if( empty( $date ) ) {
+
+          MywpHelper::error_not_found_message( '$date' , $called_text );
 
           continue;
 
@@ -803,7 +876,7 @@ final class MywpControllerModuleAdminUploads extends MywpAbstractControllerListM
       ),
       'mywp_custom_search_title' => array(
         'id' => 'mywp_custom_search_title',
-        'title' => __( 'Title' ),
+        'title' => __( 'Title' , 'default' ),
         'type' => 'text',
       ),
       'mywp_custom_search_post_date' => array(

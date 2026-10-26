@@ -16,9 +16,9 @@ abstract class MywpDeveloperAbstractModule {
 
     $class = get_called_class();
 
-    if( empty( static::$id ) ) {
+    $called_text = sprintf( 'class %s' , $class );
 
-      $called_text = sprintf( 'class %s' , $class );
+    if( empty( static::$id ) ) {
 
       MywpHelper::error_require_message( '"static protected $id"' , $called_text );
 
@@ -110,7 +110,7 @@ abstract class MywpDeveloperAbstractModule {
 
     if( ! empty( $include_debug_modules ) ) {
 
-      if( ! in_array( static::$id , $include_debug_modules ) ) {
+      if( ! in_array( static::$id , $include_debug_modules , true ) ) {
 
         return false;
 

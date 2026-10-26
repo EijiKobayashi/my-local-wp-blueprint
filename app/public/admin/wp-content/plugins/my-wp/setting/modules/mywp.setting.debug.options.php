@@ -43,30 +43,43 @@ final class MywpSettingScreenDebugOptions extends MywpAbstractSettingModule {
     }
 
     ?>
-    <p><?php _e( 'Count' , 'my-wp' ); ?>: <?php echo count( $options ); ?></p>
+    <p><?php echo esc_html( __( 'Count' , 'my-wp' ) ); ?>: <?php echo count( $options ); ?></p>
+
     <table class="form-table">
       <thead>
         <tr>
           <th>option_name</th>
-          <td>option_value(<?php echo _e( 'Raw' , 'my-wp' ); ?>)</td>
-          <td>option_value(<?php echo _e( 'Decode' , 'my-wp' ); ?>)</td>
+          <td>option_value(<?php echo esc_html( __( 'Raw' , 'my-wp' ) ); ?>)</td>
+          <td>option_value(<?php echo esc_html( __( 'Decode' , 'my-wp' ) ); ?>)</td>
           <td style="width: 10%;">autoload</td>
         </tr>
       </thead>
       <tbody>
         <?php foreach( $options as $key => $option ) : ?>
+
           <?php $option_value = maybe_unserialize( $option->option_value ); ?>
+
           <?php $option_value_json = ''; ?>
+
           <?php if( ! empty( $option->option_value ) && ! is_array( $option->option_value ) ) : ?>
+
             <?php $option_value_json = json_decode( $option->option_value ); ?>
+
           <?php endif; ?>
+
           <tr>
             <th>
-              [<?php echo esc_html( $option->option_id ); ?>] <?php echo esc_html( $option->option_name ); ?>
+              [<?php echo esc_html( $option->option_id ); ?>]
+               <?php echo esc_html( $option->option_name ); ?>
+
               <?php if( is_array( $option_value ) or is_object( $option_value ) ) : ?>
+
                 <p><code style="background-color: #F4EFCC;">Serialize</code></p>
+
               <?php elseif( ! empty( $option_value_json ) && is_object( $option_value_json ) ) : ?>
+
                 <p><code style="background-color: #CDF3D1;">Json</code></p>
+
               <?php endif; ?>
             </th>
             <td>
@@ -74,18 +87,26 @@ final class MywpSettingScreenDebugOptions extends MywpAbstractSettingModule {
             </td>
             <td>
               <?php if( is_array( $option_value ) or is_object( $option_value ) ) : ?>
+
                 <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $option_value , true ) ); ?></textarea>
+
               <?php elseif( ! empty( $option_value_json ) && is_object( $option_value_json ) ) : ?>
+
                 <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( print_r( $option_value_json , true ) ); ?></textarea>
+
               <?php else : ?>
+
                 <textarea readonly="readonly" class="large-text" style="height: 100px;"><?php echo esc_textarea( $option_value ); ?></textarea>
+
               <?php endif; ?>
             </td>
             <td>
               <?php echo esc_html( $option->autoload ); ?>
             </td>
           </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
     <p>&nbsp;</p>
